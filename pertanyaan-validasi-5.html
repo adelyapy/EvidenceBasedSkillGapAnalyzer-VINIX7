@@ -1,0 +1,41 @@
+<section id="pertanyaan">
+  <h1>Pertanyaan Validasi</h1>
+
+  <p>Pertanyaan 5 dari 5</p>
+
+  <progress value="5" max="5" aria-label="Pertanyaan 5 dari 5">
+    5 dari 5
+  </progress>
+
+  <form action="hasil-analisis.html#hasil" method="get">
+    <fieldset>
+      <legend>Pertanyaan 5</legend>
+
+      <p>
+        <label for="jawaban-5">
+          Apa hasil dari proyek yang Anda kerjakan dan bagaimana
+          Anda memastikan hasilnya sesuai tujuan? Berikan contoh
+          pengujian atau umpan balik yang Anda terima.
+        </label>
+      </p>
+
+      <textarea
+        id="jawaban-5"
+        name="jawaban-5"
+        rows="12"
+        cols="60"
+        maxlength="1000"
+        placeholder="Tulis jawaban Anda di sini..."
+        aria-describedby="batas-jawaban"
+        required
+      ></textarea>
+
+      <p id="batas-jawaban">Maksimal 1.000 karakter.</p>
+    </fieldset>
+
+    <p>
+      <a href="pertanyaan-validasi-4.html#pertanyaan">Kembali</a>
+      <button type="submit">Kirim Jawaban</button>
+    </p>
+  </form>
+</section>

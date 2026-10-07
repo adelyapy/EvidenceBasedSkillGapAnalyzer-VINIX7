@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jawab pertanyaan validasi BUKTIVA untuk memastikan pemahaman terhadap proyek Anda.">
+  <title>Pertanyaan Validasi 2 | BUKTIVA</title>
+</head>
+<body>
+  <header>
+    <img src="./assets/images/logo-buktiva.png" alt="BUKTIVA" width="64" height="65">
+    <p><strong>BUKTIVA</strong></p>
+
+    <nav aria-label="Navigasi utama">
+      <ul>
+        <li><button type="button" disabled>Dashboard</button></li>
+        <li><button type="button" disabled>Analisa Baru</button></li>
+        <li><button type="button" disabled>Riwayat Analisis</button></li>
+        <li><button type="button" disabled>Profile</button></li>
+      </ul>
+    </nav>
+    <p><button type="button" disabled>Notifikasi</button></p>
+    <p>
+      <img src="./assets/images/adelya.webp" alt="Foto profil Adelya" width="48" height="72">
+      <button type="button" disabled>Adelya</button><br>
+      Mahasiswa
+    </p>
+  </header>
+
+  <main id="konten-utama">
+    <h1>Pertanyaan Validasi</h1>
+    <p>Jawab beberapa pertanyaan berikut untuk memastikan pemahamanmu terhadap proyek benar-benar sesuai.</p>
+
+    <p><label for="progres-pertanyaan">Pertanyaan 2 dari 5</label></p>
+    <progress id="progres-pertanyaan" value="2" max="5">2 dari 5</progress>
+    <form action="pertanyaan-validasi-3.html#pertanyaan" method="get">
+      <fieldset id="pertanyaan">
+        <legend>Pertanyaan 2</legend>
+        <p>
+          <label for="jawaban">Apa peran dan tanggung jawab Anda dalam proyek ini? Jelaskan bagian yang Anda kerjakan sendiri.</label>
+        </p>
+        <textarea id="jawaban" name="jawaban-2" rows="12" cols="60"
+          maxlength="1000" required placeholder="Tulis jawaban Anda di sini…"
+          aria-describedby="batas-jawaban tips-menjawab"></textarea>
+        <p id="batas-jawaban">Maksimal 1.000 karakter</p>
+      </fieldset>
+      <p><a id="kembali" href="pertanyaan-validasi-1.html#pertanyaan">Kembali</a> <button type="submit">Selanjutnya</button></p>
+    </form>
+
+    <aside aria-labelledby="judul-tips">
+      <h2 id="judul-tips">Tips Menjawab</h2>
+      <ul id="tips-menjawab">
+        <li>Jelaskan alasan pemilihan teknologi.</li>
+        <li>Sebutkan kelebihan arsitektur.</li>
+        <li>Hubungkan dengan kebutuhan projek.</li>
+        <li>Gunakan contoh konkret dari projek Anda.</li>
+      </ul>
+    </aside>
+  </main>
+
+  <footer>
+    <p><button type="button" disabled>Keluar</button></p>
+  </footer>
+</body>
+</html>
