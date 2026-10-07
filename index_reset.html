@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Kata Sandi - BUKTIVA</title>
+</head>
+
+<body>
+
+  <header>
+    <nav aria-label="Navigasi reset kata sandi">
+      <a href="index_beranda.html">
+        <img src="./assets/images/logo-icon.svg" alt="Logo BUKTIVA" width="48">
+        <strong>BUKTIVA</strong>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section aria-labelledby="reset-title">
+      <div>
+        <h1 id="reset-title">Lupa Kata Sandi?</h1>
+
+        <p>
+          Tidak masalah! Masukkan alamat email Anda dan kami akan mengirimkan
+          tautan untuk mengatur ulang kata sandi Anda.
+        </p>
+
+        <figure>
+          <img
+            src="./assets/images/reset-illustration.png"
+            alt="Ilustrasi pengguna menerima tautan reset kata sandi melalui email"
+            width="500">
+        </figure>
+      </div>
+
+      <article>
+        <h2>Mengatur Ulang Kata Sandi</h2>
+
+        <p>
+          Masukkan alamat email yang terdaftar di akun Buktiva Anda.
+          Kami akan mengirimkan tautan untuk mengatur ulang kata sandi.
+        </p>
+
+        <form action="#" method="post">
+          <fieldset>
+            <legend>Permintaan reset kata sandi</legend>
+
+            <p>
+              <label for="email-reset"><strong>Email</strong></label><br>
+              <img src="./assets/images/reset-email-icon.png" alt="" width="28">
+              <input
+                type="email"
+                id="email-reset"
+                name="email"
+                placeholder="Masukkan alamat email Anda."
+                autocomplete="email"
+                required>
+            </p>
+
+            <p>
+              <button type="submit">Kirim Tautan</button>
+            </p>
+          </fieldset>
+        </form>
+      </article>
+    </section>
+
+    <p>
+      <a href="index_login.html">
+        <img src="./assets/images/back-arrow-reset.svg" alt="" width="32">
+        Kembali ke Halaman Masuk
+      </a>
+    </p>
+  </main>
+
+</body>
+
+</html>
