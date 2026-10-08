@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skill Gap Report - BUKTIVA</title>
+  </head>
+
+  <body>
+    <!-- HEADER UTAMA -->
+    <header>
+      <a href="index_beranda.html">
+        <img src="./assets/images/buktiva-logo.svg" alt="BUKTIVA" />
+      </a>
+      <button type="button" aria-label="Perkecil Sidebar">
+        <img src="./assets/images/icon-chevron-left.svg" alt="Tutup Sidebar" />
+      </button>
+
+      <nav aria-label="Menu Pengguna">
+        <ul>
+          <li>
+            <a href="#notifikasi">
+              <img src="./assets/images/icon-bell.svg" alt="Notifikasi" />
+            </a>
+          </li>
+          <li>
+            <a href="index_profile.html">
+              <img
+                src="./assets/images/avatar-adelya.webp"
+                alt="Foto Profil Adelya"
+              />
+              <span>Adelya</span>
+              <span>Mahasiswa</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- SIDEBAR NAVIGASI -->
+    <nav aria-label="Menu Utama">
+      <ul>
+        <li>
+          <a href="dashboard.html">
+            <img src="./assets/images/icon-home.svg" alt="" />
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="analisa-baru.html" aria-current="page">
+            <img src="./assets/images/icon-chart.svg" alt="" />
+            Analisa Baru
+          </a>
+        </li>
+        <li>
+          <a href="riwayat-analisis.html">
+            <img src="./assets/images/icon-history.svg" alt="" />
+            Riwayat Analisis
+          </a>
+        </li>
+        <li>
+          <a href="index_profile.html">
+            <img src="./assets/images/icon-user.svg" alt="" />
+            Profile
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <!-- Mengarah ke halaman login sebagai pengganti logout -->
+          <a href="index_login.html">
+            <img src="./assets/images/icon-logout.svg" alt="" />
+            Keluar
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- KONTEN UTAMA -->
+    <main>
+      <header>
+        <h1>Skill Gap Report</h1>
+        <p>
+          Perbandingan antara kompetensimu dengan kebutuhan Frontend Developer
+          di industri saat ini.
+        </p>
+
+        <p>
+          <!-- Diarahkan ke file roadmap yang benar -->
+          <a href="road-map-pengembangan-skill.html">Selanjutnya →</a>
+        </p>
+      </header>
+
+      <section aria-labelledby="legend-title">
+        <h2 id="legend-title">Keterangan</h2>
+        <ul>
+          <li>● Skill Kamu</li>
+          <li>● Kebutuhan Industri</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="comparison-title">
+        <h2 id="comparison-title">Perbandingan Skill</h2>
+        <p>Kompetensi saat ini dibandingkan dengan kebutuhan industri.</p>
+
+        <table>
+          <caption>
+            Perbandingan tingkat penguasaan skill dengan kebutuhan industri
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Skill</th>
+              <th scope="col">Skill Kamu</th>
+              <th scope="col">Kebutuhan Industri</th>
+              <th scope="col">Nilai</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">React</th>
+              <td><progress value="95" max="100">95%</progress></td>
+              <td>95%</td>
+              <td>95%</td>
+            </tr>
+            <tr>
+              <th scope="row">Next.js</th>
+              <td><progress value="85" max="100">85%</progress></td>
+              <td>85%</td>
+              <td>85%</td>
+            </tr>
+            <tr>
+              <th scope="row">TypeScript</th>
+              <td><progress value="50" max="100">50%</progress></td>
+              <td>80%</td>
+              <td>50%</td>
+            </tr>
+            <tr>
+              <th scope="row">HTML &amp; CSS</th>
+              <td><progress value="80" max="100">80%</progress></td>
+              <td>80%</td>
+              <td>80%</td>
+            </tr>
+            <tr>
+              <th scope="row">Tailwind CSS</th>
+              <td><progress value="70" max="100">70%</progress></td>
+              <td>70%</td>
+              <td>70%</td>
+            </tr>
+            <tr>
+              <th scope="row">Testing</th>
+              <td><progress value="40" max="100">40%</progress></td>
+              <td>70%</td>
+              <td>40%</td>
+            </tr>
+            <tr>
+              <th scope="row">CI/CD</th>
+              <td><progress value="30" max="100">30%</progress></td>
+              <td>60%</td>
+              <td>30%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <figure>
+          <img
+            src="./assets/images/skill-gap-illustration.svg"
+            alt="Grafik perbandingan skill kamu dengan kebutuhan industri"
+          />
+          <figcaption>Visualisasi hasil analisis skill gap.</figcaption>
+        </figure>
+
+        <p><strong>FOKUS PADA SKILL YANG PENTING</strong></p>
+      </section>
+
+      <section aria-labelledby="gap-title">
+        <h2 id="gap-title">Skill Gap Utama</h2>
+
+        <ol>
+          <li>
+            <strong>TypeScript</strong>
+            <span>Selisih 30%</span>
+            <strong>Prioritas Tinggi</strong>
+          </li>
+          <li>
+            <strong>Testing</strong>
+            <span>Selisih 30%</span>
+            <strong>Prioritas Tinggi</strong>
+          </li>
+          <li>
+            <strong>CI/CD</strong>
+            <span>Selisih 30%</span>
+            <strong>Prioritas Sedang</strong>
+          </li>
+        </ol>
+      </section>
+
+      <!-- NAVIGASI BAWAH -->
+      <nav aria-label="Navigasi antar halaman">
+        <p>
+          <a href="analisa-baru.html">← Kembali ke Analisa Baru</a>
+        </p>
+        <p>
+          <a href="dashboard.html">Kembali ke Dashboard</a>
+        </p>
+      </nav>
+    </main>
+
+    <footer>
+      <p>&copy; BUKTIVA</p>
+    </footer>
+  </body>
+</html>
