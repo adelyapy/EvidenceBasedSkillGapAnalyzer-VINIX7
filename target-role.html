@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tentukan target pekerjaan untuk analisis kompetensi BUKTIVA."
+    />
+    <title>Target Role | BUKTIVA</title>
+  </head>
+
+  <body>
+    <header>
+      <p>
+        <a href="index_beranda.html">
+          <img
+            src="./assets/images/logo-icon.svg"
+            alt="Logo BUKTIVA"
+            width="60"
+            height="68"
+          />
+          <strong>BUKTIVA</strong>
+        </a>
+      </p>
+    </header>
+
+    <nav aria-label="Navigasi utama BUKTIVA">
+      <ul>
+        <li>
+          <a href="dashboard.html">Dashboard</a>
+        </li>
+
+        <li>
+          <a href="analisa-baru.html" aria-current="page"> Analisa Baru </a>
+        </li>
+
+        <li>
+          <a href="riwayat-analisis.html"> Riwayat Analisis </a>
+        </li>
+
+        <li>
+          <a href="profile.html">Profile</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- KONTEN UTAMA -->
+    <main id="konten-utama">
+      <!-- INDIKATOR TAHAPAN -->
+      <nav aria-label="Tahapan analisis">
+        <ol>
+          <li>Upload Project</li>
+          <li aria-current="step">
+            <strong>Target Role</strong>
+          </li>
+          <li>CV</li>
+          <li>Analisis</li>
+        </ol>
+      </nav>
+
+      <section aria-labelledby="judul-target">
+        <h1 id="judul-target">Tentukan Target Pekerjaan</h1>
+
+        <p>Pilih role yang kamu incar agar hasil analisis lebih relevan.</p>
+
+        <figure>
+          <img
+            src="./assets/images/target-role-vector.png"
+            alt="Ilustrasi mahasiswa menunjuk target pekerjaan"
+            width="280"
+          />
+        </figure>
+      </section>
+
+      <section aria-labelledby="judul-form">
+        <h2 id="judul-form">Informasi Target Pekerjaan</h2>
+
+        <form action="#" method="get">
+          <fieldset>
+            <legend>Target Role</legend>
+            <p>Pilih posisi pekerjaan yang ingin kamu tuju.</p>
+            <p>
+              <input
+                type="radio"
+                id="frontend"
+                name="target_role"
+                value="Frontend Developer"
+                checked
+                required
+              />
+
+              <label for="frontend"> Frontend Developer </label>
+            </p>
+
+            <p>
+              <input
+                type="radio"
+                id="backend"
+                name="target_role"
+                value="Backend Developer"
+              />
+
+              <label for="backend"> Backend Developer </label>
+            </p>
+
+            <p>
+              <input
+                type="radio"
+                id="mobile"
+                name="target_role"
+                value="Mobile Developer"
+              />
+
+              <label for="mobile"> Mobile Developer </label>
+            </p>
+
+            <p>
+              <input
+                type="radio"
+                id="data-analyst"
+                name="target_role"
+                value="Data Analyst"
+              />
+
+              <label for="data-analyst"> Data Analyst </label>
+            </p>
+
+            <p>
+              <input
+                type="radio"
+                id="uiux"
+                name="target_role"
+                value="UI/UX Designer"
+              />
+
+              <label for="uiux"> UI/UX Designer </label>
+            </p>
+
+            <p>
+              <input
+                type="radio"
+                id="devops"
+                name="target_role"
+                value="DevOps Developer"
+              />
+
+              <label for="devops"> DevOps Developer </label>
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Deskripsi Pekerjaan (Opsional)</legend>
+
+            <p>
+              <label for="deskripsi-pekerjaan">
+                Masukkan deskripsi pekerjaan dari lowongan yang kamu pilih.
+              </label>
+            </p>
+
+            <p>
+              <textarea
+                id="deskripsi-pekerjaan"
+                name="deskripsi_pekerjaan"
+                rows="7"
+                cols="65"
+                maxlength="3000"
+                placeholder="Tuliskan deskripsi pekerjaan dari lowongan yang kamu pilih"
+              ></textarea>
+            </p>
+          </fieldset>
+
+          <aside aria-labelledby="judul-informasi">
+            <h2 id="judul-informasi">
+              Pilih role yang relevan untuk hasil analisis maksimal
+            </h2>
+
+            <p>
+              AI akan memetakan skill dari proyek dan pengalamanmu dengan
+              kebutuhan role yang kamu pilih, sehingga dapat mengidentifikasi
+              skill gap dengan lebih akurat.
+            </p>
+          </aside>
+
+          <p>
+            <a href="analisa-baru.html"> &larr; Kembali </a>
+
+            <button type="submit">Lanjutkan &rarr;</button>
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <a href="index_login.html"> Keluar </a>
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Dashboard BUKTIVA untuk melihat ringkasan analisis proyek, kompetensi, rekomendasi, dan roadmap belajar."
+    />
+    <title>Dashboard | BUKTIVA</title>
+  </head>
+  <body>
+    <header>
+      <p>
+        <a href="index_beranda.html">
+          <img
+            src="./assets/images/logo-icon.svg"
+            width="60"
+            height="68"
+            alt="Logo BUKTIVA"
+          />
+          <strong>BUKTIVA</strong>
+        </a>
+      </p>
+
+      <p>
+        <img
+          src="./assets/images/ikon-notifikasi.svg"
+          alt="Notifikasi"
+          width="28"
+          height="28"
+        />
+      </p>
+      <details>
+        <summary>
+          <img
+            src="./assets/images/adelya-putri-yunita.png"
+            width="50"
+            alt="Foto profil Adelya"
+          />
+
+          <strong>Adelya</strong>
+          <small>Mahasiswa</small>
+        </summary>
+
+        <nav aria-label="Menu profil pengguna">
+          <ul>
+            <li>
+              <a href="profile.html"> Profile Saya </a>
+            </li>
+
+            <li>
+              <a href="index_login.html"> Keluar </a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </header>
+
+    <nav aria-label="Navigasi utama BUKTIVA">
+      <ul>
+        <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+        <li><a href="analisa-baru.html">Analisa Baru</a></li>
+        <li><a href="riwayat-analisis.html">Riwayat Analisis</a></li>
+        <li><a href="profile.html">Profile</a></li>
+      </ul>
+    </nav>
+
+    <main id="konten-utama">
+      <section aria-labelledby="judul-dashboard">
+        <h1 id="judul-dashboard">Halo, Adelya</h1>
+        <p>Siap menganalisis project baru hari ini?</p>
+        <p>
+          <a href="analisa-baru.html">+ Mulai analisa baru</a>
+          <a href="index_beranda.html#cara-kerja">Lihat panduan</a>
+        </p>
+        <figure>
+          <img
+            src="./assets/images/dashboard-vector.png"
+            width="490"
+            alt="Mahasiswa sedang menggunakan laptop. Pesan motivasi: Analisis skill-mu, bangun karier impianmu; lebih siap untuk dunia kerja; satu langkah lebih dekat ke karier impianmu."
+          />
+        </figure>
+      </section>
+
+      <section aria-label="Statistik aktivitas pengguna">
+        <dl>
+          <dt>
+            <img
+              src="./assets/images/ikon-total-analisa.svg"
+              alt=""
+              width="48"
+              height="48"
+            />
+            Total Analisa
+          </dt>
+          <dd>12</dd>
+          <dt>
+            <img
+              src="./assets/images/ikon-total-proyek.svg"
+              alt=""
+              width="48"
+              height="48"
+            />
+            Total Proyek
+          </dt>
+          <dd>7</dd>
+          <dt>
+            <img
+              src="./assets/images/ikon-skill-dikuasai.svg"
+              alt=""
+              width="48"
+              height="48"
+            />
+            Skill Dikuasai
+          </dt>
+          <dd>15</dd>
+          <dt>
+            <img
+              src="./assets/images/ikon-target-role.svg"
+              alt=""
+              width="48"
+              height="48"
+            />
+            Target Role
+          </dt>
+          <dd>2</dd>
+        </dl>
+      </section>
+
+      <section aria-labelledby="judul-ringkasan-analisis">
+        <h2 id="judul-ringkasan-analisis">Ringkasan Analisis Terbaru</h2>
+        <p><a href="riwayat-analisis.html">Lihat Semua</a></p>
+        <article aria-labelledby="judul-role">
+          <h3 id="judul-role">Frontend Developer</h3>
+          <p><strong>78%</strong> — Skor Keseluruhan</p>
+          <p>
+            <meter
+              min="0"
+              max="100"
+              value="78"
+              aria-label="Skor keseluruhan 78 persen"
+            >
+              78%
+            </meter>
+          </p>
+          <p>
+            Kamu mempunyai kemampuan yang kuat di bidang frontend developer.
+          </p>
+          <section aria-labelledby="judul-kemampuan-unggul">
+            <h4 id="judul-kemampuan-unggul">Kemampuan unggul</h4>
+            <ul>
+              <li>HTML</li>
+              <li>JavaScript</li>
+              <li>Git</li>
+              <li>React</li>
+              <li>UI/UX</li>
+            </ul>
+          </section>
+          <section aria-labelledby="judul-pengembangan">
+            <h4 id="judul-pengembangan">Pengembangan Kemampuan</h4>
+            <ul>
+              <li>TypeScript</li>
+              <li>Next.js</li>
+              <li>Testing</li>
+              <li>System Design</li>
+              <li>State Mange</li>
+            </ul>
+          </section>
+        </article>
+      </section>
+
+      <section aria-labelledby="judul-rekomendasi">
+        <h2 id="judul-rekomendasi">Rekomendasi Selanjutnya</h2>
+        <ol>
+          <li>
+            <h3>
+              <img
+                src="./assets/images/ikon-rekomendasi-typescript.svg"
+                alt=""
+                width="48"
+                height="48"
+              />
+              Pelajari TypeScript
+            </h3>
+            <p>
+              Tingkatkan pemahaman TypeScript untuk memperkuat dasar frontend.
+            </p>
+          </li>
+
+          <li>
+            <h3>
+              <img
+                src="./assets/images/ikon-rekomendasi-nextjs.svg"
+                alt=""
+                width="48"
+                height="48"
+              />
+              Ikuti Project Next.js
+            </h3>
+            <p>
+              Bangun project nyata menggunakan Next.js untuk pengalaman
+              hands-on.
+            </p>
+          </li>
+
+          <li>
+            <h3>
+              <img
+                src="./assets/images/ikon-rekomendasi-interview.svg"
+                alt=""
+                width="48"
+                height="48"
+              />
+              Latih Technical Interview
+            </h3>
+            <p>
+              Kerjakan latihan soal dan simulasi interview frontend developer.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="judul-riwayat">
+        <h2 id="judul-riwayat">Riwayat Analisis Terbaru</h2>
+        <p><a href="riwayat-analisis.html">Lihat Semua</a></p>
+        <figure>
+          <img
+            src="./assets/images/riwayat-analisis-vector.png"
+            width="280"
+            alt="Ilustrasi folder dokumen dan jam untuk riwayat analisis"
+          />
+        </figure>
+        <p>Belum ada riwayat analisis terbaru.</p>
+      </section>
+
+      <section aria-labelledby="judul-roadmap">
+        <h2 id="judul-roadmap">Roadmap Belajar</h2>
+        <ol>
+          <li>Perkuat Frontend</li>
+          <li>Praktik TypeScript</li>
+          <li>Praktik Testing</li>
+          <li>Membuat Proyek</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <p><a href="index_login.html">Keluar</a></p>
+    </footer>
+  </body>
+</html>
