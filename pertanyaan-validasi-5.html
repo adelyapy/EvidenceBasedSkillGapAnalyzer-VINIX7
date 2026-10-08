@@ -1,87 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pertanyaan Validasi 5 | BUKTIVA</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pertanyaan Validasi 5 | BUKTIVA</title>
+  </head>
 
-<body>
-  <header>
-    <p><a href="index.html">BUKTIVA</a></p>
+  <body>
+    <header>
+      <p>
+        <a href="index_beranda.html">
+          <img
+            src="./assets/images/logo-icon.svg"
+            width="60"
+            height="68"
+            alt="Logo BUKTIVA"
+          />
+          <strong>BUKTIVA</strong>
+        </a>
+      </p>
 
-    <nav aria-label="Navigasi utama">
+      <p>
+        <img
+          src="./assets/images/ikon-notifikasi.svg"
+          alt="Notifikasi"
+          width="28"
+          height="28"
+        />
+      </p>
+      <details>
+        <summary>
+          <img
+            src="./assets/images/adelya-putri-yunita.png"
+            width="50"
+            alt="Foto profil Adelya"
+          />
+
+          <strong>Adelya</strong>
+          <small>Mahasiswa</small>
+        </summary>
+
+        <nav aria-label="Menu profil pengguna">
+          <ul>
+            <li>
+              <a href="profile.html"> Profile Saya </a>
+            </li>
+
+            <li>
+              <a href="index_login.html"> Keluar </a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </header>
+
+    <nav aria-label="Navigasi utama BUKTIVA">
       <ul>
-        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
         <li><a href="analisa-baru.html">Analisa Baru</a></li>
         <li><a href="riwayat-analisis.html">Riwayat Analisis</a></li>
         <li><a href="profile.html">Profile</a></li>
       </ul>
     </nav>
-  </header>
 
-  <main id="pertanyaan">
-    <h1>Pertanyaan Validasi</h1>
-
-    <p>
-      Jawab beberapa pertanyaan berikut untuk memastikan
-      pemahamanmu terhadap proyek benar-benar sesuai.
-    </p>
-
-    <p>
-      <label for="progres-pertanyaan">Pertanyaan 5 dari 5</label>
-    </p>
-
-    <progress id="progres-pertanyaan" value="5" max="5">
-      5 dari 5
-    </progress>
-
-    <form action="hasil-analisis.html#hasil" method="get">
-      <fieldset>
-        <legend>Pertanyaan 5</legend>
-
-        <p>
-          <label for="jawaban-5">
-            Apa hasil dari proyek yang Anda kerjakan dan bagaimana
-            Anda memastikan hasilnya sesuai tujuan? Berikan contoh
-            pengujian atau umpan balik yang Anda terima.
-          </label>
-        </p>
-
-        <textarea
-          id="jawaban-5"
-          name="jawaban-5"
-          rows="12"
-          cols="60"
-          maxlength="1000"
-          placeholder="Tulis jawaban Anda di sini..."
-          aria-describedby="batas-jawaban"
-          required
-        ></textarea>
-
-        <p id="batas-jawaban">Maksimal 1.000 karakter.</p>
-      </fieldset>
+    <main id="pertanyaan">
+      <h1>Pertanyaan Validasi</h1>
 
       <p>
-        <a href="pertanyaan-validasi-4.html#pertanyaan">Kembali</a>
-        <button type="submit">Selesai</button>
+        Jawab beberapa pertanyaan berikut untuk memastikan pemahamanmu terhadap
+        proyek benar-benar sesuai.
       </p>
-    </form>
 
-    <aside aria-labelledby="judul-tips">
-      <h2 id="judul-tips">Tips Menjawab</h2>
+      <p>
+        <label for="progres-pertanyaan">Pertanyaan 5 dari 5</label>
+      </p>
 
-      <ul>
-        <li>Jelaskan hasil akhir proyek Anda.</li>
-        <li>Hubungkan hasil tersebut dengan tujuan awal proyek.</li>
-        <li>Sebutkan pengujian yang Anda lakukan.</li>
-        <li>Berikan contoh umpan balik yang Anda terima.</li>
-      </ul>
-    </aside>
-  </main>
+      <progress id="progres-pertanyaan" value="5" max="5">5 dari 5</progress>
 
-  <footer>
-    <p><a href="login.html">Keluar</a></p>
-  </footer>
-</body>
+      <form action="hasil-analisis.html#hasil" method="get">
+        <fieldset>
+          <legend>Pertanyaan 5</legend>
+
+          <p>
+            <label for="jawaban-5">
+              Apa hasil dari proyek yang Anda kerjakan dan bagaimana Anda
+              memastikan hasilnya sesuai tujuan? Berikan contoh pengujian atau
+              umpan balik yang Anda terima.
+            </label>
+          </p>
+
+          <textarea
+            id="jawaban-5"
+            name="jawaban-5"
+            rows="12"
+            cols="60"
+            maxlength="1000"
+            placeholder="Tulis jawaban Anda di sini..."
+            aria-describedby="batas-jawaban"
+            required
+          ></textarea>
+
+          <p id="batas-jawaban">Maksimal 1.000 karakter.</p>
+        </fieldset>
+
+        <p>
+          <a href="pertanyaan-validasi-4.html#pertanyaan">Kembali</a>
+          <button type="submit">Selesai</button>
+        </p>
+      </form>
+
+      <aside aria-labelledby="judul-tips">
+        <h2 id="judul-tips">Tips Menjawab</h2>
+
+        <ul>
+          <li>Jelaskan hasil akhir proyek Anda.</li>
+          <li>Hubungkan hasil tersebut dengan tujuan awal proyek.</li>
+          <li>Sebutkan pengujian yang Anda lakukan.</li>
+          <li>Berikan contoh umpan balik yang Anda terima.</li>
+        </ul>
+      </aside>
+    </main>
+
+    <footer>
+      <p><a href="login.html">Keluar</a></p>
+    </footer>
+  </body>
 </html>

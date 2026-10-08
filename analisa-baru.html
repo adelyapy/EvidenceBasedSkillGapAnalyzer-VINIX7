@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tambahkan proyek untuk dianalisis oleh BUKTIVA."
+    />
+    <title>Upload Proyek | BUKTIVA</title>
+  </head>
+
+  <body>
+    <header>
+      <a href="index_beranda.html">
+        <img
+          src="./assets/images/logo-icon.svg"
+          alt="Logo BUKTIVA"
+          width="64"
+          height="64"
+        />
+        <strong>BUKTIVA</strong>
+      </a>
+    </header>
+
+    <nav aria-label="Navigasi utama">
+      <ul>
+        <li>
+          <a href="dashboard.html">Dashboard</a>
+        </li>
+
+        <li>
+          <a href="analisa-baru.html" aria-current="page"> Analisa Baru </a>
+        </li>
+
+        <li>
+          <a href="riwayat-analisis.html"> Riwayat Analisis </a>
+        </li>
+
+        <li>
+          <a href="profile.html">Profile</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main id="konten-utama">
+      <nav aria-label="Tahapan analisis">
+        <ol>
+          <li aria-current="step">
+            <strong>Upload Project</strong>
+          </li>
+          <li>Target Role</li>
+          <li>CV</li>
+          <li>Analisis</li>
+        </ol>
+      </nav>
+
+      <section aria-labelledby="judul-upload">
+        <h1 id="judul-upload">Upload Proyek Kamu</h1>
+
+        <p>
+          Unggah atau hubungkan proyek yang pernah kamu kerjakan. AI akan
+          menganalisis teknologi, peran, dan kontribusimu untuk memetakan
+          kompetensi kamu.
+        </p>
+
+        <figure>
+          <img
+            src="./assets/images/analisis-vector1.png"
+            alt="Ilustrasi folder berisi kode dan dokumen proyek"
+            width="280"
+          />
+        </figure>
+      </section>
+      >
+      <section aria-labelledby="judul-sumber">
+        <h2 id="judul-sumber">Pilih Sumber Proyek</h2>
+
+        <details open>
+          <summary>
+            <strong>GitHub URL</strong>
+            - Hubungkan repository dari GitHub
+          </summary>
+
+          <form action="#" method="post">
+            <fieldset>
+              <legend>Tambahkan Repository GitHub</legend>
+
+              <p>
+                <label for="github-url"> Link Repository GitHub </label>
+              </p>
+
+              <p>
+                <input
+                  type="url"
+                  id="github-url"
+                  name="github_url"
+                  placeholder="https://github.com/username/repository.git"
+                  size="60"
+                  required
+                />
+              </p>
+
+              <p>
+                <button type="submit">Tambahkan</button>
+              </p>
+            </fieldset>
+          </form>
+        </details>
+
+        <!-- PORTFOLIO -->
+        <details>
+          <summary>
+            <strong>Portfolio URL</strong>
+            - Masukkan link portfolio pribadi kamu
+          </summary>
+
+          <form action="#" method="post">
+            <fieldset>
+              <legend>Tambahkan Portfolio</legend>
+
+              <p>
+                <label for="portfolio-url"> Link Portfolio </label>
+              </p>
+
+              <p>
+                <input
+                  type="url"
+                  id="portfolio-url"
+                  name="portfolio_url"
+                  placeholder="https://portfolio-kamu.com"
+                  size="60"
+                  required
+                />
+              </p>
+
+              <p>
+                <button type="submit">Tambahkan</button>
+              </p>
+            </fieldset>
+          </form>
+        </details>
+
+        <!-- DEPLOYMENT -->
+        <details>
+          <summary>
+            <strong>Deployment URL</strong>
+            - Link situs yang sudah di-deploy
+          </summary>
+
+          <form action="#" method="post">
+            <fieldset>
+              <legend>Tambahkan Deployment</legend>
+
+              <p>
+                <label for="deployment-url"> Link Deployment </label>
+              </p>
+
+              <p>
+                <input
+                  type="url"
+                  id="deployment-url"
+                  name="deployment_url"
+                  placeholder="https://project-kamu.com"
+                  size="60"
+                  required
+                />
+              </p>
+
+              <p>
+                <button type="submit">Tambahkan</button>
+              </p>
+            </fieldset>
+          </form>
+        </details>
+
+        <!-- UPLOAD PDF -->
+        <details>
+          <summary>
+            <strong>Upload PDF</strong>
+            - Unggah file laporan atau dokumentasi
+          </summary>
+
+          <form action="#" method="post" enctype="multipart/form-data">
+            <fieldset>
+              <legend>Upload Dokumentasi Proyek</legend>
+
+              <p>
+                <label for="file-proyek"> Pilih Dokumen PDF </label>
+              </p>
+
+              <p>
+                <input
+                  type="file"
+                  id="file-proyek"
+                  name="file_proyek"
+                  accept=".pdf,application/pdf"
+                  required
+                />
+              </p>
+
+              <p>
+                <button type="submit">Tambahkan</button>
+              </p>
+            </fieldset>
+          </form>
+        </details>
+      </section>
+
+      <!-- KONDISI BELUM ADA PROYEK -->
+      <section aria-labelledby="judul-daftar-proyek">
+        <h2 id="judul-daftar-proyek">Daftar Proyek</h2>
+
+        <article>
+          <h3>Belum ada proyek yang ditambahkan</h3>
+
+          <p>
+            Proyek yang berhasil ditambahkan nantinya akan ditampilkan pada
+            bagian ini.
+          </p>
+        </article>
+      </section>
+
+      <!-- TIPS -->
+      <aside aria-labelledby="judul-tips">
+        <h2 id="judul-tips">Tips agar hasil analisis lebih maksimal</h2>
+
+        <ol>
+          <li>Gunakan repository publik agar dapat diakses oleh AI.</li>
+
+          <li>
+            Pastikan terdapat README yang menjelaskan tujuan, teknologi, dan
+            peran kamu.
+          </li>
+
+          <li>
+            Pilih proyek yang paling relevan dan menunjukkan kemampuan terbaik
+            kamu.
+          </li>
+        </ol>
+      </aside>
+
+      <!-- NAVIGASI BERIKUTNYA -->
+      <nav aria-label="Navigasi tahapan analisis">
+        <p>
+          <a href="target-role.html"> Lanjutkan &rarr; </a>
+        </p>
+      </nav>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>
+        <a href="index_login.html">Keluar</a>
+      </p>
+    </footer>
+  </body>
+</html>

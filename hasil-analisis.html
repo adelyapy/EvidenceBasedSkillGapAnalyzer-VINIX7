@@ -1,268 +1,275 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta
-    name="description"
-    content="Ringkasan hasil analisis kompetensi pengguna BUKTIVA."
-  >
-  <title>Hasil Analisis | BUKTIVA</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ringkasan hasil analisis kompetensi pengguna BUKTIVA."
+    />
+    <title>Hasil Analisis | BUKTIVA</title>
+  </head>
 
-<body>
-  <header>
-    <a href="index.html">
-      <img
-        src="./assets/images/logo-buktiva.png"
-        alt="Logo BUKTIVA"
-      >
-      <strong>BUKTIVA</strong>
-    </a>
+  <body>
+    <header>
+      <p>
+        <a href="index_beranda.html">
+          <img
+            src="./assets/images/logo-icon.svg"
+            width="60"
+            height="68"
+            alt="Logo BUKTIVA"
+          />
+          <strong>BUKTIVA</strong>
+        </a>
+      </p>
 
-    <p>
-      <a href="#hasil">Lewati navigasi</a>
-    </p>
+      <p>
+        <img
+          src="./assets/images/ikon-notifikasi.svg"
+          alt="Notifikasi"
+          width="28"
+          height="28"
+        />
+      </p>
+      <details>
+        <summary>
+          <img
+            src="./assets/images/adelya-putri-yunita.png"
+            width="50"
+            alt="Foto profil Adelya"
+          />
 
-    <nav aria-label="Navigasi utama">
+          <strong>Adelya</strong>
+          <small>Mahasiswa</small>
+        </summary>
+
+        <nav aria-label="Menu profil pengguna">
+          <ul>
+            <li>
+              <a href="profile.html"> Profile Saya </a>
+            </li>
+
+            <li>
+              <a href="index_login.html"> Keluar </a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </header>
+
+    <nav aria-label="Navigasi utama BUKTIVA">
       <ul>
-        <li>
-          <a href="dashboard.html">Dashboard</a>
-        </li>
-        <li>
-          <a href="analisa-baru.html">Analisa Baru</a>
-        </li>
-        <li>
-          <a href="riwayat-analisis.html">Riwayat Analisis</a>
-        </li>
-        <li>
-          <a href="profile.html">Profile</a>
-        </li>
+        <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+        <li><a href="analisa-baru.html">Analisa Baru</a></li>
+        <li><a href="riwayat-analisis.html">Riwayat Analisis</a></li>
+        <li><a href="profile.html">Profile</a></li>
       </ul>
     </nav>
-
-    <p>
-      <a href="notifikasi.html">Notifikasi</a>
-    </p>
-
-    <p>
-      <img
-        src="./assets/images/adelya.webp"
-        alt="Foto profil Adelya"
-      >
-      <a href="profile.html">Adelya</a>
-      <br>
-      Mahasiswa
-    </p>
-  </header>
-
-  <main id="hasil">
-    <h1>Hasil Analisis Anda</h1>
-
-    <p>
-      Berikut adalah ringkasan hasil analisis kompetensi
-      berdasarkan projek dan jawaban Anda.
-    </p>
-
-    <p>
-      <small>
-        Contoh hasil untuk prototipe. Persentase bersifat statis,
-        bukan hasil perhitungan dari jawaban pengguna.
-      </small>
-    </p>
-
-    <!-- HTML murni tidak dapat membuka dialog cetak secara otomatis. -->
-    <details>
-      <summary>Unduh Laporan PDF</summary>
+    <main id="hasil">
+      <h1>Hasil Analisis Anda</h1>
 
       <p>
-        Untuk menyimpan halaman ini sebagai PDF, tekan
-        <kbd>Ctrl</kbd> + <kbd>P</kbd> pada Windows atau
-        <kbd>Command</kbd> + <kbd>P</kbd> pada Mac.
-        Kemudian pilih <strong>Simpan sebagai PDF</strong>.
+        Berikut adalah ringkasan hasil analisis kompetensi berdasarkan projek
+        dan jawaban Anda.
       </p>
-    </details>
-
-    <hr>
-
-    <section aria-labelledby="judul-skor">
-      <h2 id="judul-skor">Skor Keseluruhan</h2>
 
       <p>
-        <strong>78%</strong>
+        <small>
+          Contoh hasil untuk prototipe. Persentase bersifat statis, bukan hasil
+          perhitungan dari jawaban pengguna.
+        </small>
       </p>
 
-      <meter
-        min="0"
-        max="100"
-        value="78"
-        aria-label="Skor keseluruhan 78 persen"
-      >
-        78%
-      </meter>
+      <!-- HTML murni tidak dapat membuka dialog cetak secara otomatis. -->
+      <details>
+        <summary>Unduh Laporan PDF</summary>
 
+        <p>
+          Untuk menyimpan halaman ini sebagai PDF, tekan
+          <kbd>Ctrl</kbd> + <kbd>P</kbd> pada Windows atau <kbd>Command</kbd> +
+          <kbd>P</kbd> pada Mac. Kemudian pilih
+          <strong>Simpan sebagai PDF</strong>.
+        </p>
+      </details>
+
+      <hr />
+
+      <section aria-labelledby="judul-skor">
+        <h2 id="judul-skor">Skor Keseluruhan</h2>
+
+        <p>
+          <strong>78%</strong>
+        </p>
+
+        <meter
+          min="0"
+          max="100"
+          value="78"
+          aria-label="Skor keseluruhan 78 persen"
+        >
+          78%
+        </meter>
+
+        <p>Kemampuan Frontend Developer Anda sudah kuat.</p>
+      </section>
+
+      <hr />
+
+      <section aria-labelledby="judul-kemampuan">
+        <h2 id="judul-kemampuan">Keunggulan Kemampuan Anda</h2>
+
+        <table>
+          <caption>
+            Rincian kemampuan dan persentase
+          </caption>
+
+          <thead>
+            <tr>
+              <th scope="col">Kemampuan</th>
+              <th scope="col">Tingkat</th>
+              <th scope="col">Indikator</th>
+              <th scope="col">Persentase</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th scope="row">React</th>
+              <td>Ahli</td>
+              <td>
+                <meter
+                  min="0"
+                  max="100"
+                  value="90"
+                  aria-label="Kemampuan React 90 persen"
+                >
+                  90%
+                </meter>
+              </td>
+              <td>90%</td>
+            </tr>
+
+            <tr>
+              <th scope="row">JavaScript</th>
+              <td>Mahir</td>
+              <td>
+                <meter
+                  min="0"
+                  max="100"
+                  value="80"
+                  aria-label="Kemampuan JavaScript 80 persen"
+                >
+                  80%
+                </meter>
+              </td>
+              <td>80%</td>
+            </tr>
+
+            <tr>
+              <th scope="row">HTML</th>
+              <td>Mahir</td>
+              <td>
+                <meter
+                  min="0"
+                  max="100"
+                  value="78"
+                  aria-label="Kemampuan HTML 78 persen"
+                >
+                  78%
+                </meter>
+              </td>
+              <td>78%</td>
+            </tr>
+
+            <tr>
+              <th scope="row">Git</th>
+              <td>Menengah</td>
+              <td>
+                <meter
+                  min="0"
+                  max="100"
+                  value="66"
+                  aria-label="Kemampuan Git 66 persen"
+                >
+                  66%
+                </meter>
+              </td>
+              <td>66%</td>
+            </tr>
+
+            <tr>
+              <th scope="row">UI/UX</th>
+              <td>Menengah</td>
+              <td>
+                <meter
+                  min="0"
+                  max="100"
+                  value="60"
+                  aria-label="Kemampuan UI UX 60 persen"
+                >
+                  60%
+                </meter>
+              </td>
+              <td>60%</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr />
+
+      <section aria-labelledby="judul-bukti">
+        <h2 id="judul-bukti">Bukti Proyek</h2>
+
+        <ul>
+          <li>
+            <strong>Portofolio-web</strong>
+            <br />
+            React, CSS
+          </li>
+
+          <li>
+            <strong>e-commerce-app</strong>
+            <br />
+            North.js
+          </li>
+
+          <li>
+            <strong>Dashboard penjualan</strong>
+            <br />
+            Chart.js
+          </li>
+        </ul>
+      </section>
+
+      <hr />
+
+      <section aria-labelledby="judul-rekomendasi">
+        <h2 id="judul-rekomendasi">Rekomendasi</h2>
+
+        <ul>
+          <li>Pertahankan konsistensi di React.</li>
+          <li>Tingkatkan kemampuan di TypeScript.</li>
+          <li>Pelajari testing dan CI/CD.</li>
+        </ul>
+      </section>
+
+      <hr />
+
+      <nav aria-label="Navigasi hasil analisis">
+        <!-- Ganti tujuan ini jika halaman selanjutnya bukan dashboard. -->
+        <p>
+          <a href="dashboard.html">Lanjutkan →</a>
+        </p>
+      </nav>
+    </main>
+
+    <footer>
+      <hr />
       <p>
-        Kemampuan Frontend Developer Anda sudah kuat.
+        <a href="login.html">Keluar</a>
       </p>
-    </section>
-
-    <hr>
-
-    <section aria-labelledby="judul-kemampuan">
-      <h2 id="judul-kemampuan">Keunggulan Kemampuan Anda</h2>
-
-      <table>
-        <caption>
-          Rincian kemampuan dan persentase
-        </caption>
-
-        <thead>
-          <tr>
-            <th scope="col">Kemampuan</th>
-            <th scope="col">Tingkat</th>
-            <th scope="col">Indikator</th>
-            <th scope="col">Persentase</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <th scope="row">React</th>
-            <td>Ahli</td>
-            <td>
-              <meter
-                min="0"
-                max="100"
-                value="90"
-                aria-label="Kemampuan React 90 persen"
-              >
-                90%
-              </meter>
-            </td>
-            <td>90%</td>
-          </tr>
-
-          <tr>
-            <th scope="row">JavaScript</th>
-            <td>Mahir</td>
-            <td>
-              <meter
-                min="0"
-                max="100"
-                value="80"
-                aria-label="Kemampuan JavaScript 80 persen"
-              >
-                80%
-              </meter>
-            </td>
-            <td>80%</td>
-          </tr>
-
-          <tr>
-            <th scope="row">HTML</th>
-            <td>Mahir</td>
-            <td>
-              <meter
-                min="0"
-                max="100"
-                value="78"
-                aria-label="Kemampuan HTML 78 persen"
-              >
-                78%
-              </meter>
-            </td>
-            <td>78%</td>
-          </tr>
-
-          <tr>
-            <th scope="row">Git</th>
-            <td>Menengah</td>
-            <td>
-              <meter
-                min="0"
-                max="100"
-                value="66"
-                aria-label="Kemampuan Git 66 persen"
-              >
-                66%
-              </meter>
-            </td>
-            <td>66%</td>
-          </tr>
-
-          <tr>
-            <th scope="row">UI/UX</th>
-            <td>Menengah</td>
-            <td>
-              <meter
-                min="0"
-                max="100"
-                value="60"
-                aria-label="Kemampuan UI UX 60 persen"
-              >
-                60%
-              </meter>
-            </td>
-            <td>60%</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <hr>
-
-    <section aria-labelledby="judul-bukti">
-      <h2 id="judul-bukti">Bukti Proyek</h2>
-
-      <ul>
-        <li>
-          <strong>Portofolio-web</strong>
-          <br>
-          React, CSS
-        </li>
-
-        <li>
-          <strong>e-commerce-app</strong>
-          <br>
-          North.js
-        </li>
-
-        <li>
-          <strong>Dashboard penjualan</strong>
-          <br>
-          Chart.js
-        </li>
-      </ul>
-    </section>
-
-    <hr>
-
-    <section aria-labelledby="judul-rekomendasi">
-      <h2 id="judul-rekomendasi">Rekomendasi</h2>
-
-      <ul>
-        <li>Pertahankan konsistensi di React.</li>
-        <li>Tingkatkan kemampuan di TypeScript.</li>
-        <li>Pelajari testing dan CI/CD.</li>
-      </ul>
-    </section>
-
-    <hr>
-
-    <nav aria-label="Navigasi hasil analisis">
-
-      <!-- Ganti tujuan ini jika halaman selanjutnya bukan dashboard. -->
-      <p>
-        <a href="dashboard.html">Lanjutkan →</a>
-      </p>
-    </nav>
-  </main>
-
-  <footer>
-    <hr>
-    <p>
-      <a href="login.html">Keluar</a>
-    </p>
-  </footer>
-</body>
+    </footer>
+  </body>
 </html>

@@ -1,135 +1,169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar - BUKTIVA</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar - BUKTIVA</title>
-</head>
-
-<body>
-
-  <header>
-    <nav aria-label="Navigasi pendaftaran">
-      <a href="index_beranda.html">
-        <img src="./assets/images/logo-icon.svg" alt="Logo BUKTIVA" width="48">
-        <strong>BUKTIVA</strong>
-      </a>
-    </nav>
-  </header>
-
-  <main>
-    <section aria-labelledby="register-title">
-      <div>
-        <h1>Bergabung<br>di Buktiva Sekarang</h1>
-
-        <p>
-          Buat akun dan mulai perjalanan kariermu bersama proyek-proyek nyata.
-        </p>
-
-        <ul>
-          <li>Gratis dan mudah dibuat</li>
-          <li>Akses ke semua fitur</li>
-          <li>Dukungan penuh dari tim kami</li>
-          <li>Mulai bangun portofolio professional</li>
-        </ul>
-
-        <figure>
+  <body>
+    <header>
+      <nav aria-label="Navigasi pendaftaran">
+        <a href="index_beranda.html">
           <img
-            src="./assets/images/register-illustration.png"
-            alt="Ilustrasi pengguna mengembangkan proyek dan portofolio profesional"
-            width="500">
-        </figure>
-      </div>
+            src="./assets/images/logo-icon.svg"
+            alt="Logo BUKTIVA"
+            width="48"
+          />
+          <strong>BUKTIVA</strong>
+        </a>
+      </nav>
+    </header>
 
-      <article>
-        <h2 id="register-title">Daftar ke Buktiva</h2>
-        <p>Buat akun baru dan mulai bergabung bersama kami.</p>
+    <main>
+      <section aria-labelledby="register-title">
+        <div>
+          <h1>Bergabung<br />di Buktiva Sekarang</h1>
 
-        <form action="#" method="post">
-          <fieldset>
-            <legend>Informasi akun</legend>
+          <p>
+            Buat akun dan mulai perjalanan kariermu bersama proyek-proyek nyata.
+          </p>
 
-            <p>
-              <label for="nama-lengkap"><strong>Nama Lengkap</strong></label><br>
-              <img src="./assets/images/name-icon.png" alt="" width="28">
-              <input
-                type="text"
-                id="nama-lengkap"
-                name="nama_lengkap"
-                placeholder="Masukkan nama lengkap Anda."
-                autocomplete="name"
-                required>
-            </p>
+          <ul>
+            <li>Gratis dan mudah dibuat</li>
+            <li>Akses ke semua fitur</li>
+            <li>Dukungan penuh dari tim kami</li>
+            <li>Mulai bangun portofolio professional</li>
+          </ul>
 
-            <p>
-              <label for="email-daftar"><strong>Email</strong></label><br>
-              <img src="./assets/images/email-icon-register.png" alt="" width="28">
-              <input
-                type="email"
-                id="email-daftar"
-                name="email"
-                placeholder="Masukkan alamat email Anda."
-                autocomplete="email"
-                required>
-            </p>
+          <figure>
+            <img
+              src="./assets/images/register-illustration.png"
+              alt="Ilustrasi pengguna mengembangkan proyek dan portofolio profesional"
+              width="500"
+            />
+          </figure>
+        </div>
 
-            <p>
-              <label for="kata-sandi"><strong>Kata Sandi</strong></label><br>
-              <img src="./assets/images/password-icon-register.png" alt="" width="28">
-              <input
-                type="password"
-                id="kata-sandi"
-                name="password"
-                placeholder="Masukkan kata sandi minimal 8 karakter."
-                minlength="8"
-                autocomplete="new-password"
-                required>
-            </p>
+        <article>
+          <h2 id="register-title">Daftar ke Buktiva</h2>
+          <p>Buat akun baru dan mulai bergabung bersama kami.</p>
 
-            <p>
-              <label for="konfirmasi-kata-sandi"><strong>Konfirmasi Kata Sandi</strong></label><br>
-              <img src="./assets/images/password-icon-register.png" alt="" width="28">
-              <input
-                type="password"
-                id="konfirmasi-kata-sandi"
-                name="password_confirmation"
-                placeholder="Masukkan ulang kata sandi yang sudah Anda buat."
-                minlength="8"
-                autocomplete="new-password"
-                required>
-            </p>
+          <form action="./dashboard.html" method="post">
+            <fieldset>
+              <legend>Informasi akun</legend>
 
-            <p>
-              <button type="submit">DAFTAR</button>
-            </p>
-          </fieldset>
-        </form>
+              <p>
+                <label for="nama-lengkap"><strong>Nama Lengkap</strong></label
+                ><br />
+                <img src="./assets/images/name-icon.png" alt="" width="28" />
+                <input
+                  type="text"
+                  id="nama-lengkap"
+                  name="nama_lengkap"
+                  placeholder="Masukkan nama lengkap Anda."
+                  autocomplete="name"
+                  required
+                />
+              </p>
 
-        <p>atau</p>
+              <p>
+                <label for="email-daftar"><strong>Email</strong></label
+                ><br />
+                <img
+                  src="./assets/images/email-icon-register.png"
+                  alt=""
+                  width="28"
+                />
+                <input
+                  type="email"
+                  id="email-daftar"
+                  name="email"
+                  placeholder="Masukkan alamat email Anda."
+                  autocomplete="email"
+                  required
+                />
+              </p>
 
-        <p>
-          <button type="button">
-            <img src="./assets/images/google-icon-register.png" alt="" width="28">
-            Daftar dengan Google
-          </button>
-        </p>
+              <p>
+                <label for="kata-sandi"><strong>Kata Sandi</strong></label
+                ><br />
+                <img
+                  src="./assets/images/password-icon-register.png"
+                  alt=""
+                  width="28"
+                />
+                <input
+                  type="password"
+                  id="kata-sandi"
+                  name="password"
+                  placeholder="Masukkan kata sandi minimal 8 karakter."
+                  minlength="8"
+                  autocomplete="new-password"
+                  required
+                />
+              </p>
 
-        <p>
-          Sudah punya akun?
-          <a href="index_login.html">Masuk di sini.</a>
-        </p>
-      </article>
-    </section>
+              <p>
+                <label for="konfirmasi-kata-sandi"
+                  ><strong>Konfirmasi Kata Sandi</strong></label
+                ><br />
+                <img
+                  src="./assets/images/password-icon-register.png"
+                  alt=""
+                  width="28"
+                />
+                <input
+                  type="password"
+                  id="konfirmasi-kata-sandi"
+                  name="password_confirmation"
+                  placeholder="Masukkan ulang kata sandi yang sudah Anda buat."
+                  minlength="8"
+                  autocomplete="new-password"
+                  required
+                />
+              </p>
 
-    <p>
-      <a href="index_beranda.html">
-        <img src="./assets/images/back-arrow-register.svg" alt="" width="32">
-        Kembali ke Beranda
-      </a>
-    </p>
-  </main>
+              <button
+                type="submit"
+                formaction="dashboard.html"
+                formmethod="get"
+              >
+                Daftar
+              </button>
+            </fieldset>
+          </form>
 
-</body>
+          <p>atau</p>
 
+          <p>
+            <button type="button">
+              <img
+                src="./assets/images/google-icon-register.png"
+                alt=""
+                width="28"
+              />
+              Daftar dengan Google
+            </button>
+          </p>
+
+          <p>
+            Sudah punya akun?
+            <a href="index_login.html">Masuk di sini.</a>
+          </p>
+        </article>
+      </section>
+
+      <p>
+        <a href="index_beranda.html">
+          <img
+            src="./assets/images/back-arrow-register.svg"
+            alt=""
+            width="32"
+          />
+          Kembali ke Beranda
+        </a>
+      </p>
+    </main>
+  </body>
 </html>
