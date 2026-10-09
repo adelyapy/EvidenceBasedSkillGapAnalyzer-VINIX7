@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Riwayat hasil analisis proyek dan kecocokan keterampilan pengguna BUKTIVA."
+    />
+    <title>Riwayat Analisis - BUKTIVA</title>
+  </head>
+  <body>
+    <header>
+      <p>
+        <a href="index_beranda.html">
+          <img
+            src="./assets/images/logo-icon.svg"
+            width="60"
+            height="68"
+            alt="Logo BUKTIVA"
+          />
+          <strong>BUKTIVA</strong>
+        </a>
+      </p>
+
+      <p>
+        <img
+          src="./assets/images/ikon-notifikasi.svg"
+          alt="Notifikasi"
+          width="28"
+          height="28"
+        />
+      </p>
+      <details>
+        <summary>
+          <img
+            src="./assets/images/adelya-putri-yunita.png"
+            width="50"
+            alt="Foto profil Adelya"
+          />
+
+          <strong>Adelya</strong>
+          <small>Mahasiswa</small>
+        </summary>
+
+        <nav aria-label="Menu profil pengguna">
+          <ul>
+            <li>
+              <a href="index_profile.html"> Profile Saya </a>
+            </li>
+
+            <li>
+              <a href="index_login.html"> Keluar </a>
+            </li>
+          </ul>
+        </nav>
+      </details>
+    </header>
+
+    <nav aria-label="Navigasi utama BUKTIVA">
+      <ul>
+        <li><a href="dashboard.html" aria-current="page">Dashboard</a></li>
+        <li><a href="analisa-baru.html">Analisa Baru</a></li>
+        <li><a href="riwayat-analis-dummy.html">Riwayat Analisis</a></li>
+        <li><a href="index_profile.html">Profile</a></li>
+      </ul>
+    </nav>
+
+    <main id="konten-utama">
+      <h1>Riwayat <span>Analisis</span></h1>
+
+      <section aria-labelledby="ringkasan-heading">
+        <h2 id="ringkasan-heading">Ringkasan Analisis</h2>
+        <dl>
+          <div>
+            <dt>
+              <img
+                src="./assets/images/stat-total-analisis.svg"
+                alt=""
+                width="48"
+                height="48"
+              />
+              Total Analisis
+            </dt>
+            <dd><strong>4</strong> proyek telah dianalisis</dd>
+          </div>
+          <div>
+            <dt>
+              <img
+                src="./assets/images/stat-rata-rata.svg"
+                alt=""
+                width="48"
+                height="48"
+              />
+              Rata-rata Skill Match
+            </dt>
+            <dd><strong>70%</strong> dari semua analisis (dibulatkan)</dd>
+          </div>
+          <div>
+            <dt>
+              <img
+                src="./assets/images/stat-role.svg"
+                alt=""
+                width="48"
+                height="48"
+              />
+              Role Terbanyak
+            </dt>
+            <dd>
+              <strong>Tidak ada role dominan</strong> (masing-masing dipilih 1
+              kali)
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section aria-labelledby="pencarian-heading">
+        <h2 id="pencarian-heading">Cari dan atur riwayat</h2>
+        <form action="riwayat-analisis.html" method="get" role="search">
+          <p>
+            <label for="pencarian-riwayat">
+              <img
+                src="./assets/images/cari.svg"
+                alt=""
+                width="24"
+                height="24"
+              />
+              Cari riwayat analisis
+            </label>
+            <input
+              type="search"
+              id="pencarian-riwayat"
+              name="cari"
+              placeholder="Cari nama proyek atau posisi target..."
+            />
+          </p>
+          <p>
+            <label for="filter-role">
+              <img
+                src="./assets/images/filter.svg"
+                alt=""
+                width="24"
+                height="24"
+              />
+              Filter berdasarkan target role
+            </label>
+            <select id="filter-role" name="role">
+              <option value="">Semua role</option>
+              <option value="frontend">Frontend Developer</option>
+              <option value="fullstack">Full Stack Developer</option>
+              <option value="data">Data Analyst</option>
+              <option value="mobile">Mobile Developer</option>
+            </select>
+          </p>
+          <p>
+            <label for="urutkan-riwayat">
+              <img
+                src="./assets/images/urutkan.svg"
+                alt=""
+                width="24"
+                height="24"
+              />
+              Urutkan
+            </label>
+            <select id="urutkan-riwayat" name="urut">
+              <option value="terlama">Tanggal terlama</option>
+              <option value="terbaru">Tanggal terbaru</option>
+              <option value="tertinggi">Skill Match tertinggi</option>
+              <option value="terendah">Skill Match terendah</option>
+            </select>
+            <button type="submit">Terapkan</button>
+            <button type="reset">Reset isian</button>
+          </p>
+        </form>
+        <details>
+          <summary>
+            <img
+              src="./assets/images/bantuan.svg"
+              alt=""
+              width="20"
+              height="20"
+            />
+            Bantuan
+          </summary>
+          <p>
+            Kamu dapat melihat nama proyek, target role, tanggal, persentase
+            kecocokan keterampilan, dan status analisis. Gunakan tautan Lihat
+            Detail untuk membuka hasil analisis.
+          </p>
+          <p>
+            Pencarian, filter, dan pengurutan pada contoh HTML statis ini
+            memerlukan backend atau JavaScript agar hasilnya dapat berubah.
+          </p>
+        </details>
+      </section>
+
+      <section aria-labelledby="daftar-heading">
+        <h2 id="daftar-heading">Daftar Riwayat Analisis</h2>
+        <p>Menampilkan 4 analisis yang telah selesai.</p>
+        <ol>
+          <li>
+            <article aria-labelledby="riwayat-1">
+              <h3 id="riwayat-1">
+                <img
+                  src="./assets/images/proyek-portofolio.svg"
+                  alt=""
+                  width="64"
+                  height="64"
+                />
+                Website Portofolio
+              </h3>
+              <p>Target role: <strong>Frontend Developer</strong></p>
+              <p>Teknologi: HTML, CSS, JavaScript, React</p>
+              <p>
+                <img
+                  src="./assets/images/kalender.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                Tanggal Analisis:
+                <time datetime="2026-08-12">12 Agustus 2026</time>
+              </p>
+              <figure>
+                <img
+                  src="./assets/images/skill-match-79.svg"
+                  alt="Skill Match 79 persen"
+                  width="64"
+                  height="64"
+                />
+                <figcaption>Skill Match</figcaption>
+              </figure>
+              <p>
+                <img
+                  src="./assets/images/status-selesai.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                <strong>Status: Selesai</strong>
+              </p>
+              <p>
+                <a href="hasil-analisis.html">
+                  Lihat Detail
+                  <img
+                    src="./assets/images/panah-detail.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                  />
+                </a>
+              </p>
+            </article>
+          </li>
+          <li>
+            <article aria-labelledby="riwayat-2">
+              <h3 id="riwayat-2">
+                <img
+                  src="./assets/images/proyek-ecommerce.svg"
+                  alt=""
+                  width="64"
+                  height="64"
+                />
+                Platform E-commerce
+              </h3>
+              <p>Target role: <strong>Full Stack Developer</strong></p>
+              <p>Teknologi: React, Node.js, MongoDB, Express</p>
+              <p>
+                <img
+                  src="./assets/images/kalender.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                Tanggal Analisis:
+                <time datetime="2026-08-29">29 Agustus 2026</time>
+              </p>
+              <figure>
+                <img
+                  src="./assets/images/skill-match-60.svg"
+                  alt="Skill Match 60 persen"
+                  width="64"
+                  height="64"
+                />
+                <figcaption>Skill Match</figcaption>
+              </figure>
+              <p>
+                <img
+                  src="./assets/images/status-selesai.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                <strong>Status: Selesai</strong>
+              </p>
+              <p>
+                <a href="hasil-analisis.html">
+                  Lihat Detail
+                  <img
+                    src="./assets/images/panah-detail.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                  />
+                </a>
+              </p>
+            </article>
+          </li>
+          <li>
+            <article aria-labelledby="riwayat-3">
+              <h3 id="riwayat-3">
+                <img
+                  src="./assets/images/proyek-penjualan.svg"
+                  alt=""
+                  width="64"
+                  height="64"
+                />
+                Dashboard Penjualan
+              </h3>
+              <p>Target role: <strong>Data Analyst</strong></p>
+              <p>Teknologi: Python, Pandas, SQL, Tableau</p>
+              <p>
+                <img
+                  src="./assets/images/kalender.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                Tanggal Analisis:
+                <time datetime="2026-09-03">3 September 2026</time>
+              </p>
+              <figure>
+                <img
+                  src="./assets/images/skill-match-72.svg"
+                  alt="Skill Match 72 persen"
+                  width="64"
+                  height="64"
+                />
+                <figcaption>Skill Match</figcaption>
+              </figure>
+              <p>
+                <img
+                  src="./assets/images/status-selesai.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                <strong>Status: Selesai</strong>
+              </p>
+              <p>
+                <a href="hasil-analisis.html">
+                  Lihat Detail
+                  <img
+                    src="./assets/images/panah-detail.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                  />
+                </a>
+              </p>
+            </article>
+          </li>
+          <li>
+            <article aria-labelledby="riwayat-4">
+              <h3 id="riwayat-4">
+                <img
+                  src="./assets/images/proyek-mobile.svg"
+                  alt=""
+                  width="64"
+                  height="64"
+                />
+                Aplikasi Belajar Mobile
+              </h3>
+              <p>Target role: <strong>Mobile Developer</strong></p>
+              <p>Teknologi: Flutter, Dart, Firebase, Figma</p>
+              <p>
+                <img
+                  src="./assets/images/kalender.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                Tanggal Analisis:
+                <time datetime="2026-09-14">14 September 2026</time>
+              </p>
+              <figure>
+                <img
+                  src="./assets/images/skill-match-68.svg"
+                  alt="Skill Match 68 persen"
+                  width="64"
+                  height="64"
+                />
+                <figcaption>Skill Match</figcaption>
+              </figure>
+              <p>
+                <img
+                  src="./assets/images/status-selesai.svg"
+                  alt=""
+                  width="22"
+                  height="22"
+                />
+                <strong>Status: Selesai</strong>
+              </p>
+              <p>
+                <a href="hasil-analisis.html">
+                  Lihat Detail
+                  <img
+                    src="./assets/images/panah-detail.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                  />
+                </a>
+              </p>
+            </article>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <p>BUKTIVA - From Projects to Progress</p>
+    </footer>
+  </body>
+</html>
