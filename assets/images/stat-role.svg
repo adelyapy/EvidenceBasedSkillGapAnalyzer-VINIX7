@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Ikon peran terbanyak</title>
+  <rect x="3" y="3" width="58" height="58" rx="11" fill="#DAFAEF"/>
+  <g fill="none" stroke="#101820" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="32" cy="19" r="9" fill="#9FDBFF"/><circle cx="14" cy="27" r="6"/><circle cx="50" cy="27" r="6"/><path d="M17 52V45c0-10 6-16 15-16s15 6 15 16v7ZM6 50V44c0-7 5-10 10-10h5M58 50v-6c0-7-5-10-10-10h-5"/>
+</g>
+</svg>

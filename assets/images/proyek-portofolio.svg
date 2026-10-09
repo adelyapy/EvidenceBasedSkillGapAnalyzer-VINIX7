@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Proyek website portofolio</title>
+  <rect width="64" height="64" rx="12" fill="#A8DDFB"/>
+  <g fill="none" stroke="#101820" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+<rect x="12" y="15" width="40" height="29" rx="3" fill="#096BEA"/><path d="M7 50h50l-5 7H12Z" fill="#FFF"/><path d="M18 40h28" stroke="#FFF"/>
+</g>
+</svg>
