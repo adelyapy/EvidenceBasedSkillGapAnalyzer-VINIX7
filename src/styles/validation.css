@@ -1,0 +1,48 @@
+.validation-page { width: 100%; max-width: 1050px; min-width: 0; margin-inline: auto; color: #111; }
+.validation-page * { box-sizing: border-box; }
+.validation-content { width: 100%; max-width: 900px; padding: 0 12px 36px; }
+.validation-intro h1 { margin: 0; font-size: 28px; font-weight: 700; line-height: 1.25; letter-spacing: -.7px; }
+.validation-intro p { max-width: 420px; margin: 2px 0 0; font-size: 13px; line-height: 1.4; }
+.validation-progress-section { margin: 20px 0 15px 6px; }
+.validation-progress-label { margin-bottom: 7px; font-size: 12px; font-weight: 600; }
+.validation-progress-track { width: 60%; max-width: 348px; height: 18px; overflow: hidden; border-radius: 50px; background: #cce3e0; }
+.validation-progress-fill { height: 100%; border-radius: 50px; background: #356da2; transition: width .35s ease-in-out; }
+.validation-workspace { padding: 0 4px 0 6px; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(190px, 1fr); align-items: start; gap: 12px; }
+.validation-form { min-width: 0; }
+.validation-question-card { min-height: 286px; padding: 11px; border: 1px solid #c6ced4; border-radius: 6px; }
+.validation-question-text { min-height: 40px; margin-bottom: 7px; display: block; font-size: 13px; line-height: 1.35; font-weight: 600; }
+.validation-textarea-wrap { position: relative; }
+.validation-textarea-wrap textarea { width: 100%; height: 213px; padding: 11px 10px 30px; display: block; resize: vertical; border: 1px solid #c6ced4; border-radius: 6px; outline: none; background: transparent; color: #222; font: inherit; font-size: 13px; line-height: 1.6; }
+.validation-textarea-wrap textarea:focus { border-color: #3a78b4; box-shadow: 0 0 0 2px #3a78b426; }
+.validation-textarea-wrap textarea::placeholder { color: #aeb6c0; }
+.validation-character-count { position: absolute; right: 12px; bottom: 8px; color: #aeb6c0; font-size: 12px; font-weight: 600; pointer-events: none; }
+.validation-tips { min-height: 309px; padding: 15px 20px; border: 1px solid #c6ced4; border-radius: 7px; }
+.validation-tips h2 { margin: 0 0 7px; display: flex; align-items: flex-start; gap: 8px; font-size: 15px; font-weight: 700; line-height: 1.2; }
+.validation-tips-icon { width: 19px; height: 19px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #222; border-radius: 50%; font-size: 12px; font-weight: 700; }
+.validation-tips ul { margin: 0; padding: 0; list-style: none; }
+.validation-tips li { position: relative; margin-bottom: 8px; padding-left: 24px; font-size: 13px; font-weight: 500; line-height: 1.4; }
+.validation-tips li::before { content: "✓"; position: absolute; left: 2px; top: 0; font-size: 15px; }
+.validation-buttons { margin-top: 15px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.validation-next { min-width: 125px; min-height: 34px; padding: 7px 13px; display: flex; align-items: center; justify-content: center; gap: 13px; border: 1px solid #527394; border-radius: 5px; background: #2d5279; color: #fff; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+.validation-next:hover { background: #1d4369; }
+.validation-page .validation-next:disabled { cursor: not-allowed; opacity: .6; }
+.validation-back { padding: 7px 10px; border: 1px solid #2d5279; border-radius: 5px; color: #2d5279; text-decoration: none; font-size: 12px; font-weight: 600; }
+.validation-back:hover { background: #e1eaf5; }
+.validation-error { margin: 8px 0; color: #bc3030; font-size: 12px; }
+
+@media (max-width: 760px) {
+  .validation-content { max-width: none; padding-inline: 2px; }
+  .validation-workspace { grid-template-columns: minmax(0, 1fr); padding-inline: 0; }
+  .validation-tips { min-height: 0; }
+  .validation-progress-track { width: 100%; }
+  .validation-intro h1 { font-size: 24px; }
+}
+
+@media (max-width: 420px) {
+  .validation-content { padding-bottom: 30px; }
+  .validation-question-text { min-height: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .validation-progress-fill { transition: none; }
+}

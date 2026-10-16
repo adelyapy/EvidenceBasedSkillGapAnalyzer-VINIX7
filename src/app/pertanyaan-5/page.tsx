@@ -1,5 +1,6 @@
-import ValidationPage from "../../components/validation/ValidationPage";
+import { redirect } from "next/navigation";
+import { analysisRoutes } from "@/data/analysis";
 
-export default function Page() {
-  return <ValidationPage step={5} />;
+export default function LegacyQuestionFiveRoute() {
+  redirect(analysisRoutes.question(5));
 }
