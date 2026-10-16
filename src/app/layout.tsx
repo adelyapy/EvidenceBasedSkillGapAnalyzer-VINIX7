@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BUKTIVA — Evidence-Based Skill Gap Analyzer",
-  description: "Analisis kompetensi dari proyek nyata, identifikasi skill gap, dan roadmap karier dengan BUKTIVA.",
+  title: "BUKTIVA - Evidence-Based Skill Gap Analyzer",
+  description:
+    "Analisis kompetensi dari proyek nyata, identifikasi skill gap, dan roadmap karier dengan BUKTIVA.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
