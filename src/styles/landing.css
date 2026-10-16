@@ -1,0 +1,232 @@
+/* BUKTIVA standalone styles. Imported directly in page.tsx. */
+.bk-landing {
+  --blue: #28537e;
+  --cream: #f2efe7;
+  --lightblue: #aacbd4;
+  --card: #f1f5f7;
+  background: var(--cream);
+  color: #080b0d;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  min-height: 100vh;
+}
+.bk-landing * { box-sizing: border-box; }
+.bk-landing a { text-decoration: none; }
+.bk-landing img { max-width: 100%; }
+.bk-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 34px 4.4% 6px;
+  pointer-events: none;
+}
+.bk-navbar {
+  width: 100%;
+  max-width: 1330px;
+  margin-inline: auto;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 13px 25px;
+  border-radius: 12px;
+  background: #f1f5f7;
+  border: 1px solid #c0d8e1;
+  box-shadow: 0 2px 6px #4385a055;
+  pointer-events: auto;
+}
+.bk-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #090b0c;
+  font-size: clamp(1.05rem, 1.9vw, 1.45rem);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.bk-brand img { flex-shrink: 0; }
+.bk-navLinks { display: flex; align-items: center; gap: clamp(8px, 2vw, 34px); }
+.bk-navLink, .bk-activeNav {
+  color: #0a0d10;
+  font-size: .88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 8px 11px;
+  border-radius: 24px;
+}
+.bk-activeNav { background: #aac8f0; }
+.bk-navLink:hover { background: #d7e7f5; }
+.bk-navActions { display: flex; gap: 15px; align-items: center; flex-shrink: 0; }
+.bk-loginButton, .bk-registerButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 110px;
+  height: 38px;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 700;
+}
+.bk-loginButton { background: #e3f3fb; color: #276397; border: 1.5px solid #2867a5; }
+.bk-registerButton { background: var(--blue); color: white; border: 1px solid #4783b7; }
+.bk-loginButton:hover, .bk-registerButton:hover, .bk-primaryButton:hover { filter: brightness(.94); }
+.bk-section { max-width: 1420px; padding-inline: 5%; margin: 0 auto; scroll-margin-top: 145px; }
+.bk-hero {
+  min-height: calc(100vh - 118px);
+  padding-top: 55px;
+  padding-bottom: 70px;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 28px;
+  align-items: center;
+}
+.bk-heroCopy { position: relative; z-index: 1; }
+.bk-pill {
+  width: fit-content;
+  display: inline-block;
+  background: var(--lightblue);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: clamp(.85rem,1.45vw,1.1rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.bk-hero h1 {
+  margin-top: 22px;
+  font-size: clamp(3rem, 5.7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.24;
+  letter-spacing: -.048em;
+  text-shadow: 2px 4px 1px #00000015;
+}
+.bk-heroDescription { margin: 15px 0 23px; font-size: clamp(1rem, 1.65vw, 1.35rem); line-height: 1.4; max-width: 620px; }
+.bk-primaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--blue);
+  border: 1px solid #567391;
+  box-shadow: 0 2px 3px #0004;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: .93rem;
+  font-weight: 600;
+  color: white;
+}
+.bk-primaryButton span { font-size: 1.8rem; font-weight: 400; line-height: .7; }
+.bk-heroVisual { align-self: center; display: flex; justify-content: center; }
+.bk-heroVisual img { width: 100%; height: auto; object-fit: contain; }
+.bk-about { padding-top: 70px; padding-bottom: 75px; }
+.bk-aboutTop { display: grid; grid-template-columns: 1fr 1.06fr; align-items: center; gap: 25px; }
+.bk-aboutVisual img { width: 100%; height: auto; mix-blend-mode: multiply; }
+.bk-aboutCopy { text-align: right; }
+.bk-aboutCopy .bk-pill { margin-left: auto; }
+.bk-aboutCopy h2, .bk-teamCopy h2 {
+  font-size: clamp(2.45rem, 4.8vw, 4.65rem);
+  line-height: 1.22;
+  letter-spacing: -.045em;
+  font-weight: 800;
+  margin: 20px 0 14px;
+  text-shadow: 2px 4px 1px #00000015;
+}
+.bk-aboutCopy > p:last-child, .bk-teamCopy > p:last-child { font-size: 1.05rem; line-height: 1.35; max-width: 650px; margin-left: auto; }
+.bk-benefitGrid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; max-width: 1100px; margin: 35px auto 0; }
+.bk-benefitCard, .bk-stepCard, .bk-memberCard {
+  background: #f3f6f8;
+  border: 1px solid #bac9d4;
+  border-radius: 8px;
+}
+.bk-benefitCard { min-height: 155px; padding: 12px 14px; }
+.bk-benefitTitle { display: flex; gap: 8px; align-items: center; }
+.bk-benefitTitle img { width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; }
+.bk-benefitCard h3 { font-size: .9rem; font-weight: 600; line-height: 1.3; }
+.bk-benefitCard > p { font-size: .79rem; line-height: 1.35; text-align: center; color: #434343; margin: 10px 0 0; }
+.bk-howItWorks { padding-top: 95px; padding-bottom: 115px; }
+.bk-sectionCenterTitle { text-align: center; max-width: 760px; margin: 0 auto; }
+.bk-sectionCenterTitle h2 { font-size: clamp(2.3rem,4.6vw,4.3rem); line-height: 1.15; font-weight: 800; letter-spacing: -.04em; margin: 20px auto; }
+.bk-sectionCenterTitle > p:last-child { font-size: 1.06rem; line-height: 1.5; }
+.bk-stepGrid { display: grid; grid-template-columns: repeat(4,1fr); gap: 19px; list-style: none; padding: 0; margin: 50px 0 0; }
+.bk-stepCard { padding: 20px 20px 28px; position: relative; text-align: center; }
+.bk-stepNumber { position: absolute; top: -15px; left: 18px; background: #aac8f0; border-radius: 999px; font-weight: 800; font-size: .85rem; padding: 7px 12px; }
+.bk-stepIllustration { height: 185px; display: flex; justify-content: center; align-items: center; }
+.bk-stepIllustration img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.bk-stepCard h3 { font-size: 1.07rem; font-weight: 700; margin: 15px 0 12px; }
+.bk-stepCard p { font-size: .9rem; line-height: 1.5; color: #424a50; }
+.bk-team { padding-top: 70px; padding-bottom: 45px; }
+.bk-teamIntro { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 18px; }
+.bk-teamVisual img { width: 100%; height: auto; }
+.bk-teamCopy { text-align: right; }
+.bk-teamCopy .bk-pill { margin-left: auto; }
+.bk-teamCopy h2 { font-size: clamp(2.2rem,4.1vw,4rem); }
+.bk-teamGrid { display: grid; grid-template-columns: repeat(5,1fr); gap: 13px; margin-top: 12px; }
+.bk-memberCard { padding: 14px 12px 12px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.bk-portrait { width: 100%; height: 120px; display: flex; justify-content: center; align-items: end; overflow: hidden; }
+.bk-portrait img { height: 100%; width: 100%; object-fit: contain; object-position: center bottom; }
+.bk-memberCard h3 { font-size: .99rem; line-height: 1.25; font-weight: 700; margin-top: 8px; }
+.bk-role { background: #d0e0f6; color: #2b6198; font-size: .72rem; font-weight: 600; border-radius: 999px; padding: 1px 11px; margin: 5px auto; }
+.bk-memberDescription { font-size: .73rem; line-height: 1.35; color: #4a4a4a; margin: 3px 0 9px; flex-grow: 1; }
+.bk-socialLinks { display: flex; gap: 17px; align-items: center; margin-top: auto; }
+.bk-socialLinks a { display: inline-flex; justify-content: center; align-items: center; width: 27px; height: 27px; font-weight: 800; font-size: 1.05rem; }
+.bk-socialLinks a:first-child { color: white; background: #0879c4; border-radius: 3px; }
+.bk-socialLinks a:last-child { color: #090909; }
+.bk-footer { background: #e5f4fb; border-top: 1px solid #a8bfce; margin-top: 15px; padding: 32px 5% 12px; }
+.bk-footerInner { max-width: 1350px; margin: auto; display: grid; grid-template-columns: 1.25fr .55fr .88fr .95fr; gap: 25px; }
+.bk-footerBrand > p { margin: 18px 0; max-width: 315px; font-size: .85rem; line-height: 1.6; }
+.bk-footerGroup { display: flex; flex-direction: column; gap: 9px; }
+.bk-footerGroup h2 { font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; }
+.bk-footerGroup > a, .bk-footerGroup > span { font-size: .82rem; color: #172536; }
+.bk-footerArt img { width: 100%; height: auto; }
+.bk-copyright { text-align: center; border-top: 1px solid #c0dae7; padding: 13px 0 0; margin: 14px auto 0; font-size: .77rem; }
+@media (max-width: 1150px) {
+  .bk-navbar { gap: 10px; padding-inline: 20px; }
+  .bk-navLinks { gap: 10px; }
+  .bk-navLink, .bk-activeNav { font-size: .83rem; padding-inline: 9px; }
+  .bk-loginButton, .bk-registerButton { min-width: 105px; }
+  .bk-hero h1 { font-size: clamp(3rem,6vw,4.4rem); }
+  .bk-benefitGrid { max-width: 830px; }
+  .bk-footerInner { grid-template-columns: 1.3fr .65fr 1fr; }
+  .bk-footerArt { display: none; }
+}
+@media (max-width: 880px) {
+  .bk-header { padding: 15px 3% 5px; }
+  .bk-navbar { flex-wrap: wrap; padding: 10px 15px; }
+  .bk-navLinks { order: 3; width: 100%; overflow-x: auto; justify-content: space-between; padding-top: 6px; gap: 5px; }
+  .bk-navActions { margin-left: auto; }
+  .bk-section { padding-inline: 5%; scroll-margin-top: 150px; }
+  .bk-hero { min-height: auto; padding-top: 60px; padding-bottom: 90px; }
+  .bk-hero h1 { font-size: clamp(2.55rem,6vw,4.5rem); }
+  .bk-aboutTop, .bk-teamIntro { gap: 12px; }
+  .bk-benefitGrid, .bk-stepGrid { grid-template-columns: repeat(2,1fr); }
+  .bk-teamGrid { grid-template-columns: repeat(3,1fr); }
+}
+@media (max-width: 620px) {
+  .bk-brand { font-size: 1.1rem; }
+  .bk-brand img { width: 32px; height: 32px; }
+  .bk-navActions { gap: 7px; }
+  .bk-loginButton,.bk-registerButton { min-width: 68px; height: 34px; font-size: .75rem; }
+  .bk-navLink,.bk-activeNav { font-size: .73rem; padding: 6px 7px; }
+  .bk-hero { grid-template-columns: 1fr; gap: 20px; padding-top: 43px; }
+  .bk-hero h1 { font-size: clamp(2.4rem,10vw,4rem); line-height: 1.2; }
+  .bk-heroDescription { font-size: 1rem; }
+  .bk-heroVisual { order: 2; }
+  .bk-aboutTop,.bk-teamIntro { grid-template-columns: 1fr; }
+  .bk-aboutCopy,.bk-teamCopy { text-align: center; }
+  .bk-aboutCopy .bk-pill,.bk-teamCopy .bk-pill { margin: 0 auto; }
+  .bk-aboutCopy > p:last-child, .bk-teamCopy > p:last-child { margin: 0 auto; }
+  .bk-aboutCopy h2,.bk-teamCopy h2 { font-size: 2.4rem; }
+  .bk-aboutVisual,.bk-teamVisual { max-width: 470px; margin: auto; }
+  .bk-teamCopy { order: -1; }
+  .bk-benefitGrid { gap: 11px; }
+  .bk-benefitCard { padding: 10px; }
+  .bk-benefitTitle { flex-direction: column; text-align: center; }
+  .bk-stepGrid { grid-template-columns: 1fr; max-width: 370px; margin-inline: auto; }
+  .bk-teamGrid { grid-template-columns: repeat(2,1fr); }
+  .bk-footerInner { grid-template-columns: 1fr 1fr; }
+  .bk-footerBrand { grid-column: 1 / -1; }
+}
+@media (max-width: 410px) {
+  .bk-navLinks { justify-content: flex-start; }
+  .bk-teamGrid { grid-template-columns: 1fr; max-width: 290px; margin-inline: auto; }
+  .bk-benefitGrid { grid-template-columns: 1fr; }
+  .bk-footerInner { grid-template-columns: 1fr; }
+}
