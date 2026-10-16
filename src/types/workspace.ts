@@ -4,6 +4,7 @@ export type WorkspaceNavItem = {
   label: string;
   icon: WorkspaceIconName;
   href?: string;
+  activePrefix?: string;
 };
 
 export type WorkspaceUser = {

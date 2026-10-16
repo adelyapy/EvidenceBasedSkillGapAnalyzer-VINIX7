@@ -18,7 +18,7 @@ export default function WorkspaceSidebar({ pathname, collapsed, mobileOpen, onCo
       <aside className={`bkw-sidebar${collapsed ? " bkw-sidebar--collapsed" : ""}${mobileOpen ? " bkw-sidebar--open" : ""}`} aria-label="Navigasi workspace">
         <div className="bkw-sidebarTop">
           <Link className="bkw-brand" href="/" onClick={onClose} aria-label="BUKTIVA, ke beranda">
-            <Image src="/images/logo-icon.svg" alt="" width={44} height={50} />
+            <Image src="/images/logo-icon.svg" alt="" width={44} height={41} style={{ height: "auto" }} />
             <span className="bkw-sidebarLabel">BUKTIVA</span>
           </Link>
           <button className="bkw-collapseButton" onClick={onCollapse} aria-label={collapsed ? "Perlebar sidebar" : "Perkecil sidebar"} aria-expanded={!collapsed}>
@@ -28,7 +28,7 @@ export default function WorkspaceSidebar({ pathname, collapsed, mobileOpen, onCo
         </div>
         <nav className="bkw-nav" aria-label="Navigasi utama BUKTIVA">
           {workspaceNavigation.map((item) => {
-            const active = item.href === pathname;
+            const active = item.activePrefix ? pathname.startsWith(item.activePrefix) : item.href === pathname;
             const content = <><WorkspaceIcon name={item.icon} /><span className="bkw-sidebarLabel">{item.label}</span></>;
             return item.href ? (
               <Link key={item.label} href={item.href} onClick={onClose} className={`bkw-navItem${active ? " bkw-navItem--active" : ""}`} aria-current={active ? "page" : undefined} title={collapsed ? item.label : undefined}>{content}</Link>

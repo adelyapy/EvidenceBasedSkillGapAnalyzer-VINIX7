@@ -1,5 +1,9 @@
 export type QuestionNumber = 1 | 2 | 3 | 4 | 5;
 
+export function isQuestionNumber(value: number): value is QuestionNumber {
+  return Number.isInteger(value) && value >= 1 && value <= 5;
+}
+
 type QuestionData = {
   question: string;
   tips: string[];
