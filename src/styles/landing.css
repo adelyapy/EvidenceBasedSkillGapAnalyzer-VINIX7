@@ -8,13 +8,16 @@
   color: #080b0d;
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
   min-height: 100vh;
+  padding-top: 118px;
 }
 .bk-landing * { box-sizing: border-box; }
 .bk-landing a { text-decoration: none; }
 .bk-landing img { max-width: 100%; }
 .bk-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   padding: 34px 4.4% 6px;
   pointer-events: none;
@@ -188,6 +191,7 @@
   .bk-footerArt { display: none; }
 }
 @media (max-width: 880px) {
+  .bk-landing { padding-top: 130px; }
   .bk-header { padding: 15px 3% 5px; }
   .bk-navbar { flex-wrap: wrap; padding: 10px 15px; }
   .bk-navLinks { order: 3; width: 100%; overflow-x: auto; justify-content: space-between; padding-top: 6px; gap: 5px; }
