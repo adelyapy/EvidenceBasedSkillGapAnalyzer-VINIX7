@@ -1,0 +1,540 @@
+/* ===============================
+   BUKTIVA - VALIDATION PAGE
+================================ */
+
+.validation-shell {
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr);
+  min-height: 100vh;
+  background: #f2efe9;
+  font-family: "Poppins", Arial, sans-serif;
+  color: #111;
+}
+
+.validation-shell * {
+  box-sizing: border-box;
+}
+
+.validation-shell--collapsed {
+  grid-template-columns: 76px minmax(0, 1fr);
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+
+.validation-sidebar {
+  display: flex;
+  flex-direction: column;
+  background: #f2efe9;
+  border-right: 1px solid #cbd0d5;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.validation-brand {
+  height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 19px 0 35px;
+  border-bottom: 1px solid #cbd0d5;
+}
+
+.validation-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.validation-logo strong {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+}
+
+.validation-logo img {
+  object-fit: contain;
+}
+
+.validation-collapse {
+  border: 0;
+  background: transparent;
+  font-size: 23px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #111;
+}
+
+.validation-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px 28px 0 45px;
+}
+
+.validation-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-height: 42px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #111;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.validation-nav-item svg {
+  flex-shrink: 0;
+}
+
+.validation-nav-item:hover {
+  background: #e1e8ef;
+}
+
+.validation-nav-item.active {
+  background: #afc7e9;
+  border-color: #7996b7;
+}
+
+.validation-logout {
+  margin-top: auto;
+  padding: 0 28px 28px 45px;
+}
+
+.validation-shell--collapsed .validation-logo strong,
+.validation-shell--collapsed .validation-nav-item span {
+  display: none;
+}
+
+.validation-shell--collapsed .validation-brand {
+  padding: 0 8px;
+}
+
+.validation-shell--collapsed .validation-navigation,
+.validation-shell--collapsed .validation-logout {
+  padding-left: 13px;
+  padding-right: 13px;
+}
+
+/* ===============================
+   HEADER
+================================ */
+
+.validation-main {
+  min-width: 0;
+}
+
+.validation-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 74px;
+  padding: 0 34px;
+  border-bottom: 1px solid #cbd0d5;
+}
+
+.validation-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.validation-notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.validation-profile {
+  position: relative;
+}
+
+.validation-profile summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.validation-profile summary::-webkit-details-marker {
+  display: none;
+}
+
+.validation-profile summary img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.validation-profile-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.validation-profile-name strong {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.validation-profile-name small {
+  font-size: 8px;
+}
+
+.validation-profile-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  z-index: 10;
+  min-width: 145px;
+  padding: 7px;
+  background: white;
+  border: 1px solid #d3d3d3;
+  border-radius: 7px;
+  box-shadow: 0 5px 15px #00000012;
+}
+
+.validation-profile-menu a {
+  display: block;
+  padding: 8px;
+  color: #111;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.validation-profile-menu a:hover {
+  background: #edf3fc;
+}
+
+/* ===============================
+   MAIN CONTENT
+================================ */
+
+.validation-content {
+  width: 100%;
+  max-width: 900px;
+  padding: 14px 16px 36px;
+}
+
+.validation-intro h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.7px;
+}
+
+.validation-intro p {
+  max-width: 420px;
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ===============================
+   PROGRESS BAR
+================================ */
+
+.validation-progress-section {
+  margin-top: 20px;
+  margin-left: 6px;
+  margin-bottom: 15px;
+}
+
+.validation-progress-label {
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.validation-progress-track {
+  width: 60%;
+  max-width: 348px;
+  height: 18px;
+  overflow: hidden;
+  border-radius: 50px;
+  background: #cce3e0;
+}
+
+.validation-progress-fill {
+  height: 100%;
+  border-radius: 50px;
+  background: #356da2;
+  transition: width 0.35s ease-in-out;
+}
+
+/* ===============================
+   QUESTION + TIPS
+================================ */
+
+.validation-workspace {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.5fr)
+    minmax(190px, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding-left: 6px;
+  padding-right: 4px;
+}
+
+.validation-form {
+  min-width: 0;
+}
+
+.validation-question-card {
+  padding: 11px;
+  border: 1px solid #c6ced4;
+  border-radius: 6px;
+  min-height: 286px;
+}
+
+.validation-question-text {
+  display: block;
+  min-height: 40px;
+  margin-bottom: 7px;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.validation-textarea-wrap {
+  position: relative;
+}
+
+.validation-textarea-wrap textarea {
+  display: block;
+  width: 100%;
+  height: 213px;
+  padding: 11px 10px 30px;
+  background: transparent;
+  border: 1px solid #c6ced4;
+  border-radius: 6px;
+  outline: none;
+  resize: vertical;
+  color: #222;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.validation-textarea-wrap textarea:focus {
+  border-color: #3a78b4;
+  box-shadow: 0 0 0 2px #3a78b426;
+}
+
+.validation-textarea-wrap textarea::placeholder {
+  color: #aeb6c0;
+}
+
+.validation-character-count {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #aeb6c0;
+  pointer-events: none;
+}
+
+/* ===============================
+   TIPS CARD
+================================ */
+
+.validation-tips {
+  min-height: 309px;
+  padding: 15px 20px;
+  border: 1px solid #c6ced4;
+  border-radius: 7px;
+}
+
+.validation-tips h2 {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 7px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.validation-tips-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border: 2px solid #222;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.validation-tips ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.validation-tips li {
+  position: relative;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.validation-tips li::before {
+  position: absolute;
+  left: 2px;
+  top: 0;
+  content: "✓";
+  font-size: 15px;
+  font-weight: 400;
+}
+
+/* ===============================
+   NAVIGATION BUTTONS
+================================ */
+
+.validation-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.validation-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-width: 125px;
+  min-height: 30px;
+  padding: 7px 13px;
+  border: 1px solid #527394;
+  border-radius: 5px;
+  background: #2d5279;
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.validation-next:hover {
+  background: #1d4369;
+}
+
+.validation-next:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.validation-back {
+  color: #2d5279;
+  padding: 7px 10px;
+  border: 1px solid #2d5279;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.validation-back:hover {
+  background: #e1eaf5;
+}
+
+.validation-error {
+  margin: 8px 0;
+  color: #bc3030;
+  font-size: 12px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1000px) {
+  .validation-content {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .validation-shell {
+    grid-template-columns: 70px minmax(0, 1fr);
+  }
+
+  .validation-sidebar {
+    width: 70px;
+  }
+
+  .validation-brand {
+    padding: 0 14px;
+  }
+
+  .validation-logo strong,
+  .validation-collapse,
+  .validation-nav-item span {
+    display: none;
+  }
+
+  .validation-navigation,
+  .validation-logout {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  .validation-nav-item {
+    justify-content: center;
+  }
+
+  .validation-header {
+    padding: 0 16px;
+  }
+
+  .validation-workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .validation-tips {
+    min-height: 0;
+  }
+
+  .validation-progress-track {
+    width: 100%;
+  }
+
+  .validation-intro h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .validation-content {
+    padding: 15px 10px 30px;
+  }
+
+  .validation-profile-name {
+    display: none;
+  }
+
+  .validation-question-text {
+    min-height: auto;
+  }
+}
