@@ -97,6 +97,42 @@
   }
 }
 
+@container dashboard (max-width: 599px) {
+  .analysis-stepper {
+    justify-content: center;
+    min-height: 64px;
+    margin-bottom: 16px;
+  }
+
+  .analysis-step {
+    width: 70px;
+    font-size: 11px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .analysis-step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 17px;
+  }
+
+  .analysis-step-connector {
+    width: 13px;
+    margin-top: 15px;
+  }
+}
+
+@container dashboard (max-width: 330px) {
+  .analysis-step {
+    width: 60px;
+  }
+
+  .analysis-step-connector {
+    width: 8px;
+  }
+}
+
 .analysis-result {
   max-width: 720px;
   padding: 24px;

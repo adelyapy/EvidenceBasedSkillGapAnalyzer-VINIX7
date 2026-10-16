@@ -1,13 +1,9 @@
-import Link from "next/link";
-import { analysisRoutes } from "@/data/analysis";
-import "@/styles/analysis.css";
+import type { Metadata } from "next";
+import AnalysisResultPage from "@/components/analysis/AnalysisResultPage";
+import "@/styles/analysis-result.css";
+
+export const metadata: Metadata = { title: "Hasil Analisis | BUKTIVA" };
 
 export default function WorkspaceAnalysisResultPage() {
-  return (
-    <section className="analysis-result" aria-labelledby="analysis-result-heading">
-      <h1 id="analysis-result-heading">Validasi Selesai</h1>
-      <p>Kelima jawaban berhasil disimpan sementara. Halaman hasil analisis akan dihubungkan dengan backend pada tahap berikutnya.</p>
-      <Link href={analysisRoutes.question(5)}>Kembali ke Pertanyaan 5</Link>
-    </section>
-  );
+  return <AnalysisResultPage />;
 }

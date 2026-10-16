@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from "react";
 import AnalysisStepper from "./AnalysisStepper";
@@ -175,7 +176,7 @@ export default function UploadCvPage() {
       {routeError && <p className="cv-error cv-route-error" role="alert">{routeError}</p>}
 
       <div className="cv-actions">
-        <button className="cv-action cv-action-back" type="button" disabled title="Target Role belum tersedia di Next.js"><UploadIcon name="arrow-left" size={19} /> Kembali</button>
+        <Link className="cv-action cv-action-back" href={analysisRoutes.targetRole}><UploadIcon name="arrow-left" size={19} /> Kembali</Link>
         <button className="cv-action cv-action-next" onClick={continueToReview} type="button">Lanjutkan <UploadIcon name="arrow-right" size={20} /></button>
       </div>
     </div>

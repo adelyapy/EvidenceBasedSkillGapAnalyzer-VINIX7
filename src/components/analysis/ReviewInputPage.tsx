@@ -85,7 +85,7 @@ export default function ReviewInputPage() {
         <p className="review-subtitle">Pastikan semua data sudah benar sebelum memulai analisis.</p>
 
         <section className="review-box review-project" aria-labelledby="project-head">
-          <div className="review-box-heading"><h2 id="project-head">Informasi Project</h2><EditButton label="informasi project" /></div>
+          <div className="review-box-heading"><h2 id="project-head">Informasi Project</h2><EditButton href={analysisRoutes.uploadProject} label="informasi project" /></div>
           {hasProjects ? (
             <div className="review-project-list">
               {data.projects.map((project, index) => {
@@ -111,7 +111,7 @@ export default function ReviewInputPage() {
 
         <div className="review-bottom-grid">
           <section className="review-box" aria-labelledby="role-head">
-            <div className="review-box-heading"><h2 id="role-head">Role Target</h2><EditButton label="target role" /></div>
+            <div className="review-box-heading"><h2 id="role-head">Role Target</h2><EditButton href={analysisRoutes.targetRole} label="target role" /></div>
             <div className="review-role-content"><Image src="/images/role-review.png" alt="" width={88} height={88} unoptimized /><div>{hasRole ? <><strong>{data.role}</strong><p>{data.jobDescription || "Job description belum ditambahkan (opsional)."}</p></> : <><strong>Belum dipilih</strong><p>Silakan pilih target role terlebih dahulu.</p></>}</div></div>
           </section>
           <section className="review-box" aria-labelledby="cv-head">

@@ -10,7 +10,7 @@ export default function DashboardHero() {
         <h1 id="judul-dashboard">Halo, {dashboardUser.name}</h1>
         <p>Siap menganalisis project baru hari ini?</p>
         <div className="bkd-heroActions">
-          <button type="button" className="bkd-primaryButton" disabled title="Analisa Baru belum tersedia"><WorkspaceIcon name="plus" size={16} /> Mulai analisa baru</button>
+          <Link href="/workspace/analisa-baru" className="bkd-primaryButton"><WorkspaceIcon name="plus" size={16} /> Mulai analisa baru</Link>
           <Link href="/#cara-kerja" className="bkd-secondaryButton"><WorkspaceIcon name="book" size={18} /> Lihat panduan</Link>
         </div>
       </div>
