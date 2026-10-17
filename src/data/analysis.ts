@@ -3,11 +3,14 @@ import type { AnalysisStep } from "@/types/analysis";
 const ANALYSIS_BASE = "/workspace/analisa-baru";
 
 export const analysisRoutes = {
+  uploadProject: ANALYSIS_BASE,
+  targetRole: `${ANALYSIS_BASE}/target-role`,
   uploadCv: `${ANALYSIS_BASE}/upload-cv`,
   reviewInput: `${ANALYSIS_BASE}/review-input`,
   process: `${ANALYSIS_BASE}/proses-analisis`,
   question: (number: number) => `${ANALYSIS_BASE}/pertanyaan/${number}`,
   result: `${ANALYSIS_BASE}/hasil-analisis`,
+  skillGap: `${ANALYSIS_BASE}/skill-gap-report`,
 } as const;
 
 export const analysisStorage = {
@@ -20,8 +23,8 @@ export const analysisStorage = {
 } as const;
 
 export const analysisSteps: AnalysisStep[] = [
-  { id: "project", label: "Upload Project" },
-  { id: "role", label: "Target Role" },
+  { id: "project", label: "Upload Project", href: analysisRoutes.uploadProject },
+  { id: "role", label: "Target Role", href: analysisRoutes.targetRole },
   { id: "cv", label: "CV", href: analysisRoutes.uploadCv },
   { id: "review", label: "Analisis", href: analysisRoutes.reviewInput },
 ];

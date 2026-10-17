@@ -51,7 +51,7 @@
 .cv-demo-note { margin: 7px 0 0; color: #586473; font-size: 11px; }
 .cv-route-error { margin-top: 10px; }
 .cv-actions { margin-top: auto; padding-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-.cv-action { min-height: 49px; padding: 9px 22px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 2px solid #161a1c; border-radius: 4px; background: #2d5279; color: #fff; font-size: 18px; font-weight: 560; cursor: pointer; transition: background-color .2s ease; }
+.cv-action { min-height: 49px; padding: 9px 22px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 2px solid #161a1c; border-radius: 4px; background: #2d5279; color: #fff; font-size: 18px; font-weight: 560; text-decoration: none; cursor: pointer; transition: background-color .2s ease; }
 .cv-action:hover:not(:disabled) { background: #173c63; }
 .cv-main .cv-action:disabled { cursor: not-allowed; opacity: .55; }
 .cv-action-back { width: 172px; }
