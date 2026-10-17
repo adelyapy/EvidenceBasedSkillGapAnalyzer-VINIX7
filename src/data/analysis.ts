@@ -11,6 +11,7 @@ export const analysisRoutes = {
   question: (number: number) => `${ANALYSIS_BASE}/pertanyaan/${number}`,
   result: `${ANALYSIS_BASE}/hasil-analisis`,
   skillGap: `${ANALYSIS_BASE}/skill-gap-report`,
+  roadmap: `${ANALYSIS_BASE}/roadmap`,
 } as const;
 
 export const analysisStorage = {

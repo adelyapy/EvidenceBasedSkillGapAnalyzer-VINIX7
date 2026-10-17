@@ -51,8 +51,8 @@
 .bkw-profileText strong { font-size: 16px; font-weight: 500; }
 .bkw-profileText small { font-size: 11px; }
 .bkw-profileMenu { position: absolute; z-index: 40; top: calc(100% + 12px); right: 0; width: 165px; background: #fff; border: 1px solid #555; border-radius: 7px; box-shadow: 0 5px 15px #0002; padding: 5px; }
-.bkw-profileMenu button { width: 100%; display: block; text-align: left; border: 0; border-radius: 4px; padding: 9px; background: #fff; font-size: 13px; }
-.bkw-profileMenu button:hover { background: #f0f0f0; }
+.bkw-profileMenu a, .bkw-profileMenu button { width: 100%; display: block; text-align: left; border: 0; border-radius: 4px; padding: 9px; background: #fff; font-size: 13px; }
+.bkw-profileMenu a:hover, .bkw-profileMenu a:focus-visible { background: #f0f0f0; outline: 2px solid #2e608c; outline-offset: -2px; }
 .bkw-menuButton { display: none; background: transparent; border: 0; }
 .bkw-main {
   width: 100%;

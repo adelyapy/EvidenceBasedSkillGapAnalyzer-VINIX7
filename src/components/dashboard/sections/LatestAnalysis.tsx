@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { latestAnalysis } from "@/data/dashboard";
+import { HISTORY_ROUTE } from "@/data/workspace";
 
 export default function LatestAnalysis() {
   return (
     <section className="bkd-panel bkd-analysis" aria-labelledby="judul-ringkasan-analisis">
-      <div className="bkd-panelHeading"><h2 id="judul-ringkasan-analisis">Ringkasan Analisis Terbaru</h2><span className="bkd-inactiveLink" title="Riwayat Analisis belum tersedia">Lihat Semua</span></div>
+      <div className="bkd-panelHeading"><h2 id="judul-ringkasan-analisis">Ringkasan Analisis Terbaru</h2><Link className="bkd-panelLink" href={HISTORY_ROUTE}>Lihat Semua</Link></div>
       <div className="bkd-analysisBody">
         <div className="bkd-scoreCard">
           <div className="bkd-scoreRing" style={{ "--bkd-score": `${latestAnalysis.score}%` } as React.CSSProperties} role="img" aria-label={`Skor keseluruhan ${latestAnalysis.score} persen`}>

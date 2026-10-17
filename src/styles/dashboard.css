@@ -73,6 +73,9 @@
 }
 .bkd-panelHeading h2 svg { flex: none; }
 .bkd-inactiveLink { color: #428eb7; font-size: .8rem; line-height: 1.4; white-space: nowrap; cursor: default; }
+.bkd-panelLink { color: #2e6f9f; font-size: .8rem; font-weight: 700; line-height: 1.4; text-decoration: underline !important; text-underline-offset: 3px; white-space: nowrap; }
+.bkd-panelLink:hover { color: #17496f; }
+.bkd-panelLink:focus-visible { outline: 3px solid #78b8e7; outline-offset: 3px; border-radius: 2px; }
 
 .bkd-analysisBody { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .bkd-scoreCard,
@@ -152,6 +155,7 @@
 .bkd-historyEmpty p { margin: 8px 0 0; font-size: .8rem; line-height: 1.35; font-weight: 700; text-align: center; }
 
 .bkd-roadmap ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 8px; list-style: none; padding: 12px 0 0; margin: 0; }
+.bkd-roadmapMeta { margin: -5px 0 2px; color: #466276; font-size: .75rem; line-height: 1.35; }
 .bkd-roadmap li { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .bkd-roadmap li:nth-child(odd)::after {
   content: "";

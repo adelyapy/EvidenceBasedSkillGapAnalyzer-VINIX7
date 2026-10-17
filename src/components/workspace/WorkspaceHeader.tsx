@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { dashboardUser } from "@/data/dashboard";
+import { PROFILE_ROUTE } from "@/data/workspace";
 import WorkspaceIcon from "./WorkspaceIcon";
 
 export default function WorkspaceHeader({ onOpenMenu }: { onOpenMenu: () => void }) {
@@ -15,7 +17,7 @@ export default function WorkspaceHeader({ onOpenMenu }: { onOpenMenu: () => void
             <WorkspaceIcon name="chevron" size={16} />
           </summary>
           <div className="bkw-profileMenu" role="group" aria-label="Menu profil pengguna">
-            <button type="button" disabled title="Profile belum tersedia">Profile Saya</button>
+            <Link href={PROFILE_ROUTE}>Profile Saya</Link>
             <button type="button" disabled title="Keluar belum tersedia dalam demo">Keluar</button>
           </div>
         </details>

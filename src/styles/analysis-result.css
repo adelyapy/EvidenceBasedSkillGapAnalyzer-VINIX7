@@ -345,21 +345,30 @@
   font-size: .74rem;
 }
 
-.bkr-actions button {
+.bkr-actions .bkr-next-button {
   min-width: 185px;
   min-height: 50px;
   padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid #16191c;
   border-radius: 0;
   background: #2d5d8b;
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
+  text-decoration: none;
 }
 
-.bkr-page .bkr-actions button:disabled {
-  cursor: not-allowed;
-  opacity: .55;
+.bkr-actions .bkr-next-button:hover {
+  background: #214c74;
+}
+
+.bkr-actions .bkr-next-button:focus-visible,
+.bkr-actions > a:first-child:focus-visible {
+  outline: 3px solid #327bb0;
+  outline-offset: 3px;
 }
 
 @container analysis-result (min-width: 700px) {
@@ -408,7 +417,7 @@
     align-items: stretch;
   }
 
-  .bkr-actions button {
+  .bkr-actions .bkr-next-button {
     width: 100%;
   }
 }

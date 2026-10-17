@@ -1,0 +1,153 @@
+.bks-page {
+  width: 100%;
+  max-width: 1120px;
+  min-width: 0;
+  margin-inline: auto;
+  color: #111;
+  container-name: skill-gap;
+  container-type: inline-size;
+}
+
+.bks-page *, .bks-page *::before, .bks-page *::after { box-sizing: border-box; }
+
+.bks-intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+}
+.bks-intro > div:first-child { min-width: 0; }
+.bks-intro h1 {
+  margin: 0 0 7px;
+  font-size: clamp(2rem, 4.2cqi, 2.45rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.7px;
+}
+.bks-intro > div:first-child > p {
+  max-width: 700px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.bks-nextAction { flex: 0 0 auto; display: grid; justify-items: end; gap: 6px; }
+.bks-nextAction .bks-nextButton {
+  min-width: 170px;
+  min-height: 48px;
+  padding: 9px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #16191c;
+  border-radius: 0;
+  background: #2d5d8b;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.bks-nextAction .bks-nextButton:hover { background: #214c74; }
+.bks-nextAction .bks-nextButton:focus-visible { outline: 3px solid #327bb0; outline-offset: 3px; }
+.bks-nextAction p {
+  max-width: 220px;
+  margin: 0;
+  color: #555e66;
+  font-size: .78rem;
+  line-height: 1.3;
+  text-align: right;
+}
+.bks-demoNotice {
+  margin-top: 18px;
+  padding: 11px 14px;
+  border: 1px solid #bda86b;
+  border-radius: 6px;
+  background: #fff2c9;
+  color: #53430f;
+  font-size: .84rem;
+  line-height: 1.45;
+}
+.bks-legend { display: flex; flex-wrap: wrap; gap: 14px 27px; margin: 19px 0 16px; }
+.bks-legend > span { display: inline-flex; align-items: center; gap: 8px; font-size: .9rem; font-weight: 600; }
+.bks-legendSwatch { width: 17px; height: 17px; display: block; border-radius: 50%; }
+.bks-legendSwatch--you { background: #2e75a4; }
+.bks-legendSwatch--industry { background: #9ed6d1; }
+
+.bks-contentGrid { min-width: 0; display: grid; grid-template-columns: minmax(0, 1.48fr) minmax(0, .82fr); align-items: stretch; gap: 18px; }
+.bks-panel { min-width: 0; border: 1px solid #b7c3cd; border-radius: 8px; background: #f8f6f0; }
+.bks-panel h2 { margin: 0; font-size: 1.16rem; font-weight: 750; line-height: 1.3; }
+.bks-comparisonPanel { padding: 19px 21px 17px; }
+.bks-panelHeading p { margin: 5px 0 0; color: #4b5660; font-size: .89rem; line-height: 1.4; }
+.bks-comparisonTable { width: 100%; margin-top: 16px; border-collapse: collapse; table-layout: fixed; }
+.bks-comparisonTable caption { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.bks-comparisonTable thead th { padding: 0 6px 9px; color: #52616b; font-size: .77rem; font-weight: 700; text-align: left; }
+.bks-comparisonTable thead th:first-child, .bks-comparisonTable tbody th { width: 27%; padding-left: 0; }
+.bks-comparisonTable thead th:last-child, .bks-comparisonTable td:last-child { width: 13%; padding-right: 0; text-align: right; }
+.bks-comparisonTable tbody tr { border-top: 1px solid #dce3e5; }
+.bks-comparisonTable tbody th, .bks-comparisonTable tbody td { padding: 12px 6px; vertical-align: middle; }
+.bks-comparisonTable tbody th { font-size: .9rem; font-weight: 700; text-align: left; overflow-wrap: anywhere; }
+.bks-comparisonTable .bks-value { font-size: .94rem; font-weight: 750; white-space: nowrap; }
+.bks-barTrack { position: relative; width: 100%; height: 20px; border-radius: 6px; background: #e2e9e9; overflow: hidden; }
+.bks-barIndustry, .bks-barYou { position: absolute; left: 0; display: block; border-radius: 5px; }
+.bks-barIndustry { top: 0; height: 100%; background: #9ed6d1; }
+.bks-barYou { top: 4px; height: 12px; background: #2e75a4; }
+
+.bks-visualPanel { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 12px 10px 20px; }
+.bks-illustration { display: block; width: min(100%, 360px); height: auto; max-height: 290px; }
+.bks-focusNote {
+  width: min(92%, 290px);
+  margin: -8px 0 0;
+  padding: 15px 18px;
+  transform: rotate(-4deg);
+  border: 2px solid #b4943e;
+  border-radius: 4px;
+  background: #f9df84;
+  box-shadow: 5px 6px 0 #14283b1c;
+  color: #282923;
+  font-size: clamp(.9rem, 2.2cqi, 1.1rem);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.bks-gapPanel { margin-top: 18px; padding: 18px 21px 20px; }
+.bks-priorityList { display: grid; gap: 10px; margin: 15px 0 0; padding: 0; list-style: none; counter-reset: priority; }
+.bks-priorityList li { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 12px; padding: 11px 15px; border: 1px solid #c7d3d9; border-radius: 7px; background: #fffdf8; counter-increment: priority; }
+.bks-priorityName { min-width: 0; display: flex; align-items: center; gap: 11px; font-size: .94rem; font-weight: 750; overflow-wrap: anywhere; }
+.bks-priorityName::before { content: counter(priority); width: 28px; height: 28px; flex: none; display: grid; place-items: center; border-radius: 50%; background: #dbe9f1; color: #244b72; font-size: .85rem; }
+.bks-priorityGap { color: #485661; font-size: .88rem; white-space: nowrap; }
+.bks-priorityBadge { min-width: 131px; padding: 7px 10px; border-radius: 6px; font-size: .82rem; font-weight: 750; text-align: center; white-space: nowrap; }
+.bks-priorityBadge--tinggi { background: #f5cbd0; color: #762d38; }
+.bks-priorityBadge--sedang { background: #f8e19a; color: #654d0b; }
+.bks-bottomNav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 22px; margin-top: 22px; }
+.bks-bottomNav a { display: inline-flex; align-items: center; min-height: 40px; color: #285d8a; font-size: .88rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.bks-bottomNav a:hover { color: #153e60; }
+.bks-bottomNav a:focus-visible { outline: 3px solid #327bb0; outline-offset: 3px; border-radius: 2px; }
+
+@container skill-gap (max-width: 780px) {
+  .bks-contentGrid { grid-template-columns: minmax(0, 1fr); }
+  .bks-visualPanel { flex-direction: row; gap: 12px; }
+  .bks-illustration { width: min(48%, 260px); }
+  .bks-focusNote { width: min(46%, 240px); margin: 0; }
+}
+
+@container skill-gap (max-width: 560px) {
+  .bks-intro { flex-direction: column; }
+  .bks-nextAction { width: 100%; justify-items: stretch; }
+  .bks-nextAction p { max-width: none; text-align: left; }
+  .bks-comparisonPanel, .bks-gapPanel { padding-inline: 13px; }
+  .bks-comparisonTable thead th:first-child, .bks-comparisonTable tbody th { width: 34%; }
+  .bks-visualPanel { flex-direction: column; }
+  .bks-illustration { width: min(100%, 280px); }
+  .bks-focusNote { width: min(92%, 270px); margin-top: -10px; }
+  .bks-priorityList li { grid-template-columns: minmax(0, 1fr) auto; gap: 7px; }
+  .bks-priorityBadge { min-width: 0; grid-column: 1 / -1; justify-self: start; }
+  .bks-bottomNav { flex-direction: column; align-items: flex-start; }
+}
+
+@container skill-gap (max-width: 330px) {
+  .bks-comparisonTable thead th, .bks-comparisonTable tbody th, .bks-comparisonTable tbody td { padding-inline: 3px; }
+  .bks-comparisonTable thead th:first-child, .bks-comparisonTable tbody th { width: 37%; padding-left: 0; }
+  .bks-comparisonTable thead th:last-child, .bks-comparisonTable td:last-child { width: 17%; padding-right: 0; }
+  .bks-comparisonTable thead th { font-size: .7rem; }
+  .bks-comparisonTable tbody th, .bks-comparisonTable .bks-value { font-size: .8rem; }
+}
