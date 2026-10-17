@@ -109,10 +109,7 @@ export default function AnalysisResultPage() {
 
       <nav className="bkr-actions bkr-screenOnly" aria-label="Navigasi hasil analisis">
         <Link href={analysisRoutes.question(5)}>← Kembali ke Pertanyaan 5</Link>
-        <div>
-          <p id="bkr-next-help">Halaman Skill Gap Report belum tersedia.</p>
-          <button type="button" disabled aria-describedby="bkr-next-help">Lanjutkan <span aria-hidden="true">→</span></button>
-        </div>
+        <Link className="bkr-next-button" href={analysisRoutes.skillGap}>Lanjutkan <span aria-hidden="true">→</span></Link>
       </nav>
     </article>
   );

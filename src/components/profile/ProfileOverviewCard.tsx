@@ -1,0 +1,29 @@
+import Image from "next/image";
+import type { ProfileData } from "@/types/profile";
+
+type ProfileOverviewCardProps = {
+  profile: ProfileData;
+};
+
+export default function ProfileOverviewCard({ profile }: ProfileOverviewCardProps) {
+  return (
+    <section className="bkpfl-card bkpfl-overview" aria-labelledby="bkpfl-overview-title">
+      <div className="bkpfl-avatarFrame">
+        <Image
+          className="bkpfl-avatar"
+          src={profile.avatar}
+          alt={`Foto profil contoh ${profile.fullName}`}
+          width={160}
+          height={160}
+          priority
+        />
+      </div>
+      <div className="bkpfl-identity">
+        <p className="bkpfl-eyebrow">Profil pengguna</p>
+        <h2 id="bkpfl-overview-title">{profile.fullName}</h2>
+        <p className="bkpfl-email">{profile.email}</p>
+        <p className="bkpfl-role">{profile.role}</p>
+      </div>
+    </section>
+  );
+}
