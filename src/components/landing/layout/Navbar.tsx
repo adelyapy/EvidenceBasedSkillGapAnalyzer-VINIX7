@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { navigation } from "@/data/landing";
 import Brand from "./Brand";
 
@@ -9,6 +9,9 @@ const defaultSection = navigation[0]?.id ?? "beranda";
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState(defaultSection);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navbarRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const sections = navigation.flatMap((item) => {
@@ -85,29 +88,85 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const closeFromOutside = (event: MouseEvent) => {
+      if (!navbarRef.current?.contains(event.target as Node)) setMobileOpen(false);
+    };
+
+    const closeFromKeyboard = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setMobileOpen(false);
+      menuButtonRef.current?.focus();
+    };
+
+    const mobileQuery = window.matchMedia("(max-width: 880px)");
+    const closeOnDesktop = (event: MediaQueryListEvent) => {
+      if (!event.matches) setMobileOpen(false);
+    };
+
+    document.addEventListener("click", closeFromOutside);
+    document.addEventListener("keydown", closeFromKeyboard);
+    mobileQuery.addEventListener("change", closeOnDesktop);
+
+    return () => {
+      document.removeEventListener("click", closeFromOutside);
+      document.removeEventListener("keydown", closeFromKeyboard);
+      mobileQuery.removeEventListener("change", closeOnDesktop);
+    };
+  }, [mobileOpen]);
+
   return (
     <header className="bk-header">
-      <nav className="bk-navbar" aria-label="Navigasi utama">
+      <nav
+        ref={navbarRef}
+        className="bk-navbar"
+        aria-label="Navigasi utama"
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest("a")) setMobileOpen(false);
+        }}
+      >
         <Brand />
-        <div className="bk-navLinks">
-          {navigation.map((item) => {
-            const active = activeSection === item.id;
+        <button
+          ref={menuButtonRef}
+          className={`bk-mobileMenuButton${mobileOpen ? " bk-mobileMenuButton--open" : ""}`}
+          type="button"
+          aria-label={mobileOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
+          aria-expanded={mobileOpen}
+          aria-controls="bk-mobile-navigation"
+          onClick={() => setMobileOpen((open) => !open)}
+        >
+          <span className="bk-mobileMenuIcon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+        <div
+          id="bk-mobile-navigation"
+          className={`bk-mobilePanel${mobileOpen ? " bk-mobilePanel--open" : ""}`}
+        >
+          <div className="bk-navLinks">
+            {navigation.map((item) => {
+              const active = activeSection === item.id;
 
-            return (
-              <a
-                key={item.id}
-                className={`bk-navLink${active ? " bk-activeNav" : ""}`}
-                href={`#${item.id}`}
-                aria-current={active ? "location" : undefined}
-              >
-                {item.label}
-              </a>
-            );
-          })}
-        </div>
-        <div className="bk-navActions">
-          <Link className="bk-loginButton" href="/login">MASUK</Link>
-          <Link className="bk-registerButton" href="/register">DAFTAR</Link>
+              return (
+                <a
+                  key={item.id}
+                  className={`bk-navLink${active ? " bk-activeNav" : ""}`}
+                  href={`#${item.id}`}
+                  aria-current={active ? "location" : undefined}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+          <div className="bk-navActions">
+            <Link className="bk-loginButton" href="/login">MASUK</Link>
+            <Link className="bk-registerButton" href="/register">DAFTAR</Link>
+          </div>
         </div>
       </nav>
     </header>

@@ -15,7 +15,7 @@ export default function WorkspaceSidebar({ pathname, collapsed, mobileOpen, onCo
   return (
     <>
       {mobileOpen && <button className="bkw-backdrop" aria-label="Tutup menu" onClick={onClose} />}
-      <aside className={`bkw-sidebar${collapsed ? " bkw-sidebar--collapsed" : ""}${mobileOpen ? " bkw-sidebar--open" : ""}`} aria-label="Navigasi workspace">
+      <aside id="bkw-workspace-sidebar" className={`bkw-sidebar${collapsed ? " bkw-sidebar--collapsed" : ""}${mobileOpen ? " bkw-sidebar--open" : ""}`} aria-label="Navigasi workspace">
         <div className="bkw-sidebarTop">
           <Link className="bkw-brand" href="/" onClick={onClose} aria-label="BUKTIVA, ke beranda">
             <Image src="/images/logo-icon.svg" alt="" width={44} height={41} style={{ height: "auto" }} />
@@ -24,7 +24,6 @@ export default function WorkspaceSidebar({ pathname, collapsed, mobileOpen, onCo
           <button className="bkw-collapseButton" onClick={onCollapse} aria-label={collapsed ? "Perlebar sidebar" : "Perkecil sidebar"} aria-expanded={!collapsed}>
             <span aria-hidden="true">{collapsed ? "»" : "«"}</span>
           </button>
-          <button className="bkw-sidebarClose" onClick={onClose} aria-label="Tutup menu"><WorkspaceIcon name="close" /></button>
         </div>
         <nav className="bkw-nav" aria-label="Navigasi utama BUKTIVA">
           {workspaceNavigation.map((item) => {
