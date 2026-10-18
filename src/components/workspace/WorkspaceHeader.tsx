@@ -18,7 +18,13 @@ export default function WorkspaceHeader({ onOpenMenu }: { onOpenMenu: () => void
           </summary>
           <div className="bkw-profileMenu" role="group" aria-label="Menu profil pengguna">
             <Link href={PROFILE_ROUTE}>Profile Saya</Link>
-            <button type="button" disabled title="Keluar belum tersedia dalam demo">Keluar</button>
+            <Link
+              href="/login"
+              aria-label="Keluar dan menuju halaman Login"
+              onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}
+            >
+              Keluar
+            </Link>
           </div>
         </details>
       </div>
