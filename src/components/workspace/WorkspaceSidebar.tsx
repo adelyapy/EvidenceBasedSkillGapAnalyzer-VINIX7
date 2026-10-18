@@ -37,7 +37,7 @@ export default function WorkspaceSidebar({ pathname, collapsed, mobileOpen, onCo
             );
           })}
         </nav>
-        <button className="bkw-navItem bkw-logout" type="button" disabled title="Keluar belum tersedia dalam demo" aria-label="Keluar belum tersedia dalam demo"><WorkspaceIcon name="logout" /><span className="bkw-sidebarLabel">Keluar</span></button>
+        <Link className="bkw-navItem bkw-logout" href="/login" onClick={onClose} aria-label="Keluar dan menuju halaman Login" title={collapsed ? "Keluar" : undefined}><WorkspaceIcon name="logout" /><span className="bkw-sidebarLabel">Keluar</span></Link>
       </aside>
     </>
   );

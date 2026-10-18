@@ -49,16 +49,18 @@
 }
 .bk-brand img { flex-shrink: 0; }
 .bk-navLinks { display: flex; align-items: center; gap: clamp(8px, 2vw, 34px); }
-.bk-navLink, .bk-activeNav {
+.bk-navLink {
   color: #0a0d10;
   font-size: .88rem;
   font-weight: 700;
   white-space: nowrap;
   padding: 8px 11px;
   border-radius: 24px;
+  transition: background-color .18s ease, color .18s ease, box-shadow .18s ease;
 }
-.bk-activeNav { background: #aac8f0; }
-.bk-navLink:hover { background: #d7e7f5; }
+.bk-activeNav { background: #aac8f0; box-shadow: inset 0 0 0 1px #7ea5d1; }
+.bk-navLink:not(.bk-activeNav):hover { background: #d7e7f5; }
+.bk-navLink:focus-visible { outline: 3px solid #2c659a; outline-offset: 2px; }
 .bk-navActions { display: flex; gap: 15px; align-items: center; flex-shrink: 0; }
 .bk-loginButton, .bk-registerButton {
   display: inline-flex;
@@ -183,7 +185,7 @@
 @media (max-width: 1150px) {
   .bk-navbar { gap: 10px; padding-inline: 20px; }
   .bk-navLinks { gap: 10px; }
-  .bk-navLink, .bk-activeNav { font-size: .83rem; padding-inline: 9px; }
+  .bk-navLink { font-size: .83rem; padding-inline: 9px; }
   .bk-loginButton, .bk-registerButton { min-width: 105px; }
   .bk-hero h1 { font-size: clamp(3rem,6vw,4.4rem); }
   .bk-benefitGrid { max-width: 830px; }
@@ -208,7 +210,7 @@
   .bk-brand img { width: 32px; height: 32px; }
   .bk-navActions { gap: 7px; }
   .bk-loginButton,.bk-registerButton { min-width: 68px; height: 34px; font-size: .75rem; }
-  .bk-navLink,.bk-activeNav { font-size: .73rem; padding: 6px 7px; }
+  .bk-navLink { font-size: .73rem; padding: 6px 7px; }
   .bk-hero { grid-template-columns: 1fr; gap: 20px; padding-top: 43px; }
   .bk-hero h1 { font-size: clamp(2.4rem,10vw,4rem); line-height: 1.2; }
   .bk-heroDescription { font-size: 1rem; }
@@ -233,4 +235,8 @@
   .bk-teamGrid { grid-template-columns: 1fr; max-width: 290px; margin-inline: auto; }
   .bk-benefitGrid { grid-template-columns: 1fr; }
   .bk-footerInner { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.bk-landing) { scroll-behavior: auto !important; }
+  .bk-navLink { transition: none; }
 }
