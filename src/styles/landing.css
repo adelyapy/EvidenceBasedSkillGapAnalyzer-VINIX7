@@ -48,6 +48,8 @@
   white-space: nowrap;
 }
 .bk-brand img { flex-shrink: 0; }
+.bk-mobileMenuButton { display: none; }
+.bk-mobilePanel { display: contents; }
 .bk-navLinks { display: flex; align-items: center; gap: clamp(8px, 2vw, 34px); }
 .bk-navLink {
   color: #0a0d10;
@@ -193,12 +195,107 @@
   .bk-footerArt { display: none; }
 }
 @media (max-width: 880px) {
-  .bk-landing { padding-top: 130px; }
+  .bk-landing { padding-top: 96px; }
   .bk-header { padding: 15px 3% 5px; }
-  .bk-navbar { flex-wrap: wrap; padding: 10px 15px; }
-  .bk-navLinks { order: 3; width: 100%; overflow-x: auto; justify-content: space-between; padding-top: 6px; gap: 5px; }
-  .bk-navActions { margin-left: auto; }
-  .bk-section { padding-inline: 5%; scroll-margin-top: 150px; }
+  .bk-navbar {
+    position: relative;
+    min-height: 64px;
+    flex-wrap: nowrap;
+    padding: 10px 14px;
+  }
+  .bk-brand { gap: 8px; font-size: 1.15rem; }
+  .bk-brand img { width: 36px; height: 36px; }
+  .bk-mobileMenuButton {
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #14213d;
+    box-shadow: none;
+    cursor: pointer;
+  }
+  .bk-mobileMenuButton:focus-visible {
+    border-radius: 7px;
+    outline: 3px solid #2c659a;
+    outline-offset: 2px;
+  }
+  .bk-mobileMenuIcon {
+    position: relative;
+    display: block;
+    width: 28px;
+    height: 24px;
+  }
+  .bk-mobileMenuIcon > span {
+    position: absolute;
+    right: 1px;
+    display: block;
+    height: 3px;
+    border-radius: 999px;
+    background: currentColor;
+    transform-origin: center;
+    transition: width 220ms ease, transform 220ms ease, opacity 180ms ease;
+  }
+  .bk-mobileMenuIcon > span:nth-child(1) { top: 3px; width: 26px; }
+  .bk-mobileMenuIcon > span:nth-child(2) { top: 11px; width: 18px; }
+  .bk-mobileMenuIcon > span:nth-child(3) { top: 19px; width: 23px; }
+  .bk-mobileMenuButton--open .bk-mobileMenuIcon > span { width: 26px; }
+  .bk-mobileMenuButton--open .bk-mobileMenuIcon > span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .bk-mobileMenuButton--open .bk-mobileMenuIcon > span:nth-child(2) { opacity: 0; transform: translateX(7px); }
+  .bk-mobileMenuButton--open .bk-mobileMenuIcon > span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  .bk-mobilePanel {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    display: flex;
+    visibility: hidden;
+    flex-direction: column;
+    gap: 14px;
+    border: 2px solid #14213d;
+    border-radius: 10px;
+    padding: 14px;
+    background: #f1f5f7;
+    box-shadow: 5px 5px 0 #28537e;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
+  }
+  .bk-mobilePanel--open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .bk-navLinks {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+  }
+  .bk-navLink {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    border-radius: 7px;
+    padding: 10px 12px;
+    font-size: .84rem;
+  }
+  .bk-navActions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0;
+    border-top: 1px solid #aebdca;
+    padding-top: 14px;
+  }
+  .bk-loginButton, .bk-registerButton { width: 100%; min-width: 0; height: 44px; }
+  .bk-section { padding-inline: 5%; scroll-margin-top: 105px; }
   .bk-hero { min-height: auto; padding-top: 60px; padding-bottom: 90px; }
   .bk-hero h1 { font-size: clamp(2.55rem,6vw,4.5rem); }
   .bk-aboutTop, .bk-teamIntro { gap: 12px; }
@@ -206,11 +303,9 @@
   .bk-teamGrid { grid-template-columns: repeat(3,1fr); }
 }
 @media (max-width: 620px) {
-  .bk-brand { font-size: 1.1rem; }
-  .bk-brand img { width: 32px; height: 32px; }
-  .bk-navActions { gap: 7px; }
-  .bk-loginButton,.bk-registerButton { min-width: 68px; height: 34px; font-size: .75rem; }
-  .bk-navLink { font-size: .73rem; padding: 6px 7px; }
+  .bk-navActions { gap: 8px; }
+  .bk-loginButton,.bk-registerButton { font-size: .78rem; }
+  .bk-navLink { font-size: .82rem; }
   .bk-hero { grid-template-columns: 1fr; gap: 20px; padding-top: 43px; }
   .bk-hero h1 { font-size: clamp(2.4rem,10vw,4rem); line-height: 1.2; }
   .bk-heroDescription { font-size: 1rem; }
@@ -231,12 +326,13 @@
   .bk-footerBrand { grid-column: 1 / -1; }
 }
 @media (max-width: 410px) {
-  .bk-navLinks { justify-content: flex-start; }
   .bk-teamGrid { grid-template-columns: 1fr; max-width: 290px; margin-inline: auto; }
   .bk-benefitGrid { grid-template-columns: 1fr; }
   .bk-footerInner { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   html:has(.bk-landing) { scroll-behavior: auto !important; }
-  .bk-navLink { transition: none; }
+  .bk-navLink,
+  .bk-mobileMenuIcon > span,
+  .bk-mobilePanel { transition: none; }
 }

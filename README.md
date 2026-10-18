@@ -1,6 +1,6 @@
 # BUKTIVA — Evidence-Based Skill Gap Analyzer
 
-**Platform persiapan karier berbasis bukti proyek untuk membantu mahasiswa tingkat akhir dan *fresh graduate* memahami kompetensi, kesenjangan keterampilan (*skill gap*), dan prioritas pengembangan diri.**
+**Platform persiapan karier berbasis bukti proyek untuk membantu mahasiswa tingkat akhir dan _fresh graduate_ memahami kompetensi, kesenjangan keterampilan (_skill gap_), dan prioritas pengembangan diri.**
 
 > [!IMPORTANT]
 > **Status: prototipe frontend — Modul 7 (pengembangan aktif).** Fokus tahap ini ialah menerjemahkan desain Figma ke website yang **responsif, mudah digunakan, dan interaktif**. Skor, pertanyaan, riwayat, perbandingan keterampilan, serta rekomendasi tertentu masih berupa **contoh/simulasi**. Belum ada dasar untuk menyatakan bahwa analisis AI produksi, autentikasi sungguhan, database persisten, atau tolok ukur kebutuhan industri tervalidasi sudah terintegrasi.
@@ -36,24 +36,24 @@
 
 ## 1. Identitas dan Referensi Proyek
 
-| Informasi | Keterangan |
-| --- | --- |
-| Nama produk | **BUKTIVA** |
-| Nama lengkap | **Evidence-Based Skill Gap Analyzer** |
-| Bentuk produk | Platform web untuk persiapan karier dan pemetaan kompetensi |
-| Tim | **Kelompok 3 — Web & UI/UX Developer, VINIX7** |
-| Tahap yang didokumentasikan | **Implementasi frontend Modul 7** |
-| Dasar perancangan | Modul 1–6: ideasi, riset pengguna, persona, user flow, wireframe, UI prototype, dan HTML |
-| PRD acuan | `PRD_BUKTIVA_Bagian_1-9.md` (draf; Bagian 10–11 belum disusun) |
-| Repository | [EvidenceBasedSkillGapAnalyzer-VINIX7](https://github.com/adelyapy/EvidenceBasedSkillGapAnalyzer-VINIX7) |
-| Desain | [Figma — VINIX7 DESIGN UI, Modul 5](https://www.figma.com/design/UVAFASV8FI30S6IFXKWUQU/VINIX7-DESIGN-UI?node-id=207-101&t=4u0zQ0JJCLAXJXPG-1) |
-| Branch frontend yang digunakan dalam pengerjaan | `frontend2-dev` (pastikan kebijakan branch terbaru sebelum berkontribusi) |
+| Informasi                                       | Keterangan                                                                                                                                     |
+| ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nama produk                                     | **BUKTIVA**                                                                                                                                    |
+| Nama lengkap                                    | **Evidence-Based Skill Gap Analyzer**                                                                                                          |
+| Bentuk produk                                   | Platform web untuk persiapan karier dan pemetaan kompetensi                                                                                    |
+| Tim                                             | **Kelompok 3 — Web & UI/UX Developer, VINIX7**                                                                                                 |
+| Tahap yang didokumentasikan                     | **Implementasi frontend Modul 7**                                                                                                              |
+| Dasar perancangan                               | Modul 1–6: ideasi, riset pengguna, persona, user flow, wireframe, UI prototype, dan HTML                                                       |
+| PRD acuan                                       | `PRD_BUKTIVA_Bagian_1-9.md` (draf; Bagian 10–11 belum disusun)                                                                                 |
+| Repository                                      | [EvidenceBasedSkillGapAnalyzer-VINIX7](https://github.com/adelyapy/EvidenceBasedSkillGapAnalyzer-VINIX7)                                       |
+| Desain                                          | [Figma — VINIX7 DESIGN UI, Modul 5](https://www.figma.com/design/UVAFASV8FI30S6IFXKWUQU/VINIX7-DESIGN-UI?node-id=207-101&t=4u0zQ0JJCLAXJXPG-1) |
+| Branch frontend yang digunakan dalam pengerjaan | `frontend2-dev` (pastikan kebijakan branch terbaru sebelum berkontribusi)                                                                      |
 
-**Posisi README:** panduan pengenalan dan pengembangan repository. **Posisi PRD:** sumber kebutuhan produk, user stories, dan kriteria penerimaan. Jika terdapat perbedaan antara kebutuhan PRD dan perilaku aplikasi saat ini, tandai sebagai *gap* implementasi; jangan menyamakan fitur yang masih direncanakan dengan fitur yang sudah berfungsi.
+**Posisi README:** panduan pengenalan dan pengembangan repository. **Posisi PRD:** sumber kebutuhan produk, user stories, dan kriteria penerimaan. Jika terdapat perbedaan antara kebutuhan PRD dan perilaku aplikasi saat ini, tandai sebagai _gap_ implementasi; jangan menyamakan fitur yang masih direncanakan dengan fitur yang sudah berfungsi.
 
 ## 2. Latar Belakang dan Permasalahan
 
-Mahasiswa tingkat akhir dan *fresh graduate* sering menghadapi kesulitan saat menilai kesiapan diri untuk melamar magang atau pekerjaan *entry-level*. Daftar skill pada CV tidak selalu menjelaskan kedalaman pengalaman, sementara persyaratan pekerjaan bisa sangat luas dan berubah.
+Mahasiswa tingkat akhir dan _fresh graduate_ sering menghadapi kesulitan saat menilai kesiapan diri untuk melamar magang atau pekerjaan _entry-level_. Daftar skill pada CV tidak selalu menjelaskan kedalaman pengalaman, sementara persyaratan pekerjaan bisa sangat luas dan berubah.
 
 Dari proses riset dan perancangan Modul 1–4 yang dirangkum dalam PRD, kebutuhan utamanya mencakup:
 
@@ -70,7 +70,7 @@ Dari proses riset dan perancangan Modul 1–4 yang dirangkum dalam PRD, kebutuha
 
 Mewujudkan pengalaman persiapan karier yang menghubungkan **bukti proyek → validasi pemahaman → gambaran kompetensi → skill gap → roadmap pembelajaran**.
 
-### Nilai Pembeda: *Evidence-first*
+### Nilai Pembeda: _Evidence-first_
 
 BUKTIVA menempatkan bukti proyek sebagai **konteks utama**, bukan sekadar menerima klaim keterampilan pada CV. Dalam visi produk akhir, bukti dan jawaban validasi dapat digunakan untuk mendukung analisis yang lebih kontekstual. **Kemampuan ini belum boleh dianggap sebagai analisis otomatis yang telah tersedia pada prototipe Modul 7.**
 
@@ -84,13 +84,13 @@ BUKTIVA menempatkan bukti proyek sebagai **konteks utama**, bukan sekadar meneri
 
 ## 4. Target Pengguna
 
-| Aspek | Keterangan sesuai PRD |
-| --- | --- |
-| Pengguna utama | Mahasiswa tingkat akhir dan *fresh graduate* di Indonesia |
-| Situasi | Mempersiapkan lamaran kerja/magang atau transisi ke posisi *entry-level* |
-| Bukti awal | Setidaknya satu proyek, repository, portofolio, deployment, laporan, atau pengalaman relevan |
-| Kebutuhan | Mengidentifikasi kompetensi, gap, prioritas, dan rencana belajar |
-| Perangkat | Browser desktop dan perangkat mobile |
+| Aspek          | Keterangan sesuai PRD                                                                        |
+| -------------- | -------------------------------------------------------------------------------------------- |
+| Pengguna utama | Mahasiswa tingkat akhir dan _fresh graduate_ di Indonesia                                    |
+| Situasi        | Mempersiapkan lamaran kerja/magang atau transisi ke posisi _entry-level_                     |
+| Bukti awal     | Setidaknya satu proyek, repository, portofolio, deployment, laporan, atau pengalaman relevan |
+| Kebutuhan      | Mengidentifikasi kompetensi, gap, prioritas, dan rencana belajar                             |
+| Perangkat      | Browser desktop dan perangkat mobile                                                         |
 
 PRD menggunakan **persona representatif hasil sintesis riset**, bukan identitas seorang narasumber tertentu. Fokus desain harus mendukung pengguna yang belum yakin sejauh mana pengalamannya memenuhi tuntutan karier yang diincar.
 
@@ -119,26 +119,26 @@ Fitur tersebut merupakan **arah pengembangan produk**, bukan fitur yang telah se
 
 ## 6. Fitur dan Pemetaan Kebutuhan PRD
 
-Tabel berikut menghubungkan kebutuhan fungsional **F-01 s.d. F-16** dari PRD dengan implementasi frontend yang telah **dilaporkan**. Istilah *tersedia* menunjukkan adanya halaman atau interaksi frontend, **bukan** hasil audit penerimaan menyeluruh.
+Tabel berikut menghubungkan kebutuhan fungsional **F-01 s.d. F-16** dari PRD dengan implementasi frontend yang telah **dilaporkan**. Istilah _tersedia_ menunjukkan adanya halaman atau interaksi frontend, **bukan** hasil audit penerimaan menyeluruh.
 
-| ID | Fitur sesuai PRD | Yang harus didukung | Status yang terdokumentasi |
-| --- | --- | --- | --- |
-| F-01 | Landing Page | Nilai utama, CTA, navigasi ke Tentang, Cara Kerja, Login, Register | Halaman tersedia; perilaku scroll spy perlu verifikasi |
-| F-02 | Tentang BUKTIVA | Konsep *evidence-based*, visi AI, manfaat, sasaran pengguna | Section frontend tersedia |
-| F-03 | Cara Kerja | Empat langkah: proyek, validasi, skill gap, roadmap | Section frontend tersedia |
-| F-04 | Team Kami & Footer | Lima anggota, peran, tautan yang tersedia, footer, bantuan/kontak | Bagian landing tersedia menurut pengembangan; detail perlu pemeriksaan repository |
-| F-05 | Login | Email, password, navigasi reset/register, Google sebagai UI/simulasi | Frontend tersedia; autentikasi nyata belum diverifikasi |
-| F-06 | Register | Nama, email, password dan konfirmasi, validasi dasar | Frontend tersedia; validasi akhir perlu diuji |
-| F-07 | Reset Password | Form email dan feedback simulasi | UI termasuk ruang lingkup; perilaku terakhir perlu diverifikasi |
-| F-08 | Dashboard | Ringkasan aktivitas, skill, gap, rekomendasi, roadmap, riwayat terbaru | Frontend demo tersedia |
-| F-09 | Analisa Baru / Input Proyek | GitHub/GitLab, portofolio, deployment atau PDF; status input | Validasi URL dan UI PDF tersedia; dukungan GitLab/PDF-only belum sepenuhnya setara PRD |
-| F-10 | Target Role | Enam role, deskripsi pekerjaan opsional | Form dan penyimpanan sesi tersedia |
-| F-11 | Upload CV Opsional | Area unggah dan status; boleh dilewati | Langkah frontend tersedia; kelulusan jalur tanpa CV perlu diuji |
-| F-12 | Review Input | Ringkasan proyek, role, deskripsi, CV opsional dan tombol kembali | Frontend tersedia |
-| F-13 | Pertanyaan Validasi | Lima pertanyaan terkait proyek, kontribusi, kendala, solusi; jawaban sementara | Alur 1–5 tersedia; adaptasi berbasis proyek belum merupakan AI nyata |
-| F-14 | Hasil Analisis | Skor/skill/gap/bukti/rekomendasi simulasi, unduh bila tersedia | Demo hasil dan cetak browser tersedia |
-| F-15 | Riwayat Analisis | Daftar contoh, role, teknologi, tanggal, skor, status, cari/filter/urut | Empat entri demo; pencarian, filter, sort dan detail dilaporkan berfungsi |
-| F-16 | Navigasi Alur | Kembali/lanjut, penanganan input tidak lengkap, pemeliharaan state | Alur sudah tersambung; verifikasi regresi tetap diperlukan |
+| ID   | Fitur sesuai PRD            | Yang harus didukung                                                            | Status yang terdokumentasi                                                             |
+| ---- | --------------------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| F-01 | Landing Page                | Nilai utama, CTA, navigasi ke Tentang, Cara Kerja, Login, Register             | Halaman tersedia; perilaku scroll spy perlu verifikasi                                 |
+| F-02 | Tentang BUKTIVA             | Konsep _evidence-based_, visi AI, manfaat, sasaran pengguna                    | Section frontend tersedia                                                              |
+| F-03 | Cara Kerja                  | Empat langkah: proyek, validasi, skill gap, roadmap                            | Section frontend tersedia                                                              |
+| F-04 | Team Kami & Footer          | Lima anggota, peran, tautan yang tersedia, footer, bantuan/kontak              | Bagian landing tersedia menurut pengembangan; detail perlu pemeriksaan repository      |
+| F-05 | Login                       | Email, password, navigasi reset/register, Google sebagai UI/simulasi           | Frontend tersedia; autentikasi nyata belum diverifikasi                                |
+| F-06 | Register                    | Nama, email, password dan konfirmasi, validasi dasar                           | Frontend tersedia; validasi akhir perlu diuji                                          |
+| F-07 | Reset Password              | Form email dan feedback simulasi                                               | UI termasuk ruang lingkup; perilaku terakhir perlu diverifikasi                        |
+| F-08 | Dashboard                   | Ringkasan aktivitas, skill, gap, rekomendasi, roadmap, riwayat terbaru         | Frontend demo tersedia                                                                 |
+| F-09 | Analisa Baru / Input Proyek | GitHub/GitLab, portofolio, deployment atau PDF; status input                   | Validasi URL dan UI PDF tersedia; dukungan GitLab/PDF-only belum sepenuhnya setara PRD |
+| F-10 | Target Role                 | Enam role, deskripsi pekerjaan opsional                                        | Form dan penyimpanan sesi tersedia                                                     |
+| F-11 | Upload CV Opsional          | Area unggah dan status; boleh dilewati                                         | Langkah frontend tersedia; kelulusan jalur tanpa CV perlu diuji                        |
+| F-12 | Review Input                | Ringkasan proyek, role, deskripsi, CV opsional dan tombol kembali              | Frontend tersedia                                                                      |
+| F-13 | Pertanyaan Validasi         | Lima pertanyaan terkait proyek, kontribusi, kendala, solusi; jawaban sementara | Alur 1–5 tersedia; adaptasi berbasis proyek belum merupakan AI nyata                   |
+| F-14 | Hasil Analisis              | Skor/skill/gap/bukti/rekomendasi simulasi, unduh bila tersedia                 | Demo hasil dan cetak browser tersedia                                                  |
+| F-15 | Riwayat Analisis            | Daftar contoh, role, teknologi, tanggal, skor, status, cari/filter/urut        | Empat entri demo; pencarian, filter, sort dan detail dilaporkan berfungsi              |
+| F-16 | Navigasi Alur               | Kembali/lanjut, penanganan input tidak lengkap, pemeliharaan state             | Alur sudah tersambung; verifikasi regresi tetap diperlukan                             |
 
 ### Halaman Pendukung dari Prototipe yang Sudah Dikembangkan
 
@@ -190,16 +190,16 @@ Simpan ke Dashboard (sementara dalam sesi browser)
 
 ### Skenario Alternatif Penting
 
-| Kondisi | Perilaku yang diharapkan berdasarkan PRD |
-| --- | --- |
-| Bukti proyek wajib belum tersedia | Tidak melanjutkan; tampilkan pesan yang menjelaskan kebutuhan input |
-| URL tidak sesuai format | Pesan validasi spesifik; tidak perlu mengecek repository secara nyata |
-| Target role belum dipilih | Ingatkan pengguna sebelum review/lanjut |
-| Pengguna melewati CV | Tetap boleh lanjut karena CV **opsional** |
-| Jawaban validasi belum lengkap | Tampilkan status yang menjelaskan langkah perbaikan |
-| Pengguna kembali | Pertahankan masukan sementara sejauh mekanisme frontend mendukung |
-| Hasil memakai data contoh | Beri label **demo/simulasi**, bukan skor AI pengguna |
-| Layar lebih kecil | Konten tetap dapat diakses tanpa terpotong atau scroll horizontal tidak perlu |
+| Kondisi                           | Perilaku yang diharapkan berdasarkan PRD                                      |
+| --------------------------------- | ----------------------------------------------------------------------------- |
+| Bukti proyek wajib belum tersedia | Tidak melanjutkan; tampilkan pesan yang menjelaskan kebutuhan input           |
+| URL tidak sesuai format           | Pesan validasi spesifik; tidak perlu mengecek repository secara nyata         |
+| Target role belum dipilih         | Ingatkan pengguna sebelum review/lanjut                                       |
+| Pengguna melewati CV              | Tetap boleh lanjut karena CV **opsional**                                     |
+| Jawaban validasi belum lengkap    | Tampilkan status yang menjelaskan langkah perbaikan                           |
+| Pengguna kembali                  | Pertahankan masukan sementara sejauh mekanisme frontend mendukung             |
+| Hasil memakai data contoh         | Beri label **demo/simulasi**, bukan skor AI pengguna                          |
+| Layar lebih kecil                 | Konten tetap dapat diakses tanpa terpotong atau scroll horizontal tidak perlu |
 
 Penyimpanan riwayat per pengguna belum merupakan persyaratan backend pada fase ini. Riwayat dapat disajikan menggunakan **data dummy**.
 
@@ -207,18 +207,18 @@ Penyimpanan riwayat per pengguna belum merupakan persyaratan backend pada fase i
 
 PRD **tidak mengunci framework tertentu**. Tim memilih stack berikut untuk implementasi repository frontend:
 
-| Kebutuhan | Teknologi / pendekatan |
-| --- | --- |
-| Framework | **Next.js 16.4.0**, App Router (berdasarkan catatan implementasi; cek `package.json` untuk versi terkini) |
-| UI | **React 19** |
-| Bahasa | **TypeScript** |
-| Styling | **Tailwind CSS v4** dan CSS terstruktur per halaman |
-| Runtime | **Node.js** dan **npm** |
-| Routing/Layout | Next.js App Router, layout bersama Workspace |
-| Aset | `public/images/` |
-| Data sementara | State React dan `sessionStorage` |
-| Acuan desain | Figma Modul 5 |
-| Rencana setelah prototipe | Supabase untuk autentikasi/database; OpenAI atau Gemini untuk fitur AI (belum diklaim aktif) |
+| Kebutuhan                 | Teknologi / pendekatan                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Framework                 | **Next.js 16.4.0**, App Router (berdasarkan catatan implementasi; cek `package.json` untuk versi terkini) |
+| UI                        | **React 19**                                                                                              |
+| Bahasa                    | **TypeScript**                                                                                            |
+| Styling                   | **Tailwind CSS v4** dan CSS terstruktur per halaman                                                       |
+| Runtime                   | **Node.js** dan **npm**                                                                                   |
+| Routing/Layout            | Next.js App Router, layout bersama Workspace                                                              |
+| Aset                      | `public/images/`                                                                                          |
+| Data sementara            | State React dan `sessionStorage`                                                                          |
+| Acuan desain              | Figma Modul 5                                                                                             |
+| Rencana setelah prototipe | Supabase untuk autentikasi/database; OpenAI atau Gemini untuk fitur AI (belum diklaim aktif)              |
 
 Versi dependensi dan skrip paling otoritatif adalah **`package.json` dan lockfile** pada checkout yang digunakan, bukan tabel dokumentasi ini.
 
@@ -334,16 +334,16 @@ RootLayout
 
 ### Tanggung Jawab Folder
 
-| Folder | Tanggung jawab |
-| --- | --- |
-| `src/app/` | Route dan layout Next.js; metadata halaman |
-| `src/components/` | Komponen presentasi dan interaksi React |
-| `src/data/` | Data demo, opsi role, route/config |
-| `src/types/` | TypeScript interfaces/type aliases |
-| `src/styles/` | CSS halaman dan Workspace |
-| `src/lib/` | Helper/integrasi saat memang diperlukan |
-| `public/images/` | Ilustrasi/gambar aplikasi |
-| `legacy-html/` | HTML awal sebagai referensi historis |
+| Folder            | Tanggung jawab                             |
+| ----------------- | ------------------------------------------ |
+| `src/app/`        | Route dan layout Next.js; metadata halaman |
+| `src/components/` | Komponen presentasi dan interaksi React    |
+| `src/data/`       | Data demo, opsi role, route/config         |
+| `src/types/`      | TypeScript interfaces/type aliases         |
+| `src/styles/`     | CSS halaman dan Workspace                  |
+| `src/lib/`        | Helper/integrasi saat memang diperlukan    |
+| `public/images/`  | Ilustrasi/gambar aplikasi                  |
+| `legacy-html/`    | HTML awal sebagai referensi historis       |
 
 ### Prinsip Kolaborasi
 
@@ -353,20 +353,20 @@ Gunakan komponen bersama dan penamaan CSS yang terisolasi untuk mencegah efek sa
 
 ### Workspace
 
-| Route | Tujuan |
-| --- | --- |
-| `/workspace/dashboard` | Ringkasan Dashboard (contoh) |
-| `/workspace/analisa-baru` | Input bukti proyek |
-| `/workspace/analisa-baru/target-role` | Pemilihan role dan deskripsi pekerjaan opsional |
-| `/workspace/analisa-baru/upload-cv` | CV opsional |
-| `/workspace/analisa-baru/review-input` | Meninjau input |
-| `/workspace/analisa-baru/proses-analisis` | Status/progress simulasi |
-| `/workspace/analisa-baru/pertanyaan/1` … `/5` | Lima pertanyaan validasi |
-| `/workspace/analisa-baru/hasil-analisis` | Hasil contoh |
-| `/workspace/analisa-baru/skill-gap-report` | Perbandingan keterampilan contoh |
-| `/workspace/analisa-baru/roadmap` | Roadmap pembelajaran contoh |
-| `/workspace/riwayat-analisis` | Riwayat contoh dengan search/filter/detail |
-| `/workspace/profile` | Profil; **verifikasi implementasi aktual** |
+| Route                                         | Tujuan                                          |
+| --------------------------------------------- | ----------------------------------------------- |
+| `/workspace/dashboard`                        | Ringkasan Dashboard (contoh)                    |
+| `/workspace/analisa-baru`                     | Input bukti proyek                              |
+| `/workspace/analisa-baru/target-role`         | Pemilihan role dan deskripsi pekerjaan opsional |
+| `/workspace/analisa-baru/upload-cv`           | CV opsional                                     |
+| `/workspace/analisa-baru/review-input`        | Meninjau input                                  |
+| `/workspace/analisa-baru/proses-analisis`     | Status/progress simulasi                        |
+| `/workspace/analisa-baru/pertanyaan/1` … `/5` | Lima pertanyaan validasi                        |
+| `/workspace/analisa-baru/hasil-analisis`      | Hasil contoh                                    |
+| `/workspace/analisa-baru/skill-gap-report`    | Perbandingan keterampilan contoh                |
+| `/workspace/analisa-baru/roadmap`             | Roadmap pembelajaran contoh                     |
+| `/workspace/riwayat-analisis`                 | Riwayat contoh dengan search/filter/detail      |
+| `/workspace/profile`                          | Profil; **verifikasi implementasi aktual**      |
 
 **Landing:** route publik utama berada di `/`. Route pasti Login, Register, dan Reset Password mengikuti struktur `src/app/` di repository; README tidak mengarang URL yang belum diperiksa. Beberapa URL legacy mungkin masih memiliki redirect kompatibilitas menuju route Workspace.
 
@@ -374,14 +374,14 @@ Gunakan komponen bersama dan penamaan CSS yang terisolasi untuk mencegah efek sa
 
 ### Data yang Terlihat Bukan Penilaian Personal
 
-| Area | Contoh dalam implementasi | Keterangan |
-| --- | --- | --- |
-| Dashboard | Statistik contoh seperti **12** analisis | Tidak otomatis berasal dari empat entri riwayat |
-| Hasil Analisis | Skor contoh **78%** | Bukan hasil penilaian terhadap input pengguna |
-| Skill Gap | Tujuh skill; misalnya TypeScript **50/80**, Testing **40/70**, CI/CD **30/60** | Bukan perbandingan hasil pengguna dengan benchmark industri tervalidasi |
-| Roadmap | TypeScript, Testing, CI/CD, Proyek Lanjutan | Contoh khusus Frontend Developer |
-| Riwayat | Empat entri proyek; rerata **70%** | Bukan histori database akun |
-| Profile | Informasi identitas contoh | Belum boleh dianggap bersumber dari sistem Auth nyata |
+| Area           | Contoh dalam implementasi                                                      | Keterangan                                                              |
+| -------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| Dashboard      | Statistik contoh seperti **12** analisis                                       | Tidak otomatis berasal dari empat entri riwayat                         |
+| Hasil Analisis | Skor contoh **78%**                                                            | Bukan hasil penilaian terhadap input pengguna                           |
+| Skill Gap      | Tujuh skill; misalnya TypeScript **50/80**, Testing **40/70**, CI/CD **30/60** | Bukan perbandingan hasil pengguna dengan benchmark industri tervalidasi |
+| Roadmap        | TypeScript, Testing, CI/CD, Proyek Lanjutan                                    | Contoh khusus Frontend Developer                                        |
+| Riwayat        | Empat entri proyek; rerata **70%**                                             | Bukan histori database akun                                             |
+| Profile        | Informasi identitas contoh                                                     | Belum boleh dianggap bersumber dari sistem Auth nyata                   |
 
 **Perhatian:** role pengguna yang dipilih tidak otomatis mengubah semua hasil contoh. UI harus tetap menyatakan saat konten Frontend Developer masih dipakai sebagai ilustrasi, termasuk jika pengguna sebelumnya memilih role berbeda.
 
@@ -389,14 +389,14 @@ Gunakan komponen bersama dan penamaan CSS yang terisolasi untuk mencegah efek sa
 
 Bagian frontend yang telah dilaporkan menggunakan `sessionStorage`:
 
-| Key | Fungsi |
-| --- | --- |
-| `buktiva:upload-project:links:v1` | Bukti URL proyek |
-| `buktiva:target-role:v1` | Target karier dan isi form |
-| `buktiva.analysis.targetRole` | Adapter pilihan role bagi langkah lain |
-| `buktiva.analysis.jobDescription` | Adapter deskripsi pekerjaan |
-| `buktiva.analysis.projects` | Adapter proyek untuk alur selanjutnya |
-| `buktiva:roadmap:saved:v1` | Roadmap contoh yang disimpan ke Dashboard |
+| Key                               | Fungsi                                    |
+| --------------------------------- | ----------------------------------------- |
+| `buktiva:upload-project:links:v1` | Bukti URL proyek                          |
+| `buktiva:target-role:v1`          | Target karier dan isi form                |
+| `buktiva.analysis.targetRole`     | Adapter pilihan role bagi langkah lain    |
+| `buktiva.analysis.jobDescription` | Adapter deskripsi pekerjaan               |
+| `buktiva.analysis.projects`       | Adapter proyek untuk alur selanjutnya     |
+| `buktiva:roadmap:saved:v1`        | Roadmap contoh yang disimpan ke Dashboard |
 
 Beberapa key alur lainnya didefinisikan oleh implementasi aktual di `src/data/analysis.ts`. Data `sessionStorage` bersifat **per sesi tab browser**, bukan database permanen. Jangan mengganti key atau bentuk payload tanpa memperbaiki semua pembaca/penulisnya.
 
@@ -445,22 +445,22 @@ Implementasi tertentu dapat masih membutuhkan perbaikan. Daftar ini adalah **per
 - Kesalahan **tidak hanya ditunjukkan melalui warna**.
 - Hormati `prefers-reduced-motion` jika ada animasi.
 
-### 10 *Usability Heuristics* Nielsen
+### 10 _Usability Heuristics_ Nielsen
 
 Prinsip ini digunakan sebagai **kerangka audit perbaikan**, bukan pengganti pengujian pengguna:
 
-| Prinsip | Contoh penerapan di BUKTIVA |
-| --- | --- |
-| 1. Visibility of system status | Stepper, status loading/simulasi, status simpan, active section/menu |
-| 2. Match with real world | Istilah karier/skill yang mudah dipahami, label data contoh |
-| 3. User control and freedom | Kembali, batal, reset, tutup dialog |
-| 4. Consistency and standards | Tombol, input, heading, Sidebar, Navbar konsisten |
-| 5. Error prevention | Validasi proyek, role, dan jawaban sebelum lanjut |
-| 6. Recognition rather than recall | Ringkasan input pada Review Input |
-| 7. Flexibility and efficiency | Pencarian/filter riwayat, navigasi keyboard, mobile drawer |
-| 8. Aesthetic and minimalist design | Hierarki visual, whitespace, CTA utama |
-| 9. Error recognition and recovery | Pesan validasi spesifik dan petunjuk perbaikan |
-| 10. Help and documentation | Panduan input, batasan demo, informasi fitur belum tersedia |
+| Prinsip                            | Contoh penerapan di BUKTIVA                                          |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| 1. Visibility of system status     | Stepper, status loading/simulasi, status simpan, active section/menu |
+| 2. Match with real world           | Istilah karier/skill yang mudah dipahami, label data contoh          |
+| 3. User control and freedom        | Kembali, batal, reset, tutup dialog                                  |
+| 4. Consistency and standards       | Tombol, input, heading, Sidebar, Navbar konsisten                    |
+| 5. Error prevention                | Validasi proyek, role, dan jawaban sebelum lanjut                    |
+| 6. Recognition rather than recall  | Ringkasan input pada Review Input                                    |
+| 7. Flexibility and efficiency      | Pencarian/filter riwayat, navigasi keyboard, mobile drawer           |
+| 8. Aesthetic and minimalist design | Hierarki visual, whitespace, CTA utama                               |
+| 9. Error recognition and recovery  | Pesan validasi spesifik dan petunjuk perbaikan                       |
+| 10. Help and documentation         | Panduan input, batasan demo, informasi fitur belum tersedia          |
 
 Audit heuristik menyeluruh dan kepatuhan WCAG **belum boleh dinyatakan lulus** tanpa pemeriksaan khusus.
 
@@ -468,14 +468,14 @@ Audit heuristik menyeluruh dan kepatuhan WCAG **belum boleh dinyatakan lulus** t
 
 PRD Bagian 4.2 menetapkan **target evaluasi**, bukan hasil yang sudah dicapai:
 
-| Indikator | Target PRD | Cara pembuktian |
-| --- | --- | --- |
-| Penyelesaian tugas pengguna uji | **≥ 80%** | Observasi skenario input proyek sampai hasil simulasi |
-| Pemahaman hasil | **≥ 80%** | Pertanyaan setelah pengguna membaca hasil |
-| Relevansi pertanyaan validasi | **≥ 80%** | Penilaian pengguna setelah menyelesaikan pertanyaan |
-| *System Usability Scale* (SUS) | **≥ 70** | Kuesioner SUS apabila usability test dilakukan |
-| Kualitas frontend | **Tidak ada runtime error yang menghentikan alur**, minimal **2 aksi interaktif dinamis berfungsi** | Pengujian browser dan interaksi |
-| Kesesuaian desain | Halaman prioritas sesuai **Figma Modul 5** | Pembandingan visual berdampingan |
+| Indikator                       | Target PRD                                                                                          | Cara pembuktian                                       |
+| ------------------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Penyelesaian tugas pengguna uji | **≥ 80%**                                                                                           | Observasi skenario input proyek sampai hasil simulasi |
+| Pemahaman hasil                 | **≥ 80%**                                                                                           | Pertanyaan setelah pengguna membaca hasil             |
+| Relevansi pertanyaan validasi   | **≥ 80%**                                                                                           | Penilaian pengguna setelah menyelesaikan pertanyaan   |
+| _System Usability Scale_ (SUS)  | **≥ 70**                                                                                            | Kuesioner SUS apabila usability test dilakukan        |
+| Kualitas frontend               | **Tidak ada runtime error yang menghentikan alur**, minimal **2 aksi interaktif dinamis berfungsi** | Pengujian browser dan interaksi                       |
+| Kesesuaian desain               | Halaman prioritas sesuai **Figma Modul 5**                                                          | Pembandingan visual berdampingan                      |
 
 **Belum ada hasil usability study yang diverifikasi di README ini.** Tidak menyimpulkan nilai SUS atau persentase keberhasilan hanya dari lint/build atau screenshot.
 
@@ -483,18 +483,18 @@ PRD Bagian 4.2 menetapkan **target evaluasi**, bukan hasil yang sudah dicapai:
 
 Tabel berikut merangkum **kriteria penerimaan US-01 sampai US-10** dari PRD sebagai panduan evaluasi, **bukan hasil tes yang otomatis telah lulus**.
 
-| ID | Kebutuhan pengguna | Pemeriksaan penerimaan frontend |
-| --- | --- | --- |
-| **US-01** | Memahami BUKTIVA sebelum memakai layanan | Informasi inti dan CTA tampil; menu Tentang, Cara Kerja, Login, Register berfungsi |
-| **US-02** | Mengetahui tahapan kerja | Empat tahapan ditampilkan berurutan dan dapat diakses dengan navigasi/scroll |
-| **US-03** | Memasukkan bukti proyek | Input URL dan/atau unggahan tersedia; input invalid/kosong memperoleh feedback |
-| **US-04** | Menentukan target role | Role dapat dipilih, deskripsi pekerjaan opsional, pilihan terbaca saat Review |
-| **US-05** | Memeriksa dan memperbaiki input | Review menampilkan data pokok dan pengguna dapat kembali memperbaiki |
-| **US-06** | Menjawab validasi pemahaman proyek | Lima pertanyaan dapat diisi; progres dan Kembali/Lanjutkan bekerja |
-| **US-07** | Memahami kekuatan dan skill gap | Hasil memuat ringkasan, bukti/gap/rekomendasi, dengan label simulasi jika belum ada AI |
-| **US-08** | Meninjau riwayat | Riwayat dummy tampil; pencarian/filter yang ditawarkan benar-benar bekerja |
-| **US-09** | Menggunakan desktop maupun mobile | Konten utama tidak terpotong; tidak ada scroll horizontal yang tidak perlu |
-| **US-10** | Berpindah antarhalaman akun | Login, Register, dan Reset Password terhubung; proses simulasi tidak disebut autentikasi nyata |
+| ID        | Kebutuhan pengguna                       | Pemeriksaan penerimaan frontend                                                                |
+| --------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **US-01** | Memahami BUKTIVA sebelum memakai layanan | Informasi inti dan CTA tampil; menu Tentang, Cara Kerja, Login, Register berfungsi             |
+| **US-02** | Mengetahui tahapan kerja                 | Empat tahapan ditampilkan berurutan dan dapat diakses dengan navigasi/scroll                   |
+| **US-03** | Memasukkan bukti proyek                  | Input URL dan/atau unggahan tersedia; input invalid/kosong memperoleh feedback                 |
+| **US-04** | Menentukan target role                   | Role dapat dipilih, deskripsi pekerjaan opsional, pilihan terbaca saat Review                  |
+| **US-05** | Memeriksa dan memperbaiki input          | Review menampilkan data pokok dan pengguna dapat kembali memperbaiki                           |
+| **US-06** | Menjawab validasi pemahaman proyek       | Lima pertanyaan dapat diisi; progres dan Kembali/Lanjutkan bekerja                             |
+| **US-07** | Memahami kekuatan dan skill gap          | Hasil memuat ringkasan, bukti/gap/rekomendasi, dengan label simulasi jika belum ada AI         |
+| **US-08** | Meninjau riwayat                         | Riwayat dummy tampil; pencarian/filter yang ditawarkan benar-benar bekerja                     |
+| **US-09** | Menggunakan desktop maupun mobile        | Konten utama tidak terpotong; tidak ada scroll horizontal yang tidak perlu                     |
+| **US-10** | Berpindah antarhalaman akun              | Login, Register, dan Reset Password terhubung; proses simulasi tidak disebut autentikasi nyata |
 
 ## 17. Quality Assurance dan Pengujian
 
@@ -511,13 +511,13 @@ git diff --check
 
 Ukuran referensi yang digunakan dalam pengujian pengembangan:
 
-| Perangkat | Viewport |
-| --- | --- |
-| Desktop | **1440 × 900** |
-| Laptop | **1066 × 756** |
-| Tablet | **820 × 900** |
-| Mobile | **390 × 844** |
-| Mobile sempit | **320 × 700** |
+| Perangkat     | Viewport       |
+| ------------- | -------------- |
+| Desktop       | **1440 × 900** |
+| Laptop        | **1066 × 756** |
+| Tablet        | **820 × 900**  |
+| Mobile        | **390 × 844**  |
+| Mobile sempit | **320 × 700**  |
 
 Skenario regresi minimum:
 
@@ -533,20 +533,20 @@ Pada laporan implementasi sebelumnya, sejumlah halaman telah lulus lint, type-ch
 
 ## 18. Status Implementasi dan Kesenjangan
 
-| Area | Status berdasarkan laporan pengembangan, bukan audit terbaru |
-| --- | --- |
-| Landing dan Auth | Halaman frontend tersedia; scroll spy/logout/auth sungguhan memerlukan verifikasi sesuai perubahan terakhir |
-| Dashboard & Workspace bersama | Terimplementasi |
-| Upload Project → Pertanyaan Validasi | Frontend tersedia; alur utama harus diuji ulang, terutama CV opsional dan PDF-only |
-| Hasil Analisis | Demo UI terimplementasi; bukan skor AI dinamis |
-| Skill Gap | Demo tujuh skill Frontend Developer terintegrasi |
-| Roadmap | Demo empat tahap terintegrasi; simpan ke Dashboard berbasis sesi |
-| Riwayat Analisis | Demo empat data, search/filter/sort/dialog terimplementasi |
-| Profile | Paket implementasi telah disiapkan; pemasangan/tes terbaru belum terkonfirmasi |
-| Logout Sidebar dan dropdown | Prompt perbaikan telah disiapkan; hasil terakhir belum terkonfirmasi |
-| Navbar Landing mengikuti scroll | Prompt scroll spy telah disiapkan; hasil terakhir belum terkonfirmasi |
-| Sinkronisasi data Dashboard–Riwayat | Belum menggunakan sumber data backend yang sama |
-| Supabase/Auth/AI produksi | Di luar kewajiban Modul 7 dan belum terverifikasi terintegrasi |
+| Area                                 | Status berdasarkan laporan pengembangan, bukan audit terbaru                                                |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Landing dan Auth                     | Halaman frontend tersedia; scroll spy/logout/auth sungguhan memerlukan verifikasi sesuai perubahan terakhir |
+| Dashboard & Workspace bersama        | Terimplementasi                                                                                             |
+| Upload Project → Pertanyaan Validasi | Frontend tersedia; alur utama harus diuji ulang, terutama CV opsional dan PDF-only                          |
+| Hasil Analisis                       | Demo UI terimplementasi; bukan skor AI dinamis                                                              |
+| Skill Gap                            | Demo tujuh skill Frontend Developer terintegrasi                                                            |
+| Roadmap                              | Demo empat tahap terintegrasi; simpan ke Dashboard berbasis sesi                                            |
+| Riwayat Analisis                     | Demo empat data, search/filter/sort/dialog terimplementasi                                                  |
+| Profile                              | Paket implementasi telah disiapkan; pemasangan/tes terbaru belum terkonfirmasi                              |
+| Logout Sidebar dan dropdown          | Prompt perbaikan telah disiapkan; hasil terakhir belum terkonfirmasi                                        |
+| Navbar Landing mengikuti scroll      | Prompt scroll spy telah disiapkan; hasil terakhir belum terkonfirmasi                                       |
+| Sinkronisasi data Dashboard–Riwayat  | Belum menggunakan sumber data backend yang sama                                                             |
+| Supabase/Auth/AI produksi            | Di luar kewajiban Modul 7 dan belum terverifikasi terintegrasi                                              |
 
 ### Kesenjangan yang Layak Diprioritaskan
 
@@ -593,7 +593,7 @@ Repository merupakan pekerjaan kolaboratif. Sebelum mengubah kode:
 6. Jangan menyunting `legacy-html/` hanya untuk menyelesaikan tugas Next.js.
 7. Jalankan quality checks dan uji browser sesuai lingkup perubahan.
 8. Periksa file yang masuk staging sebelum commit; jangan commit `.env.local`, token API, maupun data sensitif.
-9. Gunakan commit yang spesifik dan jangan melakukan *force push* pada branch bersama.
+9. Gunakan commit yang spesifik dan jangan melakukan _force push_ pada branch bersama.
 
 Contoh perintah:
 
@@ -614,18 +614,18 @@ Contoh pesan commit: `feat: implement profile page`, `fix: landing navigation sc
 
 ## 21. Pemecahan Masalah
 
-| Masalah | Pemeriksaan awal |
-| --- | --- |
-| `npm run dev` gagal | Periksa versi Node.js, dependency, dan pesan terminal |
-| Port 3000 terpakai | Gunakan alamat/port alternatif yang ditampilkan oleh Next.js |
-| Aset tidak muncul | Pastikan gambar di `public/images/` dan path `/images/...` benar |
-| Route 404 | Periksa struktur `src/app/` dan konfigurasi di `src/data/analysis.ts`/`workspace.ts` |
-| Sidebar/Header tampil dua kali | Jangan render navigasi lagi di halaman anak Workspace |
-| Data roadmap hilang di tab/sesi lain | `sessionStorage` bukan penyimpanan permanen |
-| Data Dashboard tidak sama dengan Riwayat | Data demo berasal dari sumber contoh berbeda |
-| Skor tetap walau masukan berubah | Hasil belum terhubung ke analisis AI produksi |
-| PDF-only tidak bisa lanjut | Keterbatasan state/upload frontend yang perlu ditangani sebagai gap implementasi |
-| `os error 112` pada Windows | Periksa ruang disk sistem dan folder temp; jangan menghapus `.git` atau konfigurasi secara sembarangan |
+| Masalah                                  | Pemeriksaan awal                                                                                       |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `npm run dev` gagal                      | Periksa versi Node.js, dependency, dan pesan terminal                                                  |
+| Port 3000 terpakai                       | Gunakan alamat/port alternatif yang ditampilkan oleh Next.js                                           |
+| Aset tidak muncul                        | Pastikan gambar di `public/images/` dan path `/images/...` benar                                       |
+| Route 404                                | Periksa struktur `src/app/` dan konfigurasi di `src/data/analysis.ts`/`workspace.ts`                   |
+| Sidebar/Header tampil dua kali           | Jangan render navigasi lagi di halaman anak Workspace                                                  |
+| Data roadmap hilang di tab/sesi lain     | `sessionStorage` bukan penyimpanan permanen                                                            |
+| Data Dashboard tidak sama dengan Riwayat | Data demo berasal dari sumber contoh berbeda                                                           |
+| Skor tetap walau masukan berubah         | Hasil belum terhubung ke analisis AI produksi                                                          |
+| PDF-only tidak bisa lanjut               | Keterbatasan state/upload frontend yang perlu ditangani sebagai gap implementasi                       |
+| `os error 112` pada Windows              | Periksa ruang disk sistem dan folder temp; jangan menghapus `.git` atau konfigurasi secara sembarangan |
 
 ## 22. Dokumentasi, Privasi, dan Lisensi
 
@@ -656,4 +656,4 @@ Proyek dikembangkan oleh **Kelompok 3 — Web & UI/UX Developer, VINIX7**. PRD m
 
 **Pemeliharaan README:** Perbarui isi setelah setiap perubahan penting, terutama saat implementasi Profile, logout, scroll spy, validasi PDF/GitLab, data backend, atau fitur AI telah benar-benar diuji. Status "selesai" hanya boleh diberikan berdasarkan bukti kode dan pengujian, bukan dari screenshot atau instruksi implementasi semata.
 
-**BUKTIVA — Evidence-Based Skill Gap Analyzer | README sementara, selaras PRD Bagian 1–9 | 17 Oktober 2026**
+**BUKTIVA - Evidence-Based Skill Gap Analyzer**
