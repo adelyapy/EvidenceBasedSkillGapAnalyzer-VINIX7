@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import AnalysisStepper from "./AnalysisStepper";
-import TargetRoleIcon from "./TargetRoleIcon";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import {
   TARGET_ROLE_DESCRIPTION_LIMIT,
@@ -13,18 +12,9 @@ import {
   targetRoleInformation,
   targetRoleOptions,
 } from "@/data/target-role";
-import type { TargetRoleDraft, TargetRoleId } from "@/types/target-role";
+import type { TargetRoleDraft } from "@/types/target-role";
 
-const DEFAULT_ROLE: TargetRoleId = "frontend";
-
-function isTargetRoleId(value: unknown): value is TargetRoleId {
-  return targetRoleOptions.some((option) => option.id === value);
-}
-
-function roleIdFromLabel(label: string | null): TargetRoleId | null {
-  const option = targetRoleOptions.find((item) => item.label === label);
-  return option?.id ?? null;
-}
+const DEFAULT_ROLE = "Frontend Developer";
 
 function readSavedDraft(): TargetRoleDraft {
   const sharedRole = sessionStorage.getItem(analysisStorage.targetRole);
@@ -37,9 +27,10 @@ function readSavedDraft(): TargetRoleDraft {
 
     if (parsed && typeof parsed === "object") {
       const candidate = parsed as Record<string, unknown>;
-      if (isTargetRoleId(candidate.role)) {
+      if (typeof candidate.role === "string" && candidate.role.trim()) {
+        const legacyRole = targetRoleOptions.find((option) => option.id === candidate.role);
         return {
-          role: candidate.role,
+          role: legacyRole?.label ?? candidate.role,
           jobDescription:
             typeof candidate.jobDescription === "string"
               ? candidate.jobDescription.slice(0, TARGET_ROLE_DESCRIPTION_LIMIT)
@@ -52,23 +43,23 @@ function readSavedDraft(): TargetRoleDraft {
   }
 
   return {
-    role: roleIdFromLabel(sharedRole) ?? DEFAULT_ROLE,
+    role: sharedRole?.trim() || DEFAULT_ROLE,
     jobDescription: sharedDescription.slice(0, TARGET_ROLE_DESCRIPTION_LIMIT),
   };
 }
 
 function writeSavedDraft(draft: TargetRoleDraft) {
-  const option = targetRoleOptions.find((item) => item.id === draft.role);
-  if (!option) throw new Error("Target role tidak valid.");
+  const role = draft.role.trim();
+  if (!role) throw new Error("Target role belum diisi.");
 
-  sessionStorage.setItem(TARGET_ROLE_STORAGE_KEY, JSON.stringify(draft));
-  sessionStorage.setItem(analysisStorage.targetRole, option.label);
+  sessionStorage.setItem(TARGET_ROLE_STORAGE_KEY, JSON.stringify({ ...draft, role }));
+  sessionStorage.setItem(analysisStorage.targetRole, role);
   sessionStorage.setItem(analysisStorage.jobDescription, draft.jobDescription);
 }
 
 export default function TargetRolePage() {
   const router = useRouter();
-  const [role, setRole] = useState<TargetRoleId>(DEFAULT_ROLE);
+  const [role, setRole] = useState(DEFAULT_ROLE);
   const [jobDescription, setJobDescription] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [storageAvailable, setStorageAvailable] = useState(true);
@@ -107,7 +98,7 @@ export default function TargetRolePage() {
     }
   }
 
-  function selectRole(nextRole: TargetRoleId) {
+  function selectRole(nextRole: string) {
     setRole(nextRole);
     setMessage("");
     persistDraft({ role: nextRole, jobDescription });
@@ -117,8 +108,8 @@ export default function TargetRolePage() {
     event.preventDefault();
     setMessage("");
 
-    if (!isTargetRoleId(role)) {
-      setMessage("Pilih target role terlebih dahulu.");
+    if (!role.trim()) {
+      setMessage("Masukkan target role terlebih dahulu.");
       return;
     }
 
@@ -166,43 +157,19 @@ export default function TargetRolePage() {
               <h2 id="bktr-role-heading">Target Role</h2>
               <p>Pilih posisi pekerjaan yang ingin kamu tuju.</p>
             </div>
-            <label className="bktr-selectField" htmlFor="bktr-role-select">
-              <span>Pilihan role</span>
-              <select
-                id="bktr-role-select"
-                value={role}
-                onChange={(event) => selectRole(event.target.value as TargetRoleId)}
-                required
-              >
-                {targetRoleOptions.map((option) => (
-                  <option key={option.id} value={option.id}>{option.label}</option>
-                ))}
-              </select>
-            </label>
           </div>
-
-          <fieldset className="bktr-roleGrid">
-            <legend className="bktr-srOnly">Pilih target role</legend>
-            {targetRoleOptions.map((option) => {
-              const selected = option.id === role;
-              return (
-                <label
-                  className={`bktr-roleCard${selected ? " bktr-roleCard--selected" : ""}`}
-                  key={option.id}
-                >
-                  <input
-                    type="radio"
-                    name="target-role"
-                    value={option.id}
-                    checked={selected}
-                    onChange={() => selectRole(option.id)}
-                  />
-                  <span className="bktr-roleIcon"><TargetRoleIcon name={option.icon} /></span>
-                  <span>{option.label}</span>
-                </label>
-              );
-            })}
-          </fieldset>
+          <label className="bktr-selectField" htmlFor="bktr-role-input">
+            <span>Target role</span>
+            <input
+              id="bktr-role-input"
+              type="text"
+              value={role}
+              placeholder="Contoh: Management Trainee"
+              onChange={(event) => selectRole(event.target.value)}
+              required
+            />
+          </label>
+          <p className="bktr-roleHint">Masukkan posisi pekerjaan yang ingin kamu tuju.</p>
         </section>
 
         <section className="bktr-descriptionSection" aria-labelledby="bktr-description-heading">

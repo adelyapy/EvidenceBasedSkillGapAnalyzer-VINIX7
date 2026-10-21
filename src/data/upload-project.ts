@@ -25,6 +25,13 @@ export const uploadProjectSources: UploadProjectSourceOption[] = [
     placeholder: "https://project-kamu.com",
   },
   {
+    id: "linkedin",
+    label: "LinkedIn URL",
+    description: "Opsional untuk portofolio dan pengalaman profesional",
+    inputLabel: "Link Profil LinkedIn",
+    placeholder: "https://www.linkedin.com/in/namamu",
+  },
+  {
     id: "pdf",
     label: "Upload PDF",
     description: "Unggah file laporan atau dokumentasi",
@@ -33,7 +40,7 @@ export const uploadProjectSources: UploadProjectSourceOption[] = [
 ];
 
 export const uploadProjectTips = [
-  "Gunakan repository publik agar dapat diakses oleh AI.",
-  "Pastikan terdapat README yang menjelaskan tujuan, teknologi, dan peran kamu.",
-  "Pilih proyek yang paling relevan dan menunjukkan kemampuan terbaik kamu.",
+  "Pilih bukti yang paling relevan dengan target pekerjaan yang kamu pilih.",
+  "Gunakan LinkedIn untuk menampilkan pengalaman, organisasi, atau sertifikat profesional.",
+  "Sertakan dokumentasi, laporan, atau portofolio yang menunjukkan kontribusi terbaik kamu.",
 ];

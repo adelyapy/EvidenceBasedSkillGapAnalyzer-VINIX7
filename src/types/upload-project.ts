@@ -1,4 +1,4 @@
-export type UploadProjectUrlSource = "github" | "portfolio" | "deployment";
+export type UploadProjectUrlSource = "github" | "portfolio" | "deployment" | "linkedin";
 export type UploadProjectSource = UploadProjectUrlSource | "pdf";
 
 export type UploadProjectSourceOption = {
@@ -20,7 +20,12 @@ export type UploadProjectPdfEvidence = {
   id: string;
   kind: "pdf";
   source: "pdf";
-  file: File;
+  file: File | {
+    name: string;
+    size: number;
+    type?: string;
+    lastModified?: number;
+  };
 };
 
 export type UploadProjectEvidence = UploadProjectLinkEvidence | UploadProjectPdfEvidence;

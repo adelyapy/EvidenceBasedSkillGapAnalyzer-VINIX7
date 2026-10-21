@@ -492,6 +492,14 @@
     align-items: end;
   }
 
+  .bkp-sourceForm--pdf {
+    align-items: start;
+  }
+
+  .bkp-sourceForm--pdf .bkp-addButton {
+    margin-top: 23px;
+  }
+
   .bkp-tips {
     grid-template-columns: minmax(230px, .8fr) minmax(0, 1.4fr);
     align-items: center;
@@ -505,7 +513,7 @@
 
 @container upload-project (min-width: 700px) {
   .bkp-sourceTabs {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .bkp-sourceTab,

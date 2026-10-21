@@ -15,9 +15,18 @@
 .review-field > b { padding: 9px; display: flex; align-items: center; justify-content: center; border-right: 1px solid #6f92be; font-size: 12px; font-weight: 500; }
 .review-field > div { min-width: 0; padding: 9px 18px; display: flex; align-items: center; color: #47546b; overflow-wrap: anywhere; font-size: 12px; }
 .review-field a { color: #345479; text-decoration: underline; }
+.review-file { display: inline-flex; align-items: center; color: #47546b; font-weight: 600; }
 .review-muted { color: #6a7586; font-style: italic; }
-.review-empty { padding: 28px 20px; color: #4e5c70; text-align: center; }
-.review-empty span { margin-left: 4px; color: #516982; text-decoration: underline; cursor: not-allowed; }
+.review-project-skeleton { display: grid; gap: 10px; padding: 20px 14px; }
+.review-project-skeleton span { display: block; height: 18px; border-radius: 5px; background: linear-gradient(90deg, #d5e1ed 25%, #edf3f8 50%, #d5e1ed 75%); background-size: 200% 100%; animation: review-skeleton 1.25s ease-in-out infinite; }
+.review-project-skeleton span:nth-child(2) { width: 82%; }
+.review-project-skeleton span:nth-child(3) { width: 58%; }
+.review-empty { min-height: 166px; padding: 22px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #4e5c70; text-align: center; }
+.review-empty-icon { width: 34px; height: 34px; margin: 0 0 7px; display: grid; place-items: center; border-radius: 50%; background: #dcebf6; color: #315a7f; font-size: 23px; font-weight: 800; }
+.review-empty strong { color: #344c64; font-size: 14px; }
+.review-empty p { margin: 5px 0 0; font-size: 12px; }
+.review-empty a { margin-top: 11px; padding: 7px 10px; border: 1px solid #2a5b93; border-radius: 4px; color: #17436d; font-size: 12px; font-weight: 700; text-decoration: none; }
+.review-empty a:hover, .review-empty a:focus-visible { background: #edf5fc; }
 .review-bottom-grid { margin-top: 27px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .review-role-content { min-height: 109px; padding: 11px 13px; display: flex; align-items: center; gap: 12px; }
 .review-role-content img { flex-shrink: 0; object-fit: contain; }
@@ -25,18 +34,43 @@
 .review-role-content p { margin: 5px 0 0; color: #39495a; font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
 .review-cv-content { min-height: 109px; padding: 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
 .review-cv-content p { max-width: 100%; margin: 0; color: #4a586e; overflow-wrap: anywhere; text-align: center; font-size: 13px; font-weight: 700; }
-.review-accept { margin-top: 14px; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: underline; text-decoration-color: #2389df; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-.review-accept input { width: 16px; height: 16px; margin: 0; accent-color: #4385c2; }
 .review-actions { margin-top: 11px; display: flex; align-items: center; justify-content: space-between; }
 .review-back, .review-start { min-height: 40px; min-width: 127px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #222; border-radius: 3px; font-size: 14px; font-weight: 600; text-decoration: none; }
 .review-back { background: transparent; }
 .review-start { min-width: 139px; background: #295376; color: #fff; cursor: pointer; }
 .review-main .review-start:disabled { cursor: not-allowed; opacity: .55; }
-.review-notice { margin: 9px 0 0; padding: 8px 10px; border-left: 3px solid #337abd; background: #e9eff6; font-size: 12px; }
 .review-help { margin: 7px 0 0; color: #6e6e6e; font-size: 11px; }
+.review-toast { position: fixed; z-index: 110; right: 24px; bottom: 24px; max-width: min(390px, calc(100vw - 32px)); padding: 13px 16px; display: flex; align-items: center; gap: 9px; border: 1px solid; border-radius: 9px; box-shadow: 0 10px 26px #14213d2e; font-size: 13px; font-weight: 700; animation: review-toast-in .2s ease-out; }
+.review-toast span { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; font-size: 13px; }
+.review-toast--success { border-color: #4f9b7d; background: #edf9f3; color: #176447; }
+.review-toast--success span { background: #267b59; color: #fff; }
+.review-toast--error { border-color: #ce7777; background: #fff1f1; color: #9b2828; }
+.review-toast--error span { background: #b73535; color: #fff; }
+.review-confirmBackdrop { position: fixed; z-index: 120; inset: 0; display: grid; place-items: center; padding: 20px; background: rgb(16 32 51 / 52%); }
+.review-confirmDialog { width: min(100%, 440px); padding: 28px; border: 1px solid #8da6bd; border-radius: 14px; background: #fff; box-shadow: 0 20px 50px #14213d45; text-align: center; }
+.review-confirmIcon { width: 46px; height: 46px; margin: 0 auto 13px; display: grid; place-items: center; border-radius: 50%; background: #dceff3; color: #267b59; font-size: 24px; font-weight: 800; }
+.review-confirmDialog h2 { margin: 0; color: #263c51; font-size: 20px; }
+.review-confirmDialog p { margin: 10px 0 0; color: #526272; font-size: 14px; line-height: 1.5; }
+.review-confirmActions { margin-top: 23px; display: flex; justify-content: center; gap: 10px; }
+.review-confirmActions button { min-height: 40px; padding: 8px 14px; border-radius: 6px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.review-confirmCancel { border: 1px solid #a6b7c5; background: #fff; color: #405365; }
+.review-confirmAccept { border: 1px solid #245f85; background: #2e608c; color: #fff; }
+.review-confirmCancel:hover, .review-confirmCancel:focus-visible { background: #eef3f6; }
+.review-confirmAccept:hover, .review-confirmAccept:focus-visible { background: #24547f; }
+
+@keyframes review-skeleton { to { background-position: -200% 0; } }
+@keyframes review-toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 720px) {
   .review-main { padding: 0 2px 12px; }
   .review-bottom-grid { grid-template-columns: 1fr; }
   .review-field { grid-template-columns: 34% 66%; }
+  .review-toast { right: 16px; bottom: 16px; }
+  .review-confirmActions { flex-direction: column-reverse; }
+  .review-confirmActions button { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-project-skeleton span,
+  .review-toast { animation: none; }
 }

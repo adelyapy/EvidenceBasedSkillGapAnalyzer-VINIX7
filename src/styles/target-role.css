@@ -75,10 +75,7 @@
 }
 
 .bktr-fieldHeading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 11px;
 }
 
 .bktr-fieldHeading h2,
@@ -104,12 +101,14 @@
   gap: 5px;
 }
 
+.bktr-fieldSection .bktr-selectField { margin-top: 14px; }
+
 .bktr-selectField > span {
   font-size: .78rem;
   font-weight: 700;
 }
 
-.bktr-selectField select {
+.bktr-selectField input {
   width: 100%;
   min-height: 45px;
   padding: 0 38px 0 13px;
@@ -121,22 +120,15 @@
   font-size: .9rem;
 }
 
-.bktr-selectField select:focus-visible,
+.bktr-selectField input:focus-visible,
 .bktr-descriptionSection textarea:focus-visible {
   outline: 3px solid #8fc8ef;
   outline-offset: 2px;
   border-color: #286ca4;
 }
 
-.bktr-roleGrid {
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
-  border: 0;
-}
+.bktr-roleHint { margin: 0; color: #52606c; font-size: .82rem; line-height: 1.45; }
+.bktr-selectField + .bktr-roleHint { margin-top: 9px; }
 
 .bktr-roleCard {
   position: relative;
@@ -325,27 +317,11 @@
   opacity: .55;
 }
 
-@container target-role (min-width: 400px) {
-  .bktr-roleGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
 @container target-role (min-width: 620px) {
   .bktr-hero {
     grid-template-columns: minmax(0, 1fr) minmax(210px, 290px);
   }
 
-  .bktr-fieldHeading {
-    grid-template-columns: minmax(0, 1fr) minmax(245px, 340px);
-    align-items: end;
-  }
-}
-
-@container target-role (min-width: 700px) {
-  .bktr-roleGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 480px) {

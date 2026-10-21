@@ -48,6 +48,8 @@ function ProjectSourceIcon({ source }: { source: UploadProjectSource }) {
       return <svg {...common}><path d="M10 13a5 5 0 0 0 7.1 0l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1" /><path d="M14 11a5 5 0 0 0-7.1 0l-2 2A5 5 0 0 0 12 20.1l1.1-1.1" /></svg>;
     case "deployment":
       return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" /></svg>;
+    case "linkedin":
+      return <svg {...common}><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M8 10v6M8 7v.01M12 16v-3.5a2.5 2.5 0 0 1 5 0V16M12 12v4" /></svg>;
     case "pdf":
       return <svg {...common}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6M8 15h8M8 18h6" /></svg>;
   }
@@ -63,7 +65,7 @@ function CloudUploadIcon() {
 }
 
 function isUrlSource(value: unknown): value is UploadProjectUrlSource {
-  return value === "github" || value === "portfolio" || value === "deployment";
+  return value === "github" || value === "portfolio" || value === "deployment" || value === "linkedin";
 }
 
 function validateUrl(rawValue: string, source: UploadProjectUrlSource): ValidationResult {
@@ -93,6 +95,13 @@ function validateUrl(rawValue: string, source: UploadProjectUrlSource): Validati
     }
   }
 
+  if (source === "linkedin") {
+    const hostname = parsed.hostname.toLowerCase();
+    if ((hostname !== "linkedin.com" && hostname !== "www.linkedin.com") || !parsed.pathname.startsWith("/in/")) {
+      return { ok: false, error: "Gunakan URL profil LinkedIn dengan format linkedin.com/in/namamu." };
+    }
+  }
+
   parsed.hash = "";
   const normalized = parsed.toString();
   return { ok: true, value: parsed.pathname === "/" ? normalized : normalized.replace(/\/$/, "") };
@@ -113,6 +122,40 @@ function parseStoredLinks(rawValue: string): UploadProjectLinkEvidence[] {
       restored.push({ id: candidate.id, kind: "url", source: candidate.source, value: validation.value });
     }
     return restored;
+  } catch {
+    return [];
+  }
+}
+
+function parseStoredPdfs(): UploadProjectPdfEvidence[] {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const rawProjects: unknown = JSON.parse(sessionStorage.getItem(analysisStorage.projects) || "[]");
+    if (!Array.isArray(rawProjects)) return [];
+
+    return rawProjects.flatMap((project) => {
+      if (!project || typeof project !== "object") return [];
+      const candidate = project as Record<string, unknown>;
+      if (
+        candidate.origin !== UPLOAD_PROJECT_ORIGIN ||
+        candidate.evidenceKind !== "pdf" ||
+        typeof candidate.id !== "string" ||
+        typeof candidate.fileName !== "string" ||
+        typeof candidate.fileSize !== "number"
+      ) return [];
+
+      return [{
+        id: candidate.id,
+        kind: "pdf" as const,
+        source: "pdf" as const,
+        file: {
+          name: candidate.fileName,
+          size: candidate.fileSize,
+          type: typeof candidate.fileType === "string" ? candidate.fileType : "application/pdf",
+        },
+      }];
+    });
   } catch {
     return [];
   }
@@ -149,14 +192,28 @@ function persistLinks(items: UploadProjectEvidence[], broadcast = true): boolean
           return (project as Record<string, unknown>).origin !== UPLOAD_PROJECT_ORIGIN;
         }) as AnalysisProject[]
       : [];
-    const adaptedProjects: SharedUploadProject[] = links.map((item) => ({
-      id: item.id,
-      origin: UPLOAD_PROJECT_ORIGIN,
-      type: sourceLabels[item.source],
-      name: sourceLabels[item.source],
-      value: item.value,
-      link: item.value,
-    }));
+    const adaptedProjects: SharedUploadProject[] = items.map((item) => (
+      item.kind === "url"
+        ? {
+            id: item.id,
+            origin: UPLOAD_PROJECT_ORIGIN,
+            evidenceKind: "url",
+            type: sourceLabels[item.source],
+            name: sourceLabels[item.source],
+            value: item.value,
+            link: item.value,
+          }
+        : {
+            id: item.id,
+            origin: UPLOAD_PROJECT_ORIGIN,
+            evidenceKind: "pdf",
+            type: sourceLabels[item.source],
+            name: item.file.name,
+            fileName: item.file.name,
+            fileSize: item.file.size,
+            fileType: item.file.type || "application/pdf",
+          }
+    ));
 
     sessionStorage.setItem(
       analysisStorage.projects,
@@ -193,7 +250,7 @@ export default function UploadProjectPage() {
   const [activeSource, setActiveSource] = useState<UploadProjectSource>("github");
   const [urlValue, setUrlValue] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [pdfEvidence, setPdfEvidence] = useState<UploadProjectPdfEvidence[]>([]);
+  const [pdfEvidence, setPdfEvidence] = useState<UploadProjectPdfEvidence[]>(() => parseStoredPdfs());
   const [error, setError] = useState("");
   const [feedback, setFeedback] = useState("");
   const [storageAvailable, setStorageAvailable] = useState(true);
@@ -206,13 +263,13 @@ export default function UploadProjectPage() {
     const frame = requestAnimationFrame(() => {
       try {
         sessionStorage.getItem(UPLOAD_PROJECT_LINKS_STORAGE_KEY);
-        setStorageAvailable(persistLinks(linkEvidence, false));
+        setStorageAvailable(true);
       } catch {
         setStorageAvailable(false);
       }
     });
     return () => cancelAnimationFrame(frame);
-  }, [linkEvidence]);
+  }, []);
 
   const currentSource = uploadProjectSources.find((source) => source.id === activeSource) ?? uploadProjectSources[0];
 
@@ -257,10 +314,13 @@ export default function UploadProjectPage() {
         return;
       }
 
-      setPdfEvidence((items) => [...items, { id: createEvidenceId(), kind: "pdf", source: "pdf", file: selectedFile }]);
+      const pdfItem: UploadProjectPdfEvidence = { id: createEvidenceId(), kind: "pdf", source: "pdf", file: selectedFile };
+      const nextEvidence = [...evidence, pdfItem];
+      setPdfEvidence((items) => [...items, pdfItem]);
+      setStorageAvailable(persistLinks(nextEvidence));
       setSelectedFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
-      setFeedback("Metadata PDF ditambahkan untuk sesi halaman ini. File belum diunggah ke server.");
+      setFeedback("Dokumen PDF ditambahkan dan akan ditampilkan pada halaman review. File belum diunggah ke server.");
       return;
     }
 
@@ -296,15 +356,14 @@ export default function UploadProjectPage() {
     setFeedback("Bukti proyek dihapus.");
   }
 
-  const hasPersistentEvidence = evidence.some((item) => item.kind === "url");
   const hasPdfEvidence = evidence.some((item) => item.kind === "pdf");
 
   function continueToTargetRole() {
     setError("");
     setFeedback("");
 
-    if (!hasPersistentEvidence) {
-      setError("Tambahkan minimal satu URL proyek agar bukti tetap tersedia pada tahap berikutnya.");
+    if (evidence.length === 0) {
+      setError("Tambahkan minimal satu URL atau dokumen PDF untuk melanjutkan.");
       return;
     }
 
@@ -343,12 +402,12 @@ export default function UploadProjectPage() {
           })}
         </div>
 
-        <form className="bkp-sourceForm" id="bkp-source-panel" role="tabpanel" aria-labelledby={`bkp-tab-${activeSource}`} onSubmit={addEvidence} noValidate>
+        <form className={`bkp-sourceForm${activeSource === "pdf" ? " bkp-sourceForm--pdf" : ""}`} id="bkp-source-panel" role="tabpanel" aria-labelledby={`bkp-tab-${activeSource}`} onSubmit={addEvidence} noValidate>
           {activeSource === "pdf" ? (
             <div className="bkp-fileField" key="pdf-field">
               <label htmlFor="bkp-project-file">{currentSource.inputLabel}</label>
               <input ref={fileInputRef} id="bkp-project-file" name="project_file" type="file" accept=".pdf,application/pdf" onChange={onFileChange} aria-describedby="bkp-file-note bkp-form-error" />
-              <span id="bkp-file-note">PDF belum diunggah dan hanya tersedia selama halaman ini dibuka.</span>
+            <span id="bkp-file-note">Nama dan ukuran PDF akan diteruskan ke halaman review. File belum diunggah ke server.</span>
             </div>
           ) : (
             <div className="bkp-urlField" key="url-field">
@@ -400,18 +459,16 @@ export default function UploadProjectPage() {
         <p id="bkp-target-note">
           {!storageAvailable
             ? "Penyimpanan sesi tidak tersedia. Perjalanan ke tahap berikutnya dihentikan agar data tidak hilang."
-            : !hasPersistentEvidence && hasPdfEvidence
-              ? "PDF belum diunggah dan akan hilang saat berpindah halaman. Tambahkan minimal satu URL proyek untuk melanjutkan."
-              : !hasPersistentEvidence
-                ? "Tambahkan minimal satu URL proyek untuk melanjutkan ke Target Role."
+            : evidence.length === 0
+              ? "Tambahkan minimal satu URL atau dokumen PDF untuk melanjutkan ke Target Role."
                 : hasPdfEvidence
-                  ? "URL proyek siap diteruskan. PDF belum diunggah dan tidak akan ikut tersimpan pada tahap berikutnya."
+                  ? "Bukti proyek siap diteruskan. Nama dan ukuran PDF akan terlihat pada halaman review; file belum diunggah ke server."
                   : "Bukti proyek sudah tersimpan untuk sesi ini dan siap diteruskan ke Target Role."}
         </p>
         <button
           className="bkp-continue"
           type="button"
-          disabled={!hasPersistentEvidence || !storageAvailable}
+          disabled={evidence.length === 0 || !storageAvailable}
           aria-describedby="bkp-target-note"
           onClick={continueToTargetRole}
         >
