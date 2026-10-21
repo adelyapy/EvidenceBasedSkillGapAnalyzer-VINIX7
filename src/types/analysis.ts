@@ -15,6 +15,10 @@ export type AnalysisProject = {
   deskripsi?: string;
   link?: string;
   url?: string;
+  evidenceKind?: "url" | "pdf";
+  fileName?: string;
+  fileSize?: number;
+  fileType?: string;
 };
 
 export type AnalysisCv = {

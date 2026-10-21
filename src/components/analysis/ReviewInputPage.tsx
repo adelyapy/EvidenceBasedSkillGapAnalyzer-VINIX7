@@ -4,11 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import type { AnalysisCv, AnalysisInput, AnalysisProject } from "@/types/analysis";
 
 const EMPTY_INPUT: AnalysisInput = { projects: [], role: "", jobDescription: "", cv: null };
+
+function formatFileSize(size?: number) {
+  if (!size) return "Ukuran tidak tersedia";
+  if (size < 1024) return `${size} B`;
+  return `${(size / 1024 / 1024).toFixed(2)} MB`;
+}
 
 function readInput(): AnalysisInput {
   const readJson = (key: string): unknown => {
@@ -48,33 +55,38 @@ export default function ReviewInputPage() {
   const router = useRouter();
   const [data, setData] = useState<AnalysisInput>(EMPTY_INPUT);
   const [loaded, setLoaded] = useState(false);
-  const [accepted, setAccepted] = useState(false);
-  const [message, setMessage] = useState("");
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => {
+    const timer = window.setTimeout(() => {
       setData(readInput());
       setLoaded(true);
-    });
-    return () => cancelAnimationFrame(frame);
+    }, 350);
+    return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = window.setTimeout(() => setToast(null), 3500);
+    return () => window.clearTimeout(timer);
+  }, [toast]);
 
   const hasProjects = data.projects.length > 0;
   const hasRole = Boolean(data.role.trim());
-  const canAnalyze = hasProjects && hasRole && accepted;
+  const canAnalyze = hasProjects && hasRole;
+
+  function showToast(type: "success" | "error", message: string) {
+    setToast({ type, message });
+  }
 
   function startAnalysis() {
     if (!hasProjects || !hasRole) {
-      setMessage("Tambahkan minimal satu proyek dan pilih target role sebelum memulai analisis.");
+      showToast("error", "Lengkapi proyek dan target role sebelum memulai analisis.");
       return;
     }
 
-    if (!accepted) {
-      setMessage("Centang konfirmasi kebenaran data terlebih dahulu.");
-      return;
-    }
-
-    router.push(analysisRoutes.process);
+    setConfirmationOpen(true);
   }
 
   return (
@@ -86,26 +98,34 @@ export default function ReviewInputPage() {
 
         <section className="review-box review-project" aria-labelledby="project-head">
           <div className="review-box-heading"><h2 id="project-head">Informasi Project</h2><EditButton href={analysisRoutes.uploadProject} label="informasi project" /></div>
-          {hasProjects ? (
+          {!loaded ? (
+            <div className="review-project-skeleton" aria-label="Memuat daftar project" aria-busy="true">
+              <span /><span /><span />
+            </div>
+          ) : hasProjects ? (
             <div className="review-project-list">
               {data.projects.map((project, index) => {
+                const isPdf = project.evidenceKind === "pdf";
                 const identifier = project.link || project.url || project.value || "";
-                const isLink = /^https?:\/\//i.test(identifier);
+                const isLink = !isPdf && /^https?:\/\//i.test(identifier);
                 const projectName = project.name || project.title || (isLink ? `Project ${index + 1}` : project.value || `Project ${index + 1}`);
-                const description = project.description || project.deskripsi || "";
-
                 return (
                   <div className="review-project-record" key={`${identifier}-${index}`}>
                     {data.projects.length > 1 && <p className="review-project-count">Project {index + 1}</p>}
-                    <div className="review-field"><b>{isLink ? "Link Project" : "Sumber Project"}</b><div>{identifier ? isLink ? <a href={identifier} target="_blank" rel="noopener noreferrer">{identifier}</a> : identifier : <span className="review-muted">Belum diisi</span>}</div></div>
-                    <div className="review-field"><b>Nama Project</b><div>{projectName}</div></div>
-                    <div className="review-field"><b>Deskripsi</b><div>{description || <span className="review-muted">Belum diisi</span>}</div></div>
+                    <div className="review-field"><b>{isPdf ? "Dokumen PDF" : isLink ? "Link Project" : "Sumber Project"}</b><div>{isPdf ? <span className="review-file">{project.fileName || projectName}</span> : identifier ? isLink ? <a href={identifier} target="_blank" rel="noopener noreferrer">{identifier}</a> : identifier : <span className="review-muted">Belum diisi</span>}</div></div>
+                    <div className="review-field"><b>{isPdf ? "Ukuran File" : "Nama Project"}</b><div>{isPdf ? formatFileSize(project.fileSize) : projectName}</div></div>
+
                   </div>
                 );
               })}
             </div>
           ) : (
-            <div className="review-empty">{loaded ? "Belum ada project yang ditambahkan." : "Memuat data project..."} <span title="Upload Project belum tersedia di Next.js">Tambah project</span></div>
+            <div className="review-empty" role="status">
+              <span className="review-empty-icon" aria-hidden="true">⌁</span>
+              <strong>Belum ada project yang ditambahkan</strong>
+              <p>Tambahkan setidaknya satu project agar analisis dapat dimulai.</p>
+              <Link href={analysisRoutes.uploadProject}>Tambah project</Link>
+            </div>
           )}
         </section>
 
@@ -120,11 +140,34 @@ export default function ReviewInputPage() {
           </section>
         </div>
 
-        <label className="review-accept"><input type="checkbox" checked={accepted} onChange={(event) => { setAccepted(event.target.checked); setMessage(""); }} />Saya yakin data sudah benar dan siap dianalisis oleh AI.</label>
-        {message && <p className="review-notice" role="status">{message}</p>}
         <div className="review-actions"><Link className="review-back" href={analysisRoutes.uploadCv}>← Kembali</Link><button type="button" className="review-start" disabled={!loaded || !canAnalyze} onClick={startAnalysis}>Mulai Analisis →</button></div>
-        {loaded && (!hasProjects || !hasRole) && <p className="review-help">Tombol Mulai Analisis aktif setelah minimal satu project dan target role tersedia, serta konfirmasi dicentang. CV tetap opsional.</p>}
+        {loaded && (!hasProjects || !hasRole) && <p className="review-help">Tombol Mulai Analisis tersedia setelah minimal satu project dan target role ada. CV bersifat opsional.</p>}
       </div>
+      {toast && <div className={`review-toast review-toast--${toast.type}`} role="status" aria-live="polite"><span aria-hidden="true">{toast.type === "success" ? "✓" : "!"}</span>{toast.message}</div>}
+      {confirmationOpen && typeof document !== "undefined" && createPortal(
+        <div className="review-confirmBackdrop" role="presentation" onMouseDown={() => setConfirmationOpen(false)}>
+          <section className="review-confirmDialog" role="dialog" aria-modal="true" aria-labelledby="review-confirm-title" onMouseDown={(event) => event.stopPropagation()}>
+            <span className="review-confirmIcon" aria-hidden="true">✓</span>
+            <h2 id="review-confirm-title">Mulai analisis?</h2>
+            <p>Pastikan informasi project dan role target sudah benar. Setelah dilanjutkan, AI akan mulai menganalisis data Anda.</p>
+            <div className="review-confirmActions">
+              <button type="button" className="review-confirmCancel" onClick={() => setConfirmationOpen(false)}>Periksa kembali</button>
+              <button
+                type="button"
+                className="review-confirmAccept"
+                onClick={() => {
+                  setConfirmationOpen(false);
+                  showToast("success", "Analisis dimulai.");
+                  window.setTimeout(() => router.push(analysisRoutes.process), 500);
+                }}
+              >
+                Ya, mulai analisis
+              </button>
+            </div>
+          </section>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }

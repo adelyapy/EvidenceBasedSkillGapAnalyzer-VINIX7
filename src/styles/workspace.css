@@ -16,8 +16,8 @@
 .bkw-sidebar {
   position: sticky;
   top: 0;
-  flex: 0 0 282px;
-  width: 282px;
+  flex: 0 0 250px;
+  width: 250px;
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -26,30 +26,30 @@
   transition: width .2s ease, flex-basis .2s ease;
   z-index: 30;
 }
-.bkw-sidebarTop { height: 92px; flex: none; display: flex; align-items: center; border-bottom: 1px solid #b9c6ce; padding: 0 8px 0 50px; background: var(--bkw-cream); }
-.bkw-brand { display: inline-flex; align-items: center; gap: 5px; min-width: 0; white-space: nowrap; font-size: 28px !important; font-weight: 800 !important; letter-spacing: -.6px; }
-.bkw-brand img { flex: none; width: 44px; height: auto; }
+.bkw-sidebarTop { height: 76px; flex: none; display: flex; align-items: center; border-bottom: 1px solid #b9c6ce; padding: 0 12px 0 28px; background: var(--bkw-cream); }
+.bkw-brand { display: inline-flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; font-size: 24px !important; font-weight: 800 !important; letter-spacing: -.5px; }
+.bkw-brand img { flex: none; width: 38px; height: auto; }
 .bkw-collapseButton { border: 0; background: transparent; display: grid; place-items: center; flex: none; }
-.bkw-collapseButton { margin-left: auto; padding: 5px; font-size: 27px !important; line-height: 1; }
-.bkw-nav { display: flex; flex-direction: column; gap: 8px; padding: 16px 35px 0 55px; }
-.bkw-navItem { width: 100%; min-height: 54px; display: flex; align-items: center; gap: 13px; text-align: left; border: 1px solid transparent; border-radius: 7px; padding: 0 12px; background: transparent; font-weight: 600 !important; font-size: 18px !important; white-space: nowrap; }
+.bkw-collapseButton { margin-left: auto; padding: 5px; font-size: 24px !important; line-height: 1; }
+.bkw-nav { display: flex; flex-direction: column; gap: 6px; padding: 14px 18px 0; }
+.bkw-navItem { width: 100%; min-height: 48px; display: flex; align-items: center; gap: 11px; text-align: left; border: 1px solid transparent; border-radius: 8px; padding: 0 11px; background: transparent; font-weight: 600 !important; font-size: 15px !important; white-space: nowrap; }
 .bkw-navItem svg { flex: none; }
 .bkw-navItem--active { background: #adc9ed; border-color: #6f879f; }
 .bkw-navItem:not(:disabled):hover, .bkw-navItem:not(:disabled):focus-visible { background: #dceaf7; }
 .bkw-navItem--active:not(:disabled):hover { background: #adc9ed; }
-.bkw-logout { margin: auto 35px 44px 55px; width: calc(100% - 90px); }
-.bkw-mainColumn { min-width: 0; flex: 1; padding-top: 92px; }
-.bkw-header { position: fixed; top: 0; right: 0; left: 282px; z-index: 40; height: 92px; display: flex; align-items: center; justify-content: flex-end; padding: 0 30px 0 18px; border-bottom: 1px solid #b9c6ce; background: var(--bkw-cream); }
-.bkw-headerActions { display: flex; align-items: center; gap: 12px; }
-.bkw-notification { border: 0; background: transparent; width: 30px; height: 38px; display: grid; place-items: center; }
+.bkw-logout { margin: auto 18px 28px; width: calc(100% - 36px); }
+.bkw-mainColumn { min-width: 0; flex: 1; padding-top: 76px; }
+.bkw-header { position: fixed; top: 0; right: 0; left: 250px; z-index: 40; height: 76px; display: flex; align-items: center; justify-content: flex-end; padding: 0 26px 0 18px; border-bottom: 1px solid #b9c6ce; background: var(--bkw-cream); }
+.bkw-headerActions { display: flex; align-items: center; gap: 10px; }
+.bkw-notification { border: 0; background: transparent; width: 30px; height: 34px; display: grid; place-items: center; }
 .bkw-profile { position: relative; }
 .bkw-profile summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 7px; }
 .bkw-profile summary::-webkit-details-marker { display: none; }
 .bkw-profile summary img { border-radius: 50%; width: 34px; height: 34px; object-fit: cover; object-position: center 20%; }
 .bkw-profileText { display: flex; flex-direction: column; line-height: 1.1; min-width: 58px; }
-.bkw-profileText strong { font-size: 16px; font-weight: 500; }
+.bkw-profileText strong { font-size: 15px; font-weight: 600; }
 .bkw-profileText small { font-size: 11px; }
-.bkw-profileMenu { position: absolute; z-index: 40; top: calc(100% + 12px); right: 0; width: 165px; background: #fff; border: 1px solid #555; border-radius: 7px; box-shadow: 0 5px 15px #0002; padding: 5px; }
+.bkw-profileMenu { position: absolute; z-index: 40; top: calc(100% + 10px); right: 0; width: 160px; background: #fff; border: 1px solid #aebfce; border-radius: 8px; box-shadow: 0 8px 22px #0002; padding: 5px; }
 .bkw-profileMenu a, .bkw-profileMenu button { width: 100%; display: block; text-align: left; border: 0; border-radius: 4px; padding: 9px; background: #fff; font-size: 13px; }
 .bkw-profileMenu a:hover, .bkw-profileMenu a:focus-visible { background: #f0f0f0; outline: 2px solid #2e608c; outline-offset: -2px; }
 .bkw-menuButton { display: none; background: transparent; border: 0; color: #14213d; }
@@ -66,33 +66,33 @@
 .bkw-main {
   width: 100%;
   min-width: 0;
-  padding: 20px 32px 28px 16px;
+  padding: 22px 28px 32px 20px;
   container-name: dashboard;
   container-type: inline-size;
 }
 .bkw-backdrop { display: none; }
-.bkw-shell--collapsed .bkw-sidebar { width: 78px; flex-basis: 78px; }
-.bkw-shell--collapsed .bkw-header { left: 78px; }
-.bkw-shell--collapsed .bkw-sidebarTop { padding: 0 9px; flex-direction: column; height: 92px; justify-content: center; gap: 0; }
+.bkw-shell--collapsed .bkw-sidebar { width: 72px; flex-basis: 72px; }
+.bkw-shell--collapsed .bkw-header { left: 72px; }
+.bkw-shell--collapsed .bkw-sidebarTop { padding: 0 9px; flex-direction: column; height: 76px; justify-content: center; gap: 0; }
 .bkw-shell--collapsed .bkw-brand img { width: 33px; height: auto; }
 .bkw-shell--collapsed .bkw-sidebarLabel { display: none; }
 .bkw-shell--collapsed .bkw-collapseButton { margin: 0; padding: 0; line-height: .8; }
-.bkw-shell--collapsed .bkw-nav { padding: 16px 10px 0; }
+.bkw-shell--collapsed .bkw-nav { padding: 14px 10px 0; }
 .bkw-shell--collapsed .bkw-navItem { justify-content: center; padding: 0; }
-.bkw-shell--collapsed .bkw-logout { margin: auto 10px 44px; width: calc(100% - 20px); }
+.bkw-shell--collapsed .bkw-logout { margin: auto 10px 28px; width: calc(100% - 20px); }
 @media (max-width: 760px) {
-  .bkw-sidebar, .bkw-shell--collapsed .bkw-sidebar { position: fixed; left: 0; top: 0; bottom: 0; z-index: 50; width: min(282px, 84vw); height: 100dvh; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-100%); transition: transform .2s ease; box-shadow: 4px 0 15px #0002; }
+  .bkw-sidebar, .bkw-shell--collapsed .bkw-sidebar { position: fixed; left: 0; top: 0; bottom: 0; z-index: 50; width: min(250px, 84vw); height: 100dvh; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-100%); transition: transform .2s ease; box-shadow: 4px 0 15px #0002; }
   .bkw-sidebar--open, .bkw-shell--collapsed .bkw-sidebar--open { transform: translateX(0); }
-  .bkw-shell--collapsed .bkw-sidebarTop { padding: 0 8px 0 72px; flex-direction: row; height: 76px; }
+  .bkw-shell--collapsed .bkw-sidebarTop { padding: 0 8px 0 64px; flex-direction: row; height: 68px; }
   .bkw-shell--collapsed .bkw-brand img { width: 44px; height: auto; }
   .bkw-shell--collapsed .bkw-sidebarLabel { display: inline; }
-  .bkw-shell--collapsed .bkw-nav { padding: 16px 25px 0; }
+  .bkw-shell--collapsed .bkw-nav { padding: 14px 18px 0; }
   .bkw-shell--collapsed .bkw-navItem { justify-content: flex-start; padding: 0 12px; }
-  .bkw-shell--collapsed .bkw-logout { margin: auto 25px 30px; width: calc(100% - 50px); }
-  .bkw-sidebarTop { height: 76px; padding-left: 72px; }
+  .bkw-shell--collapsed .bkw-logout { margin: auto 18px 24px; width: calc(100% - 36px); }
+  .bkw-sidebarTop { height: 68px; padding-left: 64px; }
   .bkw-collapseButton { display: none; }
-  .bkw-nav { padding: 16px 25px 0; }
-  .bkw-logout { margin: auto 25px 30px; width: calc(100% - 50px); }
+  .bkw-nav { padding: 14px 18px 0; }
+  .bkw-logout { margin: auto 18px 24px; width: calc(100% - 36px); }
   .bkw-backdrop { display: block; position: fixed; inset: 0; z-index: 45; width: 100%; border: 0; background: #0006; }
   .bkw-mainColumn { width: 100%; padding-top: 68px; }
   .bkw-header, .bkw-shell--collapsed .bkw-header { left: 0; height: 68px; padding: 0 16px; }
