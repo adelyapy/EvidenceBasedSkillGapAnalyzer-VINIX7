@@ -1,5 +1,26 @@
 export const img = (name: string) => `/images/${name}`;
 
+export const heroSteps = [
+  {
+    number: "01",
+    title: "Upload Proyek",
+    description: "Unggah proyek nyata yang pernah kamu kerjakan.",
+    icon: "upload",
+  },
+  {
+    number: "02",
+    title: "Analisis Kompetensi",
+    description: "Kenali kompetensi dan skill gap melalui simulasi analisis.",
+    icon: "analysis",
+  },
+  {
+    number: "03",
+    title: "Dapatkan Roadmap",
+    description: "Terima rekomendasi pembelajaran yang lebih terarah.",
+    icon: "roadmap",
+  },
+] as const;
+
 export const benefits = [
   {
     title: "Berbasis Proyek Nyata",
@@ -18,7 +39,7 @@ export const benefits = [
   },
   {
     title: "Cocok untuk Freshgraduate",
-    description: "Dirancang khusus untuk mahasiswa dan freshgraduate di berbagai industri.",
+    description: "Dirancang khusus untuk mahasiswa dan fresh graduate di berbagai industri.",
     image: "tentang-freshgraduate.png",
   },
 ];
@@ -104,3 +125,17 @@ export const navigation = [
   { label: "CARA KERJA", id: "cara-kerja" },
   { label: "TEAM KAMI", id: "team-kami" },
 ];
+
+export const footerContent = {
+  description:
+    "BUKTIVA membantu mahasiswa dan fresh graduate memahami kompetensi berdasarkan proyek nyata, mengidentifikasi skill gap, dan merencanakan pengembangan karier yang lebih terarah.",
+  email: "halo@buktiva.id",
+  region: "Indonesia",
+  socialLinks: [
+    {
+      label: "GitHub BUKTIVA",
+      href: "https://github.com/adelyapy/EvidenceBasedSkillGapAnalyzer-VINIX7",
+      service: "github",
+    },
+  ],
+} as const;
