@@ -13,6 +13,75 @@
 .bkw-shell button { cursor: pointer; }
 .bkw-shell button:disabled { cursor: default; opacity: 1; }
 .bkw-shell a { color: inherit; text-decoration: none; }
+
+/* Shared action treatment: clear hierarchy, readable labels, and a tactile hover cue. */
+.bkw-main :is(
+  .bkd-primaryButton,
+  .bkd-secondaryButton,
+  .bkp-addButton,
+  .bkp-continue,
+  .bktr-button,
+  .review-edit,
+  .review-empty a,
+  .review-back,
+  .review-start,
+  .review-confirmActions button,
+  .validation-next,
+  .cv-action,
+  .cv-selected button,
+  .bkr-printButton,
+  .bkr-actions .bkr-backButton,
+  .bkr-actions .bkr-next-button,
+  .bks-nextButton,
+  .bkrm-backButton,
+  .bkrm-dashboardButton,
+  .bkrm-materialButton,
+  .bkh-filterActions button,
+  .bkh-detailButton,
+  .bkh-emptyState button,
+  .bkh-dialogDone,
+  .bkpfl-editButton,
+  .bkpfl-saveButton,
+  .bkpfl-cancelButton
+) {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: .01em;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.bkw-main :is(
+  .bkd-primaryButton,
+  .bkd-secondaryButton,
+  .bkp-addButton,
+  .bkp-continue,
+  .bktr-button,
+  .review-edit,
+  .review-empty a,
+  .review-back,
+  .review-start,
+  .review-confirmActions button,
+  .validation-next,
+  .cv-action,
+  .cv-selected button,
+  .bkr-printButton,
+  .bkr-actions .bkr-backButton,
+  .bkr-actions .bkr-next-button,
+  .bks-nextButton,
+  .bkrm-backButton,
+  .bkrm-dashboardButton,
+  .bkrm-materialButton,
+  .bkh-filterActions button,
+  .bkh-detailButton,
+  .bkh-emptyState button,
+  .bkh-dialogDone,
+  .bkpfl-editButton,
+  .bkpfl-saveButton,
+  .bkpfl-cancelButton
+):not(:disabled):hover {
+  box-shadow: 3px 3px 0 rgb(20 33 61 / 72%);
+  transform: translate(2px, 2px);
+}
 .bkw-sidebar {
   position: sticky;
   top: 0;
@@ -100,5 +169,6 @@
   .bkw-main { padding: 14px 16px 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bkw-menuIcon > span { transition: none; }
+  .bkw-menuIcon > span,
+  .bkw-main :is(button, a) { transition: none; }
 }

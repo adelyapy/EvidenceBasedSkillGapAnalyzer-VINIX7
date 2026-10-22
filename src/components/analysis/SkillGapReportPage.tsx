@@ -11,9 +11,6 @@ export default function SkillGapReportPage() {
           <h1 id="bks-title">Skill Gap Report</h1>
           <p>Perbandingan antara kompetensimu dengan kebutuhan Frontend Developer di industri saat ini.</p>
         </div>
-        <div className="bks-nextAction">
-          <Link className="bks-nextButton" href={analysisRoutes.roadmap}>Lanjutkan <span aria-hidden="true">→</span></Link>
-        </div>
       </header>
 
       <aside className="bks-demoNotice" aria-label="Keterangan data contoh">
@@ -76,9 +73,8 @@ export default function SkillGapReportPage() {
       </section>
 
       <nav className="bks-bottomNav" aria-label="Navigasi Skill Gap Report">
-        <Link href={analysisRoutes.result}>← Kembali ke Hasil Analisis</Link>
-        <Link href={analysisRoutes.uploadProject}>Kembali ke Analisa Baru</Link>
-        <Link href="/workspace/dashboard">Kembali ke Dashboard</Link>
+        <Link className="bks-backButton" href={analysisRoutes.result}>← Kembali ke Hasil Analisis</Link>
+        <Link className="bks-nextButton" href={analysisRoutes.roadmap}>Lanjutkan <span aria-hidden="true">→</span></Link>
       </nav>
     </article>
   );

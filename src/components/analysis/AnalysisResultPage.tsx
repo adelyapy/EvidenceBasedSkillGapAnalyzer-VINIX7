@@ -108,7 +108,7 @@ export default function AnalysisResultPage() {
       </div>
 
       <nav className="bkr-actions bkr-screenOnly" aria-label="Navigasi hasil analisis">
-        <Link href={analysisRoutes.question(5)}>← Kembali ke Pertanyaan 5</Link>
+        <Link className="bkr-backButton" href={analysisRoutes.question(5)}>← Kembali ke Pertanyaan 5</Link>
         <Link className="bkr-next-button" href={analysisRoutes.skillGap}>Lanjutkan <span aria-hidden="true">→</span></Link>
       </nav>
     </article>

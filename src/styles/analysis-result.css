@@ -160,6 +160,7 @@
   place-items: center;
   border-radius: 50%;
   background: conic-gradient(#68abc9 calc(var(--bkr-score) * 1%), #e1e5e9 0);
+  animation: bkr-score-ring-spin 1.1s cubic-bezier(.2, .8, .2, 1) both;
 }
 
 .bkr-scoreRing::before {
@@ -176,6 +177,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: bkr-score-content-stay 1.1s cubic-bezier(.2, .8, .2, 1) both;
 }
 
 .bkr-scoreRing strong {
@@ -249,7 +251,13 @@
   height: 100%;
   border-radius: inherit;
   background: #68a7c4;
+  transform-origin: left center;
+  animation: bkr-skill-fill .72s cubic-bezier(.2, .8, .2, 1) both;
 }
+.bkr-skillList li:nth-child(2) .bkr-skillMeter > span { animation-delay: .1s; }
+.bkr-skillList li:nth-child(3) .bkr-skillMeter > span { animation-delay: .2s; }
+.bkr-skillList li:nth-child(4) .bkr-skillMeter > span { animation-delay: .3s; }
+.bkr-skillList li:nth-child(5) .bkr-skillMeter > span { animation-delay: .4s; }
 
 .bkr-skillList li > b {
   font-size: 1rem;
@@ -320,17 +328,22 @@
   gap: 20px;
 }
 
-.bkr-actions > a {
-  min-height: 42px;
-  padding: 8px 0;
+.bkr-actions .bkr-backButton {
+  min-height: 50px;
+  padding: 10px 16px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  border: 2px solid #2d5d8b;
+  border-radius: 6px;
+  background: #fff;
   color: #285d8a;
   font-size: .86rem;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
 }
+.bkr-actions .bkr-backButton:hover { background: #eaf4fb; box-shadow: 3px 3px 0 #9ebfd7; transform: translate(1px, 1px); }
 
 .bkr-actions > div {
   display: flex;
@@ -366,7 +379,7 @@
 }
 
 .bkr-actions .bkr-next-button:focus-visible,
-.bkr-actions > a:first-child:focus-visible {
+.bkr-actions .bkr-backButton:focus-visible {
   outline: 3px solid #327bb0;
   outline-offset: 3px;
 }
@@ -420,6 +433,10 @@
   .bkr-actions .bkr-next-button {
     width: 100%;
   }
+
+  .bkr-actions .bkr-backButton {
+    width: 100%;
+  }
 }
 
 @media (max-width: 380px) {
@@ -434,6 +451,27 @@
   .bkr-recommendationPanel {
     padding-inline: 13px;
   }
+}
+
+@keyframes bkr-score-ring-spin {
+  from { transform: rotate(-300deg); }
+  to { transform: rotate(0); }
+}
+
+@keyframes bkr-score-content-stay {
+  from { transform: rotate(300deg); }
+  to { transform: rotate(0); }
+}
+
+@keyframes bkr-skill-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bkr-scoreRing,
+  .bkr-scoreRing > div,
+  .bkr-skillMeter > span { animation: none; }
 }
 
 @page {

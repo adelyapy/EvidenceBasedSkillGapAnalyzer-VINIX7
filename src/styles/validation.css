@@ -4,19 +4,19 @@
 .validation-intro h1 { margin: 0; font-size: 28px; font-weight: 700; line-height: 1.25; letter-spacing: -.7px; }
 .validation-intro p { max-width: 420px; margin: 2px 0 0; font-size: 13px; line-height: 1.4; }
 .validation-progress-section { margin: 20px 0 15px 6px; }
-.validation-progress-label { margin-bottom: 7px; font-size: 12px; font-weight: 600; }
+.validation-progress-label { width: fit-content; margin-bottom: 7px; border-radius: 999px; padding: 4px 9px; background: #e0eef8; color: #1f5684; font-size: 12px; font-weight: 700; }
 .validation-progress-track { width: 60%; max-width: 348px; height: 18px; overflow: hidden; border-radius: 50px; background: #cce3e0; }
 .validation-progress-fill { height: 100%; border-radius: 50px; background: #356da2; transition: width .35s ease-in-out; }
 .validation-workspace { padding: 0 4px 0 6px; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(190px, 1fr); align-items: start; gap: 12px; }
 .validation-form { min-width: 0; }
-.validation-question-card { min-height: 286px; padding: 11px; border: 1px solid #c6ced4; border-radius: 6px; }
-.validation-question-text { min-height: 40px; margin-bottom: 7px; display: block; font-size: 13px; line-height: 1.35; font-weight: 600; }
+.validation-question-card { min-height: 286px; padding: 14px; border: 2px solid #5c86a9; border-radius: 9px; background: #f6fbff; box-shadow: 3px 4px 0 #c5d9e8; }
+.validation-question-text { min-height: 40px; margin-bottom: 10px; padding: 9px 10px; display: block; border-left: 4px solid #356da2; border-radius: 4px; background: #e1eff9; color: #173e60; font-size: 13px; line-height: 1.35; font-weight: 700; }
 .validation-textarea-wrap { position: relative; }
-.validation-textarea-wrap textarea { width: 100%; height: 213px; padding: 11px 10px 30px; display: block; resize: vertical; border: 1px solid #c6ced4; border-radius: 6px; outline: none; background: transparent; color: #222; font: inherit; font-size: 13px; line-height: 1.6; }
+.validation-textarea-wrap textarea { width: 100%; height: 213px; padding: 11px 10px 30px; display: block; resize: vertical; border: 1px solid #9db8cd; border-radius: 6px; outline: none; background: #fff; color: #222; font: inherit; font-size: 13px; line-height: 1.6; }
 .validation-textarea-wrap textarea:focus { border-color: #3a78b4; box-shadow: 0 0 0 2px #3a78b426; }
 .validation-textarea-wrap textarea::placeholder { color: #aeb6c0; }
 .validation-character-count { position: absolute; right: 12px; bottom: 8px; color: #aeb6c0; font-size: 12px; font-weight: 600; pointer-events: none; }
-.validation-tips { min-height: 309px; padding: 15px 20px; border: 1px solid #c6ced4; border-radius: 7px; }
+.validation-tips { min-height: 309px; padding: 15px 20px; border: 2px solid #90b0c8; border-radius: 9px; background: #f8fcff; box-shadow: 3px 4px 0 #d2e1eb; }
 .validation-tips h2 { margin: 0 0 7px; display: flex; align-items: flex-start; gap: 8px; font-size: 15px; font-weight: 700; line-height: 1.2; }
 .validation-tips-icon { width: 19px; height: 19px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #222; border-radius: 50%; font-size: 12px; font-weight: 700; }
 .validation-tips ul { margin: 0; padding: 0; list-style: none; }
