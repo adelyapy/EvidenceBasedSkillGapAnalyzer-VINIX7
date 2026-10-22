@@ -121,6 +121,7 @@ export default function UploadCvPage() {
   const hasRole = isDemo || prerequisites.hasRole;
   const hasDescription = isDemo || prerequisites.hasJobDescription;
   const ready = hasProject && hasRole;
+  const completedRequiredChecks = Number(hasProject) + Number(hasRole);
   const checks: ChecklistItem[] = [
     { text: "Minimal 1 proyek telah ditambahkan", complete: hasProject },
     { text: "Target role telah dipilih", complete: hasRole },
@@ -162,11 +163,17 @@ export default function UploadCvPage() {
 
       <section className={`cv-readiness ${ready ? "cv-readiness--ready" : "cv-readiness--incomplete"}`} aria-labelledby="cv-readiness-heading">
         <div className="cv-check-panel">
-          <h2 id="cv-readiness-heading">Pemeriksaan Kelengkapan Input</h2>
-          <ul>{checks.map((check) => <li key={check.text}><span className={`cv-check-mark ${check.complete ? "" : "cv-check-mark--empty"}`} aria-label={check.complete ? "Terpenuhi" : "Belum terpenuhi"}>{check.complete ? "✓" : "!"}</span><span>{check.text}</span></li>)}</ul>
+          <div className="cv-check-heading">
+            <div>
+              <h2 id="cv-readiness-heading">Pemeriksaan Kelengkapan Input</h2>
+              <p>Lengkapi syarat wajib sebelum melanjutkan ke review.</p>
+            </div>
+            <span className="cv-check-progress" aria-label={`${completedRequiredChecks} dari 2 syarat wajib terpenuhi`}>{completedRequiredChecks}/2 wajib</span>
+          </div>
+          <ul>{checks.map((check) => <li key={check.text} className={`cv-check-item ${check.complete ? "cv-check-item--complete" : ""}`}><span className={`cv-check-mark ${check.complete ? "" : "cv-check-mark--empty"}`} aria-label={check.complete ? "Terpenuhi" : "Belum terpenuhi"}>{check.complete ? "✓" : "!"}</span><span>{check.text}</span></li>)}</ul>
         </div>
         <div className="cv-status-panel" role="status" aria-live="polite">
-          <Image src="/images/ceklis2.png" alt="" width={77} height={77} unoptimized className={ready ? "" : "cv-status-icon--pending"} />
+          <Image src="/images/ceklis2.png" alt="" width={77} height={77} unoptimized className={`cv-status-icon ${ready ? "cv-status-icon--ready" : "cv-status-icon--pending"}`} />
           <h3>{!loaded ? "Memeriksa input…" : ready ? "Input sudah lengkap!" : "Input belum lengkap"}</h3>
           <p>{ready ? "Siap untuk memulai analisis." : "Tambahkan proyek dan pilih target role."}</p>
         </div>

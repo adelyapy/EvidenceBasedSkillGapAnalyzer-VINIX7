@@ -4,25 +4,26 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import "@/styles/auth.css";
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [notice, setNotice] = useState("");
+  const [notice, setNotice] = useState<{ type: "error" | "success"; text: string } | null>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setNotice("");
+    setNotice(null);
 
     if (password.length < 8) {
-      setNotice("Kata sandi harus terdiri dari minimal 8 karakter.");
+      setNotice({ type: "error", text: "Kata sandi harus terdiri dari minimal 8 karakter." });
       return;
     }
 
     if (password !== confirmPassword) {
-      setNotice("Konfirmasi kata sandi tidak cocok.");
+      setNotice({ type: "error", text: "Konfirmasi kata sandi tidak cocok." });
       return;
     }
 
@@ -37,9 +38,7 @@ export default function UpdatePasswordPage() {
       } = await supabase.auth.getUser();
 
       if (userError || !user) {
-        setNotice(
-          "Sesi pemulihan tidak ditemukan atau sudah kedaluwarsa. Silakan minta tautan reset baru."
-        );
+        setNotice({ type: "error", text: "Sesi pemulihan tidak ditemukan atau sudah kedaluwarsa. Silakan minta tautan reset baru." });
         return;
       }
 
@@ -49,36 +48,30 @@ export default function UpdatePasswordPage() {
 
       if (error) throw error;
 
-      setNotice("Kata sandi berhasil diperbarui. Anda akan diarahkan ke halaman masuk.");
+      setNotice({ type: "success", text: "Kata sandi berhasil diperbarui. Anda akan diarahkan ke halaman masuk." });
 
       await supabase.auth.signOut();
       setTimeout(() => router.replace("/login"), 1800);
     } catch (error) {
-      setNotice(
-        error instanceof Error
-          ? error.message
-          : "Terjadi kesalahan saat memperbarui kata sandi."
-      );
+      setNotice({
+        type: "error",
+        text: error instanceof Error ? error.message : "Terjadi kesalahan saat memperbarui kata sandi.",
+      });
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Buat Kata Sandi Baru
-        </h1>
-        <p className="mt-2 text-sm text-slate-600">
-          Masukkan kata sandi baru untuk akun BUKTIVA Anda.
-        </p>
+    <main className="bka-screen bka-updateScreen">
+      <section className="bka-updateCard" aria-labelledby="update-password-title">
+        <p className="bka-updateEyebrow">ATUR ULANG KATA SANDI</p>
+        <h1 id="update-password-title">Buat Kata Sandi Baru</h1>
+        <p className="bka-updateDescription">Masukkan kata sandi baru untuk akun BUKTIVA Anda.</p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="new-password" className="mb-1 block text-sm font-medium">
-              Kata sandi baru
-            </label>
+        <form onSubmit={handleSubmit} className="bka-updateForm">
+          <label className="bka-updateField" htmlFor="new-password">
+            <span>Kata sandi baru</span>
             <input
               id="new-password"
               type="password"
@@ -87,14 +80,12 @@ export default function UpdatePasswordPage() {
               minLength={8}
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className="bka-updateInput"
             />
-          </div>
+          </label>
 
-          <div>
-            <label htmlFor="confirm-password" className="mb-1 block text-sm font-medium">
-              Konfirmasi kata sandi
-            </label>
+          <label className="bka-updateField" htmlFor="confirm-password">
+            <span>Konfirmasi kata sandi baru</span>
             <input
               id="confirm-password"
               type="password"
@@ -103,20 +94,18 @@ export default function UpdatePasswordPage() {
               minLength={8}
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-blue-500"
+              className="bka-updateInput"
             />
-          </div>
+          </label>
 
           {notice && (
-            <p role="status" aria-live="polite" className="text-sm text-slate-700">
-              {notice}
-            </p>
+            <p role={notice.type === "error" ? "alert" : "status"} aria-live="polite" className={`bka-updateNotice bka-updateNotice--${notice.type}`}>{notice.text}</p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white disabled:opacity-60"
+            className="bka-primaryButton bka-updateButton"
           >
             {loading ? "Menyimpan..." : "Simpan Kata Sandi Baru"}
           </button>

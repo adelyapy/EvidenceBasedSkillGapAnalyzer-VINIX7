@@ -7,7 +7,7 @@
 .review-box { min-width: 0; border: 1px solid #5b85bd; background: #abc5e9; }
 .review-box-heading { min-height: 36px; padding: 0 11px; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #4385c2; }
 .review-box-heading h2 { margin: 0; font-size: 14px; font-weight: 600; }
-.review-edit { padding: 3px 7px; display: inline-flex; align-items: center; gap: 3px; border: 1px solid #2a5b93; border-radius: 3px; background: #f4f7fb; color: #17436d; font-size: 11px; font-weight: 700; text-decoration: none; }
+.review-edit { padding: 1px 3px; display: inline-flex; align-items: center; gap: 1px; border: 1px solid #2a5b93; border-radius: 3px; background: #f4f7fb; color: #17436d; font-size: 8px; font-weight: 700; text-decoration: none; }
 .review-main .review-edit:disabled { cursor: not-allowed; opacity: .65; }
 .review-project-record + .review-project-record { border-top: 3px solid #6d91bb; }
 .review-project-count { margin: 0; padding: 5px 14px; font-weight: 700; }

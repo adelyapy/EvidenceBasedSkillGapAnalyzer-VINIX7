@@ -10,12 +10,7 @@
 
 .bks-page *, .bks-page *::before, .bks-page *::after { box-sizing: border-box; }
 
-.bks-intro {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 22px;
-}
+.bks-intro { min-width: 0; }
 .bks-intro > div:first-child { min-width: 0; }
 .bks-intro h1 {
   margin: 0 0 7px;
@@ -30,8 +25,7 @@
   font-size: 1rem;
   line-height: 1.4;
 }
-.bks-nextAction { flex: 0 0 auto; display: grid; justify-items: end; gap: 6px; }
-.bks-nextAction .bks-nextButton {
+.bks-nextButton {
   min-width: 170px;
   min-height: 48px;
   padding: 9px 18px;
@@ -46,16 +40,8 @@
   font-weight: 700;
   text-decoration: none;
 }
-.bks-nextAction .bks-nextButton:hover { background: #214c74; }
-.bks-nextAction .bks-nextButton:focus-visible { outline: 3px solid #327bb0; outline-offset: 3px; }
-.bks-nextAction p {
-  max-width: 220px;
-  margin: 0;
-  color: #555e66;
-  font-size: .78rem;
-  line-height: 1.3;
-  text-align: right;
-}
+.bks-nextButton:hover { background: #214c74; }
+.bks-nextButton:focus-visible { outline: 3px solid #327bb0; outline-offset: 3px; }
 .bks-demoNotice {
   margin-top: 18px;
   padding: 11px 14px;
@@ -88,8 +74,20 @@
 .bks-comparisonTable .bks-value { font-size: .94rem; font-weight: 750; white-space: nowrap; }
 .bks-barTrack { position: relative; width: 100%; height: 20px; border-radius: 6px; background: #e2e9e9; overflow: hidden; }
 .bks-barIndustry, .bks-barYou { position: absolute; left: 0; display: block; border-radius: 5px; }
-.bks-barIndustry { top: 0; height: 100%; background: #9ed6d1; }
-.bks-barYou { top: 4px; height: 12px; background: #2e75a4; }
+.bks-barIndustry { top: 0; height: 100%; background: #9ed6d1; transform-origin: left center; animation: bks-bar-fill .7s cubic-bezier(.2, .8, .2, 1) both; }
+.bks-barYou { top: 4px; height: 12px; background: #2e75a4; transform-origin: left center; animation: bks-bar-fill .7s cubic-bezier(.2, .8, .2, 1) .12s both; }
+.bks-comparisonTable tbody tr:nth-child(2) .bks-barIndustry { animation-delay: .1s; }
+.bks-comparisonTable tbody tr:nth-child(2) .bks-barYou { animation-delay: .22s; }
+.bks-comparisonTable tbody tr:nth-child(3) .bks-barIndustry { animation-delay: .2s; }
+.bks-comparisonTable tbody tr:nth-child(3) .bks-barYou { animation-delay: .32s; }
+.bks-comparisonTable tbody tr:nth-child(4) .bks-barIndustry { animation-delay: .3s; }
+.bks-comparisonTable tbody tr:nth-child(4) .bks-barYou { animation-delay: .42s; }
+.bks-comparisonTable tbody tr:nth-child(5) .bks-barIndustry { animation-delay: .4s; }
+.bks-comparisonTable tbody tr:nth-child(5) .bks-barYou { animation-delay: .52s; }
+.bks-comparisonTable tbody tr:nth-child(6) .bks-barIndustry { animation-delay: .5s; }
+.bks-comparisonTable tbody tr:nth-child(6) .bks-barYou { animation-delay: .62s; }
+.bks-comparisonTable tbody tr:nth-child(7) .bks-barIndustry { animation-delay: .6s; }
+.bks-comparisonTable tbody tr:nth-child(7) .bks-barYou { animation-delay: .72s; }
 
 .bks-visualPanel { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 12px 10px 20px; }
 .bks-illustration { display: block; width: min(100%, 360px); height: auto; max-height: 290px; }
@@ -118,10 +116,24 @@
 .bks-priorityBadge { min-width: 131px; padding: 7px 10px; border-radius: 6px; font-size: .82rem; font-weight: 750; text-align: center; white-space: nowrap; }
 .bks-priorityBadge--tinggi { background: #f5cbd0; color: #762d38; }
 .bks-priorityBadge--sedang { background: #f8e19a; color: #654d0b; }
-.bks-bottomNav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 22px; margin-top: 22px; }
-.bks-bottomNav a { display: inline-flex; align-items: center; min-height: 40px; color: #285d8a; font-size: .88rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-.bks-bottomNav a:hover { color: #153e60; }
-.bks-bottomNav a:focus-visible { outline: 3px solid #327bb0; outline-offset: 3px; border-radius: 2px; }
+.bks-bottomNav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 22px; margin-top: 22px; }
+.bks-backButton {
+  min-height: 48px;
+  padding: 9px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2d5d8b;
+  border-radius: 6px;
+  background: #fff;
+  color: #285d8a;
+  font-size: .88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.bks-backButton:hover { background: #eaf4fb; box-shadow: 3px 3px 0 #9ebfd7; transform: translate(1px, 1px); }
+.bks-backButton:focus-visible { outline: 3px solid #327bb0; outline-offset: 3px; }
 
 @container skill-gap (max-width: 780px) {
   .bks-contentGrid { grid-template-columns: minmax(0, 1fr); }
@@ -131,9 +143,6 @@
 }
 
 @container skill-gap (max-width: 560px) {
-  .bks-intro { flex-direction: column; }
-  .bks-nextAction { width: 100%; justify-items: stretch; }
-  .bks-nextAction p { max-width: none; text-align: left; }
   .bks-comparisonPanel, .bks-gapPanel { padding-inline: 13px; }
   .bks-comparisonTable thead th:first-child, .bks-comparisonTable tbody th { width: 34%; }
   .bks-visualPanel { flex-direction: column; }
@@ -141,7 +150,8 @@
   .bks-focusNote { width: min(92%, 270px); margin-top: -10px; }
   .bks-priorityList li { grid-template-columns: minmax(0, 1fr) auto; gap: 7px; }
   .bks-priorityBadge { min-width: 0; grid-column: 1 / -1; justify-self: start; }
-  .bks-bottomNav { flex-direction: column; align-items: flex-start; }
+  .bks-bottomNav { flex-direction: column-reverse; align-items: stretch; }
+  .bks-bottomNav .bks-nextButton, .bks-backButton { width: 100%; }
 }
 
 @container skill-gap (max-width: 330px) {
@@ -150,4 +160,14 @@
   .bks-comparisonTable thead th:last-child, .bks-comparisonTable td:last-child { width: 17%; padding-right: 0; }
   .bks-comparisonTable thead th { font-size: .7rem; }
   .bks-comparisonTable tbody th, .bks-comparisonTable .bks-value { font-size: .8rem; }
+}
+
+@keyframes bks-bar-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bks-barIndustry,
+  .bks-barYou { animation: none; }
 }
