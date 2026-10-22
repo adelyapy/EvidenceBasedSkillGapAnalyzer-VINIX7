@@ -78,8 +78,9 @@
 .bka-inputWrap input::placeholder { color: #a7abb1; font-size: 11px; opacity: 1; }
 .bka-inputWrap input:disabled { opacity: .7; cursor: wait; }
 .bka-fieldError { color: #b42325; font-size: 11px; line-height: 1.35; margin: 5px 0 0; }
-.bka-primaryButton { height: 34px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; width: 100%; border: 0; background: var(--button); border-radius: 10px; color: #fff; font-weight: 700; font-family: inherit; font-size: 13px; margin-top: 4px; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
+.bka-primaryButton { height: 34px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; width: 100%; border: 0; background: var(--button); border-radius: 10px; box-shadow: 5px 5px 0 #14213d; color: #fff; font-weight: 700; font-family: inherit; font-size: 13px; margin-top: 4px; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
 .bka-primaryButton:hover:not(:disabled) { background: #214566; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
+.bka-primaryButton:active:not(:disabled) { box-shadow: 1px 1px 0 #14213d; transform: translate(4px, 4px); }
 .bka-primaryButton:focus-visible, .bka-googleButton:focus-visible, .bka-back:focus-visible { outline: 3px solid #59b6ff; outline-offset: 3px; }
 .bka-primaryButton:disabled { opacity: .78; cursor: wait; }
 .bka-spinner { border: 2px solid #ffffff75; border-top-color: #fff; height: 17px; width: 17px; border-radius: 50%; animation: bka-auth-spin .65s linear infinite; }
@@ -90,14 +91,16 @@
 .bka-socialArea { margin-top: 14px; }
 .bka-divider { display: flex; align-items: center; gap: 6px; color: #191919; font-size: 10px; white-space: nowrap; margin: 0 8px 8px; }
 .bka-divider::before, .bka-divider::after { content: ''; height: 1px; background: #929292; flex: 1; }
-.bka-googleButton { height: 36px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #c7c9cc; background: #fff; border-radius: 4px; box-shadow: 0 1px 3px #00000014; font: inherit; font-size: 12px; cursor: pointer; color: #111; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
-.bka-googleButton:hover { background: #f8fbff; box-shadow: 2px 2px 0 #b7c9d9; transform: translate(1px, 1px); }
+.bka-googleButton { height: 36px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #c7c9cc; background: #fff; border-radius: 4px; box-shadow: 5px 5px 0 #b7c9d9; font: inherit; font-size: 12px; cursor: pointer; color: #111; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
+.bka-googleButton:hover { background: #f8fbff; box-shadow: 3px 3px 0 #7faac5; transform: translate(2px, 2px); }
+.bka-googleButton:active { box-shadow: 1px 1px 0 #7faac5; transform: translate(4px, 4px); }
 .bka-googleButton img { width: 24px; height: 24px; object-fit: contain; }
 .bka-switch { font-size: 10px; color: #303030; text-align: center; line-height: 1.3; margin: auto 0 0; padding-top: 10px; }
 .bka-switch a { color: #2768a8; font-weight: 500; }
-.bka-back { margin-top: 18px; min-height: 36px; background: #f5f7f8; color: #2c68a9; border-radius: 8px; font-size: 13px; font-weight: 550; display: inline-flex; align-items: center; justify-content: center; gap: 9px; white-space: nowrap; padding: 7px 12px; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
+.bka-back { margin-top: 18px; min-height: 36px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 7px 12px; border: 2px solid #16191c; border-radius: 4px; background: transparent; box-shadow: 5px 5px 0 #14213d; color: #111; font-size: 13px; font-weight: 550; white-space: nowrap; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease; }
 .bka-back svg { width: 30px; height: 19px; }
-.bka-back:hover { background: #e6f3ff; box-shadow: 2px 2px 0 #a9c4db; transform: translate(1px, 1px); }
+.bka-back:hover { background: #173f65; box-shadow: 3px 3px 0 #14213d; color: #fff; transform: translate(2px, 2px); }
+.bka-back:active { box-shadow: 1px 1px 0 #14213d; transform: translate(4px, 4px); }
 
 /* Update-password follows the same visual language as the reset-password flow. */
 .bka-updateScreen { padding: clamp(16px, 3vw, 28px); }

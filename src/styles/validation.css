@@ -26,8 +26,8 @@
 .validation-next { min-width: 125px; min-height: 34px; padding: 7px 13px; display: flex; align-items: center; justify-content: center; gap: 13px; border: 1px solid #527394; border-radius: 5px; background: #2d5279; color: #fff; font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
 .validation-next:hover { background: #1d4369; }
 .validation-page .validation-next:disabled { cursor: not-allowed; opacity: .6; }
-.validation-back { padding: 7px 10px; border: 1px solid #2d5279; border-radius: 5px; color: #2d5279; text-decoration: none; font-size: 12px; font-weight: 600; }
-.validation-back:hover { background: #e1eaf5; }
+.validation-back { min-height: 34px; padding: 7px 10px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid #16191c; border-radius: 4px; background: transparent; color: #111; text-decoration: none; font-size: 12px; font-weight: 600; }
+.validation-back:hover, .validation-back:focus-visible { background: #173f65; color: #fff; }
 .validation-error { margin: 8px 0; color: #bc3030; font-size: 12px; }
 
 @media (max-width: 760px) {
