@@ -1,0 +1,133 @@
+{
+  "catalogVersion": "1.0.0",
+  "provenance": "Project-curated references; official pages opened during M7. Availability and relevance are not permanent guarantees.",
+  "review": {
+    "status": "source_verified_pedagogy_pending",
+    "performedBy": "codex_source_verification",
+    "method": "official_page_opened_and_skill_scope_checked",
+    "reviewedOn": "2026-10-22",
+    "humanCurriculumApproval": null
+  },
+  "resources": [
+    {
+      "resourceId": "typescript-generics",
+      "skillKey": "typescript",
+      "title": "TypeScript Generics",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html",
+      "publisher": "TypeScript",
+      "versionScope": "living documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "javascript-guide",
+      "skillKey": "javascript",
+      "title": "JavaScript Guide",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+      "publisher": "MDN",
+      "versionScope": "living documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "react-learn",
+      "skillKey": "react",
+      "title": "React Quick Start",
+      "url": "https://react.dev/learn",
+      "publisher": "React",
+      "versionScope": "19.3 documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "nextjs-layouts",
+      "skillKey": "nextjs",
+      "title": "Next.js Layouts and Pages",
+      "url": "https://nextjs.org/docs/app/getting-started/layouts-and-pages",
+      "publisher": "Next.js",
+      "versionScope": "16.4.2 documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "html-structure",
+      "skillKey": "html",
+      "title": "Structuring content with HTML",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content",
+      "publisher": "MDN",
+      "versionScope": "living documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "css-basics",
+      "skillKey": "css",
+      "title": "CSS styling basics",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics",
+      "publisher": "MDN",
+      "versionScope": "living documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "node-test",
+      "skillKey": "testing",
+      "title": "Node.js Test Runner",
+      "url": "https://nodejs.org/download/release/v24.12.0/docs/api/test.html",
+      "publisher": "Node.js",
+      "versionScope": "24.12.0",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "git-book",
+      "skillKey": "git",
+      "title": "Pro Git",
+      "url": "https://git-scm.com/book/en/v2",
+      "publisher": "Git",
+      "versionScope": "2nd edition",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "github-actions",
+      "skillKey": "cicd",
+      "title": "GitHub Actions documentation",
+      "url": "https://docs.github.com/en/actions",
+      "publisher": "GitHub",
+      "versionScope": "living documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    },
+    {
+      "resourceId": "tailwind-utilities",
+      "skillKey": "tailwind",
+      "title": "Styling with utility classes",
+      "url": "https://tailwindcss.com/docs/styling-with-utility-classes",
+      "publisher": "Tailwind CSS",
+      "versionScope": "4.3 documentation",
+      "verifiedOn": "2026-10-22",
+      "verification": "official_page_opened",
+      "language": "en",
+      "durationMinutes": null
+    }
+  ]
+}

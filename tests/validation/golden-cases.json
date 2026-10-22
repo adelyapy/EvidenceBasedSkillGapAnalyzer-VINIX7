@@ -1,0 +1,9 @@
+{
+  "label": "SYNTHETIC REVIEWER EXPECTATIONS, NOT GEMINI OUTPUT",
+  "cases": [
+    { "id": "strong", "questionOrder": 3, "answerText": "TypeScript menjaga hubungan tipe masukan dan keluaran melalui parameter generik T pada fungsi identity.", "expected": { "alignment": "supported", "scores": [4, 4, 4] } },
+    { "id": "weak", "questionOrder": 3, "answerText": "Saya memakai TypeScript.", "expected": { "alignment": "insufficient_evidence", "scores": [1, null, null] } },
+    { "id": "irrelevant", "questionOrder": 3, "answerText": "Saya suka berkebun pada sore hari.", "expected": { "alignment": "insufficient_evidence", "scores": [0, null, null] } },
+    { "id": "contradicted", "questionOrder": 3, "answerText": "Fungsi identity selalu mengubah masukan angka menjadi string sebelum mengembalikannya.", "expected": { "alignment": "contradicted", "scores": [3, 0, 0] } }
+  ]
+}

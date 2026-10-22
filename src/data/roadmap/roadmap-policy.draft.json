@@ -1,0 +1,69 @@
+{
+  "policyId": "buktiva-frontend-roadmap",
+  "policyVersion": "0.1.0",
+  "policyStatus": "draft",
+  "supportedRole": "frontend-developer",
+  "allowedActivityTypes": [
+    "learning",
+    "evidence_collection",
+    "manual_review",
+    "reassessment"
+  ],
+  "eligibilityRules": {
+    "learning": "approved_scoring_positive_gap_only",
+    "unknown": "evidence_not_low_ability",
+    "blocked": "empty_plan",
+    "draftScoring": "review_and_evidence_only"
+  },
+  "resourceSelectionRules": {
+    "catalogVersion": "1.0.0",
+    "source": "pinned_verified_catalog",
+    "missing": "manual_review",
+    "maxPerActivity": 1
+  },
+  "phaseOrderingRules": [
+    {
+      "phaseId": "review",
+      "order": 1,
+      "title": "Tinjau konteks dan dasar penilaian"
+    },
+    {
+      "phaseId": "development",
+      "order": 2,
+      "title": "Lengkapi bukti atau latihan terarah"
+    },
+    {
+      "phaseId": "verification",
+      "order": 3,
+      "title": "Verifikasi hasil dan batas bukti"
+    },
+    {
+      "phaseId": "reassessment",
+      "order": 4,
+      "title": "Asesmen ulang setelah prasyarat terpenuhi"
+    }
+  ],
+  "priorityRules": "preserve_m6_group_order_then_int8",
+  "successCriteriaRules": "observable_artifact_and_review_no_level_guarantee",
+  "approvedPolicyRequirements": {
+    "humanReviewRequired": true,
+    "noRequestApproval": true
+  },
+  "fallbackRules": {
+    "missingSkillResource": "manual_review",
+    "noEligibleActivities": "empty_plan",
+    "duration": "unknown_null",
+    "maxSkills": 20,
+    "maxActivities": 80
+  },
+  "warningRules": [
+    "POLICIES_PENDING_APPROVAL",
+    "PARTIAL_SCORING",
+    "SCORING_BLOCKED",
+    "RESOURCE_UNAVAILABLE",
+    "PLAN_TRUNCATED",
+    "SIMULATION_ONLY",
+    "DURATION_NOT_ESTIMATED"
+  ],
+  "approvalMetadata": null
+}
