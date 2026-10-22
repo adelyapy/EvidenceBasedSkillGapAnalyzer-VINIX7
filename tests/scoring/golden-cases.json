@@ -1,0 +1,10 @@
+{
+  "label": "ARTIFICIAL RULE ORACLES, NOT HUMAN APPROVAL OR SCIENTIFIC VALIDATION",
+  "cases": [
+    { "id": "identity-contract", "content": "export function identity<T>(value: T): T { return value; }\n", "currentLevel": 2, "requiredLevel": 3, "gapScore": 1, "readinessScore": 66.67 },
+    { "id": "generic-declaration-only", "content": "export function identity<T>() { return null; }\n", "currentLevel": 1, "requiredLevel": 3, "gapScore": 2, "readinessScore": 33.33 },
+    { "id": "explicit-zero-marker", "content": "export const zeroFixture = true;\n", "currentLevel": 0, "requiredLevel": 3, "gapScore": 3, "readinessScore": 0 },
+    { "id": "unknown-implementation", "content": "export const unrelated = 1;\n", "currentLevel": null, "requiredLevel": 3, "gapScore": null, "readinessScore": null },
+    { "id": "assertion-example", "content": "export function identity<T>(value: T): T { return value; }\nassert.equal(identity(1), 1);\n", "currentLevel": 3, "requiredLevel": 3, "gapScore": 0, "readinessScore": 100 }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "datasetVersion": "buktiva-local-rubrics-1.0.0",
+  "rubricVersion": "1.0.0",
+  "createdAt": "2026-10-22",
+  "scope": "local-evidence-rubric",
+  "supportedRoles": ["frontend-developer"],
+  "provenance": "Project-authored BUKTIVA heuristics; not ESCO, SKKNI, O*NET or an industry benchmark.",
+  "references": []
+}

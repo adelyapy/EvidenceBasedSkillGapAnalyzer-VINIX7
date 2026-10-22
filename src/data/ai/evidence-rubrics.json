@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "roles": [{
+    "slug": "frontend-developer",
+    "rubrics": [
+      {"key":"typescript","aliases":["TypeScript","TS"],"indicators":["Typed function parameters and return values","Interfaces, type aliases or generic implementations"],"technologyHints":["typescript dependency",".ts or .tsx files"],"caution":"A dependency or extension alone is an observation, not proof of implementation or personal mastery."},
+      {"key":"javascript","aliases":["JavaScript","JS","ECMAScript"],"indicators":["Functions handling actual application behavior","Asynchronous logic, events or data transformation"],"technologyHints":[".js, .jsx or .mjs files"],"caution":"Do not infer individual authorship from repository ownership."},
+      {"key":"react","aliases":["React","React.js","ReactJS"],"indicators":["Components with state, props or event behavior","Hooks used in a functional feature"],"technologyHints":["react dependency","JSX components"],"caution":"A React dependency without implementation is only observed technology."},
+      {"key":"nextjs","aliases":["Next.js","NextJS","Next"],"indicators":["Route handlers or application page implementations","Server/client boundaries or data loading in application code"],"technologyHints":["next dependency","app or pages directory"],"caution":"Configuration alone does not prove application implementation."},
+      {"key":"html","aliases":["HTML","HTML5"],"indicators":["Semantic markup implementing a user-facing structure","Labeled forms or accessible document structure"],"technologyHints":[".html files","JSX markup"],"caution":"Boilerplate markup does not establish personal proficiency."},
+      {"key":"css","aliases":["CSS","CSS3","HTML & CSS","HTML/CSS"],"indicators":["Selectors and rules implementing layout or responsive behavior","Accessibility-aware presentation or state styling"],"technologyHints":[".css or .scss files"],"caution":"Only cite the presentation behavior actually present in the excerpt."},
+      {"key":"testing","aliases":["Testing","Unit Testing","Software Testing"],"indicators":["Executable assertions for meaningful feature behavior","Fixtures and failure cases exercising application logic"],"technologyHints":["test or spec files","test runner configuration"],"caution":"A runner dependency is not evidence that relevant tests were implemented or executed."},
+      {"key":"git","aliases":["Git","Version Control"],"indicators":["Project automation using explicit version-control operations"],"technologyHints":["Git-related project configuration"],"caution":"Repository existence or a GitHub URL does not demonstrate version-control skill; report insufficient evidence when history is unavailable."},
+      {"key":"cicd","aliases":["CI/CD","Continuous Integration","Continuous Delivery"],"indicators":["Workflow steps implementing build, test or deployment automation"],"technologyHints":[".github/workflows YAML","pipeline configuration"],"caution":"Configuration can support observed technology; implementation claims additionally require eligible source or test evidence."},
+      {"key":"tailwind","aliases":["Tailwind CSS","Tailwind"],"indicators":["Utility classes implementing actual responsive components"],"technologyHints":["tailwind dependency","utility class usage"],"caution":"A dependency alone is observed technology, not verified mastery."}
+    ]
+  }]
+}
