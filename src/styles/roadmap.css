@@ -166,19 +166,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #2d5d8b;
-  border-radius: 6px;
-  color: #285d8a;
+  border: 2px solid #16191c;
+  border-radius: 4px;
+  color: #111;
   font-size: .88rem;
   font-weight: 700;
   text-decoration: none;
   transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
 }
-.bkrm-backButton { background: #fff; }
-.bkrm-dashboardButton { background: #2d5d8b; color: #fff !important; }
-.bkrm-bottomNav a:hover { box-shadow: 3px 3px 0 #9ebfd7; transform: translate(1px, 1px); }
-.bkrm-backButton:hover { background: #eaf4fb; color: #153e60; }
-.bkrm-dashboardButton:hover { background: #214c74; box-shadow-color: #14213d; }
+.bkrm-backButton, .bkrm-dashboardButton { background: transparent; color: #111 !important; }
+.bkrm-bottomNav a:hover, .bkrm-bottomNav a:focus-visible { background: #173f65; color: #fff !important; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
 
 @container roadmap (min-width: 720px) {
   .bkrm-stepGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 18px; }

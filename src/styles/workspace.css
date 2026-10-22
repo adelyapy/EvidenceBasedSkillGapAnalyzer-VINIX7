@@ -20,6 +20,7 @@
   .bkd-secondaryButton,
   .bkp-addButton,
   .bkp-continue,
+  .bkp-evidenceList li > button,
   .bktr-button,
   .review-edit,
   .review-empty a,
@@ -27,12 +28,14 @@
   .review-start,
   .review-confirmActions button,
   .validation-next,
+  .validation-back,
   .cv-action,
   .cv-selected button,
   .bkr-printButton,
   .bkr-actions .bkr-backButton,
   .bkr-actions .bkr-next-button,
   .bks-nextButton,
+  .bks-backButton,
   .bkrm-backButton,
   .bkrm-dashboardButton,
   .bkrm-materialButton,
@@ -47,6 +50,8 @@
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
   letter-spacing: .01em;
+  box-shadow: 5px 5px 0 #14213d;
+  cursor: pointer;
   transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
 }
 
@@ -55,6 +60,7 @@
   .bkd-secondaryButton,
   .bkp-addButton,
   .bkp-continue,
+  .bkp-evidenceList li > button,
   .bktr-button,
   .review-edit,
   .review-empty a,
@@ -62,12 +68,14 @@
   .review-start,
   .review-confirmActions button,
   .validation-next,
+  .validation-back,
   .cv-action,
   .cv-selected button,
   .bkr-printButton,
   .bkr-actions .bkr-backButton,
   .bkr-actions .bkr-next-button,
   .bks-nextButton,
+  .bks-backButton,
   .bkrm-backButton,
   .bkrm-dashboardButton,
   .bkrm-materialButton,
@@ -79,8 +87,44 @@
   .bkpfl-saveButton,
   .bkpfl-cancelButton
 ):not(:disabled):hover {
-  box-shadow: 3px 3px 0 rgb(20 33 61 / 72%);
+  box-shadow: 3px 3px 0 #14213d;
   transform: translate(2px, 2px);
+}
+
+.bkw-main :is(
+  .bkd-primaryButton,
+  .bkd-secondaryButton,
+  .bkp-addButton,
+  .bkp-continue,
+  .bkp-evidenceList li > button,
+  .bktr-button,
+  .review-edit,
+  .review-empty a,
+  .review-back,
+  .review-start,
+  .review-confirmActions button,
+  .validation-next,
+  .validation-back,
+  .cv-action,
+  .cv-selected button,
+  .bkr-printButton,
+  .bkr-actions .bkr-backButton,
+  .bkr-actions .bkr-next-button,
+  .bks-nextButton,
+  .bks-backButton,
+  .bkrm-backButton,
+  .bkrm-dashboardButton,
+  .bkrm-materialButton,
+  .bkh-filterActions button,
+  .bkh-detailButton,
+  .bkh-emptyState button,
+  .bkh-dialogDone,
+  .bkpfl-editButton,
+  .bkpfl-saveButton,
+  .bkpfl-cancelButton
+):not(:disabled):active {
+  box-shadow: 1px 1px 0 #14213d;
+  transform: translate(4px, 4px);
 }
 .bkw-sidebar {
   position: sticky;

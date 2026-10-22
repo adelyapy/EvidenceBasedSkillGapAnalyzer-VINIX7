@@ -334,16 +334,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #2d5d8b;
-  border-radius: 6px;
-  background: #fff;
-  color: #285d8a;
+  border: 2px solid #16191c;
+  border-radius: 4px;
+  background: transparent;
+  color: #111;
   font-size: .86rem;
   font-weight: 700;
   text-decoration: none;
   transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
 }
-.bkr-actions .bkr-backButton:hover { background: #eaf4fb; box-shadow: 3px 3px 0 #9ebfd7; transform: translate(1px, 1px); }
+.bkr-actions .bkr-backButton:hover,
+.bkr-actions .bkr-backButton:focus-visible { background: #173f65; color: #fff; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
 
 .bkr-actions > div {
   display: flex;

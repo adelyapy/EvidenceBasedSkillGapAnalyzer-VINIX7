@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes } from "@/data/analysis";
 
 const DURATION_MS = 12_000;
@@ -34,7 +33,6 @@ export default function ProcessAnalysisPage() {
 
   return (
     <div className="process-main">
-      <AnalysisStepper current="review" />
       <section className="process-content" aria-labelledby="process-heading">
         <h1 id="process-heading">AI Sedang Menganalisis<br />proyek kamu...</h1>
         <p className="process-description">Proses ini biasanya memakan waktu 1–3 menit.<br />Kami menganalisis teknologi, peran, dan kontribusimu.</p>

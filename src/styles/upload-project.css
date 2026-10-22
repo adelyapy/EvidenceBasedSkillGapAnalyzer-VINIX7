@@ -536,6 +536,7 @@
   min-height: 40px;
   padding: 8px 15px;
   border-radius: 6px;
+  box-shadow: 5px 5px 0 #14213d;
   font: inherit;
   font-size: 13px;
   font-weight: 700;
@@ -558,16 +559,23 @@
 .bkp-deleteCancel:hover,
 .bkp-deleteCancel:focus-visible {
   background: #eef3f6;
-  box-shadow: 2px 2px 0 #b4c4d0;
-  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 #14213d;
+  transform: translate(2px, 2px);
 }
 
 .bkp-deleteConfirm:hover,
 .bkp-deleteConfirm:focus-visible {
   background: #963131;
-  box-shadow: 2px 2px 0 #7c2626;
-  transform: translate(1px, 1px);
+  box-shadow: 3px 3px 0 #7c2626;
+  transform: translate(2px, 2px);
 }
+
+.bkp-deleteActions button:active {
+  box-shadow: 1px 1px 0 #14213d;
+  transform: translate(4px, 4px);
+}
+
+.bkp-deleteConfirm:active { box-shadow: 1px 1px 0 #7c2626; }
 
 @container upload-project (min-width: 400px) {
   .bkp-sourceTabs {

@@ -97,14 +97,26 @@
 .bkd-scoreCard,
 .bkd-skillsCard { min-width: 0; border: 1px solid #bdcbd4; border-radius: 7px; padding: 14px; }
 .bkd-scoreCard { min-height: 230px; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; }
+@property --bkd-score-progress {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
 .bkd-scoreRing {
+  --bkd-score-progress: 0%;
   display: grid;
   place-items: center;
   width: 112px;
   height: 112px;
   flex: none;
   border-radius: 50%;
-  background: conic-gradient(#68aac8 var(--bkd-score), #e2e3e5 0);
+  background: conic-gradient(#68aac8 var(--bkd-score-progress), #e2e3e5 0);
+  animation: bkd-score-ring-fill 1.15s cubic-bezier(.2, .8, .25, 1) both;
+}
+
+@keyframes bkd-score-ring-fill {
+  to { --bkd-score-progress: var(--bkd-score); }
 }
 .bkd-scoreRing > div {
   display: flex;
@@ -260,4 +272,5 @@
 @media (prefers-reduced-motion: reduce) {
   .bkd-statCard,
   .bkd-statCard img { transition: none; }
+  .bkd-scoreRing { animation: none; --bkd-score-progress: var(--bkd-score); }
 }

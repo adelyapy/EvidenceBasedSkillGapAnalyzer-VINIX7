@@ -73,10 +73,14 @@
   border-radius: 8px;
   font-size: .9rem;
   font-weight: 700;
+  transition: transform 170ms ease, box-shadow 170ms ease, background-color 170ms ease;
 }
-.bk-loginButton { background: #e3f3fb; color: #276397; border: 1.5px solid #2867a5; }
-.bk-registerButton { background: var(--blue); color: white; border: 1px solid #4783b7; }
-.bk-loginButton:hover, .bk-registerButton:hover { filter: brightness(.94); }
+.bk-loginButton { background: #e3f3fb; color: #276397; border: 1.5px solid #2867a5; box-shadow: 5px 5px 0 #7faac5; }
+.bk-registerButton { background: var(--blue); color: white; border: 1px solid #4783b7; box-shadow: 5px 5px 0 #14213d; }
+.bk-loginButton:hover, .bk-registerButton:hover { transform: translate(2px, 2px); filter: brightness(.94); }
+.bk-loginButton:hover { box-shadow: 3px 3px 0 #7faac5; }
+.bk-registerButton:hover { box-shadow: 3px 3px 0 #14213d; }
+.bk-loginButton:active, .bk-registerButton:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #14213d; }
 .bk-section { max-width: 1420px; padding-inline: 5%; margin: 0 auto; scroll-margin-top: 145px; }
 .bk-hero {
   min-height: calc(100vh - 118px);
