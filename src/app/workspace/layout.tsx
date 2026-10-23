@@ -4,8 +4,10 @@ import type { ReactNode } from "react";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { redirect } from "next/navigation";
+import WorkspaceLoading from "@/components/workspace/WorkspaceLoading";
 import WorkspaceShell from "@/components/workspace/WorkspaceShell";
 import { createClient } from "@/lib/supabase/server";
+import "@/styles/workspace-loading.css";
 import "@/styles/workspace.css";
 
 export const metadata: Metadata = { title: "Workspace | BUKTIVA" };
@@ -59,7 +61,7 @@ export default function WorkspaceLayout({
   children: ReactNode;
 }) {
   return (
-    <Suspense fallback={<div aria-busy="true">Memuat workspace...</div>}>
+    <Suspense fallback={<WorkspaceLoading />}>
       <AuthenticatedWorkspace>{children}</AuthenticatedWorkspace>
     </Suspense>
   );

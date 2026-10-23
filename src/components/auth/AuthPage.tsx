@@ -1,7 +1,8 @@
 
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useCallback, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { fields, styles } from "@/data/auth";
 import type {
@@ -14,6 +15,7 @@ import type {
 import { validate } from "./auth.validation";
 import AuthIntro from "./AuthIntro";
 import AuthForm from "./AuthForm";
+import RegistrationSuccessDialog from "./RegistrationSuccessDialog";
 import { createClient } from "@/lib/supabase/client";
 import "@/styles/auth.css";
 
@@ -31,6 +33,14 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
   const [touchedSubmit, setTouchedSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
+  const [registrationEmail, setRegistrationEmail] = useState<string | null>(
+    null,
+  );
+  const showHomeLink = mode === "login" || mode === "register";
+
+  const closeRegistrationDialog = useCallback(() => {
+    setRegistrationEmail(null);
+  }, []);
 
   function updateField(name: FieldName, value: string) {
     const next = { ...values, [name]: value };
@@ -95,10 +105,7 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
             text: "Pendaftaran berhasil. Akun Anda sudah aktif.",
           });
         } else {
-          setNotice({
-            type: "info",
-            text: "Pendaftaran berhasil. Silakan periksa email Anda untuk mengonfirmasi akun sebelum masuk.",
-          });
+          setRegistrationEmail(email);
         }
 
         setValues(initialValues);
@@ -135,7 +142,14 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
   }
 
   return (
-    <main className={styles.screen}>
+    <main
+      className={`${styles.screen}${showHomeLink ? ` ${styles.screenWithHome}` : ""}`}
+    >
+      {showHomeLink && (
+        <Link href="/" className={styles.homeLink}>
+          Kembali ke Beranda
+        </Link>
+      )}
       <div className={`${styles.shell} ${styles[mode]}`}>
         <AuthIntro mode={mode} />
         <AuthForm
@@ -154,6 +168,10 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
           }
         />
       </div>
+      <RegistrationSuccessDialog
+        email={registrationEmail}
+        onClose={closeRegistrationDialog}
+      />
     </main>
   );
 }

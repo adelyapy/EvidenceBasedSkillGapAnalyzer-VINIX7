@@ -50,6 +50,19 @@
   cursor: pointer;
 }
 
+.bkpfl-saveButton,
+.bkpfl-cancelButton {
+  min-height: 44px;
+  border: 2px solid #14213d;
+  padding: 10px 16px;
+  font-weight: 800;
+  box-shadow: 4px 4px 0 #14213d;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
 .bkpfl-editButton {
   display: inline-flex;
   flex: 0 0 auto;
@@ -227,16 +240,21 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgb(23 32 51 / 48%);
+  background: rgb(20 33 61 / 58%);
+  animation: bkpfl-dialog-backdrop-in 180ms ease-out both;
 }
 
 .bkpfl-editDialog {
   width: min(100%, 500px);
-  border: 1px solid #b9c9d9;
-  border-radius: 16px;
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
+  border: 2px solid #14213d;
+  border-radius: 12px;
   padding: 26px;
-  background: #fff;
-  box-shadow: 0 20px 50px rgb(23 32 51 / 25%);
+  background: #f8fcfd;
+  box-shadow: 8px 8px 0 #14213d;
+  transform-origin: center;
+  animation: bkpfl-dialog-card-in 260ms cubic-bezier(.22, 1, .36, 1) both;
 }
 
 .bkpfl-dialogHeading {
@@ -306,25 +324,55 @@
 }
 
 .bkpfl-cancelButton {
-  border: 1px solid #b9c9d9;
-  background: #fff;
-  color: #344154;
+  background: #fffdf5;
+  color: #14213d;
 }
 
 .bkpfl-saveButton {
-  border: 1px solid #24547f;
   background: #2e608c;
   color: #fff;
 }
 
-.bkpfl-cancelButton:hover,
-.bkpfl-cancelButton:focus-visible {
-  background: #f3f6f8;
+.bkpfl-cancelButton:hover {
+  background: #eaf5fb;
 }
 
-.bkpfl-saveButton:hover,
+.bkpfl-saveButton:hover {
+  background: #3974a8;
+}
+
+.bkpfl-cancelButton:hover,
+.bkpfl-saveButton:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #14213d;
+}
+
+.bkpfl-cancelButton:active,
+.bkpfl-saveButton:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #14213d;
+}
+
+.bkpfl-cancelButton:focus-visible,
 .bkpfl-saveButton:focus-visible {
-  background: #24547f;
+  outline: 3px solid #6cc9e8;
+  outline-offset: 3px;
+}
+
+@keyframes bkpfl-dialog-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bkpfl-dialog-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @container bkpfl-page (max-width: 720px) {
@@ -387,6 +435,7 @@
 
   .bkpfl-editDialog {
     padding: 22px 18px;
+    box-shadow: 6px 6px 0 #14213d;
   }
 
   .bkpfl-formActions {
@@ -395,5 +444,24 @@
 
   .bkpfl-formActions button {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bkpfl-modalBackdrop,
+  .bkpfl-editDialog {
+    animation: none;
+  }
+
+  .bkpfl-cancelButton,
+  .bkpfl-saveButton {
+    transition: none;
+  }
+
+  .bkpfl-cancelButton:hover,
+  .bkpfl-saveButton:hover,
+  .bkpfl-cancelButton:active,
+  .bkpfl-saveButton:active {
+    transform: none;
   }
 }

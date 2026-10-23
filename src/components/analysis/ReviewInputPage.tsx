@@ -288,10 +288,10 @@ export default function ReviewInputPage() {
       {toast && <div className={`review-toast review-toast--${toast.type}`} role="status" aria-live="polite"><span aria-hidden="true">{toast.type === "success" ? "✓" : "!"}</span>{toast.message}</div>}
       {confirmationOpen && typeof document !== "undefined" && createPortal(
         <div className="review-confirmBackdrop" role="presentation" onMouseDown={() => setConfirmationOpen(false)}>
-          <section className="review-confirmDialog" role="dialog" aria-modal="true" aria-labelledby="review-confirm-title" onMouseDown={(event) => event.stopPropagation()}>
+          <section className="review-confirmDialog" role="alertdialog" aria-modal="true" aria-labelledby="review-confirm-title" aria-describedby="review-confirm-description" onMouseDown={(event) => event.stopPropagation()}>
             <span className="review-confirmIcon" aria-hidden="true">✓</span>
             <h2 id="review-confirm-title">Mulai analisis?</h2>
-            <p>Pastikan informasi project dan role target sudah benar. Setelah dilanjutkan, AI akan mulai menganalisis data Anda.</p>
+            <p id="review-confirm-description">Pastikan informasi project dan role target sudah benar. Setelah dilanjutkan, AI akan mulai menganalisis data Anda.</p>
             <div className="review-confirmActions">
               <button type="button" className="review-confirmCancel" onClick={() => setConfirmationOpen(false)}>Periksa kembali</button>
               <button

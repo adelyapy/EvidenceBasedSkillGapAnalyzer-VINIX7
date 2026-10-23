@@ -38,16 +38,6 @@ export default function HistoryFilters({
           <h2 id="bkh-filter-title">Cari dan Atur Riwayat</h2>
           <p>Filter dan pengurutan berdasarkan riwayat analisis akunmu.</p>
         </div>
-
-        <details className="bkh-help">
-          <summary>
-            <HistoryIcon name="help" size={20} /> Bantuan
-          </summary>
-          <div>
-            Cari berdasarkan nama analisis atau target role. Gunakan filter
-            dan urutan, lalu pilih Terapkan untuk memperbarui daftar.
-          </div>
-        </details>
       </div>
 
       <form
