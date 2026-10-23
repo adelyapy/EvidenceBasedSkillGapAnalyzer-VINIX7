@@ -8,7 +8,6 @@ type Props = {
   pathname: string;
   collapsed: boolean;
   mobileOpen: boolean;
-  onCollapse: () => void;
   onClose: () => void;
   onLogout: () => void;
   isLoggingOut: boolean;
@@ -18,7 +17,6 @@ export default function WorkspaceSidebar({
   pathname,
   collapsed,
   mobileOpen,
-  onCollapse,
   onClose,
   onLogout,
   isLoggingOut,
@@ -55,14 +53,6 @@ export default function WorkspaceSidebar({
             <span className="bkw-sidebarLabel">BUKTIVA</span>
           </Link>
 
-          <button
-            className="bkw-collapseButton"
-            onClick={onCollapse}
-            aria-label={collapsed ? "Perlebar sidebar" : "Perkecil sidebar"}
-            aria-expanded={!collapsed}
-          >
-            <span aria-hidden="true">{collapsed ? "»" : "«"}</span>
-          </button>
         </div>
 
         <nav className="bkw-nav" aria-label="Navigasi utama BUKTIVA">

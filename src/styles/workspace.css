@@ -136,7 +136,10 @@
   flex-direction: column;
   border-right: 1px solid #b9c6ce;
   background: var(--bkw-cream);
-  transition: width .2s ease, flex-basis .2s ease;
+  overflow-x: hidden;
+  transition:
+    width .28s cubic-bezier(.22, 1, .36, 1),
+    flex-basis .28s cubic-bezier(.22, 1, .36, 1);
   z-index: 30;
 }
 .bkw-sidebarTop { height: 76px; flex: none; display: flex; align-items: center; border-bottom: 1px solid #b9c6ce; padding: 0 28px; background: var(--bkw-cream); }
@@ -150,24 +153,40 @@
 .bkw-navItem--active:not(:disabled):hover { background: #adc9ed; }
 .bkw-logout { margin: auto 18px 28px; width: calc(100% - 36px); }
 .bkw-mainColumn { min-width: 0; flex: 1; padding-top: 76px; }
-.bkw-header { position: fixed; top: 0; right: 0; left: 250px; z-index: 40; height: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 26px 0 18px; border-bottom: 1px solid #b9c6ce; background: var(--bkw-cream); }
-.bkw-headerCollapseButton { display: grid; width: 44px; height: 44px; flex: none; place-items: center; border: 0; border-radius: 8px; background: transparent; color: #14213d; cursor: pointer; transition: background-color .18s ease; }
-.bkw-headerCollapseButton svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s ease; }
+.bkw-header { position: fixed; top: 0; right: 0; left: 250px; z-index: 40; height: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 26px 0 18px; border-bottom: 1px solid #b9c6ce; background: var(--bkw-cream); transition: left .28s cubic-bezier(.22, 1, .36, 1); }
+.bkw-headerCollapseButton { display: grid; width: 44px; height: 44px; flex: none; place-items: center; border: 0; border-radius: 8px; background: transparent; color: #14213d; cursor: pointer; transition: background-color .18s ease, transform .18s ease; }
+.bkw-headerCollapseButton svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .28s cubic-bezier(.22, 1, .36, 1); }
 .bkw-headerCollapseButton--collapsed svg { transform: rotate(180deg); }
 .bkw-headerCollapseButton:hover { background: #dceaf7; }
+.bkw-headerCollapseButton:active { transform: translateY(1px); }
 .bkw-headerCollapseButton:focus-visible { outline: 3px solid #2c659a; outline-offset: 2px; }
-.bkw-headerActions { display: flex; align-items: center; gap: 10px; }
-.bkw-notification { border: 0; background: transparent; width: 30px; height: 34px; display: grid; place-items: center; }
-.bkw-profile { position: relative; }
-.bkw-profile summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 7px; }
+.bkw-headerActions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.bkw-profile { position: relative; min-width: 0; }
+.bkw-profile summary { min-height: 44px; list-style: none; cursor: pointer; display: flex; align-items: center; gap: 7px; border: 2px solid transparent; border-radius: 8px; padding: 3px 6px; transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
 .bkw-profile summary::-webkit-details-marker { display: none; }
 .bkw-profile summary img { border-radius: 50%; width: 34px; height: 34px; object-fit: cover; object-position: center 20%; }
-.bkw-profileText { display: flex; flex-direction: column; line-height: 1.1; min-width: 58px; }
-.bkw-profileText strong { font-size: 15px; font-weight: 600; }
+.bkw-profileText { display: flex; flex-direction: column; line-height: 1.1; min-width: 58px; max-width: clamp(90px, 18vw, 180px); }
+.bkw-profileText strong { overflow: hidden; font-size: 15px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
 .bkw-profileText small { font-size: 11px; }
-.bkw-profileMenu { position: absolute; z-index: 40; top: calc(100% + 10px); right: 0; width: 160px; background: #fff; border: 1px solid #aebfce; border-radius: 8px; box-shadow: 0 8px 22px #0002; padding: 5px; }
-.bkw-profileMenu a, .bkw-profileMenu button { width: 100%; display: block; text-align: left; border: 0; border-radius: 4px; padding: 9px; background: #fff; font-size: 13px; }
-.bkw-profileMenu a:hover, .bkw-profileMenu a:focus-visible { background: #f0f0f0; outline: 2px solid #2e608c; outline-offset: -2px; }
+.bkw-profile summary > svg { flex: none; transition: transform .18s ease; }
+.bkw-profile summary:hover { background: #dceaf7; }
+.bkw-profile summary:focus-visible { outline: 3px solid #2c659a; outline-offset: 2px; }
+.bkw-profile[open] summary { border-color: #14213d; background: #adc9ed; box-shadow: 3px 3px 0 #14213d; transform: translate(-1px, -1px); }
+.bkw-profile[open] summary > svg { transform: rotate(180deg); }
+.bkw-profileMenu { position: absolute; z-index: 70; top: calc(100% + 13px); right: 0; width: min(280px, calc(100vw - 32px)); overflow: hidden; border: 2px solid #14213d; border-radius: 8px; background: #dceaf7; box-shadow: 5px 5px 0 #14213d; color: #14213d; transform-origin: top right; animation: bkw-profile-menu-in .16s ease-out; }
+.bkw-profileMenuHeader { display: flex; flex-direction: column; gap: 3px; border-bottom: 2px solid #14213d; padding: 14px 16px; background: #c7dcf4; }
+.bkw-profileMenuHeader strong { font-size: 16px; font-weight: 800; }
+.bkw-profileMenuHeader span { overflow: hidden; color: #405269; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.bkw-profileMenuGroup { padding: 6px; }
+.bkw-profileMenuGroup--logout { border-top: 2px solid #14213d; background: var(--bkw-cream); }
+.bkw-profileMenu :is(a, button) { width: 100%; min-height: 46px; display: flex; align-items: center; gap: 12px; border: 0; border-radius: 5px; padding: 10px 11px; background: transparent; color: #14213d; font-size: 15px; font-weight: 600; text-align: left; transition: background-color .16s ease, transform .16s ease; }
+.bkw-profileMenu :is(a, button):not(:disabled):hover { background: #adc9ed; transform: translateX(2px); }
+.bkw-profileMenu :is(a, button):focus-visible { outline: 3px solid #2c659a; outline-offset: -3px; }
+.bkw-profileMenu button:disabled { color: #617084; }
+@keyframes bkw-profile-menu-in {
+  from { opacity: 0; transform: translateY(-5px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 .bkw-menuButton { display: none; background: transparent; border: 0; color: #14213d; }
 .bkw-menuIcon { position: relative; display: block; width: 28px; height: 24px; }
 .bkw-menuIcon > span { position: absolute; right: 1px; display: block; height: 3px; border-radius: 999px; background: currentColor; transform-origin: center; transition: width 220ms ease, transform 220ms ease, opacity 180ms ease; }
@@ -212,11 +231,20 @@
   .bkw-mainColumn { width: 100%; padding-top: 68px; }
   .bkw-header, .bkw-shell--collapsed .bkw-header { left: 0; height: 68px; padding: 0 16px; }
   .bkw-menuButton { position: fixed; top: 12px; left: 16px; z-index: 60; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; }
+  .bkw-headerActions { max-width: calc(100% - 60px); }
+  .bkw-profile, .bkw-profile summary { max-width: 100%; }
+  .bkw-profileText { min-width: 0; max-width: clamp(78px, 30vw, 140px); }
   .bkw-main { padding: 14px 16px 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .bkw-sidebar,
+  .bkw-header,
   .bkw-menuIcon > span,
   .bkw-headerCollapseButton,
   .bkw-headerCollapseButton svg,
+  .bkw-profile summary,
+  .bkw-profile summary > svg,
+  .bkw-profileMenu :is(a, button),
   .bkw-main :is(button, a) { transition: none; }
+  .bkw-profileMenu { animation: none; }
 }

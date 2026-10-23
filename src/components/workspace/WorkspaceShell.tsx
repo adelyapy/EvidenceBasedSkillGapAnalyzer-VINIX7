@@ -4,13 +4,16 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import type { WorkspaceUser } from "@/types/workspace";
 import WorkspaceHeader from "./WorkspaceHeader";
 import WorkspaceSidebar from "./WorkspaceSidebar";
 
 export default function WorkspaceShell({
   children,
+  user,
 }: {
   children: ReactNode;
+  user: WorkspaceUser;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -70,7 +73,6 @@ export default function WorkspaceShell({
         pathname={pathname}
         collapsed={collapsed}
         mobileOpen={mobileOpen}
-        onCollapse={() => setCollapsed((value) => !value)}
         onClose={() => setMobileOpen(false)}
         onLogout={handleLogout}
         isLoggingOut={isLoggingOut}
@@ -78,9 +80,14 @@ export default function WorkspaceShell({
 
       <div className="bkw-mainColumn">
         <WorkspaceHeader
+          user={user}
+          collapsed={collapsed}
           mobileOpen={mobileOpen}
+          onLogout={handleLogout}
+          onToggleSidebar={() => setCollapsed((value) => !value)}
           onToggleMenu={() => setMobileOpen((value) => !value)}
           onCloseMenu={() => setMobileOpen(false)}
+          isLoggingOut={isLoggingOut}
         />
         <main id="konten-utama" className="bkw-main">
           {children}

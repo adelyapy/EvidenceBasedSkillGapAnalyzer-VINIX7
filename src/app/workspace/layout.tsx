@@ -28,7 +28,29 @@ async function AuthenticatedWorkspace({
     redirect("/login");
   }
 
-  return <WorkspaceShell>{children}</WorkspaceShell>;
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const displayName =
+    profile?.full_name?.trim() ||
+    user.user_metadata?.full_name?.trim() ||
+    user.email?.split("@")[0] ||
+    "Pengguna";
+
+  return (
+    <WorkspaceShell
+      user={{
+        name: displayName,
+        role: "Mahasiswa",
+        avatar: "/images/profile/profile.png",
+      }}
+    >
+      {children}
+    </WorkspaceShell>
+  );
 }
 
 export default function WorkspaceLayout({
