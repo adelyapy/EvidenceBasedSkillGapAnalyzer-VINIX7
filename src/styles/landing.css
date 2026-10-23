@@ -73,10 +73,14 @@
   border-radius: 8px;
   font-size: .9rem;
   font-weight: 700;
+  transition: transform 170ms ease, box-shadow 170ms ease, background-color 170ms ease;
 }
-.bk-loginButton { background: #e3f3fb; color: #276397; border: 1.5px solid #2867a5; }
-.bk-registerButton { background: var(--blue); color: white; border: 1px solid #4783b7; }
-.bk-loginButton:hover, .bk-registerButton:hover { filter: brightness(.94); }
+.bk-loginButton { background: #e3f3fb; color: #276397; border: 1.5px solid #2867a5; box-shadow: 5px 5px 0 #7faac5; }
+.bk-registerButton { background: var(--blue); color: white; border: 1px solid #4783b7; box-shadow: 5px 5px 0 #14213d; }
+.bk-loginButton:hover, .bk-registerButton:hover { transform: translate(2px, 2px); filter: brightness(.94); }
+.bk-loginButton:hover { box-shadow: 3px 3px 0 #7faac5; }
+.bk-registerButton:hover { box-shadow: 3px 3px 0 #14213d; }
+.bk-loginButton:active, .bk-registerButton:active { transform: translate(4px, 4px); box-shadow: 1px 1px 0 #14213d; }
 .bk-section { max-width: 1420px; padding-inline: 5%; margin: 0 auto; scroll-margin-top: 145px; }
 .bk-hero {
   min-height: calc(100vh - 118px);
@@ -229,7 +233,7 @@
 @keyframes bk-hero-rise-lg { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bk-hero-visual-in { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
 @keyframes bk-hero-step-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.bk-about { padding-top: clamp(76px, 8vw, 118px); padding-bottom: clamp(82px, 8vw, 120px); }
+.bk-about { padding-top: clamp(76px, 8vw, 118px); padding-bottom: clamp(60px, 6vw, 88px); }
 .bk-aboutTop {
   display: grid;
   grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
@@ -243,16 +247,6 @@
   min-width: 0;
   place-items: center;
   padding: clamp(10px, 2vw, 24px);
-}
-.bk-aboutVisual::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 14% 6% 7% 10%;
-  border: 2px solid #14213d;
-  border-radius: 44% 56% 48% 52% / 52% 44% 56% 48%;
-  background: #dceef5;
-  box-shadow: 7px 7px 0 #14213d;
 }
 .bk-aboutVisual img {
   width: min(100%, 620px);
@@ -366,8 +360,8 @@
   position: relative;
   isolation: isolate;
   overflow: clip;
-  padding-top: clamp(94px, 9vw, 132px);
-  padding-bottom: clamp(104px, 10vw, 145px);
+  padding-top: clamp(66px, 7vw, 92px);
+  padding-bottom: clamp(72px, 7vw, 104px);
 }
 .bk-howItWorks::before {
   content: "";
@@ -517,7 +511,7 @@
   position: relative;
   isolation: isolate;
   overflow: clip;
-  padding-top: clamp(92px, 9vw, 132px);
+  padding-top: clamp(64px, 7vw, 96px);
   padding-bottom: clamp(94px, 9vw, 136px);
 }
 .bk-team::after {
@@ -1075,7 +1069,7 @@
   .bk-heroStepIcon { width: 38px; height: 38px; }
   .bk-heroStepCopy strong { font-size: 1rem; }
   .bk-heroStepCopy > span { font-size: .82rem; }
-  .bk-about { padding-top: 74px; padding-bottom: 82px; }
+  .bk-about { padding-top: 74px; padding-bottom: 56px; }
   .bk-aboutTop { gap: 30px; }
   .bk-aboutCopy { order: -1; text-align: left; }
   .bk-aboutCopy .bk-pill { margin-right: auto; margin-left: 0; }
@@ -1086,7 +1080,7 @@
   .bk-aboutVisual { width: min(100%, 560px); padding: 10px; }
   .bk-benefitGrid { grid-template-columns: 1fr; gap: 18px; margin-top: 42px; padding-right: 5px; }
   .bk-benefitCard { min-height: 138px; padding: 18px; }
-  .bk-howItWorks { padding-top: 84px; padding-bottom: 96px; }
+  .bk-howItWorks { padding-top: 58px; padding-bottom: 66px; }
   .bk-howItWorks::before { top: 420px; left: -130px; width: 180px; height: 230px; opacity: .5; }
   .bk-howItWorks::after { right: 4px; bottom: 30px; transform: scale(.82); }
   .bk-howHeader h2 { font-size: clamp(2.35rem, 9.5vw, 3.55rem); line-height: 1.1; }
@@ -1105,7 +1099,7 @@
     width: 30px;
     transform: translateX(-50%) rotate(90deg);
   }
-  .bk-team { padding-top: 82px; padding-bottom: 96px; }
+  .bk-team { padding-top: 58px; padding-bottom: 96px; }
   .bk-team::after { right: -18px; bottom: 20%; opacity: .25; }
   .bk-teamIntro { gap: 32px; }
   .bk-teamCopy { order: -1; text-align: left; }

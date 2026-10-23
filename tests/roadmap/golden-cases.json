@@ -1,0 +1,11 @@
+{
+  "label": "SYNTHETIC CONTRACT EXPECTATIONS; NO REAL USER OUTCOMES OR APPROVAL",
+  "cases": [
+    { "id": "draft-policy-review", "options": {}, "expectedTypes": ["manual_review", "reassessment"], "expectedStatus": "partial", "expectedResourceIds": [] },
+    { "id": "unknown-evidence", "options": {"mapped": false}, "expectedTypes": ["evidence_collection", "evidence_collection", "reassessment"], "expectedStatus": "partial", "expectedResourceIds": [] },
+    { "id": "partial-source-review", "options": {"partial": true}, "expectedTypes": ["manual_review", "reassessment"], "expectedStatus": "partial", "expectedResourceIds": [] },
+    { "id": "contradiction-review", "options": {"alignment": "contradicted"}, "expectedTypes": ["manual_review", "reassessment"], "expectedStatus": "partial", "expectedResourceIds": [] },
+    { "id": "synthetic-learning-gap", "options": {"simulation": true}, "expectedTypes": ["learning", "evidence_collection", "reassessment"], "expectedStatus": "proposed", "expectedResourceIds": ["typescript-generics"] },
+    { "id": "synthetic-no-gap", "options": {"simulation": true, "content": "export function identity<T>(value: T): T { return value; }\nassert.equal(identity(1), 1);\n"}, "expectedTypes": [], "expectedStatus": "no_actions", "expectedResourceIds": [] }
+  ]
+}

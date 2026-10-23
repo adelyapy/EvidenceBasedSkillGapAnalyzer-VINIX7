@@ -54,7 +54,17 @@ export default function ProcessAnalysisPage() {
           body: JSON.stringify({ analysisId }),
         });
 
-        const result = await response.json();
+        let result: {
+          success?: boolean;
+          message?: string;
+          questions?: unknown[];
+        };
+
+        try {
+          result = await response.json();
+        } catch {
+          throw new Error("Respons server tidak valid. Silakan coba lagi.");
+        }
 
         if (!response.ok || result.success !== true) {
           throw new Error(
@@ -113,7 +123,6 @@ export default function ProcessAnalysisPage() {
   return (
     <div className="process-main">
       <AnalysisStepper current="review" />
-
       <section className="process-content" aria-labelledby="process-heading">
         <h1 id="process-heading">
           {error ? (

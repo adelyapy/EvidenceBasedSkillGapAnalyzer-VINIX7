@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 import {
   useEffect,
   useMemo,
@@ -254,6 +255,7 @@ export default function UploadProjectPage() {
   const [error, setError] = useState("");
   const [feedback, setFeedback] = useState("");
   const [storageAvailable, setStorageAvailable] = useState(true);
+  const [evidenceToDelete, setEvidenceToDelete] = useState<UploadProjectEvidence | null>(null);
   const evidence = useMemo(
     () => [...linkEvidence, ...pdfEvidence],
     [linkEvidence, pdfEvidence],
@@ -349,9 +351,8 @@ export default function UploadProjectPage() {
     const nextEvidence = evidence.filter((item) => item.id !== id);
     if (removedEvidence?.kind === "pdf") {
       setPdfEvidence((items) => items.filter((item) => item.id !== id));
-    } else {
-      setStorageAvailable(persistLinks(nextEvidence));
     }
+    setStorageAvailable(persistLinks(nextEvidence));
     setError("");
     setFeedback("Bukti proyek dihapus.");
   }
@@ -442,7 +443,7 @@ export default function UploadProjectPage() {
                     <strong>{sourceLabels[item.source]}</strong>
                     {item.kind === "url" ? <a href={item.value} target="_blank" rel="noreferrer">{item.value}</a> : <span>{item.file.name} · {formatFileSize(item.file.size)} · belum diunggah</span>}
                   </span>
-                  <button type="button" onClick={() => removeEvidence(item.id)} aria-label={`Hapus ${item.kind === "url" ? item.value : item.file.name}`}>Hapus</button>
+                  <button type="button" onClick={() => setEvidenceToDelete(item)} aria-label={`Hapus ${item.kind === "url" ? item.value : item.file.name}`}>Hapus</button>
                 </li>
               ))}
             </ul>
@@ -475,6 +476,29 @@ export default function UploadProjectPage() {
           Lanjutkan <span aria-hidden="true">→</span>
         </button>
       </div>
+      {evidenceToDelete && typeof document !== "undefined" && createPortal(
+        <div className="bkp-deleteBackdrop" role="presentation" onMouseDown={() => setEvidenceToDelete(null)}>
+          <section className="bkp-deleteDialog" role="dialog" aria-modal="true" aria-labelledby="bkp-delete-title" aria-describedby="bkp-delete-description" onMouseDown={(event) => event.stopPropagation()}>
+            <span className="bkp-deleteIcon" aria-hidden="true">!</span>
+            <h2 id="bkp-delete-title">Hapus bukti proyek?</h2>
+            <p id="bkp-delete-description">{`Apakah Anda yakin ingin menghapus ${evidenceToDelete.kind === "url" ? "tautan proyek ini" : `dokumen ${evidenceToDelete.file.name}`}?`}</p>
+            <div className="bkp-deleteActions">
+              <button type="button" className="bkp-deleteCancel" onClick={() => setEvidenceToDelete(null)}>Tidak</button>
+              <button
+                type="button"
+                className="bkp-deleteConfirm"
+                onClick={() => {
+                  removeEvidence(evidenceToDelete.id);
+                  setEvidenceToDelete(null);
+                }}
+              >
+                Ya, hapus
+              </button>
+            </div>
+          </section>
+        </div>,
+        document.body,
+      )}
     </div>
   );
 }

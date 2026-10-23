@@ -409,8 +409,8 @@ export default function AnalysisResultPage() {
                 <strong>Hasil evaluasi belum lengkap.</strong>
                 <p>
                   {resultError ||
-                    "Data target role, bukti proyek, ringkasan, dan skor kesiapan dapat tersedia secara terpisah. Jika data kompetensi atau skill gap belum tersimpan, hasil tersebut belum dapat ditampilkan."}
-                  {" "}Bukti yang belum dianalisis tidak berarti pengguna tidak
+                    "Data target role, bukti proyek, ringkasan, dan skor kesiapan dapat tersedia secara terpisah. Jika data kompetensi atau skill gap belum tersimpan, hasil tersebut belum dapat ditampilkan."}{" "}
+                  Bukti yang belum dianalisis tidak berarti pengguna tidak
                   memiliki keterampilan tersebut.
                 </p>
               </>

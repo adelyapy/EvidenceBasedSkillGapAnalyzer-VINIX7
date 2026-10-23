@@ -1,0 +1,749 @@
+{
+  "label": "GENERATED_VALIDATED_SYNTHETIC_SNAPSHOT_NOT_INDEPENDENT_ORACLE",
+  "input": {
+    "analysisInput": {
+      "analysisId": "33333333-3333-4333-8333-333333333333",
+      "userId": "11111111-1111-4111-8111-111111111111",
+      "targetRole": {
+        "id": "9007199254740993",
+        "name": "Frontend Developer",
+        "slug": "frontend-developer",
+        "description": "Frontend engineering"
+      },
+      "benchmarks": [
+        {
+          "benchmarkId": "10",
+          "skillId": "9007199254740995",
+          "skillName": "TypeScript",
+          "category": "Engineering",
+          "description": "Typed JavaScript",
+          "requiredLevel": 3,
+          "priority": "high",
+          "sourceName": "Synthetic benchmark",
+          "sourceUrl": "https://example.invalid/benchmark"
+        }
+      ],
+      "evidences": [
+        {
+          "evidenceId": "44444444-4444-4444-8444-444444444444",
+          "sourceType": "github",
+          "sourceReference": "https://github.com/acme/demo",
+          "status": "complete",
+          "normalizedProject": {
+            "sourceType": "github",
+            "projectName": "demo",
+            "sourceReference": "https://github.com/acme/demo",
+            "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "files": [
+              {
+                "path": "src/identity.ts",
+                "content": "export function identity<T>(value: T): T { return value; }\n",
+                "sizeBytes": 59,
+                "language": "TypeScript"
+              }
+            ],
+            "stats": {
+              "discoveredFiles": 1,
+              "includedFiles": 1,
+              "skippedFiles": 0,
+              "totalContentBytes": 59
+            },
+            "warnings": [],
+            "status": "complete"
+          },
+          "warnings": []
+        }
+      ],
+      "cv": null,
+      "processingStatus": "complete",
+      "warnings": []
+    },
+    "skillExtraction": {
+      "analysisId": "33333333-3333-4333-8333-333333333333",
+      "status": "completed",
+      "model": "mock-fixture",
+      "promptVersion": "buktiva-skill-extraction-1.0.0",
+      "datasetVersion": "buktiva-local-rubrics-1.0.0",
+      "skills": [
+        {
+          "skillId": "9007199254740995",
+          "evidenceStatus": "implementation_evidence",
+          "evidenceRefs": [
+            {
+              "evidenceId": "44444444-4444-4444-8444-444444444444",
+              "fileRef": "file_0794897769b3d7079fefd0e8",
+              "filePath": "src/identity.ts",
+              "quote": "export function identity<T>(value: T): T { return value; }\n"
+            }
+          ],
+          "reason": "Kutipan menunjukkan bukti pada file yang tersedia."
+        }
+      ],
+      "coverage": {
+        "sourceCount": 1,
+        "includedSources": 1,
+        "discoveredFiles": 1,
+        "availableFiles": 1,
+        "sentFiles": 1,
+        "skippedFiles": 0,
+        "sentContentBytes": 59
+      },
+      "warnings": []
+    },
+    "validationEvaluation": {
+      "analysisId": "33333333-3333-4333-8333-333333333333",
+      "status": "completed",
+      "model": "mock-validation",
+      "promptVersion": "buktiva-validation-1.0.0",
+      "rubricVersion": "1.0.0",
+      "datasetVersion": "buktiva-local-rubrics-1.0.0",
+      "evaluations": [
+        {
+          "questionId": "25915006-cce2-5336-aa4c-add318917cdd",
+          "answerRef": "answer_24c547d7eed293c7a77a14e7",
+          "answerQuote": "Modul identity berupa fungsi murni generik, terpisah dari UI. Pemisahan ini menjaga logika mudah diuji tanpa efek samping.",
+          "dimensions": [
+            {
+              "dimensionId": "relevance",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "technical_accuracy",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "evidence_consistency",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            }
+          ],
+          "evidenceAlignment": "supported",
+          "relatedSkillIds": [
+            "9007199254740995"
+          ],
+          "evidenceRefs": [
+            {
+              "evidenceId": "44444444-4444-4444-8444-444444444444",
+              "fileRef": "file_0794897769b3d7079fefd0e8",
+              "filePath": "src/identity.ts",
+              "quote": "export function identity<T>(value: T): T { return value; }\n"
+            }
+          ],
+          "feedback": "Penjelasan merujuk implementasi yang tersedia, dengan batas verifikasi proyek.",
+          "answerQuality": {
+            "score": 9,
+            "maxScore": 12,
+            "assessedDimensions": 3,
+            "configuredDimensions": 3
+          }
+        },
+        {
+          "questionId": "35ea07bf-f589-5312-b801-9b7f9a11ec08",
+          "answerRef": "answer_b9f9a84ab6dd9daeed8b2467",
+          "answerQuote": "Saya mengklaim mengerjakan fungsi identity; bagian UI dikerjakan tim. Klaim kontribusi ini belum dibuktikan oleh repositori.",
+          "dimensions": [
+            {
+              "dimensionId": "relevance",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "contribution_clarity",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            }
+          ],
+          "evidenceAlignment": "insufficient_evidence",
+          "relatedSkillIds": [],
+          "evidenceRefs": [],
+          "feedback": "Batas kontribusi dijelaskan; kepengarangan belum dapat diverifikasi.",
+          "answerQuality": {
+            "score": 6,
+            "maxScore": 8,
+            "assessedDimensions": 2,
+            "configuredDimensions": 2
+          }
+        },
+        {
+          "questionId": "c7977660-bc16-5e23-a598-132c2e161b2b",
+          "answerRef": "answer_aa6e443d3682275267061f34",
+          "answerQuote": "TypeScript dipilih agar tipe T masukan dipertahankan pada keluaran fungsi identity. Kompilasi membantu memeriksa kontrak tipe.",
+          "dimensions": [
+            {
+              "dimensionId": "relevance",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "technical_accuracy",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "evidence_consistency",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            }
+          ],
+          "evidenceAlignment": "supported",
+          "relatedSkillIds": [
+            "9007199254740995"
+          ],
+          "evidenceRefs": [
+            {
+              "evidenceId": "44444444-4444-4444-8444-444444444444",
+              "fileRef": "file_0794897769b3d7079fefd0e8",
+              "filePath": "src/identity.ts",
+              "quote": "export function identity<T>(value: T): T { return value; }\n"
+            }
+          ],
+          "feedback": "Penjelasan merujuk implementasi yang tersedia, dengan batas verifikasi proyek.",
+          "answerQuality": {
+            "score": 9,
+            "maxScore": 12,
+            "assessedDimensions": 3,
+            "configuredDimensions": 3
+          }
+        },
+        {
+          "questionId": "44356fc1-c485-5088-8caf-963ad3bcbedf",
+          "answerRef": "answer_5de2c956d682697360a7e5c9",
+          "answerQuote": "Kendala yang saya jelaskan adalah kehilangan informasi tipe. Parameter generik T menjaga hubungan tipe masukan dan keluaran.",
+          "dimensions": [
+            {
+              "dimensionId": "relevance",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "technical_accuracy",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "evidence_consistency",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            }
+          ],
+          "evidenceAlignment": "supported",
+          "relatedSkillIds": [
+            "9007199254740995"
+          ],
+          "evidenceRefs": [
+            {
+              "evidenceId": "44444444-4444-4444-8444-444444444444",
+              "fileRef": "file_0794897769b3d7079fefd0e8",
+              "filePath": "src/identity.ts",
+              "quote": "export function identity<T>(value: T): T { return value; }\n"
+            }
+          ],
+          "feedback": "Penjelasan merujuk implementasi yang tersedia, dengan batas verifikasi proyek.",
+          "answerQuality": {
+            "score": 9,
+            "maxScore": 12,
+            "assessedDimensions": 3,
+            "configuredDimensions": 3
+          }
+        },
+        {
+          "questionId": "aad73e64-e024-5ffa-a308-61b6df7f3060",
+          "answerRef": "answer_870ba3dab838d4954855a0cc",
+          "answerQuote": "Tujuannya mengembalikan masukan tanpa perubahan. Contoh uji yang dapat dibuat adalah identity(7) menghasilkan 7; ini usulan uji, bukan klaim uji sudah dijalankan.",
+          "dimensions": [
+            {
+              "dimensionId": "relevance",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "technical_accuracy",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            },
+            {
+              "dimensionId": "evidence_consistency",
+              "status": "assessed",
+              "score": 3,
+              "maxScore": 4,
+              "reason": "Uraian menjawab tujuan pada konteks yang diberikan."
+            }
+          ],
+          "evidenceAlignment": "supported",
+          "relatedSkillIds": [
+            "9007199254740995"
+          ],
+          "evidenceRefs": [
+            {
+              "evidenceId": "44444444-4444-4444-8444-444444444444",
+              "fileRef": "file_0794897769b3d7079fefd0e8",
+              "filePath": "src/identity.ts",
+              "quote": "export function identity<T>(value: T): T { return value; }\n"
+            }
+          ],
+          "feedback": "Penjelasan merujuk implementasi yang tersedia, dengan batas verifikasi proyek.",
+          "answerQuality": {
+            "score": 9,
+            "maxScore": 12,
+            "assessedDimensions": 3,
+            "configuredDimensions": 3
+          }
+        }
+      ],
+      "competencies": [
+        {
+          "skillId": "9007199254740995",
+          "status": "validation_supported",
+          "reasonCode": "EVIDENCE_AND_ANSWERS_SUPPORT",
+          "questionIds": [
+            "25915006-cce2-5336-aa4c-add318917cdd",
+            "c7977660-bc16-5e23-a598-132c2e161b2b",
+            "44356fc1-c485-5088-8caf-963ad3bcbedf",
+            "aad73e64-e024-5ffa-a308-61b6df7f3060"
+          ],
+          "evidenceRefs": [
+            {
+              "evidenceId": "44444444-4444-4444-8444-444444444444",
+              "fileRef": "file_0794897769b3d7079fefd0e8",
+              "filePath": "src/identity.ts",
+              "quote": "export function identity<T>(value: T): T { return value; }\n"
+            }
+          ]
+        }
+      ],
+      "coverage": {
+        "sourceCount": 1,
+        "includedSources": 1,
+        "discoveredFiles": 1,
+        "availableFiles": 1,
+        "sentFiles": 1,
+        "skippedFiles": 0,
+        "sentContentBytes": 59
+      },
+      "extractionWarnings": [],
+      "warnings": [
+        "MVP_RUBRIC_NOT_APPROVED"
+      ]
+    },
+    "syntheticPolicy": {
+      "policyId": "synthetic-typescript-scoring",
+      "policyVersion": "1.0.0",
+      "policyStatus": "approved",
+      "scope": "synthetic_test",
+      "supportedRole": "frontend-developer",
+      "datasetVersion": "buktiva-local-rubrics-1.0.0",
+      "validationRubricVersion": "1.0.0",
+      "skillLevelScale": {
+        "min": 0,
+        "max": 4,
+        "step": 1
+      },
+      "levelIndicators": [
+        {
+          "skillKey": "typescript",
+          "descriptions": [
+            "Artificial fixture marker demonstrates an explicit basic failure, not missing evidence.",
+            "Artificial fixture contains a generic declaration and linked answers.",
+            "Artificial fixture contains the exact identity contract and linked reasoning.",
+            "Artificial fixture also contains an explicit assertion example.",
+            "Artificial fixture contains the reviewed type guard and linked reasoning at score four."
+          ],
+          "levelRules": [
+            {
+              "level": 0,
+              "sourceQuotes": [
+                "export const zeroFixture = true;"
+              ],
+              "requiredQuestionOrders": [
+                1,
+                3
+              ],
+              "minimumDimensionScore": 0
+            },
+            {
+              "level": 1,
+              "sourceQuotes": [
+                "export function identity<T>"
+              ],
+              "requiredQuestionOrders": [
+                1,
+                3
+              ],
+              "minimumDimensionScore": 1
+            },
+            {
+              "level": 2,
+              "sourceQuotes": [
+                "export function identity<T>(value: T): T { return value; }"
+              ],
+              "requiredQuestionOrders": [
+                1,
+                3
+              ],
+              "minimumDimensionScore": 3
+            },
+            {
+              "level": 3,
+              "sourceQuotes": [
+                "assert.equal(identity(1), 1);"
+              ],
+              "requiredQuestionOrders": [
+                1,
+                3,
+                5
+              ],
+              "minimumDimensionScore": 3
+            },
+            {
+              "level": 4,
+              "sourceQuotes": [
+                "export const isString = (value: unknown): value is string => typeof value === 'string';"
+              ],
+              "requiredQuestionOrders": [
+                1,
+                3,
+                4,
+                5
+              ],
+              "minimumDimensionScore": 4
+            }
+          ]
+        }
+      ],
+      "evidenceRequirements": {
+        "implementationRequired": true,
+        "allowPartial": false
+      },
+      "validationRequirements": {
+        "mappingApproved": true,
+        "questionSkillMapping": [
+          {
+            "order": 1,
+            "skillIds": [
+              "9007199254740995"
+            ]
+          },
+          {
+            "order": 3,
+            "skillIds": [
+              "9007199254740995"
+            ]
+          },
+          {
+            "order": 4,
+            "skillIds": [
+              "9007199254740995"
+            ]
+          },
+          {
+            "order": 5,
+            "skillIds": [
+              "9007199254740995"
+            ]
+          }
+        ],
+        "minimumLinkedAnswers": 2
+      },
+      "coverageRequirements": {
+        "minimumSkillRatio": 1,
+        "requireAllBenchmarks": true
+      },
+      "benchmarkPriorityRules": {
+        "approved": true,
+        "categoryRanks": [
+          {
+            "category": "high",
+            "rank": 1
+          },
+          {
+            "category": "medium",
+            "rank": 2
+          },
+          {
+            "category": "low",
+            "rank": 3
+          }
+        ],
+        "numericRanks": [
+          {
+            "value": 1,
+            "rank": 1
+          },
+          {
+            "value": 2,
+            "rank": 2
+          }
+        ]
+      },
+      "gapCalculationMethod": "nonnegative_difference_same_scale",
+      "readinessCalculationMethod": "weighted_capped_level_ratio_all_benchmarks",
+      "readinessWeights": [
+        {
+          "skillId": "9007199254740995",
+          "weight": 1
+        }
+      ],
+      "mandatorySkillIds": [
+        "9007199254740995"
+      ],
+      "roundingRules": {
+        "level": "integer_only",
+        "gap": "exact_integer",
+        "readinessDecimals": 2
+      },
+      "approvalMetadata": {
+        "kind": "synthetic_test",
+        "reviewer": "SYNTHETIC_TEST_REVIEWER_NOT_HUMAN_APPROVAL",
+        "reference": "tests/scoring/synthetic-policy.fixture.json",
+        "approvedPolicyVersion": "1.0.0",
+        "approvedOn": "2026-10-22"
+      }
+    }
+  },
+  "simulationExpected": {
+    "analysisId": "33333333-3333-4333-8333-333333333333",
+    "targetRole": {
+      "id": "9007199254740993",
+      "name": "Frontend Developer",
+      "slug": "frontend-developer"
+    },
+    "policyId": "synthetic-typescript-scoring",
+    "policyVersion": "1.0.0",
+    "policyStatus": "approved",
+    "scoringStatus": "completed",
+    "skills": [
+      {
+        "skillId": "9007199254740995",
+        "skillName": "TypeScript",
+        "requiredLevel": 3,
+        "currentLevel": 2,
+        "gapScore": 1,
+        "assessmentStatus": "assessed",
+        "priority": "high",
+        "priorityRank": 1,
+        "explanation": "Simulasi sintetis memenuhi aturan kutipan dan mapping policy fixture; bukan penilaian pengguna.",
+        "evidenceRefs": [
+          {
+            "evidenceId": "44444444-4444-4444-8444-444444444444",
+            "fileRef": "file_0794897769b3d7079fefd0e8",
+            "filePath": "src/identity.ts",
+            "quote": "export function identity<T>(value: T): T { return value; }\n"
+          }
+        ],
+        "validationRefs": [
+          "25915006-cce2-5336-aa4c-add318917cdd",
+          "c7977660-bc16-5e23-a598-132c2e161b2b",
+          "44356fc1-c485-5088-8caf-963ad3bcbedf",
+          "aad73e64-e024-5ffa-a308-61b6df7f3060"
+        ],
+        "limitations": []
+      }
+    ],
+    "coverage": {
+      "benchmarkSkills": 1,
+      "assessedSkills": 1,
+      "unassessedSkills": 0,
+      "notAssessableSkills": 0,
+      "needsReviewSkills": 0,
+      "contradictorySkills": 0,
+      "pendingPolicySkills": 0,
+      "skillRatio": 1,
+      "sources": {
+        "total": 1,
+        "complete": 1,
+        "partial": 0,
+        "blocked": 0,
+        "failed": 0,
+        "unsupported": 0
+      },
+      "sourceCoverage": {
+        "sourceCount": 1,
+        "includedSources": 1,
+        "discoveredFiles": 1,
+        "availableFiles": 1,
+        "sentFiles": 1,
+        "skippedFiles": 0,
+        "sentContentBytes": 59
+      },
+      "extractionStatus": "completed",
+      "validationStatus": "completed",
+      "incomplete": false,
+      "limitations": [
+        "SOURCE_SELECTION_BOUNDED",
+        "ANSWER_JUDGMENT_UNCALIBRATED"
+      ]
+    },
+    "readinessScore": 66.67,
+    "readinessStatus": "simulation_computed",
+    "readinessReasons": [],
+    "priorityGroups": {
+      "learning": [
+        "9007199254740995"
+      ],
+      "evidenceCollection": [],
+      "manualReview": []
+    },
+    "warnings": [
+      "SIMULATION_ONLY"
+    ],
+    "calculationMetadata": {
+      "engineVersion": "buktiva-scoring-1.0.0",
+      "executionMode": "synthetic_simulation",
+      "policyDigest": "d2255a2066d9b69a57fdb96383d400631a56811828e26c0318e38d03315baac4",
+      "datasetVersion": "buktiva-local-rubrics-1.0.0",
+      "rubricVersion": "1.0.0",
+      "extractionPromptVersion": "buktiva-skill-extraction-1.0.0",
+      "validationPromptVersion": "buktiva-validation-1.0.0",
+      "rounding": "integer_levels_exact_gap_readiness_half_up_2dp",
+      "extractionWarnings": [],
+      "validationWarnings": [
+        "MVP_RUBRIC_NOT_APPROVED"
+      ]
+    }
+  },
+  "runtimeExpected": {
+    "analysisId": "33333333-3333-4333-8333-333333333333",
+    "targetRole": {
+      "id": "9007199254740993",
+      "name": "Frontend Developer",
+      "slug": "frontend-developer"
+    },
+    "policyId": "buktiva-frontend-scoring",
+    "policyVersion": "0.1.0",
+    "policyStatus": "draft",
+    "scoringStatus": "policy_pending_approval",
+    "skills": [
+      {
+        "skillId": "9007199254740995",
+        "skillName": "TypeScript",
+        "requiredLevel": 3,
+        "currentLevel": null,
+        "gapScore": null,
+        "assessmentStatus": "policy_pending_approval",
+        "priority": "high",
+        "priorityRank": null,
+        "explanation": "Policy produksi belum disahkan; level dan gap tetap null.",
+        "evidenceRefs": [
+          {
+            "evidenceId": "44444444-4444-4444-8444-444444444444",
+            "fileRef": "file_0794897769b3d7079fefd0e8",
+            "filePath": "src/identity.ts",
+            "quote": "export function identity<T>(value: T): T { return value; }\n"
+          }
+        ],
+        "validationRefs": [
+          "25915006-cce2-5336-aa4c-add318917cdd",
+          "c7977660-bc16-5e23-a598-132c2e161b2b",
+          "44356fc1-c485-5088-8caf-963ad3bcbedf",
+          "aad73e64-e024-5ffa-a308-61b6df7f3060"
+        ],
+        "limitations": [
+          "PRIORITY_MAPPING_NOT_APPROVED",
+          "MISSING_LEVEL_INDICATORS",
+          "QUESTION_SKILL_MAPPING_NOT_APPROVED",
+          "POLICY_NOT_APPROVED"
+        ]
+      }
+    ],
+    "coverage": {
+      "benchmarkSkills": 1,
+      "assessedSkills": 0,
+      "unassessedSkills": 1,
+      "notAssessableSkills": 0,
+      "needsReviewSkills": 0,
+      "contradictorySkills": 0,
+      "pendingPolicySkills": 1,
+      "skillRatio": 0,
+      "sources": {
+        "total": 1,
+        "complete": 1,
+        "partial": 0,
+        "blocked": 0,
+        "failed": 0,
+        "unsupported": 0
+      },
+      "sourceCoverage": {
+        "sourceCount": 1,
+        "includedSources": 1,
+        "discoveredFiles": 1,
+        "availableFiles": 1,
+        "sentFiles": 1,
+        "skippedFiles": 0,
+        "sentContentBytes": 59
+      },
+      "extractionStatus": "completed",
+      "validationStatus": "completed",
+      "incomplete": true,
+      "limitations": [
+        "SOURCE_SELECTION_BOUNDED",
+        "ANSWER_JUDGMENT_UNCALIBRATED",
+        "UNMEASURED_BENCHMARKS"
+      ]
+    },
+    "readinessScore": null,
+    "readinessStatus": "not_available",
+    "readinessReasons": [
+      "EVIDENCE_REQUIRES_REVIEW",
+      "INSUFFICIENT_SKILL_COVERAGE",
+      "INVALID_WEIGHTS",
+      "METHOD_DISABLED",
+      "MISSING_LEVEL_INDICATORS",
+      "POLICY_NOT_APPROVED",
+      "QUESTION_SKILL_MAPPING_NOT_APPROVED"
+    ],
+    "priorityGroups": {
+      "learning": [],
+      "evidenceCollection": [],
+      "manualReview": [
+        "9007199254740995"
+      ]
+    },
+    "warnings": [
+      "POLICY_PENDING_APPROVAL",
+      "LEVEL_METHOD_UNAPPROVED",
+      "PRIORITY_MAPPING_PENDING"
+    ],
+    "calculationMetadata": {
+      "engineVersion": "buktiva-scoring-1.0.0",
+      "executionMode": "non_numeric",
+      "policyDigest": "463e8458e1de5290d235a58e43b29151d811cf96f5fa56dc8b76e8a0420049dc",
+      "datasetVersion": "buktiva-local-rubrics-1.0.0",
+      "rubricVersion": "1.0.0",
+      "extractionPromptVersion": "buktiva-skill-extraction-1.0.0",
+      "validationPromptVersion": "buktiva-validation-1.0.0",
+      "rounding": "integer_levels_exact_gap_readiness_half_up_2dp",
+      "extractionWarnings": [],
+      "validationWarnings": [
+        "MVP_RUBRIC_NOT_APPROVED"
+      ]
+    }
+  }
+}

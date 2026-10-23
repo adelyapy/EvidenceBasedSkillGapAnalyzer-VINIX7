@@ -1,0 +1,154 @@
+{
+  "policyId": "buktiva-frontend-scoring",
+  "policyVersion": "0.1.0",
+  "policyStatus": "draft",
+  "scope": "production",
+  "supportedRole": "frontend-developer",
+  "datasetVersion": "buktiva-local-rubrics-1.0.0",
+  "validationRubricVersion": "1.0.0",
+  "skillLevelScale": {
+    "min": 0,
+    "max": 4,
+    "step": 1
+  },
+  "levelIndicators": [
+    {
+      "skillKey": "typescript",
+      "descriptions": [
+        "Kontrak tipe dasar belum terpenuhi pada contoh yang dapat diperiksa.",
+        "Tipe dasar dan narrowing lokal diterapkan dengan benar.",
+        "Kontrak generik dan penanganan batas input dijelaskan dan diimplementasikan.",
+        "Tipe lintas modul dan pengujian kontrak termasuk kasus gagal tersedia.",
+        "Trade-off tipe tingkat lanjut dan verifikasi regresi lintas konteks ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "javascript",
+      "descriptions": [
+        "Perilaku dasar fungsi belum terpenuhi pada kasus konkret.",
+        "Fungsi dan alur kontrol dasar sesuai kontrak.",
+        "Modul, asinkronitas dan error ditangani sesuai kebutuhan.",
+        "Kasus batas serta pengujian integrasi dan kegagalan dijelaskan.",
+        "Keputusan concurrency/performa divalidasi dengan pengujian terkontrol."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "react",
+      "descriptions": [
+        "Kontrak komponen dasar gagal pada kasus konkret.",
+        "Komponen dan props dasar diimplementasikan sesuai kebutuhan.",
+        "State, efek dan interaksi komponen memiliki alasan dan batas jelas.",
+        "Aksesibilitas, failure states dan pengujian interaksi tersedia.",
+        "Trade-off rendering dan state lintas fitur diverifikasi dan ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "nextjs",
+      "descriptions": [
+        "Kontrak route/rendering dasar gagal pada kasus konkret.",
+        "Route dan komponen server/client digunakan sesuai kebutuhan.",
+        "Batas server/client dan data loading dijelaskan dengan benar.",
+        "Caching, error boundaries dan pengujian integrasi tersedia.",
+        "Keputusan rendering, keamanan dan caching lintas fitur diverifikasi."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "html",
+      "descriptions": [
+        "Struktur atau interaksi semantik dasar gagal pada kasus konkret.",
+        "Elemen semantik dan struktur dokumen memenuhi kebutuhan.",
+        "Form, label dan navigasi aksesibel diimplementasikan.",
+        "Keyboard, pembaca layar dan validasi form diuji.",
+        "Trade-off struktur kompleks serta regresi aksesibilitas ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "css",
+      "descriptions": [
+        "Perilaku layout dasar gagal pada kasus konkret.",
+        "Selektor dan layout dasar memenuhi kebutuhan.",
+        "Layout responsif dan state interaksi dijelaskan.",
+        "Kasus viewport dan aksesibilitas visual diverifikasi.",
+        "Trade-off layout kompleks dan konsistensi lintas halaman ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "testing",
+      "descriptions": [
+        "Pengujian yang diklaim gagal memeriksa perilaku dasar pada kasus konkret.",
+        "Satu perilaku inti diuji dengan assertion bermakna.",
+        "Kasus batas dan kegagalan diuji secara terisolasi.",
+        "Integrasi dan regresi penting diverifikasi secara berulang.",
+        "Strategi tes, kelemahan oracle dan trade-off cakupan ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "git",
+      "descriptions": [
+        "Prosedur perubahan dasar gagal pada demonstrasi konkret.",
+        "Alur commit/branch dasar dapat dijelaskan dengan bukti proses.",
+        "Merge/conflict dan penelusuran perubahan didemonstrasikan.",
+        "Kolaborasi dan pemulihan perubahan diverifikasi pada skenario terkontrol.",
+        "Kebijakan histori, release dan audit kolaborasi ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "cicd",
+      "descriptions": [
+        "Pipeline gagal memenuhi kontrak verifikasi dasar pada contoh konkret.",
+        "Pipeline menjalankan pemeriksaan dasar sesuai tujuan.",
+        "Pemicu, kegagalan dan pengelolaan secret dijelaskan.",
+        "Isolasi, artefak dan kegagalan pipeline diuji.",
+        "Trade-off supply chain, release dan pemulihan pipeline ditinjau."
+      ],
+      "levelRules": []
+    },
+    {
+      "skillKey": "tailwind",
+      "descriptions": [
+        "Layout utilitas dasar gagal pada kasus konkret.",
+        "Utilitas dipakai untuk kebutuhan layout dasar.",
+        "State, breakpoint dan komposisi style dijelaskan.",
+        "Konsistensi komponen dan aksesibilitas responsif diuji.",
+        "Trade-off design tokens, pemeliharaan dan regresi visual ditinjau."
+      ],
+      "levelRules": []
+    }
+  ],
+  "evidenceRequirements": {
+    "implementationRequired": true,
+    "allowPartial": false
+  },
+  "validationRequirements": {
+    "mappingApproved": false,
+    "questionSkillMapping": [],
+    "minimumLinkedAnswers": 2
+  },
+  "coverageRequirements": {
+    "minimumSkillRatio": 1,
+    "requireAllBenchmarks": true
+  },
+  "benchmarkPriorityRules": {
+    "approved": false,
+    "categoryRanks": [],
+    "numericRanks": []
+  },
+  "gapCalculationMethod": "nonnegative_difference_same_scale",
+  "readinessCalculationMethod": "disabled",
+  "readinessWeights": [],
+  "mandatorySkillIds": [],
+  "roundingRules": {
+    "level": "integer_only",
+    "gap": "exact_integer",
+    "readinessDecimals": 2
+  },
+  "approvalMetadata": null
+}

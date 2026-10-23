@@ -7,7 +7,7 @@
 .review-box { min-width: 0; border: 1px solid #5b85bd; background: #abc5e9; }
 .review-box-heading { min-height: 36px; padding: 0 11px; display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #4385c2; }
 .review-box-heading h2 { margin: 0; font-size: 14px; font-weight: 600; }
-.review-edit { padding: 3px 7px; display: inline-flex; align-items: center; gap: 3px; border: 1px solid #2a5b93; border-radius: 3px; background: #f4f7fb; color: #17436d; font-size: 11px; font-weight: 700; text-decoration: none; }
+.review-edit { min-height: 16px; padding: 0 2px; display: inline-flex; align-items: center; gap: 1px; border: 1px solid #2a5b93; border-radius: 3px; background: #f4f7fb; color: #17436d; font-size: 7px; font-weight: 700; line-height: 1; text-decoration: none; }
 .review-main .review-edit:disabled { cursor: not-allowed; opacity: .65; }
 .review-project-record + .review-project-record { border-top: 3px solid #6d91bb; }
 .review-project-count { margin: 0; padding: 5px 14px; font-weight: 700; }
@@ -36,7 +36,8 @@
 .review-cv-content p { max-width: 100%; margin: 0; color: #4a586e; overflow-wrap: anywhere; text-align: center; font-size: 13px; font-weight: 700; }
 .review-actions { margin-top: 11px; display: flex; align-items: center; justify-content: space-between; }
 .review-back, .review-start { min-height: 40px; min-width: 127px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #222; border-radius: 3px; font-size: 14px; font-weight: 600; text-decoration: none; }
-.review-back { background: transparent; }
+.review-back { border: 2px solid #16191c; border-radius: 4px; background: transparent; color: #111; }
+.review-back:hover, .review-back:focus-visible { background: #173f65; color: #fff; }
 .review-start { min-width: 139px; background: #295376; color: #fff; cursor: pointer; }
 .review-main .review-start:disabled { cursor: not-allowed; opacity: .55; }
 .review-help { margin: 7px 0 0; color: #6e6e6e; font-size: 11px; }
@@ -52,11 +53,12 @@
 .review-confirmDialog h2 { margin: 0; color: #263c51; font-size: 20px; }
 .review-confirmDialog p { margin: 10px 0 0; color: #526272; font-size: 14px; line-height: 1.5; }
 .review-confirmActions { margin-top: 23px; display: flex; justify-content: center; gap: 10px; }
-.review-confirmActions button { min-height: 40px; padding: 8px 14px; border-radius: 6px; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.review-confirmActions button { min-height: 40px; padding: 8px 14px; border-radius: 6px; box-shadow: 5px 5px 0 #14213d; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
 .review-confirmCancel { border: 1px solid #a6b7c5; background: #fff; color: #405365; }
 .review-confirmAccept { border: 1px solid #245f85; background: #2e608c; color: #fff; }
-.review-confirmCancel:hover, .review-confirmCancel:focus-visible { background: #eef3f6; }
-.review-confirmAccept:hover, .review-confirmAccept:focus-visible { background: #24547f; }
+.review-confirmCancel:hover, .review-confirmCancel:focus-visible { background: #eef3f6; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
+.review-confirmAccept:hover, .review-confirmAccept:focus-visible { background: #24547f; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
+.review-confirmActions button:active { box-shadow: 1px 1px 0 #14213d; transform: translate(4px, 4px); }
 
 @keyframes review-skeleton { to { background-position: -200% 0; } }
 @keyframes review-toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
