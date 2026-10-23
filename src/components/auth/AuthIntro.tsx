@@ -29,9 +29,18 @@ export default function AuthIntro({ mode }: AuthIntroProps) {
           </ul>
         </>
       )}
-      <div className={styles.illustration}>
-        <Image src={data.illustration} alt={data.imageAlt} width={mode === "login" ? 1580 : mode === "register" ? 1604 : 1448} height={mode === "login" ? 995 : mode === "register" ? 980 : 1086} priority sizes="(max-width: 700px) 75vw, 360px" />
-      </div>
+      {isReset && (
+        <div className={styles.illustration}>
+          <Image
+            src={data.illustration}
+            alt={data.imageAlt}
+            width={1448}
+            height={1086}
+            priority
+            sizes="(max-width: 700px) 75vw, 360px"
+          />
+        </div>
+      )}
     </section>
   );
 }

@@ -65,10 +65,11 @@ export default function AuthForm({ mode, values, errors, loading, notice, onFiel
           </p>
         )}
       </section>
-      <Link href={isReset ? "/login" : "/"} className={styles.back}>
-        <svg viewBox="0 0 44 21" fill="none" aria-hidden="true"><path d="M40 10.5H3m0 0 9-9m-9 9 9 9" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        {isReset ? "Kembali ke Halaman Masuk" : "Kembali ke Beranda"}
-      </Link>
+      {isReset && (
+        <Link href="/login" className={styles.back}>
+          Kembali ke Login
+        </Link>
+      )}
     </div>
   );
 }

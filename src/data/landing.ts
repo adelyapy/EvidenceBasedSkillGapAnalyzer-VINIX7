@@ -1,26 +1,5 @@
 export const img = (name: string) => `/images/${name}`;
 
-export const heroSteps = [
-  {
-    number: "01",
-    title: "Upload Proyek",
-    description: "Unggah proyek nyata yang pernah kamu kerjakan.",
-    icon: "upload",
-  },
-  {
-    number: "02",
-    title: "Analisis Kompetensi",
-    description: "Kenali kompetensi dan skill gap melalui simulasi analisis.",
-    icon: "analysis",
-  },
-  {
-    number: "03",
-    title: "Dapatkan Roadmap",
-    description: "Terima rekomendasi pembelajaran yang lebih terarah.",
-    icon: "roadmap",
-  },
-] as const;
-
 export const benefits = [
   {
     title: "Berbasis Proyek Nyata",

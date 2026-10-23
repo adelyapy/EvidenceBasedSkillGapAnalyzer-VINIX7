@@ -52,10 +52,6 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
     const invalidField = fields[mode].find((field) => nextErrors[field]);
 
     if (invalidField) {
-      setNotice({
-        type: "error",
-        text: "Periksa kembali kolom yang ditandai merah.",
-      });
       document.getElementById(`${mode}-${invalidField}`)?.focus();
       return;
     }
