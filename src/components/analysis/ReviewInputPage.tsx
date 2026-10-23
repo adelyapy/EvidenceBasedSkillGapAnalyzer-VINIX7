@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import type { AnalysisCv, AnalysisInput, AnalysisProject } from "@/types/analysis";
+import { createClient } from "@/lib/supabase/client";
 
 const EMPTY_INPUT: AnalysisInput = { projects: [], role: "", jobDescription: "", cv: null };
 
@@ -57,6 +58,7 @@ export default function ReviewInputPage() {
   const [loaded, setLoaded] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -79,6 +81,146 @@ export default function ReviewInputPage() {
   function showToast(type: "success" | "error", message: string) {
     setToast({ type, message });
   }
+
+  async function saveAnalysis() {
+  if (saving) return;
+
+  if (!hasProjects || !hasRole) {
+    showToast(
+      "error",
+      "Lengkapi proyek dan target role sebelum memulai analisis."
+    );
+    return;
+  }
+
+  setSaving(true);
+
+  try {
+    const supabase = createClient();
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      throw new Error("Sesi login tidak ditemukan. Silakan login kembali.");
+    }
+
+    // Buat record analisis untuk pengguna yang sedang login.
+    const { data: analysis, error: analysisError } = await supabase
+      .from("analyses")
+      .insert({
+        user_id: user.id,
+        target_role: data.role.trim(),
+        status: "draft",
+      })
+      .select("id")
+      .single();
+
+    if (analysisError || !analysis) {
+      throw new Error(
+        analysisError?.message || "Gagal menyimpan analisis."
+      );
+    }
+
+    try {
+      // PDF dilewati karena file aslinya belum diunggah ke Storage.
+      
+      const evidences = data.projects.flatMap((project) => {
+        if (project.evidenceKind === "pdf") return [];
+
+        const url = (
+          project.link ||
+          project.url ||
+          project.value ||
+          ""
+        ).trim();
+
+        if (!/^https?:\/\//i.test(url)) return [];
+
+        const source = `${project.type || ""} ${
+          project.name || ""
+        } ${project.title || ""}`.toLowerCase();
+
+        let evidenceType:
+          | "github"
+          | "gitlab"
+          | "portfolio"
+          | "deployment"
+          | "other" = "other";
+
+        if (url.toLowerCase().includes("github.com")) {
+          evidenceType = "github";
+        } else if (url.toLowerCase().includes("gitlab.com")) {
+          evidenceType = "gitlab";
+        } else if (source.includes("portfolio")) {
+          evidenceType = "portfolio";
+        } else if (
+          source.includes("deployment") ||
+          source.includes("deploy")
+        ) {
+          evidenceType = "deployment";
+        }
+
+        return [
+          {
+            analysis_id: analysis.id,
+            user_id: user.id,
+            evidence_type: evidenceType,
+            title:
+              project.name ||
+              project.title ||
+              project.type ||
+              "Bukti proyek",
+            url,
+            description:
+              project.description || project.deskripsi || null,
+          },
+        ];
+      });
+
+      if (evidences.length > 0) {
+        const { error: evidenceError } = await supabase
+          .from("project_evidences")
+          .insert(evidences);
+
+        if (evidenceError) {
+          throw new Error(evidenceError.message);
+        }
+      }
+
+      // Simpan referensi analisis yang akan digunakan halaman berikutnya.
+      sessionStorage.setItem(
+        analysisStorage.activeAnalysisId,
+        analysis.id
+      );
+    } catch (error) {
+      // Hapus record analisis jika penyimpanan bukti gagal.
+      await supabase
+        .from("analyses")
+        .delete()
+        .eq("id", analysis.id)
+        .eq("user_id", user.id);
+
+      throw error;
+    }
+
+    setConfirmationOpen(false);
+    router.push(analysisRoutes.process);
+  } catch (error) {
+    console.error("Gagal menyimpan analisis:", error);
+
+    showToast(
+      "error",
+      error instanceof Error
+        ? error.message
+        : "Terjadi kesalahan saat menyimpan analisis."
+    );
+  } finally {
+    setSaving(false);
+  }
+}
 
   function startAnalysis() {
     if (!hasProjects || !hasRole) {
@@ -155,13 +297,10 @@ export default function ReviewInputPage() {
               <button
                 type="button"
                 className="review-confirmAccept"
-                onClick={() => {
-                  setConfirmationOpen(false);
-                  showToast("success", "Analisis dimulai.");
-                  window.setTimeout(() => router.push(analysisRoutes.process), 500);
-                }}
+                disabled={saving}
+                onClick={saveAnalysis}
               >
-                Ya, mulai analisis
+                {saving ? "Menyimpan..." : "Ya, mulai analisis"}
               </button>
             </div>
           </section>

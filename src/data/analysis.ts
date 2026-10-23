@@ -19,6 +19,7 @@ export const analysisStorage = {
   targetRole: "buktiva.analysis.targetRole",
   jobDescription: "buktiva.analysis.jobDescription",
   cv: "buktiva.analysis.cv",
+  activeAnalysisId: "buktiva.analysis.activeAnalysisId",
   validationAnswers: "buktiva.validation.answers",
   validationCompleted: "buktiva.validation.completed",
 } as const;

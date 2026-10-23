@@ -10,7 +10,6 @@ import {
   TARGET_ROLE_DESCRIPTION_LIMIT,
   TARGET_ROLE_STORAGE_KEY,
   targetRoleInformation,
-  targetRoleOptions,
 } from "@/data/target-role";
 import type { TargetRoleDraft } from "@/types/target-role";
 
@@ -28,9 +27,8 @@ function readSavedDraft(): TargetRoleDraft {
     if (parsed && typeof parsed === "object") {
       const candidate = parsed as Record<string, unknown>;
       if (typeof candidate.role === "string" && candidate.role.trim()) {
-        const legacyRole = targetRoleOptions.find((option) => option.id === candidate.role);
         return {
-          role: legacyRole?.label ?? candidate.role,
+          role: candidate.role,
           jobDescription:
             typeof candidate.jobDescription === "string"
               ? candidate.jobDescription.slice(0, TARGET_ROLE_DESCRIPTION_LIMIT)
