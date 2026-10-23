@@ -485,17 +485,22 @@
   display: grid;
   place-items: center;
   padding: 20px;
-  background: rgb(16 32 51 / 52%);
+  background: rgb(20 33 61 / 58%);
+  animation: bkp-dialog-backdrop-in 180ms ease-out both;
 }
 
 .bkp-deleteDialog {
   width: min(100%, 420px);
+  max-height: calc(100dvh - 40px);
+  overflow: auto;
   padding: 26px;
-  border: 1px solid #8da6bd;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 20px 50px #14213d45;
+  border: 2px solid #14213d;
+  border-radius: 12px;
+  background: #f8fcfd;
+  box-shadow: 8px 8px 0 #14213d;
   text-align: center;
+  transform-origin: center;
+  animation: bkp-dialog-card-in 260ms cubic-bezier(.22, 1, .36, 1) both;
 }
 
 .bkp-deleteIcon {
@@ -504,8 +509,10 @@
   margin: 0 auto 13px;
   display: grid;
   place-items: center;
+  border: 2px solid #14213d;
   border-radius: 50%;
   background: #fff0e9;
+  box-shadow: 3px 3px 0 #14213d;
   color: #a23b19;
   font-size: 25px;
   font-weight: 800;
@@ -576,6 +583,22 @@
 }
 
 .bkp-deleteConfirm:active { box-shadow: 1px 1px 0 #7c2626; }
+
+@keyframes bkp-dialog-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bkp-dialog-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 @container upload-project (min-width: 400px) {
   .bkp-sourceTabs {
@@ -678,5 +701,17 @@
 
   .bkp-deleteActions button {
     width: 100%;
+  }
+
+  .bkp-deleteDialog {
+    padding: 22px 18px;
+    box-shadow: 6px 6px 0 #14213d;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bkp-deleteBackdrop,
+  .bkp-deleteDialog {
+    animation: none;
   }
 }

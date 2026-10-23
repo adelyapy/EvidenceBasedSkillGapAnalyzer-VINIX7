@@ -31,7 +31,7 @@
   line-height: 1.2;
   font-weight: 600 !important;
 }
-.bkd-primaryButton { color: #fff; background: #2d5b88; }
+.bkd-heroActions .bkd-primaryButton { color: #fff; background: #2d5b88; }
 .bkd-secondaryButton { color: #111; background: transparent; }
 .bkd-secondaryButton:hover { background: #e6f0f7; }
 .bkd-heroImage {

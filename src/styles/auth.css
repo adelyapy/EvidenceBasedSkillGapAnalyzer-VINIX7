@@ -18,6 +18,39 @@
 }
 .bka-screen * { box-sizing: border-box; }
 .bka-screen a { text-decoration: none; }
+.bka-screenWithHome {
+  position: relative;
+  padding-top: clamp(76px, 8vw, 92px);
+}
+.bka-homeLink {
+  position: absolute;
+  top: clamp(18px, 2vw, 24px);
+  left: clamp(18px, 2vw, 24px);
+  z-index: 2;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 16px;
+  border: 2px solid #14213d;
+  border-radius: 7px;
+  background: var(--button);
+  box-shadow: 5px 5px 0 #14213d;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.bka-homeLink:hover {
+  background: #214566;
+  box-shadow: 3px 3px 0 #14213d;
+  transform: translate(2px, 2px);
+}
+.bka-homeLink:active {
+  box-shadow: 1px 1px 0 #14213d;
+  transform: translate(4px, 4px);
+}
 .bka-shell {
   background: var(--panel);
   border: 4px solid #454748;
@@ -86,13 +119,141 @@
 .bka-primaryButton { height: 34px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; width: 100%; border: 0; background: var(--button); border-radius: 10px; box-shadow: 5px 5px 0 #14213d; color: #fff; font-weight: 700; font-family: inherit; font-size: 13px; margin-top: 4px; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
 .bka-primaryButton:hover:not(:disabled) { background: #214566; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
 .bka-primaryButton:active:not(:disabled) { box-shadow: 1px 1px 0 #14213d; transform: translate(4px, 4px); }
-.bka-primaryButton:focus-visible, .bka-googleButton:focus-visible, .bka-back:focus-visible { outline: 3px solid #59b6ff; outline-offset: 3px; }
+.bka-primaryButton:focus-visible, .bka-googleButton:focus-visible, .bka-back:focus-visible, .bka-homeLink:focus-visible { outline: 3px solid #59b6ff; outline-offset: 3px; }
 .bka-primaryButton:disabled { opacity: .78; cursor: wait; }
 .bka-spinner { border: 2px solid #ffffff75; border-top-color: #fff; height: 17px; width: 17px; border-radius: 50%; animation: bka-auth-spin .65s linear infinite; }
 @keyframes bka-auth-spin { to { transform: rotate(360deg); } }
 .bka-notice { padding: 9px 11px; font-size: 11.5px; line-height: 1.4; border-radius: 6px; margin: 2px 0 0; }
 .bka-noticeError { background: #fff1f1; color: #a52c2c; border: 1px solid #eeacac; }
 .bka-noticeInfo { background: #e8f3ff; color: #21507c; border: 1px solid #a9c5e3; }
+.bka-confirmationBackdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(20 33 61 / 62%);
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  animation: bka-confirmation-backdrop-in 180ms ease-out both;
+}
+.bka-confirmationDialog {
+  width: min(100%, 480px);
+  padding: clamp(26px, 5vw, 38px);
+  border: 3px solid #14213d;
+  border-radius: 14px;
+  background: #f4f5f6;
+  box-shadow: 9px 9px 0 #14213d;
+  color: #14213d;
+  text-align: center;
+  transform-origin: center;
+  animation: bka-confirmation-card-in 320ms cubic-bezier(.22, 1, .36, 1) both;
+}
+.bka-confirmationIcon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #14213d;
+  border-radius: 12px;
+  background: #8ed5e8;
+  box-shadow: 4px 4px 0 #14213d;
+  color: #14213d;
+}
+.bka-confirmationIcon svg {
+  width: 38px;
+  height: 38px;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.bka-confirmationEyebrow {
+  margin: 0 0 7px;
+  color: #2e608c;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.bka-confirmationDialog h2 {
+  margin: 0;
+  color: #0a0d0e;
+  font-size: clamp(25px, 5vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -.035em;
+}
+.bka-confirmationDialog > p:not(.bka-confirmationEyebrow) {
+  margin: 12px auto 0;
+  max-width: 390px;
+  color: #344154;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.bka-confirmationEmail {
+  display: block;
+  margin: 14px 0 0;
+  padding: 11px 13px;
+  overflow-wrap: anywhere;
+  border: 2px solid #14213d;
+  border-radius: 8px;
+  background: #dceef8;
+  color: #173f65;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.bka-confirmationDialog .bka-confirmationInstruction {
+  font-weight: 600;
+}
+.bka-confirmationDialog > p.bka-confirmationNote {
+  margin-top: 9px;
+  color: #5b6470;
+  font-size: 12px;
+}
+.bka-confirmationButton {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 22px;
+  padding: 10px 18px;
+  border: 2px solid #14213d;
+  border-radius: 9px;
+  background: #2b5279;
+  box-shadow: 5px 5px 0 #14213d;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.bka-confirmationButton:hover {
+  background: #3974a8;
+  box-shadow: 7px 7px 0 #14213d;
+  transform: translate(-2px, -2px);
+}
+.bka-confirmationButton:active {
+  box-shadow: 1px 1px 0 #14213d;
+  transform: translate(4px, 4px);
+}
+.bka-confirmationButton:focus-visible {
+  outline: 3px solid #6cc9e8;
+  outline-offset: 3px;
+}
+@keyframes bka-confirmation-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes bka-confirmation-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 .bka-socialArea { margin-top: 14px; }
 .bka-divider { display: flex; align-items: center; gap: 6px; color: #191919; font-size: 10px; white-space: nowrap; margin: 0 8px 8px; }
 .bka-divider::before, .bka-divider::after { content: ''; height: 1px; background: #929292; flex: 1; }
@@ -121,20 +282,41 @@
 .bka-updateDescription { margin: 8px 0 0; color: #3f4850; font-size: 13px; line-height: 1.45; }
 .bka-updateForm { margin-top: 22px; display: grid; gap: 14px; }
 .bka-updateField { display: grid; gap: 6px; color: #333; font-size: 13px; font-weight: 650; }
-.bka-updateInput {
+.bka-updateInputWrap {
   width: 100%;
   height: 42px;
-  padding: 0 11px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
   border: 1px solid #c6c9cc;
   border-radius: 4px;
   background: #fff;
   box-shadow: 0 1px 3px #00000016;
+}
+.bka-updateInput {
+  min-width: 0;
+  height: 100%;
+  flex: 1;
+  padding: 0 4px 0 11px;
+  border: 0;
+  background: transparent;
   color: #151515;
   font: inherit;
   font-size: 13px;
   outline: none;
 }
-.bka-updateInput:focus { border-color: #2a71b8; outline: 2px solid #2a71b8; outline-offset: 1px; }
+.bka-updateInput:disabled { opacity: .7; cursor: wait; }
+.bka-updateInputWrap:focus-within {
+  border-color: #2a71b8;
+  outline: 2px solid #2a71b8;
+  outline-offset: 1px;
+}
+.bka-updatePasswordToggle {
+  width: 42px;
+  height: 40px;
+  flex-basis: 42px;
+  margin-right: 0;
+}
 .bka-updateNotice { margin: 0; padding: 9px 11px; border: 1px solid #a9c5e3; border-radius: 6px; background: #e8f3ff; color: #21507c; font-size: 11.5px; line-height: 1.4; }
 .bka-updateNotice--error { border-color: #eeacac; background: #fff1f1; color: #a52c2c; }
 .bka-updateButton { height: 40px; margin-top: 2px; }
@@ -233,6 +415,7 @@
 }
 @media (max-width: 700px) {
   .bka-screen { padding: 12px; align-items: stretch; }
+  .bka-screenWithHome { padding-top: 72px; }
   .bka-shell, .bka-reset { display: flex; flex-direction: column; align-items: stretch; gap: 16px; padding: 20px 16px; }
   .bka-shell.bka-login,
   .bka-shell.bka-register { display: flex; min-height: 0; gap: 24px; padding: 22px 16px; }
@@ -269,8 +452,17 @@
   .bka-back { white-space: normal; text-align: center; }
   .bka-updateCard { padding: 24px 18px 22px; border-width: 2px; box-shadow: 5px 5px 0 #06080b; }
   .bka-updateCard h1 { font-size: 21px; }
+  .bka-confirmationBackdrop { padding: 16px; }
+  .bka-confirmationDialog { padding: 25px 18px; box-shadow: 6px 6px 0 #14213d; }
+  .bka-confirmationIcon { width: 60px; height: 60px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bka-spinner { animation-duration: 1.5s; }
-  .bka-passwordToggle { transition: none; }
+  .bka-passwordToggle,
+  .bka-homeLink,
+  .bka-confirmationButton { transition: none; }
+  .bka-confirmationBackdrop,
+  .bka-confirmationDialog { animation: none; }
+  .bka-confirmationButton:hover,
+  .bka-confirmationButton:active { transform: none; }
 }

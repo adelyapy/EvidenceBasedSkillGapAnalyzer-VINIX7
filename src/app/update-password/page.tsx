@@ -3,6 +3,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { PasswordVisibilityIcon } from "@/components/auth/AuthField";
 import { createClient } from "@/lib/supabase/client";
 import "@/styles/auth.css";
 
@@ -10,6 +11,8 @@ export default function UpdatePasswordPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<{ type: "error" | "success"; text: string } | null>(null);
 
@@ -70,33 +73,73 @@ export default function UpdatePasswordPage() {
         <p className="bka-updateDescription">Masukkan kata sandi baru untuk akun BUKTIVA Anda.</p>
 
         <form onSubmit={handleSubmit} className="bka-updateForm">
-          <label className="bka-updateField" htmlFor="new-password">
-            <span>Kata sandi baru</span>
-            <input
-              id="new-password"
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={8}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="bka-updateInput"
-            />
-          </label>
+          <div className="bka-updateField">
+            <label htmlFor="new-password">Kata sandi baru</label>
+            <div className="bka-updateInputWrap">
+              <input
+                id="new-password"
+                type={passwordVisible ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                minLength={8}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="bka-updateInput"
+                disabled={loading}
+              />
+              <button
+                type="button"
+                className="bka-passwordToggle bka-updatePasswordToggle"
+                onClick={() => setPasswordVisible((visible) => !visible)}
+                aria-label={
+                  passwordVisible
+                    ? "Sembunyikan kata sandi baru"
+                    : "Tampilkan kata sandi baru"
+                }
+                aria-pressed={passwordVisible}
+                aria-controls="new-password"
+                disabled={loading}
+              >
+                <PasswordVisibilityIcon visible={passwordVisible} />
+              </button>
+            </div>
+          </div>
 
-          <label className="bka-updateField" htmlFor="confirm-password">
-            <span>Konfirmasi kata sandi baru</span>
-            <input
-              id="confirm-password"
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={8}
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              className="bka-updateInput"
-            />
-          </label>
+          <div className="bka-updateField">
+            <label htmlFor="confirm-password">
+              Konfirmasi kata sandi baru
+            </label>
+            <div className="bka-updateInputWrap">
+              <input
+                id="confirm-password"
+                type={confirmPasswordVisible ? "text" : "password"}
+                autoComplete="new-password"
+                required
+                minLength={8}
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                className="bka-updateInput"
+                disabled={loading}
+              />
+              <button
+                type="button"
+                className="bka-passwordToggle bka-updatePasswordToggle"
+                onClick={() =>
+                  setConfirmPasswordVisible((visible) => !visible)
+                }
+                aria-label={
+                  confirmPasswordVisible
+                    ? "Sembunyikan konfirmasi kata sandi baru"
+                    : "Tampilkan konfirmasi kata sandi baru"
+                }
+                aria-pressed={confirmPasswordVisible}
+                aria-controls="confirm-password"
+                disabled={loading}
+              >
+                <PasswordVisibilityIcon visible={confirmPasswordVisible} />
+              </button>
+            </div>
+          </div>
 
           {notice && (
             <p role={notice.type === "error" ? "alert" : "status"} aria-live="polite" className={`bka-updateNotice bka-updateNotice--${notice.type}`}>{notice.text}</p>

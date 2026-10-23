@@ -478,7 +478,7 @@ export default function UploadProjectPage() {
       </div>
       {evidenceToDelete && typeof document !== "undefined" && createPortal(
         <div className="bkp-deleteBackdrop" role="presentation" onMouseDown={() => setEvidenceToDelete(null)}>
-          <section className="bkp-deleteDialog" role="dialog" aria-modal="true" aria-labelledby="bkp-delete-title" aria-describedby="bkp-delete-description" onMouseDown={(event) => event.stopPropagation()}>
+          <section className="bkp-deleteDialog" role="alertdialog" aria-modal="true" aria-labelledby="bkp-delete-title" aria-describedby="bkp-delete-description" onMouseDown={(event) => event.stopPropagation()}>
             <span className="bkp-deleteIcon" aria-hidden="true">!</span>
             <h2 id="bkp-delete-title">Hapus bukti proyek?</h2>
             <p id="bkp-delete-description">{`Apakah Anda yakin ingin menghapus ${evidenceToDelete.kind === "url" ? "tautan proyek ini" : `dokumen ${evidenceToDelete.file.name}`}?`}</p>
