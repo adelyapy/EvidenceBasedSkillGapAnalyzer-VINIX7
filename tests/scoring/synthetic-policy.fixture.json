@@ -1,0 +1,174 @@
+{
+  "policyId": "synthetic-typescript-scoring",
+  "policyVersion": "1.0.0",
+  "policyStatus": "approved",
+  "scope": "synthetic_test",
+  "supportedRole": "frontend-developer",
+  "datasetVersion": "buktiva-local-rubrics-1.0.0",
+  "validationRubricVersion": "1.0.0",
+  "skillLevelScale": {
+    "min": 0,
+    "max": 4,
+    "step": 1
+  },
+  "levelIndicators": [
+    {
+      "skillKey": "typescript",
+      "descriptions": [
+        "Artificial fixture marker demonstrates an explicit basic failure, not missing evidence.",
+        "Artificial fixture contains a generic declaration and linked answers.",
+        "Artificial fixture contains the exact identity contract and linked reasoning.",
+        "Artificial fixture also contains an explicit assertion example.",
+        "Artificial fixture contains the reviewed type guard and linked reasoning at score four."
+      ],
+      "levelRules": [
+        {
+          "level": 0,
+          "sourceQuotes": [
+            "export const zeroFixture = true;"
+          ],
+          "requiredQuestionOrders": [
+            1,
+            3
+          ],
+          "minimumDimensionScore": 0
+        },
+        {
+          "level": 1,
+          "sourceQuotes": [
+            "export function identity<T>"
+          ],
+          "requiredQuestionOrders": [
+            1,
+            3
+          ],
+          "minimumDimensionScore": 1
+        },
+        {
+          "level": 2,
+          "sourceQuotes": [
+            "export function identity<T>(value: T): T { return value; }"
+          ],
+          "requiredQuestionOrders": [
+            1,
+            3
+          ],
+          "minimumDimensionScore": 3
+        },
+        {
+          "level": 3,
+          "sourceQuotes": [
+            "assert.equal(identity(1), 1);"
+          ],
+          "requiredQuestionOrders": [
+            1,
+            3,
+            5
+          ],
+          "minimumDimensionScore": 3
+        },
+        {
+          "level": 4,
+          "sourceQuotes": [
+            "export const isString = (value: unknown): value is string => typeof value === 'string';"
+          ],
+          "requiredQuestionOrders": [
+            1,
+            3,
+            4,
+            5
+          ],
+          "minimumDimensionScore": 4
+        }
+      ]
+    }
+  ],
+  "evidenceRequirements": {
+    "implementationRequired": true,
+    "allowPartial": false
+  },
+  "validationRequirements": {
+    "mappingApproved": true,
+    "questionSkillMapping": [
+      {
+        "order": 1,
+        "skillIds": [
+          "9007199254740995"
+        ]
+      },
+      {
+        "order": 3,
+        "skillIds": [
+          "9007199254740995"
+        ]
+      },
+      {
+        "order": 4,
+        "skillIds": [
+          "9007199254740995"
+        ]
+      },
+      {
+        "order": 5,
+        "skillIds": [
+          "9007199254740995"
+        ]
+      }
+    ],
+    "minimumLinkedAnswers": 2
+  },
+  "coverageRequirements": {
+    "minimumSkillRatio": 1,
+    "requireAllBenchmarks": true
+  },
+  "benchmarkPriorityRules": {
+    "approved": true,
+    "categoryRanks": [
+      {
+        "category": "high",
+        "rank": 1
+      },
+      {
+        "category": "medium",
+        "rank": 2
+      },
+      {
+        "category": "low",
+        "rank": 3
+      }
+    ],
+    "numericRanks": [
+      {
+        "value": 1,
+        "rank": 1
+      },
+      {
+        "value": 2,
+        "rank": 2
+      }
+    ]
+  },
+  "gapCalculationMethod": "nonnegative_difference_same_scale",
+  "readinessCalculationMethod": "weighted_capped_level_ratio_all_benchmarks",
+  "readinessWeights": [
+    {
+      "skillId": "9007199254740995",
+      "weight": 1
+    }
+  ],
+  "mandatorySkillIds": [
+    "9007199254740995"
+  ],
+  "roundingRules": {
+    "level": "integer_only",
+    "gap": "exact_integer",
+    "readinessDecimals": 2
+  },
+  "approvalMetadata": {
+    "kind": "synthetic_test",
+    "reviewer": "SYNTHETIC_TEST_REVIEWER_NOT_HUMAN_APPROVAL",
+    "reference": "tests/scoring/synthetic-policy.fixture.json",
+    "approvedPolicyVersion": "1.0.0",
+    "approvedOn": "2026-10-22"
+  }
+}

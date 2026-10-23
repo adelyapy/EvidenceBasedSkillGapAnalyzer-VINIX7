@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "extractionDatasetVersion": "buktiva-local-rubrics-1.0.0",
+  "approvalStatus": "mvp_proposed",
+  "provenance": "Local MVP design based on the five existing questions; PRD provides no scoring scale or approved weights.",
+  "aggregation": "sum_assessed_dimensions_per_question",
+  "competencyPolicy": "conservative_status_only_v1",
+  "dimensions": [
+    { "id": "relevance", "description": "Kesesuaian makna jawaban dengan pertanyaan; panjang dan gaya bahasa bukan kompetensi.", "minScore": 0, "maxScore": 4,
+      "levels": ["Tidak menjawab tujuan pertanyaan.", "Menjawab sangat sedikit bagian tujuan.", "Menjawab bagian inti tetapi konteks terbatas.", "Menjawab tujuan secara jelas dengan konteks konkret.", "Menjawab tujuan dan alasan secara tepat dengan contoh relevan."],
+      "notAssessableWhen": "Makna tidak dapat ditafsirkan dengan wajar; jangan mengganti kegagalan provider dengan nilai nol." },
+    { "id": "technical_accuracy", "description": "Ketepatan penjelasan teknis menurut bukti dan rubrik, bukan asumsi kepengarangan.", "minScore": 0, "maxScore": 4,
+      "levels": ["Penjelasan teknis terbukti salah pada inti jawaban.", "Ada kekeliruan teknis besar yang dapat ditunjukkan.", "Inti teknis masuk akal dengan kekurangan penjelasan.", "Penjelasan teknis tepat dan konkret.", "Penjelasan tepat dengan alasan dan trade-off relevan."],
+      "notAssessableWhen": "Klaim teknis tidak dapat diperiksa dengan informasi tersedia; tidak ada bukti bukan berarti salah." },
+    { "id": "evidence_consistency", "description": "Kesesuaian klaim spesifik dengan kutipan proyek yang tersedia.", "minScore": 0, "maxScore": 4,
+      "levels": ["Klaim inti bertentangan dengan kutipan konkret.", "Ada pertentangan material yang dapat ditunjukkan.", "Sebagian klaim cocok tetapi penjelasan hubungan terbatas.", "Klaim inti cocok dengan bukti yang dikutip.", "Klaim dan batasannya ditautkan jelas ke bukti konkret."],
+      "notAssessableWhen": "Bukti tidak cukup atau klaim sejarah, kontribusi, hasil runtime, dan feedback tidak dapat diverifikasi dari kode saja." },
+    { "id": "contribution_clarity", "description": "Kejelasan uraian peran dan batas kontribusi yang diklaim, bukan verifikasi penulis kode.", "minScore": 0, "maxScore": 4,
+      "levels": ["Tidak menguraikan peran atau kontribusi.", "Klaim peran umum tanpa batas kontribusi.", "Peran dan satu tugas disebutkan.", "Peran, tugas pribadi, dan batas tanggung jawab jelas.", "Uraian konkret membedakan kontribusi pribadi, tim, dan bagian yang tidak diketahui."],
+      "notAssessableWhen": "Penjelasan peran tidak dapat ditafsirkan; repositori sendiri tidak membuktikan kepengarangan." }
+  ],
+  "questions": [
+    { "order": 1, "purpose": "Arsitektur sistem dan alasan keputusan desain.", "dimensions": ["relevance", "technical_accuracy", "evidence_consistency"], "authorshipVerifiable": false },
+    { "order": 2, "purpose": "Uraian peran, tanggung jawab, dan batas kontribusi pribadi.", "dimensions": ["relevance", "contribution_clarity"], "authorshipVerifiable": false },
+    { "order": 3, "purpose": "Pilihan teknologi/tools beserta alasan sesuai konteks proyek.", "dimensions": ["relevance", "technical_accuracy", "evidence_consistency"], "authorshipVerifiable": false },
+    { "order": 4, "purpose": "Kendala, langkah pemecahan, dan penalaran teknis; sejarah kejadian belum terverifikasi.", "dimensions": ["relevance", "technical_accuracy", "evidence_consistency"], "authorshipVerifiable": false },
+    { "order": 5, "purpose": "Hasil dibanding tujuan dan contoh pengujian/feedback; hasil runtime tidak diasumsikan dari kode.", "dimensions": ["relevance", "technical_accuracy", "evidence_consistency"], "authorshipVerifiable": false }
+  ]
+}

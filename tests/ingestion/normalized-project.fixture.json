@@ -1,0 +1,21 @@
+{
+  "sourceType": "zip",
+  "projectName": "demo",
+  "sourceReference": "demo.zip",
+  "files": [
+    {
+      "path": "src/main.ts",
+      "language": "TypeScript",
+      "content": "export const answer = 42;\n",
+      "sizeBytes": 26
+    }
+  ],
+  "stats": {
+    "discoveredFiles": 1,
+    "includedFiles": 1,
+    "skippedFiles": 0,
+    "totalContentBytes": 26
+  },
+  "warnings": [],
+  "status": "complete"
+}

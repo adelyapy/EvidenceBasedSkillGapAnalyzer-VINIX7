@@ -1,0 +1,81 @@
+[
+  {
+    "caseId": "eval_001",
+    "description": "Strong React Project (Perfect Match)",
+    "inputEvidence": "Created a full e-commerce frontend using React, TypeScript, and Redux. Implemented custom hooks and context API.",
+    "expectedGroundTruth": {
+      "skills": [
+        {
+          "skillId": "react",
+          "level": 3,
+          "confidence": 0.9,
+          "evidenceRefs": ["ev_1"]
+        },
+        {
+          "skillId": "typescript",
+          "level": 3,
+          "confidence": 0.85,
+          "evidenceRefs": ["ev_1"]
+        }
+      ]
+    }
+  },
+  {
+    "caseId": "eval_002",
+    "description": "Basic HTML/CSS Only (Partial Match)",
+    "inputEvidence": "Built a static portfolio website using plain HTML, CSS, and JavaScript. No frameworks used.",
+    "expectedGroundTruth": {
+      "skills": [
+        {
+          "skillId": "css",
+          "level": 2,
+          "confidence": 0.8,
+          "evidenceRefs": ["ev_1"]
+        },
+        {
+          "skillId": "javascript",
+          "level": 2,
+          "confidence": 0.7,
+          "evidenceRefs": ["ev_1"]
+        }
+      ]
+    }
+  },
+  {
+    "caseId": "eval_003",
+    "description": "AI Hallucination Trap (Claims React but evidence is Python)",
+    "inputEvidence": "Wrote a Python script to scrape data using BeautifulSoup. No web development involved.",
+    "expectedGroundTruth": {
+      "skills": []
+    }
+  },
+  {
+    "caseId": "eval_004",
+    "description": "React mentioned but no implementation proof",
+    "inputEvidence": "I have a repository that has React in the package.json, but I only edited the README file.",
+    "expectedGroundTruth": {
+      "skills": []
+    }
+  },
+  {
+    "caseId": "eval_005",
+    "description": "Advanced TypeScript & API Integration",
+    "inputEvidence": "Designed a REST API client using TypeScript generics. Handled error states and HTTP status codes.",
+    "expectedGroundTruth": {
+      "skills": [
+        {
+          "skillId": "typescript",
+          "level": 4,
+          "confidence": 0.95,
+          "evidenceRefs": ["ev_1"]
+        },
+        {
+          "skillId": "rest-api",
+          "level": 3,
+          "confidence": 0.8,
+          "evidenceRefs": ["ev_1"]
+        }
+      ]
+    }
+  }
+]

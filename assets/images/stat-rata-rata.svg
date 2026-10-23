@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Ikon rata-rata kecocokan</title>
+  <rect x="3" y="3" width="58" height="58" rx="11" fill="#FFF0BA"/>
+  <g fill="none" stroke="#101820" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<rect x="13" y="40" width="10" height="13" rx="2" fill="#8AD7FC"/><rect x="27" y="29" width="10" height="24" rx="2" fill="#51B9F9"/><rect x="41" y="15" width="10" height="38" rx="2" fill="#096BEA"/>
+</g>
+</svg>

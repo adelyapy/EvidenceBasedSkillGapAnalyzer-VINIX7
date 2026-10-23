@@ -1,0 +1,41 @@
+{
+  "analysisId": "33333333-3333-4333-8333-333333333333",
+  "userId": "11111111-1111-4111-8111-111111111111",
+  "targetRole": {
+    "id": "9007199254740993",
+    "name": "Frontend Developer",
+    "slug": "frontend-developer",
+    "description": "Frontend engineering"
+  },
+  "benchmarks": [{
+    "benchmarkId": "10",
+    "skillId": "9007199254740995",
+    "skillName": "TypeScript",
+    "category": "Engineering",
+    "description": "Typed JavaScript",
+    "requiredLevel": 3,
+    "priority": "high",
+    "sourceName": "Synthetic benchmark",
+    "sourceUrl": "https://example.invalid/benchmark"
+  }],
+  "evidences": [{
+    "evidenceId": "44444444-4444-4444-8444-444444444444",
+    "sourceType": "github",
+    "sourceReference": "https://github.com/acme/demo",
+    "status": "complete",
+    "normalizedProject": {
+      "sourceType": "github",
+      "projectName": "demo",
+      "sourceReference": "https://github.com/acme/demo",
+      "revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "files": [{"path": "src/main.ts", "language": "TypeScript", "content": "export const answer = 42;\n", "sizeBytes": 26}],
+      "stats": {"discoveredFiles": 1, "includedFiles": 1, "skippedFiles": 0, "totalContentBytes": 26},
+      "warnings": [],
+      "status": "complete"
+    },
+    "warnings": []
+  }],
+  "cv": null,
+  "processingStatus": "complete",
+  "warnings": []
+}

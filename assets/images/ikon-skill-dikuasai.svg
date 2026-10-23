@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="judul-skill">
+  <title id="judul-skill">Ikon Skill Dikuasai</title>
+  <rect x="2" y="2" width="44" height="44" rx="8" fill="#68A9C6"/>
+  <g transform="translate(12 12)" fill="none" stroke="#101419" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m2 9 10-5 10 5-10 5L2 9Z"/>
+    <path d="M6 11.2v5.3c0 1.7 2.7 3.5 6 3.5s6-.8 6-3.5v-5.3"/>
+    <path d="M22 9v7"/>
+  </g>
+</svg>

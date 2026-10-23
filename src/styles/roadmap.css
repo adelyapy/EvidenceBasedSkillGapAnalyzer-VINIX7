@@ -1,0 +1,201 @@
+.bkrm-page {
+  width: 100%;
+  max-width: 1120px;
+  min-width: 0;
+  margin-inline: auto;
+  color: #111;
+  container-name: roadmap;
+  container-type: inline-size;
+}
+
+.bkrm-page *,
+.bkrm-page *::before,
+.bkrm-page *::after { box-sizing: border-box; }
+
+.bkrm-srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.bkrm-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 275px);
+  align-items: start;
+  gap: 28px;
+}
+
+.bkrm-introCopy { min-width: 0; }
+.bkrm-introCopy h1 {
+  margin: 0 0 9px;
+  font-size: clamp(2rem, 4.1cqi, 2.45rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.8px;
+}
+.bkrm-introCopy p {
+  max-width: 620px;
+  margin: 0;
+  color: #343b42;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.bkrm-careerForm { min-width: 0; display: grid; gap: 9px; }
+.bkrm-careerForm label { font-size: .82rem; font-weight: 750; }
+.bkrm-careerForm select {
+  width: 100%;
+  min-height: 56px;
+  border: 1px solid #9bafc3;
+  border-radius: 9px;
+  font: inherit;
+  font-size: .94rem;
+  font-weight: 700;
+}
+.bkrm-careerForm select {
+  padding: 0 42px 0 15px;
+  background: #f9fbfd;
+  color: #16191c;
+}
+.bkrm-careerForm select:focus-visible,
+.bkrm-bottomNav a:focus-visible {
+  outline: 3px solid #78b8e7;
+  outline-offset: 3px;
+}
+
+.bkrm-demoNotice {
+  margin-top: 18px;
+  padding: 11px 14px;
+  border: 1px solid #8eb5d5;
+  border-radius: 7px;
+  background: #eaf4fb;
+  color: #25435b;
+  font-size: .85rem;
+  line-height: 1.45;
+}
+.bkrm-demoNotice--warning {
+  border-color: #c19b43;
+  background: #fff1c7;
+  color: #59440e;
+}
+
+.bkrm-roadmap { min-width: 0; margin-top: 18px; }
+.bkrm-stepGrid {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  list-style: none;
+}
+.bkrm-stepItem { position: relative; min-width: 0; }
+.bkrm-stepCard {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 230px;
+  padding: 19px 20px 16px 68px;
+  border: 1px solid #9fb4c8;
+  border-radius: 11px;
+  background: #f8fbfd;
+  box-shadow: 0 1px 2px #1e3d5a12;
+}
+.bkrm-stepNumber {
+  position: absolute;
+  top: 15px;
+  left: 11px;
+  z-index: 2;
+  width: 47px;
+  height: 47px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #3f82c5;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 750;
+}
+.bkrm-stepBody { min-width: 0; display: flex; flex-direction: column; min-height: 193px; }
+.bkrm-stepBody h3 {
+  margin: 4px 0 6px;
+  font-size: 1.02rem;
+  font-weight: 750;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.bkrm-duration { margin: 0; font-size: .84rem; line-height: 1.35; }
+.bkrm-checklist { margin: 13px 0 14px; padding: 0; display: grid; gap: 10px; list-style: none; }
+.bkrm-checklist li { min-width: 0; display: flex; align-items: flex-start; gap: 10px; font-size: .9rem; line-height: 1.35; overflow-wrap: anywhere; }
+.bkrm-checklist li > span {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #20b892;
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 800;
+}
+.bkrm-materialButton {
+  width: 100%;
+  min-height: 38px;
+  margin-top: auto;
+  border: 2px solid #3f82c5;
+  border-radius: 6px;
+  background: #fff;
+  color: #2e72b5;
+  font-size: .86rem;
+  font-weight: 750;
+}
+.bkrm-page .bkrm-materialButton:disabled { cursor: not-allowed; opacity: .65; }
+.bkrm-materialHelp { margin: 5px 0 0; color: #5b646c; font-size: .72rem; line-height: 1.3; text-align: center; }
+
+.bkrm-bottomNav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 22px; margin-top: 22px; }
+.bkrm-bottomNav a {
+  min-height: 48px;
+  padding: 9px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #16191c;
+  border-radius: 4px;
+  color: #111;
+  font-size: .88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.bkrm-backButton, .bkrm-dashboardButton { background: transparent; color: #111 !important; }
+.bkrm-bottomNav a:hover, .bkrm-bottomNav a:focus-visible { background: #173f65; color: #fff !important; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
+
+@container roadmap (min-width: 720px) {
+  .bkrm-stepGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 18px; }
+  .bkrm-stepItem:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .bkrm-stepItem:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .bkrm-stepItem:nth-child(3) { grid-column: 2; grid-row: 1; }
+  .bkrm-stepItem:nth-child(4) { grid-column: 2; grid-row: 2; }
+}
+
+@container roadmap (max-width: 660px) {
+  .bkrm-intro { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .bkrm-careerForm { width: 100%; }
+}
+
+@container roadmap (max-width: 390px) {
+  .bkrm-introCopy h1 { font-size: 1.85rem; }
+  .bkrm-stepCard { padding: 17px 13px 14px 59px; }
+  .bkrm-stepNumber { left: 8px; width: 42px; height: 42px; }
+  .bkrm-stepBody h3 { font-size: .96rem; }
+  .bkrm-checklist li { font-size: .84rem; }
+  .bkrm-bottomNav { flex-direction: column-reverse; align-items: stretch; }
+  .bkrm-bottomNav a { width: 100%; }
+}

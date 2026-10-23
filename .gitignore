@@ -1,0 +1,25 @@
+# Dependencies
+/node_modules
+
+# Next.js build
+/.next/
+/out/
+
+# Environment variables
+.env*
+!.env.example
+.env.local
+
+# Vercel
+.vercel/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*.next.zip
+.next.zip
+.next/
