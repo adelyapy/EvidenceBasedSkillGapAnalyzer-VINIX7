@@ -139,11 +139,9 @@
   transition: width .2s ease, flex-basis .2s ease;
   z-index: 30;
 }
-.bkw-sidebarTop { height: 76px; flex: none; display: flex; align-items: center; border-bottom: 1px solid #b9c6ce; padding: 0 12px 0 28px; background: var(--bkw-cream); }
+.bkw-sidebarTop { height: 76px; flex: none; display: flex; align-items: center; border-bottom: 1px solid #b9c6ce; padding: 0 28px; background: var(--bkw-cream); }
 .bkw-brand { display: inline-flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; font-size: 24px !important; font-weight: 800 !important; letter-spacing: -.5px; }
 .bkw-brand img { flex: none; width: 38px; height: auto; }
-.bkw-collapseButton { border: 0; background: transparent; display: grid; place-items: center; flex: none; }
-.bkw-collapseButton { margin-left: auto; padding: 5px; font-size: 24px !important; line-height: 1; }
 .bkw-nav { display: flex; flex-direction: column; gap: 6px; padding: 14px 18px 0; }
 .bkw-navItem { width: 100%; min-height: 48px; display: flex; align-items: center; gap: 11px; text-align: left; border: 1px solid transparent; border-radius: 8px; padding: 0 11px; background: transparent; font-weight: 600 !important; font-size: 15px !important; white-space: nowrap; }
 .bkw-navItem svg { flex: none; }
@@ -152,7 +150,12 @@
 .bkw-navItem--active:not(:disabled):hover { background: #adc9ed; }
 .bkw-logout { margin: auto 18px 28px; width: calc(100% - 36px); }
 .bkw-mainColumn { min-width: 0; flex: 1; padding-top: 76px; }
-.bkw-header { position: fixed; top: 0; right: 0; left: 250px; z-index: 40; height: 76px; display: flex; align-items: center; justify-content: flex-end; padding: 0 26px 0 18px; border-bottom: 1px solid #b9c6ce; background: var(--bkw-cream); }
+.bkw-header { position: fixed; top: 0; right: 0; left: 250px; z-index: 40; height: 76px; display: flex; align-items: center; justify-content: space-between; padding: 0 26px 0 18px; border-bottom: 1px solid #b9c6ce; background: var(--bkw-cream); }
+.bkw-headerCollapseButton { display: grid; width: 44px; height: 44px; flex: none; place-items: center; border: 0; border-radius: 8px; background: transparent; color: #14213d; cursor: pointer; transition: background-color .18s ease; }
+.bkw-headerCollapseButton svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s ease; }
+.bkw-headerCollapseButton--collapsed svg { transform: rotate(180deg); }
+.bkw-headerCollapseButton:hover { background: #dceaf7; }
+.bkw-headerCollapseButton:focus-visible { outline: 3px solid #2c659a; outline-offset: 2px; }
 .bkw-headerActions { display: flex; align-items: center; gap: 10px; }
 .bkw-notification { border: 0; background: transparent; width: 30px; height: 34px; display: grid; place-items: center; }
 .bkw-profile { position: relative; }
@@ -186,10 +189,9 @@
 .bkw-backdrop { display: none; }
 .bkw-shell--collapsed .bkw-sidebar { width: 72px; flex-basis: 72px; }
 .bkw-shell--collapsed .bkw-header { left: 72px; }
-.bkw-shell--collapsed .bkw-sidebarTop { padding: 0 9px; flex-direction: column; height: 76px; justify-content: center; gap: 0; }
+.bkw-shell--collapsed .bkw-sidebarTop { padding: 0 9px; height: 76px; justify-content: center; }
 .bkw-shell--collapsed .bkw-brand img { width: 33px; height: auto; }
 .bkw-shell--collapsed .bkw-sidebarLabel { display: none; }
-.bkw-shell--collapsed .bkw-collapseButton { margin: 0; padding: 0; line-height: .8; }
 .bkw-shell--collapsed .bkw-nav { padding: 14px 10px 0; }
 .bkw-shell--collapsed .bkw-navItem { justify-content: center; padding: 0; }
 .bkw-shell--collapsed .bkw-logout { margin: auto 10px 28px; width: calc(100% - 20px); }
@@ -203,7 +205,7 @@
   .bkw-shell--collapsed .bkw-navItem { justify-content: flex-start; padding: 0 12px; }
   .bkw-shell--collapsed .bkw-logout { margin: auto 18px 24px; width: calc(100% - 36px); }
   .bkw-sidebarTop { height: 68px; padding-left: 64px; }
-  .bkw-collapseButton { display: none; }
+  .bkw-headerCollapseButton { display: none; }
   .bkw-nav { padding: 14px 18px 0; }
   .bkw-logout { margin: auto 18px 24px; width: calc(100% - 36px); }
   .bkw-backdrop { display: block; position: fixed; inset: 0; z-index: 45; width: 100%; border: 0; background: #0006; }
@@ -214,5 +216,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .bkw-menuIcon > span,
+  .bkw-headerCollapseButton,
+  .bkw-headerCollapseButton svg,
   .bkw-main :is(button, a) { transition: none; }
 }

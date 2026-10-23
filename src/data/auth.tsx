@@ -24,6 +24,7 @@ export const styles = {
   notice: "bka-notice",
   noticeError: "bka-noticeError",
   noticeInfo: "bka-noticeInfo",
+  passwordToggle: "bka-passwordToggle",
   primaryButton: "bka-primaryButton",
   register: "bka-register",
   reset: "bka-reset",
@@ -71,7 +72,6 @@ export const contents: Record<AuthMode, AuthContent> = {
     benefits: [
       "Gratis dan mudah dibuat",
       "Akses ke semua fitur",
-      "Dukungan penuh dari tim kami",
       "Mulai bangun portofolio profesional",
     ],
   },

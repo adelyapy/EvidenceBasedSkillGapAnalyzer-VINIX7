@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { fieldLabels, fieldPlaceholders, styles } from "@/data/auth";
 import type { AuthMode, FieldName } from "@/types/auth";
@@ -12,6 +15,19 @@ function FieldIcon({ name }: { name: FieldName }) {
   return <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.1 9V6.5a5.9 5.9 0 0 1 11.8 0V9h.8a2.3 2.3 0 0 1 2.3 2.3v8.4a2.3 2.3 0 0 1-2.3 2.3H5.3A2.3 2.3 0 0 1 3 19.7v-8.4A2.3 2.3 0 0 1 5.3 9h.8Zm2.1 0h7.6V6.5a3.8 3.8 0 1 0-7.6 0V9Zm.5 8.2a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9Zm3.3 0a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9Zm3.3 0a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9Z"/></svg>;
 }
 
+function PasswordVisibilityIcon({ visible }: { visible: boolean }) {
+  return visible ? (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.7 2.7M9.9 4.3A10.8 10.8 0 0 1 12 4c5.5 0 9 5 9 5a15.7 15.7 0 0 1-3 3.5M6.2 6.2C4.2 7.4 3 9 3 9s3.5 5 9 5c1 0 1.9-.2 2.7-.4" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 12s3.5-5 9-5 9 5 9 5-3.5 5-9 5-9-5-9-5Z" />
+      <circle cx="12" cy="12" r="2.5" />
+    </svg>
+  );
+}
+
 type AuthFieldProps = {
   mode: AuthMode;
   name: FieldName;
@@ -22,6 +38,7 @@ type AuthFieldProps = {
 };
 
 export default function AuthField({ mode, name, value, error, loading, onChange }: AuthFieldProps) {
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const isRegister = mode === "register";
   const isPass = name === "password" || name === "confirmPassword";
   const inputType = name === "email" ? "email" : isPass ? "password" : "text";
@@ -39,7 +56,7 @@ export default function AuthField({ mode, name, value, error, loading, onChange 
         <input
           id={`${mode}-${name}`}
           name={name}
-          type={inputType}
+          type={isPass && passwordVisible ? "text" : inputType}
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
@@ -49,6 +66,19 @@ export default function AuthField({ mode, name, value, error, loading, onChange 
           disabled={loading}
           required
         />
+        {isPass && (
+          <button
+            type="button"
+            className={styles.passwordToggle}
+            onClick={() => setPasswordVisible((visible) => !visible)}
+            aria-label={passwordVisible ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+            aria-pressed={passwordVisible}
+            aria-controls={`${mode}-${name}`}
+            disabled={loading}
+          >
+            <PasswordVisibilityIcon visible={passwordVisible} />
+          </button>
+        )}
       </div>
       {error && <p className={styles.fieldError} id={`${mode}-${name}-error`}>{error}</p>}
     </div>

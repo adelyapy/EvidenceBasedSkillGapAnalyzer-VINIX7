@@ -8,12 +8,14 @@ import { PROFILE_ROUTE } from "@/data/workspace";
 import WorkspaceIcon from "./WorkspaceIcon";
 
 type Props = {
+  collapsed: boolean;
   mobileOpen: boolean;
+  onToggleSidebar: () => void;
   onToggleMenu: () => void;
   onCloseMenu: () => void;
 };
 
-export default function WorkspaceHeader({ mobileOpen, onToggleMenu, onCloseMenu }: Props) {
+export default function WorkspaceHeader({ collapsed, mobileOpen, onToggleSidebar, onToggleMenu, onCloseMenu }: Props) {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -47,6 +49,19 @@ export default function WorkspaceHeader({ mobileOpen, onToggleMenu, onCloseMenu 
         </span>
       </button>
       <header className="bkw-header">
+        <button
+          className={`bkw-headerCollapseButton${collapsed ? " bkw-headerCollapseButton--collapsed" : ""}`}
+          type="button"
+          onClick={onToggleSidebar}
+          aria-label={collapsed ? "Perlebar sidebar" : "Perkecil sidebar"}
+          aria-expanded={!collapsed}
+          aria-controls="bkw-workspace-sidebar"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m12 6-6 6 6 6" />
+            <path d="m18 6-6 6 6 6" />
+          </svg>
+        </button>
         <div className="bkw-headerActions">
           <button className="bkw-notification" type="button" disabled aria-label="Notifikasi belum tersedia" title="Notifikasi belum tersedia"><Image src="/images/ikon-notifikasi.svg" alt="" width={24} height={24} /></button>
           <details className="bkw-profile">
