@@ -17,6 +17,192 @@
 .review-field a { color: #345479; text-decoration: underline; }
 .review-file { display: inline-flex; align-items: center; color: #47546b; font-weight: 600; }
 .review-muted { color: #6a7586; font-style: italic; }
+
+/* Project summary: neobrutalist data table with an easy-to-scan label/value hierarchy. */
+.review-project {
+  border: 3px solid #14213d;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fffdf7;
+  box-shadow: 7px 7px 0 #14213d;
+}
+.review-project .review-box-heading {
+  min-height: 52px;
+  padding: 8px 14px;
+  background: #58b6d4;
+  border-bottom: 3px solid #14213d;
+}
+.review-project .review-box-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #14213d;
+  font-size: 16px;
+  font-weight: 800;
+}
+.review-project .review-box-heading h2::before {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #14213d;
+  border-radius: 4px;
+  background: #ffe681;
+  content: "↗";
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+.review-project .review-edit {
+  min-height: 31px;
+  padding: 5px 9px;
+  gap: 4px;
+  border: 2px solid #14213d;
+  border-radius: 4px;
+  background: #fffdf7;
+  box-shadow: 3px 3px 0 #14213d;
+  color: #14213d;
+  font-size: 11px;
+  font-weight: 800;
+}
+.review-project .review-edit:hover,
+.review-project .review-edit:focus-visible {
+  box-shadow: 1px 1px 0 #14213d;
+  transform: translate(2px, 2px);
+}
+.review-project-list { padding: 14px; background: #e6f5fb; }
+.review-project-record {
+  overflow: hidden;
+  border: 2px solid #14213d;
+  border-radius: 6px;
+  background: #fffdf7;
+  box-shadow: 4px 4px 0 #14213d;
+}
+.review-project-record + .review-project-record { margin-top: 14px; border-top: 2px solid #14213d; }
+.review-project-count {
+  margin: 0;
+  padding: 7px 12px;
+  border-bottom: 2px solid #14213d;
+  background: #ffe681;
+  color: #14213d;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.review-project .review-field {
+  min-height: 58px;
+  grid-template-columns: minmax(145px, 25%) minmax(0, 1fr);
+  border-top: 2px solid #14213d;
+}
+.review-project .review-project-count + .review-field { border-top: 0; }
+.review-project .review-field > b {
+  justify-content: flex-start;
+  padding: 12px 14px;
+  border-right: 2px solid #14213d;
+  background: #b8dcf0;
+  color: #14213d;
+  font-size: 12px;
+  font-weight: 800;
+}
+.review-project .review-field > div {
+  padding: 12px 15px;
+  background: #fffdf7;
+  color: #24374b;
+  font-size: 13px;
+  font-weight: 600;
+}
+.review-project .review-field a {
+  color: #174e83;
+  font-weight: 800;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.review-project .review-file {
+  color: #14213d;
+  font-weight: 800;
+}
+.review-project .review-muted { color: #5e6470; font-weight: 600; }
+
+/* Keep the role, CV, and primary actions in the same neobrutalist system. */
+.review-bottom-grid .review-box {
+  overflow: hidden;
+  border: 3px solid #14213d;
+  border-radius: 7px;
+  background: #fffdf7;
+  box-shadow: 6px 6px 0 #14213d;
+}
+.review-bottom-grid .review-box-heading {
+  min-height: 49px;
+  padding: 8px 12px;
+  border-bottom: 3px solid #14213d;
+  background: #ffe681;
+}
+.review-bottom-grid .review-box-heading h2 {
+  color: #14213d;
+  font-size: 15px;
+  font-weight: 800;
+}
+.review-bottom-grid .review-edit {
+  min-height: 30px;
+  padding: 5px 9px;
+  gap: 4px;
+  border: 2px solid #14213d;
+  border-radius: 4px;
+  background: #fffdf7;
+  box-shadow: 3px 3px 0 #14213d;
+  color: #14213d;
+  font-size: 11px;
+  font-weight: 800;
+}
+.review-bottom-grid .review-edit:hover,
+.review-bottom-grid .review-edit:focus-visible {
+  box-shadow: 1px 1px 0 #14213d;
+  transform: translate(2px, 2px);
+}
+.review-role-content {
+  min-height: 126px;
+  padding: 15px;
+  border: 0;
+  background: #eef5f7;
+}
+.review-role-content img {
+  padding: 5px;
+  border: 2px solid #14213d;
+  border-radius: 5px;
+  background: #fffdf7;
+  box-shadow: 3px 3px 0 #14213d;
+}
+.review-role-content strong { color: #14213d; font-size: 15px; font-weight: 800; }
+.review-role-content p { color: #30465d; font-size: 12px; font-weight: 600; }
+.review-cv-content {
+  min-height: 126px;
+  padding: 14px;
+  border: 0;
+  background: #f3f1ec;
+}
+.review-cv-content svg {
+  filter: drop-shadow(3px 3px 0 #14213d);
+}
+.review-cv-content p { color: #14213d; font-size: 13px; font-weight: 800; }
+.review-actions { margin-top: 20px; }
+.review-back,
+.review-start {
+  min-height: 46px;
+  border: 3px solid #14213d;
+  border-radius: 5px;
+  box-shadow: 5px 5px 0 #14213d;
+  font-weight: 800;
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+.review-back { background: #fffdf7; color: #14213d; }
+.review-start { background: #2f72ad; color: #fff; }
+.review-back:hover,
+.review-back:focus-visible { background: #ffe681; color: #14213d; box-shadow: 2px 2px 0 #14213d; transform: translate(3px, 3px); }
+.review-start:hover:not(:disabled),
+.review-start:focus-visible:not(:disabled) { background: #205783; box-shadow: 2px 2px 0 #14213d; transform: translate(3px, 3px); }
+.review-back:active,
+.review-start:active:not(:disabled) { box-shadow: 0 0 0 #14213d; transform: translate(5px, 5px); }
 .review-project-skeleton { display: grid; gap: 10px; padding: 20px 14px; }
 .review-project-skeleton span { display: block; height: 18px; border-radius: 5px; background: linear-gradient(90deg, #d5e1ed 25%, #edf3f8 50%, #d5e1ed 75%); background-size: 200% 100%; animation: review-skeleton 1.25s ease-in-out infinite; }
 .review-project-skeleton span:nth-child(2) { width: 82%; }
@@ -69,6 +255,10 @@
   .review-main { padding: 0 2px 12px; }
   .review-bottom-grid { grid-template-columns: 1fr; }
   .review-field { grid-template-columns: 34% 66%; }
+  .review-project-list { padding: 10px; }
+  .review-project .review-field { grid-template-columns: 1fr; }
+  .review-project .review-field > b { min-height: 39px; border-right: 0; border-bottom: 2px solid #14213d; }
+  .review-project .review-field > div { min-height: 48px; }
   .review-toast { right: 16px; bottom: 16px; }
   .review-confirmActions { flex-direction: column-reverse; }
   .review-confirmActions button { width: 100%; }

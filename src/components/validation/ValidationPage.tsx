@@ -1,6 +1,7 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
@@ -14,6 +15,9 @@ type ValidationQuestion = {
   question_text: string;
   evidence_context: string | null;
 };
+
+type NavigationDirection = "back" | "next";
+const VALIDATION_NAVIGATION_STORAGE_KEY = "buktiva.validation.navigation";
 
 function readAnswers(): Record<string, string> {
   try {
@@ -44,6 +48,11 @@ export default function ValidationPage({
   const [answer, setAnswer] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [navigationDirection, setNavigationDirection] = useState<NavigationDirection | null>(() => {
+    if (typeof window === "undefined") return null;
+    const direction = sessionStorage.getItem(VALIDATION_NAVIGATION_STORAGE_KEY);
+    return direction === "back" || direction === "next" ? direction : null;
+  });
   const [error, setError] = useState("");
   const [questions, setQuestions] = useState<ValidationQuestion[]>([]);
 
@@ -52,6 +61,8 @@ export default function ValidationPage({
   const progress = totalQuestions
     ? (step / totalQuestions) * 100
     : 0;
+  const isMovingToNextQuestion = saving && step < totalQuestions;
+  const isShowingTransition = isMovingToNextQuestion || navigationDirection !== null;
 
   useEffect(() => {
     let cancelled = false;
@@ -149,7 +160,11 @@ export default function ValidationPage({
           );
         }
       } finally {
-        if (!cancelled) setLoaded(true);
+        if (!cancelled) {
+          sessionStorage.removeItem(VALIDATION_NAVIGATION_STORAGE_KEY);
+          setNavigationDirection(null);
+          setLoaded(true);
+        }
       }
     }
 
@@ -243,6 +258,8 @@ export default function ValidationPage({
 
       
       if (step < totalQuestions) {
+        sessionStorage.setItem(VALIDATION_NAVIGATION_STORAGE_KEY, "next");
+        setNavigationDirection("next");
         router.push(
           analysisRoutes.question((step + 1) as QuestionNumber)
         );
@@ -328,37 +345,30 @@ export default function ValidationPage({
         <div className="validation-workspace">
           <form className="validation-form" onSubmit={handleNext}>
             <div className="validation-question-card">
-              <label
-                htmlFor="validation-answer"
-                className="validation-question-text"
-              >
-                {currentQuestion?.question_text ??
-                  (loaded && !error
-                    ? "Pertanyaan tidak tersedia."
-                    : "Memuat pertanyaan...")}
-              </label>
+              {loaded && (
+                <>
+                  <p className="validation-question-eyebrow">Pertanyaan untuk Anda</p>
+                  <label htmlFor="validation-answer" className="validation-question-text">
+                    {currentQuestion?.question_text ?? "Pertanyaan tidak tersedia."}
+                  </label>
 
-              <div className="validation-textarea-wrap">
-                <textarea
-                  id="validation-answer"
-                  name={`jawaban-${step}`}
-                  placeholder="Tulis jawaban Anda di sini..."
-                  value={answer}
-                  maxLength={1000}
-                  required
-                  disabled={!loaded || !currentQuestion || saving}
-                  onChange={(event) =>
-                    handleAnswerChange(event.target.value)
-                  }
-                  aria-describedby="validation-counter"
-                />
-                <span
-                  id="validation-counter"
-                  className="validation-character-count"
-                >
-                  {answer.length}/1000
-                </span>
-              </div>
+                  <div className="validation-textarea-wrap">
+                    <textarea
+                      id="validation-answer"
+                      name={`jawaban-${step}`}
+                      placeholder="Ceritakan pengalaman atau langkah yang Anda lakukan..."
+                      value={answer}
+                      maxLength={1000}
+                      required
+                      disabled={!currentQuestion || saving}
+                      onChange={(event) => handleAnswerChange(event.target.value)}
+                      aria-describedby="validation-answer-help validation-counter"
+                    />
+                    <p id="validation-answer-help" className="validation-answer-help">Gunakan contoh konkret dari proyek Anda.</p>
+                    <span id="validation-counter" className="validation-character-count">{answer.length}/1000</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {error && (
@@ -374,6 +384,10 @@ export default function ValidationPage({
                     (step - 1) as QuestionNumber
                   )}
                   className="validation-back"
+                  onClick={() => {
+                    sessionStorage.setItem(VALIDATION_NAVIGATION_STORAGE_KEY, "back");
+                    setNavigationDirection("back");
+                  }}
                 >
                   ← Kembali
                 </Link>
@@ -412,14 +426,30 @@ export default function ValidationPage({
               </li>
             </ul>
             {currentQuestion?.evidence_context && (
-              <p>
-                <strong>Konteks bukti:</strong>{" "}
-                {currentQuestion.evidence_context}
-              </p>
+              <section className="validation-evidence" aria-labelledby="validation-evidence-title">
+                <div className="validation-evidence-heading">
+                  <svg className="validation-evidence-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6.5 3.5h7l4 4v13H6.5z" />
+                    <path d="M13.5 3.5v4h4M9.5 12h5M9.5 15.5h5" />
+                  </svg>
+                  <h3 id="validation-evidence-title">Konteks bukti</h3>
+                </div>
+                <p>{currentQuestion.evidence_context}</p>
+              </section>
             )}
           </aside>
         </div>
       </div>
+      {isShowingTransition && (
+        <div className="validation-transition" role="status" aria-live="assertive" aria-label={navigationDirection === "back" ? "Membuka pertanyaan sebelumnya" : "Menyimpan jawaban dan membuka pertanyaan berikutnya"}>
+          <div className="validation-transition-card">
+            <Image src="/images/logo-icon.svg" alt="" width={62} height={58} priority />
+            <div className="validation-loader-dots" aria-hidden="true"><span /><span /><span /></div>
+            <strong>{navigationDirection === "back" ? "Membuka pertanyaan sebelumnya" : "Menyimpan jawaban"}</strong>
+            <p>{navigationDirection === "back" ? "Menyiapkan pertanyaan sebelumnya..." : "Menyiapkan pertanyaan berikutnya..."}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

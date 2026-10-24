@@ -134,6 +134,7 @@ export default function UploadCvPage() {
       setRouteError("Lengkapi minimal satu proyek dan target role terlebih dahulu.");
       return;
     }
+    sessionStorage.setItem(analysisStorage.flowProgress, "cv");
     router.push(analysisRoutes.reviewInput);
   }
 
