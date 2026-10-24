@@ -30,7 +30,11 @@ type EvaluationResult = {
 type SkillGapPriority = "low" | "medium" | "high" | "critical";
 
 function normalizePriority(value: unknown): SkillGapPriority {
-  switch (String(value ?? "").trim().toLowerCase()) {
+  switch (
+    String(value ?? "")
+      .trim()
+      .toLowerCase()
+  ) {
     case "rendah":
     case "low":
       return "low";
@@ -52,10 +56,7 @@ function normalizePriority(value: unknown): SkillGapPriority {
 }
 
 function errorResponse(message: string, status: number) {
-  return NextResponse.json(
-    { success: false, message },
-    { status }
-  );
+  return NextResponse.json({ success: false, message }, { status });
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -65,7 +66,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function validNumber(
   value: unknown,
   min: number,
-  max: number
+  max: number,
 ): value is number {
   return (
     typeof value === "number" &&
@@ -106,13 +107,12 @@ export async function POST(request: Request) {
 
     const analysisId = body.analysisId;
 
-    const { data: analysis, error: analysisError } =
-      await supabase
-        .from("analyses")
-        .select("id, user_id, target_role, status")
-        .eq("id", analysisId)
-        .eq("user_id", user.id)
-        .maybeSingle();
+    const { data: analysis, error: analysisError } = await supabase
+      .from("analyses")
+      .select("id, user_id, target_role, status")
+      .eq("id", analysisId)
+      .eq("user_id", user.id)
+      .maybeSingle();
 
     if (analysisError) {
       console.error("Analysis lookup failed:", analysisError.message);
@@ -126,18 +126,17 @@ export async function POST(request: Request) {
     if (analysis.status === "completed") {
       return errorResponse(
         "Analisis ini sudah selesai dan tidak perlu diproses ulang.",
-        409
+        409,
       );
     }
 
     // Ambil pertanyaan yang benar-benar tersimpan.
-    const { data: questions, error: questionError } =
-      await supabase
-        .from("validation_questions")
-        .select("id, question_order, question_text, evidence_context")
-        .eq("analysis_id", analysisId)
-        .eq("user_id", user.id)
-        .order("question_order", { ascending: true });
+    const { data: questions, error: questionError } = await supabase
+      .from("validation_questions")
+      .select("id, question_order, question_text, evidence_context")
+      .eq("analysis_id", analysisId)
+      .eq("user_id", user.id)
+      .order("question_order", { ascending: true });
 
     if (questionError) {
       console.error("Question lookup failed:", questionError.message);
@@ -145,20 +144,16 @@ export async function POST(request: Request) {
     }
 
     if (!questions || questions.length !== QUESTION_COUNT) {
-      return errorResponse(
-        "Lima pertanyaan validasi belum tersedia.",
-        400
-      );
+      return errorResponse("Lima pertanyaan validasi belum tersedia.", 400);
     }
 
     const questionIds = questions.map((question) => question.id);
 
-    const { data: answers, error: answerError } =
-      await supabase
-        .from("validation_answers")
-        .select("id, question_id, answer_text")
-        .eq("user_id", user.id)
-        .in("question_id", questionIds);
+    const { data: answers, error: answerError } = await supabase
+      .from("validation_answers")
+      .select("id, question_id, answer_text")
+      .eq("user_id", user.id)
+      .in("question_id", questionIds);
 
     if (answerError) {
       console.error("Answer lookup failed:", answerError.message);
@@ -166,10 +161,7 @@ export async function POST(request: Request) {
     }
 
     const answerByQuestion = new Map(
-      (answers ?? []).map((answer) => [
-        answer.question_id,
-        answer,
-      ])
+      (answers ?? []).map((answer) => [answer.question_id, answer]),
     );
 
     if (
@@ -178,22 +170,18 @@ export async function POST(request: Request) {
       questions.some(
         (question) =>
           !answerByQuestion.has(question.id) ||
-          !answerByQuestion.get(question.id)?.answer_text.trim()
+          !answerByQuestion.get(question.id)?.answer_text.trim(),
       )
     ) {
-      return errorResponse(
-        "Pastikan semua pertanyaan sudah dijawab.",
-        400
-      );
+      return errorResponse("Pastikan semua pertanyaan sudah dijawab.", 400);
     }
 
     // Ambil bukti proyek yang tersimpan.
-    const { data: evidences, error: evidenceError } =
-      await supabase
-        .from("project_evidences")
-        .select("evidence_type, title, url, description")
-        .eq("analysis_id", analysisId)
-        .eq("user_id", user.id);
+    const { data: evidences, error: evidenceError } = await supabase
+      .from("project_evidences")
+      .select("evidence_type, title, url, description")
+      .eq("analysis_id", analysisId)
+      .eq("user_id", user.id);
 
     if (evidenceError) {
       console.error("Evidence lookup failed:", evidenceError.message);
@@ -205,40 +193,32 @@ export async function POST(request: Request) {
     }
 
     // Cegah penambahan hasil ganda saat request diulang.
-    const { data: existingSkills, error: existingSkillError } =
-      await supabase
-        .from("analysis_skill_results")
-        .select("id")
-        .eq("analysis_id", analysisId)
-        .eq("user_id", user.id)
-        .limit(1);
+    const { data: existingSkills, error: existingSkillError } = await supabase
+      .from("analysis_skill_results")
+      .select("id")
+      .eq("analysis_id", analysisId)
+      .eq("user_id", user.id)
+      .limit(1);
 
-    const { data: existingGaps, error: existingGapError } =
-      await supabase
-        .from("skill_gaps")
-        .select("id")
-        .eq("analysis_id", analysisId)
-        .eq("user_id", user.id)
-        .limit(1);
+    const { data: existingGaps, error: existingGapError } = await supabase
+      .from("skill_gaps")
+      .select("id")
+      .eq("analysis_id", analysisId)
+      .eq("user_id", user.id)
+      .limit(1);
 
     if (existingSkillError || existingGapError) {
       console.error(
         "Existing results lookup failed:",
-        existingSkillError?.message ?? existingGapError?.message
+        existingSkillError?.message ?? existingGapError?.message,
       );
-      return errorResponse(
-        "Gagal memeriksa hasil analisis sebelumnya.",
-        500
-      );
+      return errorResponse("Gagal memeriksa hasil analisis sebelumnya.", 500);
     }
 
-    if (
-      (existingSkills?.length ?? 0) > 0 ||
-      (existingGaps?.length ?? 0) > 0
-    ) {
+    if ((existingSkills?.length ?? 0) > 0 || (existingGaps?.length ?? 0) > 0) {
       return errorResponse(
         "Hasil evaluasi sudah ada sebagian. Periksa data sebelum memproses ulang.",
-        409
+        409,
       );
     }
 
@@ -246,10 +226,7 @@ export async function POST(request: Request) {
     const model = process.env.GEMINI_MODEL;
 
     if (!apiKey || !model) {
-      return errorResponse(
-        "Konfigurasi Gemini belum lengkap.",
-        500
-      );
+      return errorResponse("Konfigurasi Gemini belum lengkap.", 500);
     }
 
     const evaluationInput = {
@@ -349,14 +326,12 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
       } catch (error) {
         console.error(
           `Evaluation attempt ${attempt}/3 failed:`,
-          error instanceof Error ? error.message : "Unknown error"
+          error instanceof Error ? error.message : "Unknown error",
         );
 
         if (attempt === 3) throw error;
 
-        await new Promise((resolve) =>
-          setTimeout(resolve, attempt * 1500)
-        );
+        await new Promise((resolve) => setTimeout(resolve, attempt * 1500));
       }
     }
 
@@ -390,14 +365,14 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
           typeof item.questionId !== "string" ||
           !expectedQuestionIds.has(item.questionId) ||
           !validNumber(item.score, 0, 100) ||
-          typeof item.feedback !== "string"
+          typeof item.feedback !== "string",
       ) ||
       new Set(result.answers.map((item) => item.questionId)).size !==
         QUESTION_COUNT
     ) {
       return errorResponse(
         "AI menghasilkan penilaian jawaban yang tidak lengkap atau tidak valid.",
-        502
+        502,
       );
     }
 
@@ -411,13 +386,13 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
         validNumber(skill.confidence, 0, 1) &&
         typeof skill.evidenceSummary === "string" &&
         typeof skill.explanation === "string" &&
-        ["tinggi", "sedang", "rendah"].includes(skill.priority)
+        ["tinggi", "sedang", "rendah"].includes(skill.priority),
     );
 
     if (!validSkills) {
       return errorResponse(
         "AI menghasilkan data kompetensi yang tidak valid.",
-        502
+        502,
       );
     }
 
@@ -452,10 +427,7 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
       skill_name: skill.skillName,
       current_level: skill.currentLevel,
       required_level: skill.requiredLevel,
-      gap_score: Math.max(
-        0,
-        skill.requiredLevel - skill.currentLevel
-      ),
+      gap_score: Math.max(0, skill.requiredLevel - skill.currentLevel),
       priority: normalizePriority(skill.priority),
       explanation: skill.explanation,
     }));
@@ -474,7 +446,7 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
 
       return errorResponse(
         "Gagal menyimpan hasil kompetensi. Periksa izin database.",
-        500
+        500,
       );
     }
 
@@ -492,7 +464,7 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
 
       return errorResponse(
         "Hasil kompetensi tersimpan, tetapi skill gap gagal disimpan. Perlu pemulihan data sebelum mencoba ulang.",
-        500
+        500,
       );
     }
 
@@ -502,7 +474,7 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
       if (!savedAnswer) {
         return errorResponse(
           "Jawaban tidak ditemukan saat menyimpan evaluasi.",
-          500
+          500,
         );
       }
 
@@ -519,7 +491,7 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
       if (updateAnswerError) {
         console.error(
           "Answer evaluation update failed:",
-          updateAnswerError.message
+          updateAnswerError.message,
         );
 
         await supabase
@@ -528,17 +500,14 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
           .eq("id", analysisId)
           .eq("user_id", user.id);
 
-        return errorResponse(
-          "Gagal menyimpan evaluasi jawaban.",
-          500
-        );
+        return errorResponse("Gagal menyimpan evaluasi jawaban.", 500);
       }
     }
 
     // Skor kesiapan dihitung dari level kompetensi terhadap kebutuhan.
     // Skill dengan level kebutuhan 0 tidak dimasukkan ke penyebut.
     const scoreSkills = result.skills.filter(
-      (skill) => skill.requiredLevel > 0
+      (skill) => skill.requiredLevel > 0,
     );
 
     const readinessScore =
@@ -547,15 +516,11 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
         : Math.round(
             (scoreSkills.reduce(
               (total, skill) =>
-                total +
-                Math.min(
-                  skill.currentLevel / skill.requiredLevel,
-                  1
-                ),
-              0
+                total + Math.min(skill.currentLevel / skill.requiredLevel, 1),
+              0,
             ) /
               scoreSkills.length) *
-              100
+              100,
           );
 
     const { error: completeError } = await supabase
@@ -573,10 +538,108 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
       console.error("Analysis completion failed:", completeError.message);
       return errorResponse(
         "Hasil evaluasi tersimpan, tetapi status akhir gagal diperbarui.",
-        500
+        500,
       );
     }
+    // === INTEGRASI ROADMAP (Blocking, Fail-safe) ===
+    try {
+      // 1. Ambil snapshot trusted
+      const { data: analysisRow } = await supabase
+        .from("analyses")
+        .select("*")
+        .eq("id", analysisId)
+        .eq("user_id", user.id)
+        .single();
 
+      if (analysisRow) {
+        // 2. Panggil generator
+        const { generateLearningRoadmap } =
+          await import("@/lib/roadmap/roadmap-service");
+        const { persistRoadmap } =
+          await import("@/lib/roadmap/persist-roadmap");
+
+        // Pastikan scoring data tersedia di analysisRow (sesuaikan nama field dengan skema Anda)
+        // Jika tidak ada di DB, Anda mungkin perlu me-reconstruct scoring dari `result` atau tabel lain.
+        const rawScoring = analysisRow.scoring_data || {};
+
+        const roadmap = generateLearningRoadmap(rawScoring, {
+          analysisInput: analysisRow,
+          skillExtraction: result,
+          validationEvaluation: {}, // Sesuaikan jika ada variabel validasi
+        });
+
+        // 3. Simpan ke DB
+        const { inserted } = await persistRoadmap(
+          supabaseAdmin,
+          roadmap,
+          user.id,
+        );
+        console.log(
+          `✅ Roadmap tersimpan: ${inserted} item (Status: ${roadmap.status})`,
+        );
+      }
+    } catch (error) {
+      // Fail-safe: Hanya log, JANGAN gagalkan response analisis
+      console.error(
+        "❌ Gagal generate/simpan roadmap (Analisis tetap sukses):",
+        error,
+      );
+    }
+    // === END INTEGRASI ROADMAP ===
+    // === INTEGRASI ROADMAP (OPSI A) ===
+    try {
+      // 1. Query data gap & skill dari DB (data yang baru saja disimpan)
+      const { data: dbGaps } = await supabase
+        .from("skill_gaps")
+        .select(
+          "skill_name, current_level, required_level, gap_score, priority, explanation",
+        )
+        .eq("analysis_id", analysisId)
+        .eq("user_id", user.id);
+
+      const { data: dbSkills } = await supabase
+        .from("analysis_skill_results")
+        .select("skill_name, estimated_level, evidence_summary")
+        .eq("analysis_id", analysisId)
+        .eq("user_id", user.id);
+
+      if (dbGaps && dbSkills) {
+        const { generateRoadmapFromGaps } =
+          await import("@/lib/roadmap/gap-based-generator");
+        const { persistGapBasedRoadmap } =
+          await import("@/lib/roadmap/roadmap-persistence");
+
+        // 2. Generate items
+        const roadmapItems = generateRoadmapFromGaps(
+          analysisId,
+          user.id,
+          dbGaps,
+          dbSkills,
+        );
+
+        // 3. Simpan secara idempotent
+        if (roadmapItems.length > 0) {
+          const { inserted } = await persistGapBasedRoadmap(
+            supabaseAdmin,
+            roadmapItems,
+            analysisId,
+            user.id,
+          );
+          console.log(`✅ Roadmap (Opsi A) tersimpan: ${inserted} item.`);
+        } else {
+          console.log(
+            "ℹ️ Tidak ada gap yang perlu direkomendasikan (roadmap kosong).",
+          );
+        }
+      }
+    } catch (roadmapError) {
+      // Fail-safe: Jangan gagalkan analisis utama
+      console.error(
+        "❌ Gagal generate/simpan roadmap (Analisis tetap sukses):",
+        roadmapError,
+      );
+    }
+    // === END INTEGRASI ROADMAP ===
     return NextResponse.json({
       success: true,
       message: "Evaluasi kompetensi berhasil disimpan.",
@@ -588,12 +651,12 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
   } catch (error) {
     console.error(
       "Analysis evaluation failed:",
-      error instanceof Error ? error.message : "Unknown error"
+      error instanceof Error ? error.message : "Unknown error",
     );
 
     return errorResponse(
       "Evaluasi AI gagal. Periksa log terminal server.",
-      502
+      502,
     );
   }
 }
