@@ -120,6 +120,7 @@ export default function TargetRolePage() {
 
     try {
       writeSavedDraft({ role, jobDescription });
+      sessionStorage.setItem(analysisStorage.flowProgress, "role");
       router.push(analysisRoutes.uploadCv);
     } catch {
       setStorageAvailable(false);

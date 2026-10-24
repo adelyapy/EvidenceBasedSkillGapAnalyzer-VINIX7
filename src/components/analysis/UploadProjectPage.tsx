@@ -253,7 +253,6 @@ export default function UploadProjectPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [pdfEvidence, setPdfEvidence] = useState<UploadProjectPdfEvidence[]>(() => parseStoredPdfs());
   const [error, setError] = useState("");
-  const [feedback, setFeedback] = useState("");
   const [storageAvailable, setStorageAvailable] = useState(true);
   const [evidenceToDelete, setEvidenceToDelete] = useState<UploadProjectEvidence | null>(null);
   const evidence = useMemo(
@@ -278,19 +277,16 @@ export default function UploadProjectPage() {
   function changeSource(source: UploadProjectSource) {
     setActiveSource(source);
     setError("");
-    setFeedback("");
   }
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
     setSelectedFile(event.target.files?.[0] ?? null);
     setError("");
-    setFeedback("");
   }
 
   function addEvidence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
-    setFeedback("");
 
     if (activeSource === "pdf") {
       if (!selectedFile) {
@@ -322,7 +318,6 @@ export default function UploadProjectPage() {
       setStorageAvailable(persistLinks(nextEvidence));
       setSelectedFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
-      setFeedback("Dokumen PDF ditambahkan dan akan ditampilkan pada halaman review. File belum diunggah ke server.");
       return;
     }
 
@@ -343,7 +338,6 @@ export default function UploadProjectPage() {
     ];
     setStorageAvailable(persistLinks(nextEvidence));
     setUrlValue("");
-    setFeedback("URL proyek berhasil ditambahkan ke penyimpanan sesi browser.");
   }
 
   function removeEvidence(id: string) {
@@ -354,14 +348,10 @@ export default function UploadProjectPage() {
     }
     setStorageAvailable(persistLinks(nextEvidence));
     setError("");
-    setFeedback("Bukti proyek dihapus.");
   }
-
-  const hasPdfEvidence = evidence.some((item) => item.kind === "pdf");
 
   function continueToTargetRole() {
     setError("");
-    setFeedback("");
 
     if (evidence.length === 0) {
       setError("Tambahkan minimal satu URL atau dokumen PDF untuk melanjutkan.");
@@ -374,6 +364,7 @@ export default function UploadProjectPage() {
       return;
     }
 
+    sessionStorage.setItem(analysisStorage.flowProgress, "project");
     router.push(analysisRoutes.targetRole);
   }
 
@@ -413,14 +404,13 @@ export default function UploadProjectPage() {
           ) : (
             <div className="bkp-urlField" key="url-field">
               <label className="bkp-srOnly" htmlFor="bkp-project-url">{currentSource.inputLabel}</label>
-              <input id="bkp-project-url" name={`${activeSource}_url`} type="url" inputMode="url" autoComplete="url" value={urlValue} placeholder={currentSource.placeholder} onChange={(event) => { setUrlValue(event.target.value); setError(""); setFeedback(""); }} aria-describedby="bkp-form-error" />
+              <input id="bkp-project-url" name={`${activeSource}_url`} type="url" inputMode="url" autoComplete="url" value={urlValue} placeholder={currentSource.placeholder} onChange={(event) => { setUrlValue(event.target.value); setError(""); }} aria-describedby="bkp-form-error" />
             </div>
           )}
           <button className="bkp-addButton" type="submit">Tambahkan</button>
         </form>
 
         {error && <p className="bkp-formMessage bkp-formError" id="bkp-form-error" role="alert">{error}</p>}
-        {feedback && <p className="bkp-formMessage bkp-formSuccess" role="status">{feedback}</p>}
         {!storageAvailable && <p className="bkp-formMessage bkp-storageWarning" role="status">Penyimpanan sesi tidak tersedia. URL tetap tersimpan selama halaman ini tetap terbuka.</p>}
       </section>
 
@@ -457,20 +447,10 @@ export default function UploadProjectPage() {
       </aside>
 
       <div className="bkp-nextSection">
-        <p id="bkp-target-note">
-          {!storageAvailable
-            ? "Penyimpanan sesi tidak tersedia. Perjalanan ke tahap berikutnya dihentikan agar data tidak hilang."
-            : evidence.length === 0
-              ? "Tambahkan minimal satu URL atau dokumen PDF untuk melanjutkan ke Target Role."
-                : hasPdfEvidence
-                  ? "Bukti proyek siap diteruskan. Nama dan ukuran PDF akan terlihat pada halaman review; file belum diunggah ke server."
-                  : "Bukti proyek sudah tersimpan untuk sesi ini dan siap diteruskan ke Target Role."}
-        </p>
         <button
           className="bkp-continue"
           type="button"
           disabled={evidence.length === 0 || !storageAvailable}
-          aria-describedby="bkp-target-note"
           onClick={continueToTargetRole}
         >
           Lanjutkan <span aria-hidden="true">→</span>
