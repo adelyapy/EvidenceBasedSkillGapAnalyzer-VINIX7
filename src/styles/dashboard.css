@@ -553,3 +553,77 @@
     --bkd-score-progress: var(--bkd-score);
   }
 }
+
+/* Neobrutalism visual layer for the dashboard. */
+.bkd-dashboard {
+  --bkd-ink: #14213d;
+  --bkd-blue: #2f72ad;
+  --bkd-cyan: #bfeaf4;
+  --bkd-yellow: #ffe681;
+  --bkd-pink: #ffd0df;
+  --bkd-paper: #fffdf7;
+}
+.bkd-hero {
+  padding: 22px;
+  border: 3px solid var(--bkd-ink);
+  border-radius: 8px;
+  background: var(--bkd-cyan);
+  box-shadow: 7px 7px 0 var(--bkd-ink);
+}
+.bkd-hero h1 { font-weight: 800; }
+.bkd-primaryButton,
+.bkd-secondaryButton {
+  border-radius: 5px;
+  box-shadow: 4px 4px 0 var(--bkd-ink);
+  font-weight: 800 !important;
+}
+.bkd-heroActions .bkd-primaryButton { background: var(--bkd-blue); }
+.bkd-secondaryButton { background: var(--bkd-yellow); }
+.bkd-primaryButton:hover,
+.bkd-secondaryButton:hover { box-shadow: 2px 2px 0 var(--bkd-ink); transform: translate(2px, 2px); }
+.bkd-statCard {
+  border: 3px solid var(--bkd-ink);
+  border-radius: 6px;
+  background: var(--bkd-paper);
+  box-shadow: 5px 5px 0 var(--bkd-ink);
+}
+.bkd-statCard:nth-child(2) { background: #d6f4d9; }
+.bkd-statCard:nth-child(3) { background: var(--bkd-yellow); }
+.bkd-statCard:nth-child(4) { background: var(--bkd-pink); }
+.bkd-statCard h2 { font-weight: 800; }
+.bkd-statCard p { color: var(--bkd-ink); font-weight: 900; }
+@media (hover: hover) {
+  .bkd-statCard:hover {
+    border-color: var(--bkd-ink);
+    box-shadow: 2px 2px 0 var(--bkd-ink);
+  }
+}
+.bkd-panel {
+  border: 3px solid var(--bkd-ink);
+  border-radius: 7px;
+  background: var(--bkd-paper);
+  box-shadow: 6px 6px 0 var(--bkd-ink);
+  padding: 16px 18px 18px;
+}
+.bkd-panelHeading h2 { font-weight: 800; }
+.bkd-panelLink {
+  border: 2px solid var(--bkd-ink);
+  border-radius: 4px;
+  padding: 4px 7px;
+  background: var(--bkd-yellow);
+  box-shadow: 3px 3px 0 var(--bkd-ink);
+  color: var(--bkd-ink);
+  font-weight: 800;
+  text-decoration: none !important;
+}
+.bkd-panelLink:hover { color: var(--bkd-ink); box-shadow: 1px 1px 0 var(--bkd-ink); transform: translate(2px, 2px); }
+.bkd-scoreCard,
+.bkd-skillsCard { border: 2px solid var(--bkd-ink); border-radius: 5px; }
+.bkd-scoreCard { background: #dceffb; }
+.bkd-skillsCard { background: #fff; }
+.bkd-scoreRing { border: 2px solid var(--bkd-ink); background: conic-gradient(var(--bkd-blue) var(--bkd-score-progress), #fffdf7 0); }
+.bkd-scoreRing > div { border: 2px solid var(--bkd-ink); background: var(--bkd-yellow); }
+.bkd-recommendationNumber { border: 2px solid var(--bkd-ink); background: var(--bkd-blue); }
+.bkd-recommendationCard { border: 2px solid var(--bkd-ink); border-radius: 5px; background: #d8f1f8; box-shadow: 3px 3px 0 var(--bkd-ink); }
+.bkd-historyEmpty { border: 2px dashed var(--bkd-ink); background: #f7f2e8; }
+.bkd-roadmap li span { border: 2px solid var(--bkd-ink); background: var(--bkd-blue); box-shadow: 2px 2px 0 var(--bkd-ink); }

@@ -380,7 +380,6 @@ export default function UploadProjectPage() {
     () => parseStoredPdfs(),
   );
   const [error, setError] = useState("");
-  const [feedback, setFeedback] = useState("");
   const [storageAvailable, setStorageAvailable] = useState(true);
   const [evidenceToDelete, setEvidenceToDelete] =
     useState<UploadProjectEvidence | null>(null);
@@ -408,19 +407,16 @@ export default function UploadProjectPage() {
   function changeSource(source: UploadProjectSource) {
     setActiveSource(source);
     setError("");
-    setFeedback("");
   }
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
     setSelectedFile(event.target.files?.[0] ?? null);
     setError("");
-    setFeedback("");
   }
 
   function addEvidence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
-    setFeedback("");
 
     if (activeSource === "pdf") {
       if (!selectedFile) {
@@ -464,9 +460,6 @@ export default function UploadProjectPage() {
       setStorageAvailable(persistLinks(nextEvidence));
       setSelectedFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
-      setFeedback(
-        "Dokumen PDF ditambahkan dan akan ditampilkan pada halaman review. File belum diunggah ke server.",
-      );
       return;
     }
 
@@ -496,7 +489,6 @@ export default function UploadProjectPage() {
     ];
     setStorageAvailable(persistLinks(nextEvidence));
     setUrlValue("");
-    setFeedback("URL proyek berhasil ditambahkan ke penyimpanan sesi browser.");
   }
 
   function removeEvidence(id: string) {
@@ -507,14 +499,10 @@ export default function UploadProjectPage() {
     }
     setStorageAvailable(persistLinks(nextEvidence));
     setError("");
-    setFeedback("Bukti proyek dihapus.");
   }
-
-  const hasPdfEvidence = evidence.some((item) => item.kind === "pdf");
 
   function continueToTargetRole() {
     setError("");
-    setFeedback("");
 
     if (evidence.length === 0) {
       setError(
@@ -531,6 +519,7 @@ export default function UploadProjectPage() {
       return;
     }
 
+    sessionStorage.setItem(analysisStorage.flowProgress, "project");
     router.push(analysisRoutes.targetRole);
   }
 
@@ -634,7 +623,6 @@ export default function UploadProjectPage() {
                 onChange={(event) => {
                   setUrlValue(event.target.value);
                   setError("");
-                  setFeedback("");
                 }}
                 aria-describedby="bkp-form-error"
               />
@@ -652,11 +640,6 @@ export default function UploadProjectPage() {
             role="alert"
           >
             {error}
-          </p>
-        )}
-        {feedback && (
-          <p className="bkp-formMessage bkp-formSuccess" role="status">
-            {feedback}
           </p>
         )}
         {!storageAvailable && (
@@ -735,20 +718,10 @@ export default function UploadProjectPage() {
       </aside>
 
       <div className="bkp-nextSection">
-        <p id="bkp-target-note">
-          {!storageAvailable
-            ? "Penyimpanan sesi tidak tersedia. Perjalanan ke tahap berikutnya dihentikan agar data tidak hilang."
-            : evidence.length === 0
-              ? "Tambahkan minimal satu URL atau dokumen PDF untuk melanjutkan ke Target Role."
-              : hasPdfEvidence
-                ? "Bukti proyek siap diteruskan. Nama dan ukuran PDF akan terlihat pada halaman review; file belum diunggah ke server."
-                : "Bukti proyek sudah tersimpan untuk sesi ini dan siap diteruskan ke Target Role."}
-        </p>
         <button
           className="bkp-continue"
           type="button"
           disabled={evidence.length === 0 || !storageAvailable}
-          aria-describedby="bkp-target-note"
           onClick={continueToTargetRole}
         >
           Lanjutkan <span aria-hidden="true">→</span>
