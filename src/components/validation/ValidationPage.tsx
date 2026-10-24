@@ -7,6 +7,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import { createClient } from "@/lib/supabase/client";
 import type { QuestionNumber } from "./questions";
+import ValidationQuestionSkeleton from "./ValidationQuestionSkeleton";
 
 type ValidationQuestion = {
   id: string;
@@ -286,8 +287,16 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
     }
   }
 
+  if (step === 1 && !loaded) {
+    return <ValidationQuestionSkeleton />;
+  }
+
   return (
-    <div className="validation-page">
+    <div
+      className={`validation-page${
+        step === 1 ? " validation-page--questionOneReady" : ""
+      }`}
+    >
       <div className="validation-content">
         <div className="validation-intro">
           <h1>Pertanyaan Validasi</h1>

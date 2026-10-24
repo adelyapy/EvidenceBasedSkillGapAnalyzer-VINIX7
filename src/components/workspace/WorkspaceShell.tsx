@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { WORKSPACE_PROFILE_UPDATED_EVENT } from "@/data/workspace";
 import type { WorkspaceUser } from "@/types/workspace";
 import WorkspaceHeader from "./WorkspaceHeader";
 import WorkspaceSidebar from "./WorkspaceSidebar";
@@ -17,6 +18,9 @@ export default function WorkspaceShell({
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [updatedProfileName, setUpdatedProfileName] = useState<string | null>(
+    null,
+  );
   const pathname = usePathname();
   const router = useRouter();
 
@@ -38,6 +42,27 @@ export default function WorkspaceShell({
       mobileQuery.removeEventListener("change", closeWhenLeavingMobile);
     };
   }, [mobileOpen]);
+
+  useEffect(() => {
+    const updateProfileName = (event: Event) => {
+      const detail = (event as CustomEvent<{ name?: unknown }>).detail;
+      const nextName =
+        typeof detail?.name === "string" ? detail.name.trim() : "";
+
+      if (nextName) setUpdatedProfileName(nextName);
+    };
+
+    window.addEventListener(
+      WORKSPACE_PROFILE_UPDATED_EVENT,
+      updateProfileName,
+    );
+
+    return () =>
+      window.removeEventListener(
+        WORKSPACE_PROFILE_UPDATED_EVENT,
+        updateProfileName,
+      );
+  }, []);
 
   const handleLogout = async () => {
     if (isLoggingOut) return;
@@ -79,7 +104,11 @@ export default function WorkspaceShell({
 
       <div className="bkw-mainColumn">
         <WorkspaceHeader
-          user={user}
+          user={
+            updatedProfileName
+              ? { ...user, name: updatedProfileName }
+              : user
+          }
           collapsed={collapsed}
           mobileOpen={mobileOpen}
           onLogout={handleLogout}

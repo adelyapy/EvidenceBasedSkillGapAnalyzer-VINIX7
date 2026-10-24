@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import WorkspaceIcon from "@/components/workspace/WorkspaceIcon";
+import DashboardGuideDialog from "@/components/dashboard/DashboardGuideDialog";
 
 export default async function DashboardHero() {
   const supabase = await createClient();
@@ -35,10 +36,7 @@ export default async function DashboardHero() {
             Mulai analisa baru
           </Link>
 
-          <Link href="/#cara-kerja" className="bkd-secondaryButton">
-            <WorkspaceIcon name="book" size={18} />
-            Lihat panduan
-          </Link>
+          <DashboardGuideDialog />
         </div>
       </div>
 

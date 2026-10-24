@@ -1,6 +1,8 @@
 import Link from "next/link";
+import DashboardEmptyState from "@/components/dashboard/DashboardEmptyState";
 import { createClient } from "@/lib/supabase/server";
 import WorkspaceIcon from "@/components/workspace/WorkspaceIcon";
+import { analysisRoutes } from "@/data/analysis";
 
 export default async function Recommendations() {
   const supabase = await createClient();
@@ -82,15 +84,13 @@ export default async function Recommendations() {
           ))}
         </ol>
       ) : (
-        <div className="bkd-recommendationEmpty">
-          <WorkspaceIcon name="book" size={32} />
-          <h3>Belum ada rekomendasi belajar</h3>
-          <p>
-            Rekomendasi akan muncul setelah roadmap pembelajaran tersedia dari
-            hasil analisis.
-          </p>
-          <Link href="/workspace/analisa-baru">Mulai analisis baru</Link>
-        </div>
+        <DashboardEmptyState
+          icon="book"
+          title="Belum ada rekomendasi belajar"
+          description="Selesaikan analisis untuk mendapatkan rekomendasi belajar yang sesuai dengan skill gap-mu."
+          actionLabel="Mulai analisis"
+          actionHref={analysisRoutes.uploadProject}
+        />
       )}
     </section>
   );

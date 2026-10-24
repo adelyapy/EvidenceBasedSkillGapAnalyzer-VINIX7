@@ -1,3 +1,9 @@
+import { Suspense } from "react";
+import {
+  DashboardHeroSkeleton,
+  DashboardPanelSkeleton,
+  DashboardStatsSkeleton,
+} from "@/components/dashboard/DashboardSkeletons";
 import DashboardHero from "@/components/dashboard/sections/DashboardHero";
 import DashboardStats from "@/components/dashboard/sections/DashboardStats";
 import LatestAnalysis from "@/components/dashboard/sections/LatestAnalysis";
@@ -9,11 +15,19 @@ import "@/styles/dashboard.css";
 export default function DashboardPage() {
   return (
     <div className="bkd-dashboard">
-      <DashboardHero />
-      <DashboardStats />
+      <Suspense fallback={<DashboardHeroSkeleton />}>
+        <DashboardHero />
+      </Suspense>
+      <Suspense fallback={<DashboardStatsSkeleton />}>
+        <DashboardStats />
+      </Suspense>
       <div className="bkd-contentGrid">
-        <LatestAnalysis />
-        <Recommendations />
+        <Suspense fallback={<DashboardPanelSkeleton />}>
+          <LatestAnalysis />
+        </Suspense>
+        <Suspense fallback={<DashboardPanelSkeleton />}>
+          <Recommendations />
+        </Suspense>
         <RecentHistory />
         <LearningRoadmap />
       </div>

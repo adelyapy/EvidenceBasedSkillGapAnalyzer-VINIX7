@@ -1,5 +1,7 @@
 import Link from "next/link";
+import DashboardEmptyState from "@/components/dashboard/DashboardEmptyState";
 import { createClient } from "@/lib/supabase/server";
+import { analysisRoutes } from "@/data/analysis";
 import { HISTORY_ROUTE } from "@/data/workspace";
 
 export default async function LatestAnalysis() {
@@ -47,17 +49,13 @@ export default async function LatestAnalysis() {
           Ringkasan analisis belum dapat dimuat. Silakan muat ulang halaman.
         </p>
       ) : !analysis ? (
-        <div className="bkd-analysisBody">
-          <div className="bkd-scoreCard">
-            <h3>Belum ada analisis</h3>
-            <p>
-              Mulai analisis baru untuk melihat ringkasan kesiapan kariermu.
-            </p>
-            <Link className="bkd-panelLink" href="/workspace/analisa-baru">
-              Mulai analisis
-            </Link>
-          </div>
-        </div>
+        <DashboardEmptyState
+          icon="analysis"
+          title="Belum ada analisis"
+          description="Mulai analisis pertamamu untuk melihat ringkasan kompetensi dan kesiapan karier di sini."
+          actionLabel="Mulai analisis"
+          actionHref={analysisRoutes.uploadProject}
+        />
       ) : (
         <div className="bkd-analysisBody">
           <div className="bkd-scoreCard">

@@ -3,6 +3,8 @@ import { analysisRoutes } from "@/data/analysis";
 
 export const HISTORY_ROUTE = "/workspace/riwayat-analisis";
 export const PROFILE_ROUTE = "/workspace/profile";
+export const WORKSPACE_PROFILE_UPDATED_EVENT =
+  "buktiva:workspace-profile-updated";
 
 export const workspaceNavigation: WorkspaceNavItem[] = [
   { label: "Dashboard", icon: "dashboard", href: "/workspace/dashboard" },

@@ -4,11 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ChangeEvent, type DragEvent } from "react";
+import AnalysisToast from "./AnalysisToast";
 import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import type { AnalysisCv } from "@/types/analysis";
 
 const MAX_CV_BYTES = 3 * 1024 * 1024;
+const TOAST_VISIBLE_DURATION = 3500;
+const TOAST_EXIT_DURATION = 240;
 
 type ChecklistItem = { text: string; complete: boolean };
 type UploadIconName = "arrow-left" | "arrow-right" | "file" | "close";
@@ -41,6 +44,18 @@ function readSavedInputs() {
   };
 }
 
+function getMissingInputMessage(hasProject: boolean, hasRole: boolean) {
+  if (!hasProject && !hasRole) {
+    return "Tambahkan minimal satu proyek dan pilih target role terlebih dahulu.";
+  }
+
+  if (!hasProject) {
+    return "Tambahkan minimal satu proyek terlebih dahulu.";
+  }
+
+  return "Pilih target role terlebih dahulu.";
+}
+
 function verifyCv(file: File): string | null {
   if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== "application/pdf")) return "Format tidak didukung. Pilih CV berformat PDF (.pdf).";
   if (file.size > MAX_CV_BYTES) return "Ukuran CV melebihi 3 MB. Pilih file yang lebih kecil.";
@@ -54,10 +69,16 @@ export default function UploadCvPage() {
   const [dragActive, setDragActive] = useState(false);
   const [cv, setCv] = useState<AnalysisCv | null>(null);
   const [cvError, setCvError] = useState("");
-  const [routeError, setRouteError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [prerequisites, setPrerequisites] = useState({ hasProject: false, hasRole: false, hasJobDescription: false });
   const [isDemo, setIsDemo] = useState(false);
+  const [toast, setToast] = useState<{
+    id: number;
+    type: "error";
+    message: string;
+  } | null>(null);
+  const [toastLeaving, setToastLeaving] = useState(false);
+  const toastId = useRef(0);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -84,6 +105,42 @@ export default function UploadCvPage() {
 
     return () => window.cancelAnimationFrame(frame);
   }, []);
+
+  useEffect(() => {
+    const syncPrerequisites = () => setPrerequisites(readSavedInputs());
+
+    window.addEventListener("focus", syncPrerequisites);
+    window.addEventListener("pageshow", syncPrerequisites);
+
+    return () => {
+      window.removeEventListener("focus", syncPrerequisites);
+      window.removeEventListener("pageshow", syncPrerequisites);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!toast) return;
+
+    const exitTimer = window.setTimeout(
+      () => setToastLeaving(true),
+      TOAST_VISIBLE_DURATION,
+    );
+    const removeTimer = window.setTimeout(
+      () => setToast(null),
+      TOAST_VISIBLE_DURATION + TOAST_EXIT_DURATION,
+    );
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [toast]);
+
+  function showErrorToast(message: string) {
+    toastId.current += 1;
+    setToastLeaving(false);
+    setToast({ id: toastId.current, type: "error", message });
+  }
 
   function acceptFile(file?: File) {
     if (!file) return;
@@ -130,8 +187,16 @@ export default function UploadCvPage() {
   ];
 
   function continueToReview() {
-    if (!ready) {
-      setRouteError("Lengkapi minimal satu proyek dan target role terlebih dahulu.");
+    const latestPrerequisites = readSavedInputs();
+    const latestHasProject = isDemo || latestPrerequisites.hasProject;
+    const latestHasRole = isDemo || latestPrerequisites.hasRole;
+
+    setPrerequisites(latestPrerequisites);
+
+    if (!latestHasProject || !latestHasRole) {
+      showErrorToast(
+        getMissingInputMessage(latestHasProject, latestHasRole),
+      );
       return;
     }
     sessionStorage.setItem(analysisStorage.flowProgress, "cv");
@@ -176,17 +241,30 @@ export default function UploadCvPage() {
         <div className="cv-status-panel" role="status" aria-live="polite">
           <Image src="/images/ceklis2.png" alt="" width={77} height={77} unoptimized className={`cv-status-icon ${ready ? "cv-status-icon--ready" : "cv-status-icon--pending"}`} />
           <h3>{!loaded ? "Memeriksa input…" : ready ? "Input sudah lengkap!" : "Input belum lengkap"}</h3>
-          <p>{ready ? "Siap untuk memulai analisis." : "Tambahkan proyek dan pilih target role."}</p>
+          <p>
+            {!loaded
+              ? "Menyesuaikan data proyek dan target role."
+              : ready
+                ? "Siap untuk memulai analisis."
+                : getMissingInputMessage(hasProject, hasRole)}
+          </p>
         </div>
       </section>
 
       {isDemo && <p className="cv-demo-note">Mode pratinjau desain: kelengkapan langkah sebelumnya ditampilkan sebagai simulasi.</p>}
-      {routeError && <p className="cv-error cv-route-error" role="alert">{routeError}</p>}
 
       <div className="cv-actions">
         <Link className="cv-action cv-action-back" href={analysisRoutes.targetRole}><UploadIcon name="arrow-left" size={19} /> Kembali</Link>
         <button className="cv-action cv-action-next" onClick={continueToReview} type="button">Lanjutkan <UploadIcon name="arrow-right" size={20} /></button>
       </div>
+      {toast && (
+        <AnalysisToast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          leaving={toastLeaving}
+        />
+      )}
     </div>
   );
 }

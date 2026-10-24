@@ -1,8 +1,11 @@
 
 "use client";
 
+import Link from "next/link";
 import { useMemo, useRef, useState, type FormEvent } from "react";
+import { analysisRoutes } from "@/data/analysis";
 import { DEFAULT_HISTORY_FILTERS } from "@/data/history";
+import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
 import type {
   AnalysisHistoryEntry,
   HistoryFiltersValue,
@@ -91,6 +94,12 @@ export default function AnalysisHistoryClient({
     useState<AnalysisHistoryEntry | null>(null);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const {
+    isClosing: detailDialogClosing,
+    requestDismiss: closeDetail,
+  } = useAnimatedDismiss({
+    onDismiss: () => dialogRef.current?.close(),
+  });
 
   const results = useMemo(
     () => filterAndSortHistory(entries, appliedFilters),
@@ -113,10 +122,6 @@ export default function AnalysisHistoryClient({
   function openDetail(entry: AnalysisHistoryEntry) {
     setSelectedEntry(entry);
     requestAnimationFrame(() => dialogRef.current?.showModal());
-  }
-
-  function closeDetail() {
-    dialogRef.current?.close();
   }
 
   return (
@@ -176,23 +181,42 @@ export default function AnalysisHistoryClient({
             ))}
           </ol>
         ) : (
-          <div className="bkh-emptyState" role="status">
-            <HistoryIcon name="search" size={42} />
+          <div className="bkh-emptyState">
+            <span className="bkh-emptyStateIcon" aria-hidden="true">
+              <HistoryIcon
+                name={entries.length === 0 ? "history" : "search"}
+                size={27}
+              />
+            </span>
 
-            <h3>
-              {entries.length === 0
-                ? "Belum ada riwayat analisis"
-                : "Riwayat tidak ditemukan"}
-            </h3>
+            <div className="bkh-emptyStateMessage" role="status">
+              <h3>
+                {entries.length === 0
+                  ? "Belum ada riwayat analisis"
+                  : "Riwayat tidak ditemukan"}
+              </h3>
 
-            <p>
-              {entries.length === 0
-                ? "Analisis yang kamu simpan akan muncul di halaman ini."
-                : "Coba kata kunci atau filter lain."}
-            </p>
+              <p>
+                {entries.length === 0
+                  ? "Mulai analisis pertamamu untuk menyimpan hasil kompetensi, skill gap, dan roadmap karier di sini."
+                  : "Tidak ada riwayat yang cocok dengan kata kunci atau filter saat ini."}
+              </p>
+            </div>
 
-            {entries.length > 0 && (
-              <button type="button" onClick={resetFilters}>
+            {entries.length === 0 ? (
+              <Link
+                className="bkh-emptyStateAction"
+                href={analysisRoutes.uploadProject}
+              >
+                <HistoryIcon name="plus" size={19} />
+                Mulai analisis
+              </Link>
+            ) : (
+              <button
+                className="bkh-emptyStateAction"
+                type="button"
+                onClick={resetFilters}
+              >
                 Reset pencarian dan filter
               </button>
             )}
@@ -201,9 +225,15 @@ export default function AnalysisHistoryClient({
       </section>
 
       <dialog
-        className="bkh-dialog"
+        className={`bkh-dialog${
+          detailDialogClosing ? " bkh-dialog--closing" : ""
+        }`}
         ref={dialogRef}
         aria-labelledby="bkh-dialog-title"
+        onCancel={(event) => {
+          event.preventDefault();
+          closeDetail();
+        }}
         onClose={() => setSelectedEntry(null)}
       >
         {selectedEntry && (

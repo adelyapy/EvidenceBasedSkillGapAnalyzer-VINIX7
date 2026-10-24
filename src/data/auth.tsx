@@ -6,6 +6,7 @@ export const styles = {
   benefits: "bka-benefits",
   card: "bka-card",
   confirmationBackdrop: "bka-confirmationBackdrop",
+  confirmationBackdropClosing: "bka-confirmationBackdrop--closing",
   confirmationButton: "bka-confirmationButton",
   confirmationDialog: "bka-confirmationDialog",
   confirmationEmail: "bka-confirmationEmail",

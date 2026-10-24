@@ -501,49 +501,6 @@
   color: #6e6e6e;
   font-size: 11px;
 }
-.review-toast {
-  position: fixed;
-  z-index: 110;
-  right: 24px;
-  bottom: 24px;
-  max-width: min(390px, calc(100vw - 32px));
-  padding: 13px 16px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  border: 1px solid;
-  border-radius: 9px;
-  box-shadow: 0 10px 26px #14213d2e;
-  font-size: 13px;
-  font-weight: 700;
-  animation: review-toast-in 0.2s ease-out;
-}
-.review-toast span {
-  width: 20px;
-  height: 20px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  font-size: 13px;
-}
-.review-toast--success {
-  border-color: #4f9b7d;
-  background: #edf9f3;
-  color: #176447;
-}
-.review-toast--success span {
-  background: #267b59;
-  color: #fff;
-}
-.review-toast--error {
-  border-color: #ce7777;
-  background: #fff1f1;
-  color: #9b2828;
-}
-.review-toast--error span {
-  background: #b73535;
-  color: #fff;
-}
 .review-confirmBackdrop {
   position: fixed;
   z-index: 120;
@@ -553,6 +510,13 @@
   padding: 20px;
   background: rgb(20 33 61 / 58%);
   animation: review-dialog-backdrop-in 180ms ease-out both;
+}
+.review-confirmBackdrop--closing {
+  pointer-events: none;
+  animation: review-dialog-backdrop-out 220ms ease-in forwards;
+}
+.review-confirmBackdrop--closing .review-confirmDialog {
+  animation: review-dialog-card-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 .review-confirmDialog {
   width: min(100%, 440px);
@@ -644,22 +608,20 @@
     background-position: -200% 0;
   }
 }
-@keyframes review-toast-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 @keyframes review-dialog-backdrop-in {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes review-dialog-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 @keyframes review-dialog-card-in {
@@ -670,6 +632,16 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+@keyframes review-dialog-card-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
   }
 }
 
@@ -697,10 +669,6 @@
   .review-project .review-field > div {
     min-height: 48px;
   }
-  .review-toast {
-    right: 16px;
-    bottom: 16px;
-  }
   .review-confirmActions {
     flex-direction: column-reverse;
   }
@@ -715,9 +683,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .review-project-skeleton span,
-  .review-toast,
   .review-confirmBackdrop,
   .review-confirmDialog {
+    animation: none;
+  }
+  .review-confirmBackdrop--closing,
+  .review-confirmBackdrop--closing .review-confirmDialog {
     animation: none;
   }
 }

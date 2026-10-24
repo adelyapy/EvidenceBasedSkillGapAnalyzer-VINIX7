@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { workspaceNavigation } from "@/data/workspace";
 import WorkspaceIcon from "./WorkspaceIcon";
 
@@ -11,6 +13,22 @@ type Props = {
   onLogout: () => void;
   isLoggingOut: boolean;
 };
+
+function WorkspaceNavPending({ label }: { label: string }) {
+  const { pending } = useLinkStatus();
+
+  return (
+    <>
+      <span
+        className={`bkw-navPending${pending ? " bkw-navPending--active" : ""}`}
+        aria-hidden="true"
+      />
+      <span className="bkw-srOnly" role="status" aria-live="polite">
+        {pending ? `Membuka ${label}...` : ""}
+      </span>
+    </>
+  );
+}
 
 export default function WorkspaceSidebar({
   pathname,
@@ -76,6 +94,7 @@ export default function WorkspaceSidebar({
                 title={collapsed ? item.label : undefined}
               >
                 {content}
+                <WorkspaceNavPending label={item.label} />
               </Link>
             ) : (
               <button
