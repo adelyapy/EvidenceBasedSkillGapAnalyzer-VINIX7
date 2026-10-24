@@ -12,7 +12,7 @@ export default function ProfileOverviewCard({ profile }: ProfileOverviewCardProp
         <Image
           className="bkpfl-avatar"
           src={profile.avatar}
-          alt={`Foto profil contoh ${profile.fullName}`}
+          alt={`Foto profil ${profile.fullName}`}
           width={160}
           height={160}
           priority
