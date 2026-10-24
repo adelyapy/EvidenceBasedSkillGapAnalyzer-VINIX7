@@ -541,55 +541,10 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
         500,
       );
     }
-    // === INTEGRASI ROADMAP (Blocking, Fail-safe) ===
-    try {
-      // 1. Ambil snapshot trusted
-      const { data: analysisRow } = await supabase
-        .from("analyses")
-        .select("*")
-        .eq("id", analysisId)
-        .eq("user_id", user.id)
-        .single();
-
-      if (analysisRow) {
-        // 2. Panggil generator
-        const { generateLearningRoadmap } =
-          await import("@/lib/roadmap/roadmap-service");
-        const { persistRoadmap } =
-          await import("@/lib/roadmap/persist-roadmap");
-
-        // Pastikan scoring data tersedia di analysisRow (sesuaikan nama field dengan skema Anda)
-        // Jika tidak ada di DB, Anda mungkin perlu me-reconstruct scoring dari `result` atau tabel lain.
-        const rawScoring = analysisRow.scoring_data || {};
-
-        const roadmap = generateLearningRoadmap(rawScoring, {
-          analysisInput: analysisRow,
-          skillExtraction: result,
-          validationEvaluation: {}, // Sesuaikan jika ada variabel validasi
-        });
-
-        // 3. Simpan ke DB
-        const { inserted } = await persistRoadmap(
-          supabaseAdmin,
-          roadmap,
-          user.id,
-        );
-        console.log(
-          `✅ Roadmap tersimpan: ${inserted} item (Status: ${roadmap.status})`,
-        );
-      }
-    } catch (error) {
-      // Fail-safe: Hanya log, JANGAN gagalkan response analisis
-      console.error(
-        "❌ Gagal generate/simpan roadmap (Analisis tetap sukses):",
-        error,
-      );
-    }
-    // === END INTEGRASI ROADMAP ===
     // === INTEGRASI ROADMAP (OPSI A) ===
     try {
-      // 1. Query data gap & skill dari DB (data yang baru saja disimpan)
-      const { data: dbGaps } = await supabase
+      // 1. Query data gap & skill dari DB
+      const { data: dbGaps, error: gapsError } = await supabase
         .from("skill_gaps")
         .select(
           "skill_name, current_level, required_level, gap_score, priority, explanation",
@@ -597,19 +552,26 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
         .eq("analysis_id", analysisId)
         .eq("user_id", user.id);
 
-      const { data: dbSkills } = await supabase
+      const { data: dbSkills, error: skillsError } = await supabase
         .from("analysis_skill_results")
         .select("skill_name, estimated_level, evidence_summary")
         .eq("analysis_id", analysisId)
         .eq("user_id", user.id);
 
-      if (dbGaps && dbSkills) {
+      // 2. Periksa error query sumber (Poin 4)
+      // Jangan samakan error database dengan hasil kosong (empty state)
+      if (gapsError || skillsError) {
+        console.error(
+          "❌ Gagal query data roadmap (Analisis tetap sukses):",
+          gapsError?.message || skillsError?.message,
+        );
+      } else if (dbGaps && dbSkills) {
         const { generateRoadmapFromGaps } =
           await import("@/lib/roadmap/gap-based-generator");
         const { persistGapBasedRoadmap } =
           await import("@/lib/roadmap/roadmap-persistence");
 
-        // 2. Generate items
+        // 3. Generate items
         const roadmapItems = generateRoadmapFromGaps(
           analysisId,
           user.id,
@@ -617,18 +579,19 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
           dbSkills,
         );
 
-        // 3. Simpan secara idempotent
-        if (roadmapItems.length > 0) {
-          const { inserted } = await persistGapBasedRoadmap(
-            supabaseAdmin,
-            roadmapItems,
-            analysisId,
-            user.id,
-          );
+        // 4. Simpan secara idempotent (termasuk pembersihan data lama jika kosong)
+        const { inserted } = await persistGapBasedRoadmap(
+          supabaseAdmin,
+          roadmapItems,
+          analysisId,
+          user.id,
+        );
+
+        if (inserted > 0) {
           console.log(`✅ Roadmap (Opsi A) tersimpan: ${inserted} item.`);
         } else {
           console.log(
-            "ℹ️ Tidak ada gap yang perlu direkomendasikan (roadmap kosong).",
+            "ℹ️ Roadmap kosong (tidak ada gap). Item lama telah dibersihkan (jika ada).",
           );
         }
       }

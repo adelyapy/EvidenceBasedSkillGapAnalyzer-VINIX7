@@ -8,17 +8,29 @@ export async function persistGapBasedRoadmap(
   analysisId: string,
   userId: string,
 ): Promise<{ inserted: number }> {
-  // Validasi keamanan (defense in depth)
   if (!analysisId || !userId) throw new Error("Missing identity");
-  if (items.length === 0) return { inserted: 0 };
 
-  // Pastikan semua item milik analisis & user yang benar
+  // 2. Jika hasil generate KOSONG (valid), bersihkan data lama
+  if (items.length === 0) {
+    const { error: deleteError } = await supabaseAdmin
+      .from("roadmap_items")
+      .delete()
+      .eq("analysis_id", analysisId)
+      .eq("user_id", userId);
+
+    if (deleteError)
+      console.error("Gagal membersihkan roadmap kosong:", deleteError.message);
+    return { inserted: 0 };
+  }
+
+  // Validasi kepemilikan data
   const invalidItem = items.find(
     (i) => i.analysis_id !== analysisId || i.user_id !== userId,
   );
   if (invalidItem) throw new Error("Ownership mismatch in roadmap items");
 
-  // 1. INSERT data baru terlebih dahulu
+  // 3. Strategi Anti-Duplikat & Race Condition:
+  // 1. INSERT data baru terlebih dahulu (jika ini gagal, data lama aman).
   const { data: insertedData, error: insertError } = await supabaseAdmin
     .from("roadmap_items")
     .insert(items)
@@ -29,23 +41,23 @@ export async function persistGapBasedRoadmap(
   }
 
   const newIds = (insertedData || []).map((d) => d.id);
-  if (newIds.length === 0) throw new Error("No items inserted");
 
-  // 2. HAPUS data lama HANYA JIKA insert baru sukses
-  // (Mencegah kehilangan data valid jika insert gagal)
-  const { error: deleteError } = await supabaseAdmin
-    .from("roadmap_items")
-    .delete()
-    .eq("analysis_id", analysisId)
-    .eq("user_id", userId)
-    .not("id", "in", `(${newIds.join(",")})`);
+  // 2. HAPUS data lama yang ID-nya BUKAN bagian dari newIds.
+  if (newIds.length > 0) {
+    const { error: deleteError } = await supabaseAdmin
+      .from("roadmap_items")
+      .delete()
+      .eq("analysis_id", analysisId)
+      .eq("user_id", userId)
+      .not("id", "in", newIds); // Supabase mendukung array langsung di sini
 
-  if (deleteError) {
-    console.error(
-      "Peringatan: Gagal menghapus roadmap lama:",
-      deleteError.message,
-    );
-    // Tidak throw error, karena data baru sudah aman di DB
+    if (deleteError) {
+      // Hanya log, jangan throw. Data baru sudah masuk. Sisa data lama tidak merusak sistem.
+      console.error(
+        "Peringatan: Gagal membersihkan data lama:",
+        deleteError.message,
+      );
+    }
   }
 
   return { inserted: newIds.length };
