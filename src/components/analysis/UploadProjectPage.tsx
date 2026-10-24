@@ -609,8 +609,23 @@ export default function UploadProjectPage() {
             </div>
           ) : (
             <div className="bkp-urlField" key="url-field">
-              <label className="bkp-srOnly" htmlFor="bkp-project-url">{currentSource.inputLabel}</label>
-              <input id="bkp-project-url" name={`${activeSource}_url`} type="url" inputMode="url" autoComplete="url" value={urlValue} placeholder={currentSource.placeholder} onChange={(event) => { setUrlValue(event.target.value); setError(""); }} aria-describedby="bkp-form-error" />
+              <label className="bkp-srOnly" htmlFor="bkp-project-url">
+                {currentSource.inputLabel}
+              </label>
+              <input
+                id="bkp-project-url"
+                name={`${activeSource}_url`}
+                type="url"
+                inputMode="url"
+                autoComplete="url"
+                value={urlValue}
+                placeholder={currentSource.placeholder}
+                onChange={(event) => {
+                  setUrlValue(event.target.value);
+                  setError("");
+                }}
+                aria-describedby="bkp-form-error"
+              />
             </div>
           )}
           <button className="bkp-addButton" type="submit">
@@ -618,8 +633,21 @@ export default function UploadProjectPage() {
           </button>
         </form>
 
-        {error && <p className="bkp-formMessage bkp-formError" id="bkp-form-error" role="alert">{error}</p>}
-        {!storageAvailable && <p className="bkp-formMessage bkp-storageWarning" role="status">Penyimpanan sesi tidak tersedia. URL tetap tersimpan selama halaman ini tetap terbuka.</p>}
+        {error && (
+          <p
+            className="bkp-formMessage bkp-formError"
+            id="bkp-form-error"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
+        {!storageAvailable && (
+          <p className="bkp-formMessage bkp-storageWarning" role="status">
+            Penyimpanan sesi tidak tersedia. URL tetap tersimpan selama halaman
+            ini tetap terbuka.
+          </p>
+        )}
       </section>
 
       <section

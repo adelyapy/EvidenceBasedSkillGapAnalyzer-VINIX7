@@ -1,42 +1,62 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import { dashboardRoadmap } from "@/data/dashboard";
-import { isSavedRoadmap, ROADMAP_STORAGE_KEY, roadmapSteps } from "@/data/roadmap";
-import type { SavedRoadmap } from "@/types/roadmap";
+import { createClient } from "@/lib/supabase/client"; // pastikan path benar
 
 export default function LearningRoadmap() {
-  const [savedRoadmap, setSavedRoadmap] = useState<SavedRoadmap | null>(null);
+  const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      try {
-        const parsed: unknown = JSON.parse(sessionStorage.getItem(ROADMAP_STORAGE_KEY) || "null");
-        setSavedRoadmap(isSavedRoadmap(parsed) ? parsed : null);
-      } catch {
-        setSavedRoadmap(null);
+    const supabase = createClient();
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        setLoading(false);
+        return;
       }
-    });
 
-    return () => cancelAnimationFrame(frame);
+      // Ambil analysis terbaru
+      const { data: latest } = await supabase
+        .from("analyses")
+        .select("id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!latest) {
+        setLoading(false);
+        return;
+      }
+
+      // Ambil roadmap
+      const { data } = await supabase
+        .from("roadmap_items")
+        .select("*")
+        .eq("user_id", user.id)
+        .eq("analysis_id", latest.id)
+        .order("sort_order", { ascending: true });
+
+      setItems(data ?? []);
+      setLoading(false);
+    })();
   }, []);
 
-  const steps = savedRoadmap
-    ? savedRoadmap.stepIds.flatMap((id) => {
-        const step = roadmapSteps.find((item) => item.id === id);
-        return step ? [{ label: step.title }] : [];
-      })
-    : dashboardRoadmap;
+  if (loading) return <div>Memuat roadmap...</div>;
+  if (items.length === 0) return <div>Belum ada rekomendasi belajar.</div>;
 
   return (
-    <section className="bkd-panel bkd-roadmap" aria-labelledby="judul-roadmap">
-      <div className="bkd-panelHeading"><h2 id="judul-roadmap">Roadmap Belajar</h2></div>
-      {savedRoadmap && (
-        <p className="bkd-roadmapMeta">
-          Contoh {savedRoadmap.careerLabel} tersimpan sementara untuk sesi browser ini.
-        </p>
-      )}
-      <ol>{steps.map((step, index) => <li key={step.label}><span>{index + 1}</span><p>{step.label}</p></li>)}</ol>
-    </section>
+    <div>
+      {items.map((item) => (
+        <div key={item.id}>
+          {/* Silakan sesuaikan dengan UI/Tailwind Anda */}
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+          <span>Priority: {item.priority}</span>
+        </div>
+      ))}
+    </div>
   );
 }
