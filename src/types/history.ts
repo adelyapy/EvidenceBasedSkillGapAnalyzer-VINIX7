@@ -1,17 +1,9 @@
-export type HistoryRoleId = "frontend" | "full-stack" | "data-analyst" | "mobile";
-
-export type AnalysisHistoryEntry = {
-  id: string;
-  projectName: string;
-  roleId: HistoryRoleId;
-  roleLabel: string;
-  technologies: string[];
-  date: string;
-  dateLabel: string;
-  match: number;
-  status: "Selesai";
-  icon: "portfolio" | "commerce" | "analytics" | "mobile";
-};
+export type HistoryRoleId =
+  | "frontend"
+  | "full-stack"
+  | "data-analyst"
+  | "mobile"
+  | "other";
 
 export type HistorySort = "oldest" | "newest" | "highest" | "lowest";
 
@@ -20,10 +12,23 @@ export type HistoryFiltersValue = {
   role: "all" | HistoryRoleId;
   sort: HistorySort;
 };
+export type AnalysisHistoryEntry = {
+  id: string;
+  projectName: string;
+  roleId: HistoryRoleId;
+  roleLabel: string;
+  technologies: string[];
+  date: string;
+  dateLabel: string;
+  match: number | null;
+  status: string;
+  icon: "portfolio" | "commerce" | "analytics" | "mobile";
+  summary: string | null;
+};
 
 export type HistorySummaryValue = {
   total: number;
-  averageMatch: number;
+  averageMatch: number | null;
   dominantRole: string | null;
   dominantRoleCount: number;
 };

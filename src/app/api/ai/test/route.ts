@@ -1,28 +1,87 @@
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 import { GeminiError, generateGeminiText } from "@/lib/ai/gemini";
 
-// Node.js is the default runtime. An explicit runtime export is incompatible
-// with this project's cacheComponents configuration in Next.js 16.4.
+const TEST_PROMPT = "Reply with exactly this text: BUKTIVA_AI_CONNECTION_OK";
 
-const TEST_PROMPT = "Kamu adalah asisten AI untuk aplikasi BUKTIVA, sebuah Evidence-Based Skill Gap Analyzer. Sebutkan tiga keterampilan penting untuk Frontend Developer dalam bahasa Indonesia secara singkat.";
-
-export async function POST() {
-  // Also blocks preview/test environments; never call Gemini in production.
-  if (process.env.NODE_ENV !== "development") {
-    return Response.json({ success: false, error: "Endpoint tidak tersedia." }, { status: 404 });
-  }
-
+export async function GET() {
   try {
+    // Pastikan pengguna sudah login.
+    const supabase = await createClient();
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Silakan login terlebih dahulu.",
+        },
+        {
+          status: 401,
+          headers: { "Cache-Control": "no-store" },
+        },
+      );
+    }
+
+    // Pengujian hanya tersedia di lingkungan development.
+    if (process.env.NODE_ENV !== "development") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Endpoint pengujian hanya tersedia di development.",
+        },
+        {
+          status: 404,
+          headers: { "Cache-Control": "no-store" },
+        },
+      );
+    }
+
+    // Gunakan helper Gemini bersama dari modul AI.
     const response = await generateGeminiText(TEST_PROMPT);
-    return Response.json({ success: true, ...response }, {
-      headers: { "Cache-Control": "no-store" },
-    });
+
+    if (response.result.trim() !== "BUKTIVA_AI_CONNECTION_OK") {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Gemini merespons, tetapi hasil tes tidak sesuai.",
+        },
+        {
+          status: 502,
+          headers: { "Cache-Control": "no-store" },
+        },
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Koneksi Gemini AI berhasil.",
+        model: response.model,
+      },
+      {
+        headers: { "Cache-Control": "no-store" },
+      },
+    );
   } catch (error: unknown) {
-    return Response.json({
-      success: false,
-      error: error instanceof GeminiError ? error.message : "Pengujian Gemini gagal.",
-    }, {
-      status: error instanceof GeminiError ? error.status : 500,
-      headers: { "Cache-Control": "no-store" },
-    });
+    const status = error instanceof GeminiError ? error.status : 502;
+
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof GeminiError
+            ? error.message
+            : "Tes Gemini gagal. Periksa konfigurasi server dan log terminal.",
+      },
+      {
+        status,
+        headers: { "Cache-Control": "no-store" },
+      },
+    );
   }
 }

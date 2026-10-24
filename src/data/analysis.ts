@@ -19,12 +19,17 @@ export const analysisStorage = {
   targetRole: "buktiva.analysis.targetRole",
   jobDescription: "buktiva.analysis.jobDescription",
   cv: "buktiva.analysis.cv",
+  activeAnalysisId: "buktiva.analysis.activeAnalysisId",
   validationAnswers: "buktiva.validation.answers",
   validationCompleted: "buktiva.validation.completed",
 } as const;
 
 export const analysisSteps: AnalysisStep[] = [
-  { id: "project", label: "Upload Project", href: analysisRoutes.uploadProject },
+  {
+    id: "project",
+    label: "Upload Project",
+    href: analysisRoutes.uploadProject,
+  },
   { id: "role", label: "Target Role", href: analysisRoutes.targetRole },
   { id: "cv", label: "CV", href: analysisRoutes.uploadCv },
   { id: "review", label: "Analisis", href: analysisRoutes.reviewInput },

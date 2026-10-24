@@ -10,7 +10,6 @@ import {
   TARGET_ROLE_DESCRIPTION_LIMIT,
   TARGET_ROLE_STORAGE_KEY,
   targetRoleInformation,
-  targetRoleOptions,
 } from "@/data/target-role";
 import type { TargetRoleDraft } from "@/types/target-role";
 
@@ -18,7 +17,8 @@ const DEFAULT_ROLE = "Frontend Developer";
 
 function readSavedDraft(): TargetRoleDraft {
   const sharedRole = sessionStorage.getItem(analysisStorage.targetRole);
-  const sharedDescription = sessionStorage.getItem(analysisStorage.jobDescription) || "";
+  const sharedDescription =
+    sessionStorage.getItem(analysisStorage.jobDescription) || "";
 
   try {
     const parsed: unknown = JSON.parse(
@@ -28,9 +28,8 @@ function readSavedDraft(): TargetRoleDraft {
     if (parsed && typeof parsed === "object") {
       const candidate = parsed as Record<string, unknown>;
       if (typeof candidate.role === "string" && candidate.role.trim()) {
-        const legacyRole = targetRoleOptions.find((option) => option.id === candidate.role);
         return {
-          role: legacyRole?.label ?? candidate.role,
+          role: candidate.role,
           jobDescription:
             typeof candidate.jobDescription === "string"
               ? candidate.jobDescription.slice(0, TARGET_ROLE_DESCRIPTION_LIMIT)
@@ -52,7 +51,10 @@ function writeSavedDraft(draft: TargetRoleDraft) {
   const role = draft.role.trim();
   if (!role) throw new Error("Target role belum diisi.");
 
-  sessionStorage.setItem(TARGET_ROLE_STORAGE_KEY, JSON.stringify({ ...draft, role }));
+  sessionStorage.setItem(
+    TARGET_ROLE_STORAGE_KEY,
+    JSON.stringify({ ...draft, role }),
+  );
   sessionStorage.setItem(analysisStorage.targetRole, role);
   sessionStorage.setItem(analysisStorage.jobDescription, draft.jobDescription);
 }
@@ -151,7 +153,10 @@ export default function TargetRolePage() {
       </section>
 
       <form className="bktr-form" onSubmit={submitTargetRole} noValidate>
-        <section className="bktr-fieldSection" aria-labelledby="bktr-role-heading">
+        <section
+          className="bktr-fieldSection"
+          aria-labelledby="bktr-role-heading"
+        >
           <div className="bktr-fieldHeading">
             <div>
               <h2 id="bktr-role-heading">Target Role</h2>
@@ -169,18 +174,27 @@ export default function TargetRolePage() {
               required
             />
           </label>
-          <p className="bktr-roleHint">Masukkan posisi pekerjaan yang ingin kamu tuju.</p>
+          <p className="bktr-roleHint">
+            Masukkan posisi pekerjaan yang ingin kamu tuju.
+          </p>
         </section>
 
-        <section className="bktr-descriptionSection" aria-labelledby="bktr-description-heading">
+        <section
+          className="bktr-descriptionSection"
+          aria-labelledby="bktr-description-heading"
+        >
           <div className="bktr-descriptionHeading">
             <div>
-              <h2 id="bktr-description-heading">Deskripsi Pekerjaan <span>(Opsional)</span></h2>
+              <h2 id="bktr-description-heading">
+                Deskripsi Pekerjaan <span>(Opsional)</span>
+              </h2>
               <label htmlFor="bktr-job-description">
                 Masukkan deskripsi pekerjaan dari lowongan yang kamu pilih.
               </label>
             </div>
-            <span aria-live="polite">{jobDescription.length}/{TARGET_ROLE_DESCRIPTION_LIMIT}</span>
+            <span aria-live="polite">
+              {jobDescription.length}/{TARGET_ROLE_DESCRIPTION_LIMIT}
+            </span>
           </div>
           <textarea
             id="bktr-job-description"
@@ -198,18 +212,30 @@ export default function TargetRolePage() {
           />
         </section>
 
-        <aside className="bktr-information" aria-labelledby="bktr-information-title">
-          <span className="bktr-informationIcon" aria-hidden="true">i</span>
+        <aside
+          className="bktr-information"
+          aria-labelledby="bktr-information-title"
+        >
+          <span className="bktr-informationIcon" aria-hidden="true">
+            i
+          </span>
           <div>
             <h2 id="bktr-information-title">{targetRoleInformation.title}</h2>
             <p>{targetRoleInformation.description}</p>
           </div>
         </aside>
 
-        {message && <p className="bktr-message" role="alert">{message}</p>}
+        {message && (
+          <p className="bktr-message" role="alert">
+            {message}
+          </p>
+        )}
 
         <div className="bktr-actions">
-          <Link className="bktr-button bktr-button--back" href={analysisRoutes.uploadProject}>
+          <Link
+            className="bktr-button bktr-button--back"
+            href={analysisRoutes.uploadProject}
+          >
             <span aria-hidden="true">←</span> Kembali
           </Link>
           <button

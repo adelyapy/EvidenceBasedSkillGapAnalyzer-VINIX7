@@ -5,6 +5,14 @@ export const styles = {
   back: "bka-back",
   benefits: "bka-benefits",
   card: "bka-card",
+  confirmationBackdrop: "bka-confirmationBackdrop",
+  confirmationButton: "bka-confirmationButton",
+  confirmationDialog: "bka-confirmationDialog",
+  confirmationEmail: "bka-confirmationEmail",
+  confirmationEyebrow: "bka-confirmationEyebrow",
+  confirmationIcon: "bka-confirmationIcon",
+  confirmationInstruction: "bka-confirmationInstruction",
+  confirmationNote: "bka-confirmationNote",
   description: "bka-description",
   divider: "bka-divider",
   field: "bka-field",
@@ -15,6 +23,7 @@ export const styles = {
   form: "bka-form",
   googleButton: "bka-googleButton",
   headline: "bka-headline",
+  homeLink: "bka-homeLink",
   illustration: "bka-illustration",
   inputError: "bka-inputError",
   inputWrap: "bka-inputWrap",
@@ -24,11 +33,13 @@ export const styles = {
   notice: "bka-notice",
   noticeError: "bka-noticeError",
   noticeInfo: "bka-noticeInfo",
+  passwordToggle: "bka-passwordToggle",
   primaryButton: "bka-primaryButton",
   register: "bka-register",
   reset: "bka-reset",
   right: "bka-right",
   screen: "bka-screen",
+  screenWithHome: "bka-screenWithHome",
   shell: "bka-shell",
   socialArea: "bka-socialArea",
   spinner: "bka-spinner",
@@ -48,7 +59,15 @@ type AuthContent = {
 
 export const contents: Record<AuthMode, AuthContent> = {
   login: {
-    heading: <>Satu Akun<br />untuk Masa Depan<br />Lebih Jelas</>,
+    heading: (
+      <>
+        Satu Akun
+        <br />
+        untuk Masa Depan
+        <br />
+        Lebih Jelas
+      </>
+    ),
     illustration: "/images/login-illustration.png",
     imageAlt: "Ilustrasi dokumen proyek dengan panah kemajuan",
     title: "Masuk ke Buktiva",
@@ -62,16 +81,22 @@ export const contents: Record<AuthMode, AuthContent> = {
     ],
   },
   register: {
-    heading: <>Bergabung<br />di Buktiva Sekarang</>,
+    heading: (
+      <>
+        Bergabung
+        <br />
+        di Buktiva Sekarang
+      </>
+    ),
     illustration: "/images/register-illustration.png",
-    imageAlt: "Ilustrasi perempuan menggunakan laptop untuk membangun portofolio",
+    imageAlt:
+      "Ilustrasi perempuan menggunakan laptop untuk membangun portofolio",
     title: "Daftar ke Buktiva",
     description: "Buat akun baru dan mulai bergabung bersama kami.",
     submit: "DAFTAR",
     benefits: [
       "Gratis dan mudah dibuat",
       "Akses ke semua fitur",
-      "Dukungan penuh dari tim kami",
       "Mulai bangun portofolio profesional",
     ],
   },
