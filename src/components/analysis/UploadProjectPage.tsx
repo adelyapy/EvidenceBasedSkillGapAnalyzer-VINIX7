@@ -11,6 +11,7 @@ import {
   useSyncExternalStore,
   type ChangeEvent,
   type FormEvent,
+  type KeyboardEvent,
 } from "react";
 import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
@@ -19,6 +20,7 @@ import {
   uploadProjectSources,
   uploadProjectTips,
 } from "@/data/upload-project";
+import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
 import type {
   UploadProjectEvidence,
   UploadProjectLinkEvidence,
@@ -363,6 +365,8 @@ function formatFileSize(size: number) {
 export default function UploadProjectPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const sourceTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const deleteCancelRef = useRef<HTMLButtonElement>(null);
   const storedLinksSnapshot = useSyncExternalStore(
     subscribeToStoredLinks,
     getStoredLinksSnapshot,
@@ -383,6 +387,12 @@ export default function UploadProjectPage() {
   const [storageAvailable, setStorageAvailable] = useState(true);
   const [evidenceToDelete, setEvidenceToDelete] =
     useState<UploadProjectEvidence | null>(null);
+  const {
+    isClosing: deleteDialogClosing,
+    requestDismiss: closeDeleteDialog,
+  } = useAnimatedDismiss({
+    onDismiss: () => setEvidenceToDelete(null),
+  });
   const evidence = useMemo(
     () => [...linkEvidence, ...pdfEvidence],
     [linkEvidence, pdfEvidence],
@@ -400,6 +410,29 @@ export default function UploadProjectPage() {
     return () => cancelAnimationFrame(frame);
   }, []);
 
+  useEffect(() => {
+    if (!evidenceToDelete) return;
+
+    const previouslyFocused =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const frame = requestAnimationFrame(() => deleteCancelRef.current?.focus());
+
+    const closeOnEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      closeDeleteDialog();
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("keydown", closeOnEscape);
+      previouslyFocused?.focus();
+    };
+  }, [closeDeleteDialog, evidenceToDelete]);
+
   const currentSource =
     uploadProjectSources.find((source) => source.id === activeSource) ??
     uploadProjectSources[0];
@@ -407,6 +440,32 @@ export default function UploadProjectPage() {
   function changeSource(source: UploadProjectSource) {
     setActiveSource(source);
     setError("");
+  }
+
+  function handleSourceKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    currentIndex: number,
+  ) {
+    let nextIndex = currentIndex;
+
+    if (event.key === "ArrowRight") {
+      nextIndex = (currentIndex + 1) % uploadProjectSources.length;
+    } else if (event.key === "ArrowLeft") {
+      nextIndex =
+        (currentIndex - 1 + uploadProjectSources.length) %
+        uploadProjectSources.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = uploadProjectSources.length - 1;
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    const nextSource = uploadProjectSources[nextIndex];
+    changeSource(nextSource.id);
+    sourceTabRefs.current[nextIndex]?.focus();
   }
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -555,18 +614,23 @@ export default function UploadProjectPage() {
           role="tablist"
           aria-label="Pilih sumber proyek"
         >
-          {uploadProjectSources.map((source) => {
+          {uploadProjectSources.map((source, index) => {
             const active = source.id === activeSource;
             return (
               <button
                 key={source.id}
+                ref={(element) => {
+                  sourceTabRefs.current[index] = element;
+                }}
                 id={`bkp-tab-${source.id}`}
                 className={`bkp-sourceTab${active ? " bkp-sourceTab--active" : ""}`}
                 type="button"
                 role="tab"
                 aria-selected={active}
                 aria-controls="bkp-source-panel"
+                tabIndex={active ? 0 : -1}
                 onClick={() => changeSource(source.id)}
+                onKeyDown={(event) => handleSourceKeyDown(event, index)}
               >
                 <span className="bkp-sourceIcon">
                   <ProjectSourceIcon source={source.id} />
@@ -600,12 +664,8 @@ export default function UploadProjectPage() {
                 type="file"
                 accept=".pdf,application/pdf"
                 onChange={onFileChange}
-                aria-describedby="bkp-file-note bkp-form-error"
+                aria-describedby="bkp-form-error"
               />
-              <span id="bkp-file-note">
-                Nama dan ukuran PDF akan diteruskan ke halaman review. File
-                belum diunggah ke server.
-              </span>
             </div>
           ) : (
             <div className="bkp-urlField" key="url-field">
@@ -658,7 +718,7 @@ export default function UploadProjectPage() {
           Daftar Proyek
         </h2>
         {evidence.length === 0 ? (
-          <div className="bkp-emptyState">
+          <div className="bkp-emptyState" role="status">
             <CloudUploadIcon />
             <strong>Belum ada proyek yang ditambahkan</strong>
             <span>Tambahkan URL atau dokumen PDF sebagai bukti proyek.</span>
@@ -667,7 +727,7 @@ export default function UploadProjectPage() {
           <div className="bkp-evidenceList">
             <div className="bkp-evidenceHeading">
               <h3>Bukti proyek yang ditambahkan</h3>
-              <span>{evidence.length} item</span>
+              <span aria-live="polite">{evidence.length} item</span>
             </div>
             <ul>
               {evidence.map((item) => (
@@ -731,9 +791,11 @@ export default function UploadProjectPage() {
         typeof document !== "undefined" &&
         createPortal(
           <div
-            className="bkp-deleteBackdrop"
+            className={`bkp-deleteBackdrop${
+              deleteDialogClosing ? " bkp-deleteBackdrop--closing" : ""
+            }`}
             role="presentation"
-            onMouseDown={() => setEvidenceToDelete(null)}
+            onMouseDown={closeDeleteDialog}
           >
             <section
               className="bkp-deleteDialog"
@@ -750,9 +812,10 @@ export default function UploadProjectPage() {
               <p id="bkp-delete-description">{`Apakah Anda yakin ingin menghapus ${evidenceToDelete.kind === "url" ? "tautan proyek ini" : `dokumen ${evidenceToDelete.file.name}`}?`}</p>
               <div className="bkp-deleteActions">
                 <button
+                  ref={deleteCancelRef}
                   type="button"
                   className="bkp-deleteCancel"
-                  onClick={() => setEvidenceToDelete(null)}
+                  onClick={closeDeleteDialog}
                 >
                   Tidak
                 </button>
@@ -761,7 +824,7 @@ export default function UploadProjectPage() {
                   className="bkp-deleteConfirm"
                   onClick={() => {
                     removeEvidence(evidenceToDelete.id);
-                    setEvidenceToDelete(null);
+                    closeDeleteDialog();
                   }}
                 >
                   Ya, hapus

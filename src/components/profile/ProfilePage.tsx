@@ -4,11 +4,16 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
+import { WORKSPACE_PROFILE_UPDATED_EVENT } from "@/data/workspace";
+import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
 import type { ProfileData } from "@/types/profile";
 import PersonalInformationCard from "./PersonalInformationCard";
 import ProfileOverviewCard from "./ProfileOverviewCard";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 const defaultAvatar = "/images/profile/profile.png";
+const SUCCESS_MESSAGE_DURATION = 5000;
+const SUCCESS_MESSAGE_EXIT_DURATION = 240;
 
 function formatJoinedDate(date: string) {
   return new Intl.DateTimeFormat("id-ID", {
@@ -26,6 +31,15 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [messageLeaving, setMessageLeaving] = useState(false);
+  const {
+    isClosing: editDialogClosing,
+    requestDismiss: closeEditDialog,
+    forceDismiss: closeEditDialogAfterSave,
+  } = useAnimatedDismiss({
+    onDismiss: () => setEditing(false),
+    disabled: saving,
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -89,6 +103,24 @@ export default function ProfilePage() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!message) return;
+
+    const exitTimer = window.setTimeout(
+      () => setMessageLeaving(true),
+      SUCCESS_MESSAGE_DURATION,
+    );
+    const removeTimer = window.setTimeout(() => {
+      setMessage("");
+      setMessageLeaving(false);
+    }, SUCCESS_MESSAGE_DURATION + SUCCESS_MESSAGE_EXIT_DURATION);
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [message]);
+
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -97,6 +129,7 @@ export default function ProfilePage() {
     setSaving(true);
     setError("");
     setMessage("");
+    setMessageLeaving(false);
 
     try {
       const formData = new FormData(event.currentTarget);
@@ -146,11 +179,13 @@ export default function ProfilePage() {
           " Permintaan perubahan email dikirim. Ikuti instruksi konfirmasi dari Supabase sebelum email baru berlaku.";
       }
 
+      const savedFullName = updatedProfile.full_name?.trim() || fullName;
+
       setProfile((current) =>
         current
           ? {
               ...current,
-              fullName: updatedProfile.full_name || fullName,
+              fullName: savedFullName,
               avatar: updatedProfile.avatar_url || defaultAvatar,
               joinedDateTime: current.joinedDateTime,
               joinedLabel: current.joinedLabel,
@@ -158,7 +193,14 @@ export default function ProfilePage() {
           : current,
       );
 
-      setEditing(false);
+      window.dispatchEvent(
+        new CustomEvent(WORKSPACE_PROFILE_UPDATED_EVENT, {
+          detail: { name: savedFullName },
+        }),
+      );
+
+      closeEditDialogAfterSave();
+      setMessageLeaving(false);
       setMessage(`Nama profil berhasil disimpan.${emailMessage}`);
     } catch (err) {
       console.error("Gagal menyimpan profil:", err);
@@ -173,23 +215,35 @@ export default function ProfilePage() {
   }
 
   if (loading) {
-    return <div className="bkpfl-page" aria-live="polite">Memuat profil...</div>;
+    return <ProfileSkeleton />;
   }
 
   if (!profile) {
     return (
       <div className="bkpfl-page">
-        <h1>Profil Saya</h1>
-        <p role="alert">{error || "Data profil belum tersedia."}</p>
-        <button type="button" onClick={() => window.location.reload()}>
-          Coba lagi
-        </button>
+        <section
+          className="bkpfl-errorState"
+          aria-labelledby="bkpfl-error-title"
+        >
+          <span className="bkpfl-errorIcon" aria-hidden="true">
+            !
+          </span>
+          <h1 id="bkpfl-error-title">Profil belum dapat ditampilkan</h1>
+          <p role="alert">{error || "Data profil belum tersedia."}</p>
+          <button
+            className="bkpfl-retryButton"
+            type="button"
+            onClick={() => window.location.reload()}
+          >
+            Coba lagi
+          </button>
+        </section>
       </div>
     );
   }
 
   return (
-    <div className="bkpfl-page">
+    <div className="bkpfl-page bkpfl-page--ready">
       <header className="bkpfl-pageHeader">
         <div>
           <p className="bkpfl-kicker">Akun</p>
@@ -203,15 +257,43 @@ export default function ProfilePage() {
           onClick={() => {
             setError("");
             setMessage("");
+            setMessageLeaving(false);
             setEditing(true);
           }}
         >
-          <span aria-hidden="true">✎</span> Edit profil
+          <svg
+            aria-hidden="true"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z" />
+          </svg>
+          Edit profil
         </button>
       </header>
 
-      {error && <p role="alert">{error}</p>}
-      {message && <p role="status">{message}</p>}
+      {error && (
+        <p className="bkpfl-feedback bkpfl-feedback--error" role="alert">
+          {error}
+        </p>
+      )}
+      {message && (
+        <p
+          className={`bkpfl-feedback bkpfl-feedback--success${
+            messageLeaving ? " bkpfl-feedback--leaving" : ""
+          }`}
+          role="status"
+        >
+          {message}
+        </p>
+      )}
 
       <div className="bkpfl-grid">
         <ProfileOverviewCard profile={profile} />
@@ -222,10 +304,12 @@ export default function ProfilePage() {
         typeof document !== "undefined" &&
         createPortal(
           <div
-            className="bkpfl-modalBackdrop"
+            className={`bkpfl-modalBackdrop${
+              editDialogClosing ? " bkpfl-modalBackdrop--closing" : ""
+            }`}
             role="presentation"
             onMouseDown={() => {
-              if (!saving) setEditing(false);
+              closeEditDialog();
             }}
           >
             <section
@@ -245,10 +329,10 @@ export default function ProfilePage() {
                   className="bkpfl-dialogClose"
                   type="button"
                   disabled={saving}
-                  onClick={() => setEditing(false)}
+                  onClick={closeEditDialog}
                   aria-label="Tutup menu edit profil"
                 >
-                  ×
+                  <span aria-hidden="true">&times;</span>
                 </button>
               </div>
 
@@ -287,7 +371,7 @@ export default function ProfilePage() {
                     className="bkpfl-cancelButton"
                     type="button"
                     disabled={saving}
-                    onClick={() => setEditing(false)}
+                    onClick={closeEditDialog}
                   >
                     Batal
                   </button>

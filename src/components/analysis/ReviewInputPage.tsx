@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import AnalysisToast from "./AnalysisToast";
 import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
+import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
 import type {
   AnalysisCv,
   AnalysisInput,
@@ -20,6 +22,9 @@ const EMPTY_INPUT: AnalysisInput = {
   jobDescription: "",
   cv: null,
 };
+
+const TOAST_VISIBLE_DURATION = 3500;
+const TOAST_EXIT_DURATION = 240;
 
 function formatFileSize(size?: number) {
   if (!size) return "Ukuran tidak tersedia";
@@ -101,10 +106,20 @@ export default function ReviewInputPage() {
   const [loaded, setLoaded] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [toast, setToast] = useState<{
+    id: number;
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const [toastLeaving, setToastLeaving] = useState(false);
+  const toastId = useRef(0);
   const [saving, setSaving] = useState(false);
+  const {
+    isClosing: confirmationClosing,
+    requestDismiss: closeConfirmation,
+  } = useAnimatedDismiss({
+    onDismiss: () => setConfirmationOpen(false),
+    disabled: saving,
+  });
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -116,8 +131,19 @@ export default function ReviewInputPage() {
 
   useEffect(() => {
     if (!toast) return;
-    const timer = window.setTimeout(() => setToast(null), 3500);
-    return () => window.clearTimeout(timer);
+    const exitTimer = window.setTimeout(
+      () => setToastLeaving(true),
+      TOAST_VISIBLE_DURATION,
+    );
+    const removeTimer = window.setTimeout(
+      () => setToast(null),
+      TOAST_VISIBLE_DURATION + TOAST_EXIT_DURATION,
+    );
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
   }, [toast]);
 
   const hasProjects = data.projects.length > 0;
@@ -125,7 +151,9 @@ export default function ReviewInputPage() {
   const canAnalyze = hasProjects && hasRole;
 
   function showToast(type: "success" | "error", message: string) {
-    setToast({ type, message });
+    toastId.current += 1;
+    setToastLeaving(false);
+    setToast({ id: toastId.current, type, message });
   }
 
   async function saveAnalysis() {
@@ -465,22 +493,22 @@ export default function ReviewInputPage() {
         )}
       </div>
       {toast && (
-        <div
-          className={`review-toast review-toast--${toast.type}`}
-          role="status"
-          aria-live="polite"
-        >
-          <span aria-hidden="true">{toast.type === "success" ? "✓" : "!"}</span>
-          {toast.message}
-        </div>
+        <AnalysisToast
+          key={toast.id}
+          type={toast.type}
+          message={toast.message}
+          leaving={toastLeaving}
+        />
       )}
       {confirmationOpen &&
         typeof document !== "undefined" &&
         createPortal(
           <div
-            className="review-confirmBackdrop"
+            className={`review-confirmBackdrop${
+              confirmationClosing ? " review-confirmBackdrop--closing" : ""
+            }`}
             role="presentation"
-            onMouseDown={() => setConfirmationOpen(false)}
+            onMouseDown={closeConfirmation}
           >
             <section
               className="review-confirmDialog"
@@ -502,7 +530,7 @@ export default function ReviewInputPage() {
                 <button
                   type="button"
                   className="review-confirmCancel"
-                  onClick={() => setConfirmationOpen(false)}
+                  onClick={closeConfirmation}
                 >
                   Periksa kembali
                 </button>

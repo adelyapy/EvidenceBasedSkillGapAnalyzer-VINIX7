@@ -1,9 +1,14 @@
 .bkp-page {
+  --bkp-ink: #14213d;
+  --bkp-blue: #2f72ad;
+  --bkp-blue-soft: #dcecf8;
+  --bkp-yellow: #ffe681;
+  --bkp-paper: #fffdf7;
   width: 100%;
   max-width: 1120px;
   min-width: 0;
   margin-inline: auto;
-  color: #111;
+  color: var(--bkp-ink);
   container-name: upload-project;
   container-type: inline-size;
 }
@@ -31,7 +36,12 @@
   grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
+  padding: clamp(18px, 3vw, 26px);
+  border: 3px solid var(--bkp-ink);
+  border-radius: 9px;
+  background: var(--bkp-paper);
+  box-shadow: 7px 7px 0 var(--bkp-ink);
 }
 
 .bkp-heroCopy {
@@ -50,7 +60,8 @@
   max-width: 650px;
   margin: 0;
   font-size: 0.95rem;
-  line-height: 1.4;
+  color: #34445a;
+  line-height: 1.5;
 }
 
 .bkp-heroImage {
@@ -59,6 +70,11 @@
   height: auto;
   margin-inline: auto;
   object-fit: contain;
+  padding: 8px;
+  border: 2px solid var(--bkp-ink);
+  border-radius: 42% 58% 47% 53%;
+  background: #c8ecf3;
+  box-shadow: 4px 4px 0 var(--bkp-ink);
 }
 
 .bkp-sourceSection {
@@ -69,8 +85,10 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
-  border: 1px solid #afbac3;
-  border-radius: 7px;
+  border: 2px solid var(--bkp-ink);
+  border-radius: 8px;
+  background: var(--bkp-paper);
+  box-shadow: 5px 5px 0 var(--bkp-ink);
 }
 
 .bkp-sourceTab {
@@ -81,10 +99,14 @@
   align-items: center;
   gap: 10px;
   border: 0;
-  border-bottom: 1px solid #c4ccd2;
-  background: transparent;
-  color: #111;
+  border-bottom: 2px solid var(--bkp-ink);
+  background: var(--bkp-paper);
+  color: var(--bkp-ink);
   text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
 .bkp-sourceTab:last-child {
@@ -96,10 +118,18 @@
   background: #e3edf7;
 }
 
+.bkp-sourceTab:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid #2f72ad;
+  outline-offset: -4px;
+}
+
 .bkp-sourceTab--active,
 .bkp-sourceTab--active:hover,
 .bkp-sourceTab--active:focus-visible {
   background: #a9c7ed;
+  box-shadow: inset 0 -5px 0 #2f72ad;
 }
 
 .bkp-sourceTab > span:last-child {
@@ -126,8 +156,10 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
+  border: 2px solid var(--bkp-ink);
   background: #edf7f8;
-  color: #111;
+  box-shadow: 2px 2px 0 var(--bkp-ink);
+  color: var(--bkp-ink);
 }
 
 .bkp-sourceIcon {
@@ -152,12 +184,16 @@
   width: 100%;
   min-width: 0;
   min-height: 48px;
-  border: 1px solid #93a7b8;
+  border: 2px solid var(--bkp-ink);
   border-radius: 6px;
   background: #fff;
   color: #1f2933;
   font: inherit;
   font-size: 0.9rem;
+  box-shadow: 3px 3px 0 var(--bkp-ink);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .bkp-urlField input {
@@ -168,7 +204,8 @@
 .bkp-fileField input:focus {
   outline: 3px solid #8fc8ef;
   outline-offset: 2px;
-  border-color: #286ca4;
+  border-color: var(--bkp-ink);
+  box-shadow: 5px 5px 0 var(--bkp-ink);
 }
 
 .bkp-fileField {
@@ -189,18 +226,13 @@
   min-height: 30px;
   margin-right: 10px;
   padding-inline: 12px;
-  border: 0;
+  border: 2px solid var(--bkp-ink);
   border-radius: 4px;
   background: #dcebf7;
   color: #173f63;
   font-weight: 700;
+  box-shadow: 2px 2px 0 var(--bkp-ink);
   cursor: pointer;
-}
-
-.bkp-fileField > span {
-  color: #5f6870;
-  font-size: 0.75rem;
-  line-height: 1.35;
 }
 
 .bkp-addButton,
@@ -208,11 +240,12 @@
   min-height: 48px;
   padding: 10px 22px;
   border: 2px solid #15191d;
-  border-radius: 0;
+  border-radius: 6px;
   background: #2c5b89;
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
+  box-shadow: 5px 5px 0 var(--bkp-ink);
   cursor: pointer;
   transition:
     transform 0.18s ease,
@@ -232,25 +265,27 @@
 .bkp-formMessage {
   margin: 9px 0 0;
   padding: 9px 11px;
-  border-radius: 5px;
+  border: 2px solid var(--bkp-ink);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 var(--bkp-ink);
   font-size: 0.82rem;
   line-height: 1.4;
 }
 
 .bkp-formError {
-  border-left: 4px solid #b42318;
+  border-left: 7px solid #b42318;
   background: #fee4e2;
   color: #861c14;
 }
 
 .bkp-formSuccess {
-  border-left: 4px solid #138a67;
+  border-left: 7px solid #138a67;
   background: #e3f5ee;
   color: #155d4a;
 }
 
 .bkp-storageWarning {
-  border-left: 4px solid #b77a0c;
+  border-left: 7px solid #b77a0c;
   background: #fff3d6;
   color: #6c4709;
 }
@@ -262,9 +297,10 @@
 .bkp-emptyState,
 .bkp-evidenceList {
   min-width: 0;
-  border: 2px dashed #2e80c4;
+  border: 2px dashed var(--bkp-ink);
   border-radius: 8px;
   background: #e7f5fb;
+  box-shadow: 5px 5px 0 var(--bkp-ink);
 }
 
 .bkp-emptyState {
@@ -274,8 +310,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #2169a8;
+  color: var(--bkp-ink);
   text-align: center;
+}
+
+.bkp-emptyState > svg {
+  width: 54px;
+  height: 54px;
+  padding: 8px;
+  border: 2px solid var(--bkp-ink);
+  border-radius: 7px;
+  background: var(--bkp-paper);
+  box-shadow: 3px 3px 0 var(--bkp-ink);
+  color: var(--bkp-blue);
 }
 
 .bkp-emptyState strong {
@@ -330,9 +377,10 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
-  border: 1px solid #acc8d8;
+  border: 2px solid var(--bkp-ink);
   border-radius: 6px;
   background: #fff;
+  box-shadow: 3px 3px 0 var(--bkp-ink);
 }
 
 .bkp-evidenceIcon {
@@ -365,6 +413,12 @@
   text-decoration: underline;
 }
 
+.bkp-evidenceContent a:focus-visible {
+  border-radius: 2px;
+  outline: 3px solid #2f72ad;
+  outline-offset: 3px;
+}
+
 .bkp-evidenceList li > button {
   min-height: 34px;
   padding: 6px 10px;
@@ -394,9 +448,10 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 15px;
-  border: 1px solid #91b9b4;
+  border: 2px solid var(--bkp-ink);
   border-radius: 7px;
   background: #c7e1de;
+  box-shadow: 5px 5px 0 var(--bkp-ink);
 }
 
 .bkp-tipsHeading {
@@ -412,8 +467,10 @@
   flex: none;
   display: grid;
   place-items: center;
+  border: 2px solid var(--bkp-ink);
   border-radius: 50%;
-  background: #75b4cf;
+  background: var(--bkp-yellow);
+  box-shadow: 3px 3px 0 var(--bkp-ink);
   font-size: 1.55rem;
 }
 
@@ -446,7 +503,8 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: #66aac8;
+  border: 2px solid var(--bkp-ink);
+  background: var(--bkp-blue);
   color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
@@ -466,22 +524,57 @@
   gap: 8px;
 }
 
-.bkp-nextSection p {
-  max-width: 580px;
-  margin: 0;
-  color: #5d646b;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  text-align: right;
-}
-
 .bkp-continue {
   min-width: 185px;
 }
 
 .bkp-page .bkp-continue:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  border-color: #5e6b79;
+  background: #91a5b7;
+  box-shadow: 3px 3px 0 #5e6b79;
+  color: #fff;
+  opacity: 1;
+}
+
+.bkp-page > .analysis-stepper,
+.bkp-page > .bkp-hero,
+.bkp-page > .bkp-sourceSection,
+.bkp-page > .bkp-evidenceSection,
+.bkp-page > .bkp-tips,
+.bkp-page > .bkp-nextSection {
+  animation: bkp-section-in 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.bkp-page > .bkp-hero {
+  animation-delay: 70ms;
+}
+
+.bkp-page > .bkp-sourceSection {
+  animation-delay: 140ms;
+}
+
+.bkp-page > .bkp-evidenceSection {
+  animation-delay: 210ms;
+}
+
+.bkp-page > .bkp-tips {
+  animation-delay: 280ms;
+}
+
+.bkp-page > .bkp-nextSection {
+  animation-delay: 350ms;
+}
+
+@keyframes bkp-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .bkp-deleteBackdrop {
@@ -493,6 +586,13 @@
   padding: 20px;
   background: rgb(20 33 61 / 58%);
   animation: bkp-dialog-backdrop-in 180ms ease-out both;
+}
+.bkp-deleteBackdrop--closing {
+  pointer-events: none;
+  animation: bkp-dialog-backdrop-out 220ms ease-in forwards;
+}
+.bkp-deleteBackdrop--closing .bkp-deleteDialog {
+  animation: bkp-dialog-card-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .bkp-deleteDialog {
@@ -595,12 +695,29 @@
   box-shadow: 1px 1px 0 #7c2626;
 }
 
+.bkp-addButton:focus-visible,
+.bkp-continue:focus-visible,
+.bkp-evidenceList li > button:focus-visible,
+.bkp-deleteActions button:focus-visible {
+  outline: 3px solid #5cbfe5;
+  outline-offset: 3px;
+}
+
 @keyframes bkp-dialog-backdrop-in {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes bkp-dialog-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -615,16 +732,31 @@
   }
 }
 
+@keyframes bkp-dialog-card-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
 @container upload-project (min-width: 400px) {
   .bkp-sourceTabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .bkp-sourceTab:nth-child(odd) {
-    border-right: 1px solid #c4ccd2;
+    border-right: 2px solid var(--bkp-ink);
   }
 
   .bkp-sourceTab:nth-last-child(-n + 2) {
+    border-bottom: 2px solid var(--bkp-ink);
+  }
+
+  .bkp-sourceTab:last-child {
     border-bottom: 0;
   }
 }
@@ -654,7 +786,7 @@
 
   .bkp-tips ol {
     padding-left: 20px;
-    border-left: 1px solid #9bc4bf;
+    border-left: 2px solid var(--bkp-ink);
   }
 }
 
@@ -665,7 +797,7 @@
 
   .bkp-sourceTab,
   .bkp-sourceTab:nth-child(odd) {
-    border-right: 1px solid #c4ccd2;
+    border-right: 2px solid var(--bkp-ink);
     border-bottom: 0;
   }
 
@@ -700,10 +832,8 @@
     justify-self: stretch;
   }
 
-  .bkp-nextSection,
-  .bkp-nextSection p {
+  .bkp-nextSection {
     align-items: stretch;
-    text-align: left;
   }
 
   .bkp-continue {
@@ -725,8 +855,25 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .bkp-page > .analysis-stepper,
+  .bkp-page > .bkp-hero,
+  .bkp-page > .bkp-sourceSection,
+  .bkp-page > .bkp-evidenceSection,
+  .bkp-page > .bkp-tips,
+  .bkp-page > .bkp-nextSection {
+    animation: none;
+  }
+  .bkp-sourceTab,
+  .bkp-urlField input,
+  .bkp-fileField input {
+    transition: none;
+  }
   .bkp-deleteBackdrop,
   .bkp-deleteDialog {
+    animation: none;
+  }
+  .bkp-deleteBackdrop--closing,
+  .bkp-deleteBackdrop--closing .bkp-deleteDialog {
     animation: none;
   }
 }

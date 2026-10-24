@@ -1,6 +1,6 @@
 import type { AnalysisHistoryEntry } from "@/types/history";
 
-type IconName = AnalysisHistoryEntry["icon"] | "analysis" | "average" | "role" | "search" | "filter" | "sort" | "calendar" | "check" | "help" | "close";
+type IconName = AnalysisHistoryEntry["icon"] | "analysis" | "average" | "role" | "search" | "filter" | "sort" | "calendar" | "check" | "help" | "close" | "history" | "plus";
 
 export default function HistoryIcon({ name, size = 24 }: { name: IconName; size?: number }) {
   const common = {
@@ -20,6 +20,8 @@ export default function HistoryIcon({ name, size = 24 }: { name: IconName; size?
     case "average": return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M8 15 16 9M9 9h.01M15 15h.01" /></svg>;
     case "role": return <svg {...common}><circle cx="12" cy="7" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>;
     case "search": return <svg {...common}><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>;
+    case "history": return <svg {...common}><path d="M4 11a8 8 0 1 1 1.6 5M4 5v6h6" /><path d="M12 7v5l3 2" /></svg>;
+    case "plus": return <svg {...common}><path d="M12 4v16M4 12h16" /></svg>;
     case "filter": return <svg {...common}><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z" /></svg>;
     case "sort": return <svg {...common}><path d="M7 4v16m0 0-3-3m3 3 3-3M17 20V4m0 0-3 3m3-3 3 3" /></svg>;
     case "calendar": return <svg {...common}><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M8 3v4m8-4v4M3 10h18" /></svg>;

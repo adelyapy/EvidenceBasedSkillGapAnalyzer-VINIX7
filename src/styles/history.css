@@ -177,7 +177,7 @@
 .bkh-field select:focus-visible,
 .bkh-filterActions button:focus-visible,
 .bkh-detailButton:focus-visible,
-.bkh-emptyState button:focus-visible,
+.bkh-emptyStateAction:focus-visible,
 .bkh-dialog button:focus-visible {
   outline: 3px solid #78b8e7;
   outline-offset: 2px;
@@ -350,38 +350,87 @@
 }
 
 .bkh-emptyState {
-  min-height: 230px;
+  min-height: 270px;
   margin-top: 15px;
-  padding: 28px 15px;
+  padding: clamp(24px, 4vw, 38px) 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px dashed #8ca4b5;
-  border-radius: 8px;
-  color: #425766;
+  border: 3px dashed var(--bkh-ink);
+  border-radius: 6px;
+  background: #dcecfb;
+  color: var(--bkh-ink);
   text-align: center;
+  animation: bkh-empty-state-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.bkh-emptyStateIcon {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--bkh-ink);
+  border-radius: 6px;
+  background: var(--bkh-paper);
+  box-shadow: 4px 4px 0 var(--bkh-ink);
 }
 .bkh-emptyState h3 {
-  margin: 10px 0 4px;
-  color: #18232c;
+  margin: 17px 0 0;
+  color: var(--bkh-ink);
   font-size: 1.05rem;
+  line-height: 1.3;
+  font-weight: 850;
 }
 .bkh-emptyState p {
-  margin: 0;
+  max-width: 520px;
+  margin: 8px 0 0;
+  color: #34445a;
   font-size: 0.86rem;
-  line-height: 1.4;
+  line-height: 1.5;
 }
-.bkh-emptyState button {
-  min-height: 40px;
-  margin-top: 14px;
+.bkh-page .bkh-emptyStateAction,
+.bkh-page .bkh-emptyStateAction:visited {
+  min-height: 44px;
+  margin-top: 17px;
   padding: 8px 14px;
-  border: 1px solid #2e608c;
-  border-radius: 6px;
-  background: #2e608c;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 2px solid var(--bkh-ink);
+  border-radius: 5px;
+  background: var(--bkh-blue);
+  box-shadow: 4px 4px 0 var(--bkh-ink);
   color: #fff;
+  font: inherit;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+.bkh-page .bkh-emptyStateAction svg {
+  color: #fff;
+  stroke: currentColor;
+}
+.bkh-page .bkh-emptyStateAction:hover {
+  background: #285f91;
+  box-shadow: 2px 2px 0 var(--bkh-ink);
+  color: #fff;
+  transform: translate(2px, 2px);
+}
+.bkh-page .bkh-emptyStateAction:active {
+  box-shadow: 1px 1px 0 var(--bkh-ink);
+  transform: translate(3px, 3px);
+}
+
+@keyframes bkh-empty-state-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .bkh-dialog {
@@ -406,6 +455,13 @@
 }
 .bkh-dialog[open]::backdrop {
   animation: bkh-dialog-backdrop-in 180ms ease-out both;
+}
+.bkh-dialog[open].bkh-dialog--closing {
+  pointer-events: none;
+  animation: bkh-dialog-card-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+.bkh-dialog[open].bkh-dialog--closing::backdrop {
+  animation: bkh-dialog-backdrop-out 220ms ease-in forwards;
 }
 .bkh-dialogContent {
   position: relative;
@@ -498,6 +554,15 @@
   }
 }
 
+@keyframes bkh-dialog-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes bkh-dialog-card-in {
   from {
     opacity: 0;
@@ -506,6 +571,17 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bkh-dialog-card-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
   }
 }
 
@@ -518,6 +594,10 @@
 @media (prefers-reduced-motion: reduce) {
   .bkh-dialog[open],
   .bkh-dialog[open]::backdrop {
+    animation: none;
+  }
+  .bkh-dialog[open].bkh-dialog--closing,
+  .bkh-dialog[open].bkh-dialog--closing::backdrop {
     animation: none;
   }
 }
@@ -663,21 +743,18 @@
   box-shadow: 2px 2px 0 #b8c4cc;
 }
 .bkh-filterActions button,
-.bkh-detailButton,
-.bkh-emptyState button {
+.bkh-detailButton {
   border: 2px solid var(--bkh-ink);
   border-radius: 5px;
   box-shadow: 4px 4px 0 var(--bkh-ink);
   font-weight: 800;
   transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
 }
-.bkh-applyButton,
-.bkh-emptyState button { background: var(--bkh-blue); color: #fff; }
+.bkh-applyButton { background: var(--bkh-blue); color: #fff; }
 .bkh-resetButton,
 .bkh-detailButton { background: var(--bkh-paper); color: var(--bkh-ink); }
 .bkh-filterActions button:hover,
-.bkh-detailButton:hover,
-.bkh-emptyState button:hover { box-shadow: 1px 1px 0 var(--bkh-ink); transform: translate(3px, 3px); }
+.bkh-detailButton:hover { box-shadow: 1px 1px 0 var(--bkh-ink); transform: translate(3px, 3px); }
 .bkh-historyCard {
   border: 3px solid var(--bkh-ink);
   border-radius: 7px;
@@ -718,11 +795,15 @@
   .bkh-summaryCard { transition: none; }
   .bkh-historyCard:hover { transform: none; }
   .bkh-summaryCard:hover { transform: none; }
+  .bkh-emptyState,
+  .bkh-page .bkh-emptyStateAction { animation: none; transition: none; }
+  .bkh-page .bkh-emptyStateAction:hover,
+  .bkh-page .bkh-emptyStateAction:active { transform: none; }
 }
 .bkh-cardHeader h3 { color: var(--bkh-ink); font-weight: 850; }
 .bkh-cardDetails dt { color: #3f4d59; font-weight: 800; }
 .bkh-matchRing { border: 2px solid var(--bkh-ink); background: conic-gradient(var(--bkh-blue) var(--bkh-match), #e0e4e5 0); }
 .bkh-matchRing > div { border: 2px solid var(--bkh-ink); background: var(--bkh-paper); }
-.bkh-emptyState { border: 3px dashed var(--bkh-ink); border-radius: 6px; background: var(--bkh-muted-paper); }
+.bkh-emptyState { border: 3px dashed var(--bkh-ink); border-radius: 6px; background: #dcecfb; }
 .bkh-dialog { border: 3px solid var(--bkh-ink); border-radius: 8px; background: var(--bkh-paper); }
 .bkh-dialogDone { border: 2px solid var(--bkh-ink); border-radius: 5px; box-shadow: 4px 4px 0 var(--bkh-ink); background: var(--bkh-blue); font-weight: 800; }

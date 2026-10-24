@@ -24,10 +24,7 @@ export default function PersonalInformationCard({ profile }: PersonalInformation
         <div className="bkpfl-detailRow">
           <dt>Password</dt>
           <dd>
-            <span className="bkpfl-passwordMask" aria-hidden="true">
-              {profile.passwordMask}
-            </span>
-            <span className="bkpfl-visuallyHidden">Password disamarkan</span>
+            <span className="bkpfl-passwordState">Tidak ditampilkan</span>
           </dd>
         </div>
         <div className="bkpfl-detailRow">

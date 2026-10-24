@@ -407,6 +407,14 @@
   font-family: "Poppins", "Segoe UI", Arial, sans-serif;
   animation: bka-confirmation-backdrop-in 180ms ease-out both;
 }
+.bka-confirmationBackdrop--closing {
+  pointer-events: none;
+  animation: bka-confirmation-backdrop-out 220ms ease-in forwards;
+}
+.bka-confirmationBackdrop--closing .bka-confirmationDialog {
+  animation: bka-confirmation-card-out 220ms cubic-bezier(0.4, 0, 1, 1)
+    forwards;
+}
 .bka-confirmationDialog {
   width: min(100%, 480px);
   padding: clamp(26px, 5vw, 38px);
@@ -521,6 +529,14 @@
     opacity: 1;
   }
 }
+@keyframes bka-confirmation-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 @keyframes bka-confirmation-card-in {
   from {
     opacity: 0;
@@ -529,6 +545,16 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+@keyframes bka-confirmation-card-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
   }
 }
 .bka-socialArea {
@@ -1106,6 +1132,10 @@
   }
   .bka-confirmationBackdrop,
   .bka-confirmationDialog {
+    animation: none;
+  }
+  .bka-confirmationBackdrop--closing,
+  .bka-confirmationBackdrop--closing .bka-confirmationDialog {
     animation: none;
   }
   .bka-confirmationButton:hover,

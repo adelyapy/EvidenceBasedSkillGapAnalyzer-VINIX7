@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { styles } from "@/data/auth";
+import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
 
 type RegistrationSuccessDialogProps = {
   email: string | null;
@@ -14,6 +15,9 @@ export default function RegistrationSuccessDialog({
   onClose,
 }: RegistrationSuccessDialogProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { isClosing, requestDismiss } = useAnimatedDismiss({
+    onDismiss: onClose,
+  });
 
   useEffect(() => {
     if (!email) return;
@@ -30,7 +34,7 @@ export default function RegistrationSuccessDialog({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose();
+        requestDismiss();
       }
 
       if (event.key === "Tab") {
@@ -47,12 +51,16 @@ export default function RegistrationSuccessDialog({
       document.body.style.overflow = previousBodyOverflow;
       previousFocus?.focus();
     };
-  }, [email, onClose]);
+  }, [email, requestDismiss]);
 
   if (!email || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className={styles.confirmationBackdrop}>
+    <div
+      className={`${styles.confirmationBackdrop}${
+        isClosing ? ` ${styles.confirmationBackdropClosing}` : ""
+      }`}
+    >
       <section
         className={styles.confirmationDialog}
         role="alertdialog"
@@ -86,7 +94,7 @@ export default function RegistrationSuccessDialog({
           ref={closeButtonRef}
           className={styles.confirmationButton}
           type="button"
-          onClick={onClose}
+          onClick={requestDismiss}
         >
           Saya mengerti
         </button>
