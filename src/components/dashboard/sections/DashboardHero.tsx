@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
@@ -31,18 +30,12 @@ export default async function DashboardHero() {
         <p>Siap menganalisis project baru hari ini?</p>
 
         <div className="bkd-heroActions">
-          <Link
-            href="/workspace/analisa-baru"
-            className="bkd-primaryButton"
-          >
+          <Link href="/workspace/analisa-baru" className="bkd-primaryButton">
             <WorkspaceIcon name="plus" size={16} />
             Mulai analisa baru
           </Link>
 
-          <Link
-            href="/#cara-kerja"
-            className="bkd-secondaryButton"
-          >
+          <Link href="/#cara-kerja" className="bkd-secondaryButton">
             <WorkspaceIcon name="book" size={18} />
             Lihat panduan
           </Link>

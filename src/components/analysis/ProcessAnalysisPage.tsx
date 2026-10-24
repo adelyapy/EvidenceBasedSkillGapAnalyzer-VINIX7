@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -37,12 +36,12 @@ export default function ProcessAnalysisPage() {
     async function processAnalysis() {
       try {
         const analysisId = sessionStorage.getItem(
-          analysisStorage.activeAnalysisId
+          analysisStorage.activeAnalysisId,
         );
 
         if (!analysisId) {
           throw new Error(
-            "ID analisis tidak ditemukan. Silakan kembali ke halaman input dan buat analisis baru."
+            "ID analisis tidak ditemukan. Silakan kembali ke halaman input dan buat analisis baru.",
           );
         }
 
@@ -70,16 +69,13 @@ export default function ProcessAnalysisPage() {
           throw new Error(
             typeof result.message === "string"
               ? result.message
-              : "Gagal memproses analisis AI."
+              : "Gagal memproses analisis AI.",
           );
         }
 
-        if (
-          !Array.isArray(result.questions) ||
-          result.questions.length === 0
-        ) {
+        if (!Array.isArray(result.questions) || result.questions.length === 0) {
           throw new Error(
-            "AI belum menghasilkan pertanyaan validasi. Silakan coba lagi."
+            "AI belum menghasilkan pertanyaan validasi. Silakan coba lagi.",
           );
         }
 
@@ -103,7 +99,7 @@ export default function ProcessAnalysisPage() {
         setError(
           err instanceof Error
             ? err.message
-            : "Terjadi kesalahan saat memproses analisis."
+            : "Terjadi kesalahan saat memproses analisis.",
         );
       }
     }

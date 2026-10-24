@@ -8,17 +8,20 @@ export const benefits = [
   },
   {
     title: "Menggunakan AI",
-    description: "AI menganalisis teknologi, peran, dan kontribusimu secara mendalam.",
+    description:
+      "AI menganalisis teknologi, peran, dan kontribusimu secara mendalam.",
     image: "tentang-ai.png",
   },
   {
     title: "Hasil yang Terstruktur",
-    description: "Skill gap dan progres disajikan secara jelas dan mudah dipahami.",
+    description:
+      "Skill gap dan progres disajikan secara jelas dan mudah dipahami.",
     image: "tentang-hasil-terstruktur.png",
   },
   {
     title: "Cocok untuk Freshgraduate",
-    description: "Dirancang khusus untuk mahasiswa dan fresh graduate di berbagai industri.",
+    description:
+      "Dirancang khusus untuk mahasiswa dan fresh graduate di berbagai industri.",
     image: "tentang-freshgraduate.png",
   },
 ];

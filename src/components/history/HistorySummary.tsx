@@ -1,4 +1,3 @@
-
 import { getHistorySummary } from "@/data/history";
 import type { AnalysisHistoryEntry } from "@/types/history";
 import HistoryIcon from "./HistoryIcon";

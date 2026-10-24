@@ -11,15 +11,17 @@ export default function Hero() {
     >
       <div className="bk-heroMain">
         <div className="bk-heroCopy">
-          <p className="bk-pill bk-heroBadge">EVIDENCE-BASED SKILL GAP ANALYZER</p>
+          <p className="bk-pill bk-heroBadge">
+            EVIDENCE-BASED SKILL GAP ANALYZER
+          </p>
           <h1 id="hero-title">
-            <span>Dari Proyek</span>{" "}
-            <span>Nyata ke Karier</span>{" "}
+            <span>Dari Proyek</span> <span>Nyata ke Karier</span>{" "}
             <span>yang Terarah</span>
           </h1>
           <p className="bk-heroDescription">
-            Analisis kompetensi berdasarkan proyekmu dengan AI, temukan skill gap,
-            dan dapatkan roadmap pembelajaran yang sesuai dengan target kariermu.
+            Analisis kompetensi berdasarkan proyekmu dengan AI, temukan skill
+            gap, dan dapatkan roadmap pembelajaran yang sesuai dengan target
+            kariermu.
           </p>
           <div className="bk-heroActions">
             <Link className="bk-heroButton bk-primaryButton" href="/login">

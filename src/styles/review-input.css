@@ -246,10 +246,39 @@
 .review-confirmAccept:hover, .review-confirmAccept:focus-visible { background: #24547f; box-shadow: 3px 3px 0 #14213d; transform: translate(2px, 2px); }
 .review-confirmActions button:active { box-shadow: 1px 1px 0 #14213d; transform: translate(4px, 4px); }
 
-@keyframes review-skeleton { to { background-position: -200% 0; } }
-@keyframes review-toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes review-dialog-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes review-dialog-card-in { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes review-skeleton {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes review-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes review-dialog-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes review-dialog-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 @media (max-width: 720px) {
   .review-main { padding: 0 2px 12px; }
@@ -269,5 +298,7 @@
   .review-project-skeleton span,
   .review-toast,
   .review-confirmBackdrop,
-  .review-confirmDialog { animation: none; }
+  .review-confirmDialog {
+    animation: none;
+  }
 }

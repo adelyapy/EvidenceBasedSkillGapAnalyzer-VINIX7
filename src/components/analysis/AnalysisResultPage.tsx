@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -226,9 +225,7 @@ export default function AnalysisResultPage() {
         <section className="bkr-panel" role="alert">
           <h2>Data analisis belum dapat ditampilkan</h2>
           <p>{error}</p>
-          <Link href={analysisRoutes.uploadProject}>
-            Mulai analisis baru
-          </Link>
+          <Link href={analysisRoutes.uploadProject}>Mulai analisis baru</Link>
         </section>
       )}
 

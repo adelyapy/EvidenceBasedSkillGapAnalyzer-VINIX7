@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useCallback, useState, type FormEvent } from "react";
@@ -112,12 +111,9 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
         return;
       }
 
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        email,
-        {
-          redirectTo: `${window.location.origin}/update-password`,
-        }
-      );
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/update-password`,
+      });
 
       if (error) throw error;
 

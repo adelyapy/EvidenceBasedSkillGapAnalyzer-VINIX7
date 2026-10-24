@@ -1,4 +1,3 @@
-
 import { createClient } from "@/lib/supabase/server";
 import type { AnalysisHistoryEntry, HistoryRoleId } from "@/types/history";
 import AnalysisHistoryClient from "./AnalysisHistoryClient";
@@ -17,7 +16,10 @@ function getRoleInfo(targetRole: string | null): {
     return { roleId: "full-stack", roleLabel: "Full Stack Developer" };
   }
 
-  if (normalized.includes("data analyst") || normalized.includes("data analyst")) {
+  if (
+    normalized.includes("data analyst") ||
+    normalized.includes("data analyst")
+  ) {
     return { roleId: "data-analyst", roleLabel: "Data Analyst" };
   }
 
@@ -77,9 +79,7 @@ function getStatusLabel(status: string | null): string {
   }
 }
 
-function getHistoryIcon(
-  roleId: HistoryRoleId,
-): AnalysisHistoryEntry["icon"] {
+function getHistoryIcon(roleId: HistoryRoleId): AnalysisHistoryEntry["icon"] {
   switch (roleId) {
     case "frontend":
       return "portfolio";
@@ -123,9 +123,10 @@ export default async function AnalysisHistoryPage() {
 
     return {
       id: row.id,
-      projectName: role.roleLabel === "Belum ditentukan"
-        ? "Analisis baru"
-        : `Analisis ${role.roleLabel}`,
+      projectName:
+        role.roleLabel === "Belum ditentukan"
+          ? "Analisis baru"
+          : `Analisis ${role.roleLabel}`,
       roleId: role.roleId,
       roleLabel: role.roleLabel,
       technologies: [],

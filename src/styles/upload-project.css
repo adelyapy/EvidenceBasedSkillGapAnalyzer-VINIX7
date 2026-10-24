@@ -43,13 +43,13 @@
   font-size: clamp(2rem, 5cqi, 2.5rem);
   font-weight: 800;
   line-height: 1.08;
-  letter-spacing: -.8px;
+  letter-spacing: -0.8px;
 }
 
 .bkp-hero p {
   max-width: 650px;
   margin: 0;
-  font-size: .95rem;
+  font-size: 0.95rem;
   line-height: 1.4;
 }
 
@@ -109,13 +109,13 @@
 }
 
 .bkp-sourceTab strong {
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 1.2;
 }
 
 .bkp-sourceTab small {
   margin-top: 2px;
-  font-size: .75rem;
+  font-size: 0.75rem;
   line-height: 1.25;
   overflow-wrap: anywhere;
 }
@@ -157,7 +157,7 @@
   background: #fff;
   color: #1f2933;
   font: inherit;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .bkp-urlField input {
@@ -177,7 +177,7 @@
 }
 
 .bkp-fileField label {
-  font-size: .85rem;
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
@@ -199,7 +199,7 @@
 
 .bkp-fileField > span {
   color: #5f6870;
-  font-size: .75rem;
+  font-size: 0.75rem;
   line-height: 1.35;
 }
 
@@ -214,7 +214,10 @@
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .bkp-addButton:hover,
@@ -230,7 +233,7 @@
   margin: 9px 0 0;
   padding: 9px 11px;
   border-radius: 5px;
-  font-size: .82rem;
+  font-size: 0.82rem;
   line-height: 1.4;
 }
 
@@ -284,7 +287,7 @@
 .bkp-emptyState span {
   margin-top: 5px;
   color: #536b7c;
-  font-size: .8rem;
+  font-size: 0.8rem;
   line-height: 1.4;
 }
 
@@ -308,7 +311,7 @@
 .bkp-evidenceHeading > span {
   flex: none;
   color: #315a78;
-  font-size: .78rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
@@ -346,13 +349,13 @@
 }
 
 .bkp-evidenceContent strong {
-  font-size: .85rem;
+  font-size: 0.85rem;
 }
 
 .bkp-evidenceContent a,
 .bkp-evidenceContent > span {
   color: #506171;
-  font-size: .78rem;
+  font-size: 0.78rem;
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
@@ -369,10 +372,13 @@
   border-radius: 5px;
   background: #fff;
   color: #8d2525;
-  font-size: .78rem;
+  font-size: 0.78rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .bkp-evidenceList li > button:hover,
@@ -442,13 +448,13 @@
   border-radius: 50%;
   background: #66aac8;
   color: #fff;
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
 .bkp-tips li p {
   margin: 1px 0 0;
-  font-size: .78rem;
+  font-size: 0.78rem;
   line-height: 1.4;
 }
 
@@ -464,7 +470,7 @@
   max-width: 580px;
   margin: 0;
   color: #5d646b;
-  font-size: .78rem;
+  font-size: 0.78rem;
   line-height: 1.4;
   text-align: right;
 }
@@ -475,7 +481,7 @@
 
 .bkp-page .bkp-continue:disabled {
   cursor: not-allowed;
-  opacity: .55;
+  opacity: 0.55;
 }
 
 .bkp-deleteBackdrop {
@@ -500,7 +506,7 @@
   box-shadow: 8px 8px 0 #14213d;
   text-align: center;
   transform-origin: center;
-  animation: bkp-dialog-card-in 260ms cubic-bezier(.22, 1, .36, 1) both;
+  animation: bkp-dialog-card-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .bkp-deleteIcon {
@@ -548,7 +554,10 @@
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 .bkp-deleteCancel {
@@ -582,17 +591,23 @@
   transform: translate(4px, 4px);
 }
 
-.bkp-deleteConfirm:active { box-shadow: 1px 1px 0 #7c2626; }
+.bkp-deleteConfirm:active {
+  box-shadow: 1px 1px 0 #7c2626;
+}
 
 @keyframes bkp-dialog-backdrop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes bkp-dialog-card-in {
   from {
     opacity: 0;
-    transform: translateY(14px) scale(.96);
+    transform: translateY(14px) scale(0.96);
   }
   to {
     opacity: 1;
@@ -633,7 +648,7 @@
   }
 
   .bkp-tips {
-    grid-template-columns: minmax(230px, .8fr) minmax(0, 1.4fr);
+    grid-template-columns: minmax(230px, 0.8fr) minmax(0, 1.4fr);
     align-items: center;
   }
 
@@ -665,7 +680,7 @@
   }
 
   .bkp-hero p {
-    font-size: .88rem;
+    font-size: 0.88rem;
   }
 
   .bkp-heroImage {

@@ -26,7 +26,11 @@ export const analysisStorage = {
 } as const;
 
 export const analysisSteps: AnalysisStep[] = [
-  { id: "project", label: "Upload Project", href: analysisRoutes.uploadProject },
+  {
+    id: "project",
+    label: "Upload Project",
+    href: analysisRoutes.uploadProject,
+  },
   { id: "role", label: "Target Role", href: analysisRoutes.targetRole },
   { id: "cv", label: "CV", href: analysisRoutes.uploadCv },
   { id: "review", label: "Analisis", href: analysisRoutes.reviewInput },

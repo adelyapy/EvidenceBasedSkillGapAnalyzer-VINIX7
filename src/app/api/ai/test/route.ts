@@ -1,10 +1,8 @@
-
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { GeminiError, generateGeminiText } from "@/lib/ai/gemini";
 
-const TEST_PROMPT =
-  "Reply with exactly this text: BUKTIVA_AI_CONNECTION_OK";
+const TEST_PROMPT = "Reply with exactly this text: BUKTIVA_AI_CONNECTION_OK";
 
 export async function GET() {
   try {
@@ -25,7 +23,7 @@ export async function GET() {
         {
           status: 401,
           headers: { "Cache-Control": "no-store" },
-        }
+        },
       );
     }
 
@@ -39,7 +37,7 @@ export async function GET() {
         {
           status: 404,
           headers: { "Cache-Control": "no-store" },
-        }
+        },
       );
     }
 
@@ -55,7 +53,7 @@ export async function GET() {
         {
           status: 502,
           headers: { "Cache-Control": "no-store" },
-        }
+        },
       );
     }
 
@@ -67,7 +65,7 @@ export async function GET() {
       },
       {
         headers: { "Cache-Control": "no-store" },
-      }
+      },
     );
   } catch (error: unknown) {
     const status = error instanceof GeminiError ? error.status : 502;
@@ -83,7 +81,7 @@ export async function GET() {
       {
         status,
         headers: { "Cache-Control": "no-store" },
-      }
+      },
     );
   }
 }

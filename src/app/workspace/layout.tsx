@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
@@ -12,11 +11,7 @@ import "@/styles/workspace.css";
 
 export const metadata: Metadata = { title: "Workspace | BUKTIVA" };
 
-async function AuthenticatedWorkspace({
-  children,
-}: {
-  children: ReactNode;
-}) {
+async function AuthenticatedWorkspace({ children }: { children: ReactNode }) {
   await connection();
 
   const supabase = await createClient();
@@ -55,11 +50,7 @@ async function AuthenticatedWorkspace({
   );
 }
 
-export default function WorkspaceLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function WorkspaceLayout({ children }: { children: ReactNode }) {
   return (
     <Suspense fallback={<WorkspaceLoading />}>
       <AuthenticatedWorkspace>{children}</AuthenticatedWorkspace>

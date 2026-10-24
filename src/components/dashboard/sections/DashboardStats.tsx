@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 
@@ -51,10 +50,7 @@ export default async function DashboardStats() {
     }
 
     if (projectsResponse.error) {
-      console.error(
-        "Gagal mengambil proyek:",
-        projectsResponse.error.message,
-      );
+      console.error("Gagal mengambil proyek:", projectsResponse.error.message);
     } else {
       const uniqueProjects = new Set(
         (projectsResponse.data ?? []).map((project) => {
@@ -123,10 +119,7 @@ export default async function DashboardStats() {
       .eq("status", "completed");
 
     if (rolesError) {
-      console.error(
-        "Gagal mengambil target role:",
-        rolesError.message,
-      );
+      console.error("Gagal mengambil target role:", rolesError.message);
     } else {
       totalTargetRoles = new Set(
         (targetRoles ?? [])
@@ -144,10 +137,7 @@ export default async function DashboardStats() {
   ];
 
   return (
-    <section
-      className="bkd-stats"
-      aria-label="Statistik aktivitas pengguna"
-    >
+    <section className="bkd-stats" aria-label="Statistik aktivitas pengguna">
       {statDefinitions.map((stat, index) => (
         <article className="bkd-statCard" key={stat.label}>
           <Image src={stat.icon} alt="" width={44} height={44} />

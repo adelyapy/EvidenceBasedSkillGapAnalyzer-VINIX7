@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -21,16 +20,12 @@ const VALIDATION_NAVIGATION_STORAGE_KEY = "buktiva.validation.navigation";
 
 function readAnswers(): Record<string, string> {
   try {
-    const saved = sessionStorage.getItem(
-      analysisStorage.validationAnswers
-    );
+    const saved = sessionStorage.getItem(analysisStorage.validationAnswers);
     if (!saved) return {};
 
     const parsed: unknown = JSON.parse(saved);
 
-    return parsed &&
-      typeof parsed === "object" &&
-      !Array.isArray(parsed)
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
       ? (parsed as Record<string, string>)
       : {};
   } catch {
@@ -38,11 +33,7 @@ function readAnswers(): Record<string, string> {
   }
 }
 
-export default function ValidationPage({
-  step,
-}: {
-  step: QuestionNumber;
-}) {
+export default function ValidationPage({ step }: { step: QuestionNumber }) {
   const router = useRouter();
 
   const [answer, setAnswer] = useState("");
@@ -73,12 +64,12 @@ export default function ValidationPage({
 
       try {
         const analysisId = sessionStorage.getItem(
-          analysisStorage.activeAnalysisId
+          analysisStorage.activeAnalysisId,
         );
 
         if (!analysisId) {
           throw new Error(
-            "Analisis aktif tidak ditemukan. Silakan mulai analisis terlebih dahulu."
+            "Analisis aktif tidak ditemukan. Silakan mulai analisis terlebih dahulu.",
           );
         }
 
@@ -93,13 +84,12 @@ export default function ValidationPage({
           throw new Error("Sesi login berakhir. Silakan login kembali.");
         }
 
-        const { data: analysis, error: analysisError } =
-          await supabase
-            .from("analyses")
-            .select("id")
-            .eq("id", analysisId)
-            .eq("user_id", user.id)
-            .maybeSingle();
+        const { data: analysis, error: analysisError } = await supabase
+          .from("analyses")
+          .select("id")
+          .eq("id", analysisId)
+          .eq("user_id", user.id)
+          .maybeSingle();
 
         if (analysisError) throw analysisError;
 
@@ -107,21 +97,18 @@ export default function ValidationPage({
           throw new Error("Analisis tidak ditemukan atau tidak dapat diakses.");
         }
 
-        const { data: questionRows, error: questionError } =
-          await supabase
-            .from("validation_questions")
-            .select(
-              "id, question_order, question_text, evidence_context"
-            )
-            .eq("analysis_id", analysisId)
-            .eq("user_id", user.id)
-            .order("question_order", { ascending: true });
+        const { data: questionRows, error: questionError } = await supabase
+          .from("validation_questions")
+          .select("id, question_order, question_text, evidence_context")
+          .eq("analysis_id", analysisId)
+          .eq("user_id", user.id)
+          .order("question_order", { ascending: true });
 
         if (questionError) throw questionError;
 
         if (!questionRows || questionRows.length === 0) {
           throw new Error(
-            "Pertanyaan validasi belum tersedia. Buat pertanyaan AI terlebih dahulu."
+            "Pertanyaan validasi belum tersedia. Buat pertanyaan AI terlebih dahulu.",
           );
         }
 
@@ -131,13 +118,12 @@ export default function ValidationPage({
 
         const current = questionRows[step - 1];
 
-        const { data: savedAnswer, error: answerError } =
-          await supabase
-            .from("validation_answers")
-            .select("answer_text")
-            .eq("question_id", current.id)
-            .eq("user_id", user.id)
-            .maybeSingle();
+        const { data: savedAnswer, error: answerError } = await supabase
+          .from("validation_answers")
+          .select("answer_text")
+          .eq("question_id", current.id)
+          .eq("user_id", user.id)
+          .maybeSingle();
 
         if (answerError) throw answerError;
 
@@ -146,17 +132,13 @@ export default function ValidationPage({
         setQuestions(questionRows as ValidationQuestion[]);
 
         const localAnswers = readAnswers();
-        setAnswer(
-          savedAnswer?.answer_text ??
-            localAnswers[String(step)] ??
-            ""
-        );
+        setAnswer(savedAnswer?.answer_text ?? localAnswers[String(step)] ?? "");
       } catch (err) {
         if (!cancelled) {
           setError(
             err instanceof Error
               ? err.message
-              : "Gagal memuat pertanyaan validasi."
+              : "Gagal memuat pertanyaan validasi.",
           );
         }
       } finally {
@@ -183,7 +165,7 @@ export default function ValidationPage({
       JSON.stringify({
         ...previous,
         [String(step)]: value,
-      })
+      }),
     );
   }
 
@@ -221,13 +203,12 @@ export default function ValidationPage({
         throw new Error("Sesi login berakhir. Silakan login kembali.");
       }
 
-      const { data: existingAnswer, error: lookupError } =
-        await supabase
-          .from("validation_answers")
-          .select("id")
-          .eq("question_id", currentQuestion.id)
-          .eq("user_id", user.id)
-          .maybeSingle();
+      const { data: existingAnswer, error: lookupError } = await supabase
+        .from("validation_answers")
+        .select("id")
+        .eq("question_id", currentQuestion.id)
+        .eq("user_id", user.id)
+        .maybeSingle();
 
       if (lookupError) throw lookupError;
 
@@ -256,7 +237,6 @@ export default function ValidationPage({
 
       persistLocalAnswer(answer.trim());
 
-      
       if (step < totalQuestions) {
         sessionStorage.setItem(VALIDATION_NAVIGATION_STORAGE_KEY, "next");
         setNavigationDirection("next");
@@ -267,12 +247,12 @@ export default function ValidationPage({
       }
 
       const analysisId = sessionStorage.getItem(
-        analysisStorage.activeAnalysisId
+        analysisStorage.activeAnalysisId,
       );
 
       if (!analysisId) {
         throw new Error(
-          "Analisis aktif tidak ditemukan. Silakan mulai analisis kembali."
+          "Analisis aktif tidak ditemukan. Silakan mulai analisis kembali.",
         );
       }
 
@@ -288,22 +268,18 @@ export default function ValidationPage({
 
       if (!response.ok || !result.success) {
         throw new Error(
-          result.message || "Evaluasi AI gagal dilakukan. Silakan coba lagi."
+          result.message || "Evaluasi AI gagal dilakukan. Silakan coba lagi.",
         );
       }
 
-      sessionStorage.setItem(
-        analysisStorage.validationCompleted,
-        "true"
-      );
+      sessionStorage.setItem(analysisStorage.validationCompleted, "true");
 
       router.push(analysisRoutes.result);
-
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
-          : "Jawaban gagal disimpan. Silakan coba lagi."
+          : "Jawaban gagal disimpan. Silakan coba lagi.",
       );
     } finally {
       setSaving(false);
@@ -316,8 +292,8 @@ export default function ValidationPage({
         <div className="validation-intro">
           <h1>Pertanyaan Validasi</h1>
           <p>
-            Jawab beberapa pertanyaan berikut untuk memastikan
-            pemahamanmu terhadap proyek benar-benar sesuai.
+            Jawab beberapa pertanyaan berikut untuk memastikan pemahamanmu
+            terhadap proyek benar-benar sesuai.
           </p>
         </div>
 
@@ -380,9 +356,7 @@ export default function ValidationPage({
             <div className="validation-buttons">
               {step > 1 && (
                 <Link
-                  href={analysisRoutes.question(
-                    (step - 1) as QuestionNumber
-                  )}
+                  href={analysisRoutes.question((step - 1) as QuestionNumber)}
                   className="validation-back"
                   onClick={() => {
                     sessionStorage.setItem(VALIDATION_NAVIGATION_STORAGE_KEY, "back");
@@ -421,8 +395,8 @@ export default function ValidationPage({
                 Berikan contoh teknis yang benar-benar pernah kamu kerjakan.
               </li>
               <li>
-                Jika ada hal yang belum kamu kuasai, jelaskan apa yang
-                sudah kamu pahami dan bagian yang masih menjadi kendala.
+                Jika ada hal yang belum kamu kuasai, jelaskan apa yang sudah
+                kamu pahami dan bagian yang masih menjadi kendala.
               </li>
             </ul>
             {currentQuestion?.evidence_context && (

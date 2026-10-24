@@ -11,17 +11,35 @@ export default function AuthIntro({ mode }: AuthIntroProps) {
 
   return (
     <section className={styles.left} aria-labelledby={`${mode}-headline`}>
-      <h1 id={`${mode}-headline`} className={styles.headline}>{data.heading}</h1>
+      <h1 id={`${mode}-headline`} className={styles.headline}>
+        {data.heading}
+      </h1>
       {isReset ? (
-        <p className={styles.intro}>Tidak masalah! Masukkan alamat email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.</p>
+        <p className={styles.intro}>
+          Tidak masalah! Masukkan alamat email Anda dan kami akan mengirimkan
+          tautan untuk mengatur ulang kata sandi Anda.
+        </p>
       ) : (
         <>
-          {isRegister && <p className={styles.intro}>Buat akun dan mulai perjalanan kariermu bersama proyek-proyek nyata.</p>}
+          {isRegister && (
+            <p className={styles.intro}>
+              Buat akun dan mulai perjalanan kariermu bersama proyek-proyek
+              nyata.
+            </p>
+          )}
           <ul className={styles.benefits}>
             {data.benefits.map((benefit) => (
               <li key={benefit}>
                 <span className={styles.tick} aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="m4.2 12.5 5.1 5.1 10.5-11" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="m4.2 12.5 5.1 5.1 10.5-11"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </span>
                 {benefit}
               </li>

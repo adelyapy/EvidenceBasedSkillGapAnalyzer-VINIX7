@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import WorkspaceIcon from "@/components/workspace/WorkspaceIcon";
@@ -23,7 +22,9 @@ export default async function Recommendations() {
   const { data: recommendations, error } = analysis
     ? await supabase
         .from("roadmap_items")
-        .select("id, title, description, resource_url, priority, status, sort_order")
+        .select(
+          "id, title, description, resource_url, priority, status, sort_order",
+        )
         .eq("user_id", user!.id)
         .eq("analysis_id", analysis.id)
         .order("sort_order", { ascending: true })
@@ -62,9 +63,7 @@ export default async function Recommendations() {
                   <h3>{item.title}</h3>
                   <p>{item.description || "Belum ada deskripsi."}</p>
 
-                  {item.priority && (
-                    <p>Prioritas: {item.priority}</p>
-                  )}
+                  {item.priority && <p>Prioritas: {item.priority}</p>}
 
                   {item.status && <p>Status: {item.status}</p>}
 
@@ -87,12 +86,10 @@ export default async function Recommendations() {
           <WorkspaceIcon name="book" size={32} />
           <h3>Belum ada rekomendasi belajar</h3>
           <p>
-            Rekomendasi akan muncul setelah roadmap pembelajaran
-            tersedia dari hasil analisis.
+            Rekomendasi akan muncul setelah roadmap pembelajaran tersedia dari
+            hasil analisis.
           </p>
-          <Link href="/workspace/analisa-baru">
-            Mulai analisis baru
-          </Link>
+          <Link href="/workspace/analisa-baru">Mulai analisis baru</Link>
         </div>
       )}
     </section>

@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { HISTORY_ROUTE } from "@/data/workspace";
@@ -51,7 +50,9 @@ export default async function LatestAnalysis() {
         <div className="bkd-analysisBody">
           <div className="bkd-scoreCard">
             <h3>Belum ada analisis</h3>
-            <p>Mulai analisis baru untuk melihat ringkasan kesiapan kariermu.</p>
+            <p>
+              Mulai analisis baru untuk melihat ringkasan kesiapan kariermu.
+            </p>
             <Link className="bkd-panelLink" href="/workspace/analisa-baru">
               Mulai analisis
             </Link>
@@ -62,9 +63,7 @@ export default async function LatestAnalysis() {
           <div className="bkd-scoreCard">
             <div
               className="bkd-scoreRing"
-              style={
-                { "--bkd-score": `${score ?? 0}%` } as React.CSSProperties
-              }
+              style={{ "--bkd-score": `${score ?? 0}%` } as React.CSSProperties}
               role={score === null ? "img" : "progressbar"}
               aria-label={
                 score === null

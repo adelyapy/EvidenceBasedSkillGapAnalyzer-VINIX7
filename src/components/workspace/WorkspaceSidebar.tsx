@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import { workspaceNavigation } from "@/data/workspace";
@@ -52,7 +51,6 @@ export default function WorkspaceSidebar({
             />
             <span className="bkw-sidebarLabel">BUKTIVA</span>
           </Link>
-
         </div>
 
         <nav className="bkw-nav" aria-label="Navigasi utama BUKTIVA">

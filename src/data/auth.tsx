@@ -59,7 +59,15 @@ type AuthContent = {
 
 export const contents: Record<AuthMode, AuthContent> = {
   login: {
-    heading: <>Satu Akun<br />untuk Masa Depan<br />Lebih Jelas</>,
+    heading: (
+      <>
+        Satu Akun
+        <br />
+        untuk Masa Depan
+        <br />
+        Lebih Jelas
+      </>
+    ),
     illustration: "/images/login-illustration.png",
     imageAlt: "Ilustrasi dokumen proyek dengan panah kemajuan",
     title: "Masuk ke Buktiva",
@@ -73,9 +81,16 @@ export const contents: Record<AuthMode, AuthContent> = {
     ],
   },
   register: {
-    heading: <>Bergabung<br />di Buktiva Sekarang</>,
+    heading: (
+      <>
+        Bergabung
+        <br />
+        di Buktiva Sekarang
+      </>
+    ),
     illustration: "/images/register-illustration.png",
-    imageAlt: "Ilustrasi perempuan menggunakan laptop untuk membangun portofolio",
+    imageAlt:
+      "Ilustrasi perempuan menggunakan laptop untuk membangun portofolio",
     title: "Daftar ke Buktiva",
     description: "Buat akun baru dan mulai bergabung bersama kami.",
     submit: "DAFTAR",

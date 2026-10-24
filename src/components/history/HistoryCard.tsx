@@ -1,4 +1,3 @@
-
 import type { CSSProperties } from "react";
 import type { AnalysisHistoryEntry } from "@/types/history";
 import HistoryIcon from "./HistoryIcon";
