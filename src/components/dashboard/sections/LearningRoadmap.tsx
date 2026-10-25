@@ -52,7 +52,7 @@ export default function LearningRoadmap() {
 
   if (loading) return <div>Memuat roadmap...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
-  if (items.length === 0) return <div>Belum ada rekomendasi belajar.</div>;
+  if (items.length === 0) return null;
 
   return (
     <div>

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import AnalysisStepper from "./AnalysisStepper";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 
 const REDIRECT_DELAY_MS = 500;
@@ -118,7 +117,6 @@ export default function ProcessAnalysisPage() {
 
   return (
     <div className="process-main">
-      <AnalysisStepper current="review" />
       <section className="process-content" aria-labelledby="process-heading">
         <h1 id="process-heading">
           {error ? (

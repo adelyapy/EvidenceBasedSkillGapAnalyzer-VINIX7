@@ -1,17 +1,17 @@
 .analysis-stepper {
   width: 100%;
-  min-height: 76px;
+  min-height: 55px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 2px;
   margin: 0 0 24px;
-  padding: 13px 16px 11px;
+  padding: 0;
   overflow-x: auto;
-  border: 2px solid #14213d;
-  border-radius: 9px;
-  background: #dcecf8;
-  box-shadow: 5px 5px 0 #14213d;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   scrollbar-width: thin;
 }
 
@@ -71,9 +71,9 @@ a.analysis-step:focus-visible {
 }
 
 .analysis-step-number--active {
-  background: #3d82c4;
-  color: #fff;
-  box-shadow: 3px 3px 0 #14213d;
+  background: #ffe681;
+  color: #14213d;
+  box-shadow: 2px 2px 0 #14213d;
 }
 .analysis-step-number--complete {
   background: #ffe681;
@@ -81,8 +81,8 @@ a.analysis-step:focus-visible {
   box-shadow: 2px 2px 0 #14213d;
 }
 .analysis-step-number--active.analysis-step-number--complete {
-  background: #3d82c4;
-  color: #fff;
+  background: #ffe681;
+  color: #14213d;
 }
 .analysis-step--complete {
   color: #14213d;

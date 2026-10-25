@@ -79,23 +79,31 @@ export default async function LatestAnalysis() {
             </div>
 
             <h3>{role}</h3>
-            <p>{analysis.summary || "Ringkasan analisis belum tersedia."}</p>
+            <p className="bkd-analysisSummaryLabel">Ringkasan penilaian</p>
+            <p className="bkd-analysisSummary">
+              {analysis.summary || "Ringkasan analisis belum tersedia."}
+            </p>
 
-            {dateLabel && <p>Terakhir dianalisis: {dateLabel}</p>}
-            <p>Status: {analysis.status || "Belum diketahui"}</p>
+            <div className="bkd-analysisMeta">
+              {dateLabel && <span>Terakhir dianalisis: {dateLabel}</span>}
+              <span>Status: {analysis.status || "Belum diketahui"}</span>
+            </div>
+
+            <Link className="bkd-analysisDetailLink" href={analysisRoutes.result}>
+              Lihat hasil lengkap →
+            </Link>
           </div>
 
           <div className="bkd-skillsCard">
-            <h3>Kemampuan unggul</h3>
-            <p>
-              Data kemampuan unggul belum tersedia pada ringkasan analisis ini.
-            </p>
+            <div className="bkd-skillStatus">
+              <h3>Kemampuan unggul</h3>
+              <p>Belum ada informasi kemampuan unggul yang tersedia.</p>
+            </div>
 
-            <h3>Pengembangan Kemampuan</h3>
-            <p>
-              Data kemampuan yang perlu dikembangkan belum tersedia pada
-              ringkasan analisis ini.
-            </p>
+            <div className="bkd-skillStatus">
+              <h3>Area pengembangan</h3>
+              <p>Belum ada informasi area yang perlu dikembangkan.</p>
+            </div>
           </div>
         </div>
       )}
