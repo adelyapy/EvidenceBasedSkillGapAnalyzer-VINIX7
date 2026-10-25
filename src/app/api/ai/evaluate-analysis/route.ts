@@ -569,7 +569,7 @@ Gunakan nama dan ID pertanyaan yang sama persis dari input.
         const { generateRoadmapFromGaps } =
           await import("@/lib/roadmap/gap-based-generator");
         const { persistGapBasedRoadmap } =
-          await import("@/lib/roadmap/roadmap-persistence");
+          await import("@/lib/roadmap-persistence");
 
         // 3. Generate items
         const roadmapItems = generateRoadmapFromGaps(

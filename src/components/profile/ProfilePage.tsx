@@ -16,6 +16,7 @@ import type { ProfileData } from "@/types/profile";
 import PersonalInformationCard from "./PersonalInformationCard";
 import ProfileOverviewCard from "./ProfileOverviewCard";
 import ProfileSkeleton from "./ProfileSkeleton";
+import Image from "next/image";
 
 const defaultAvatar = "/images/profile/profile.png";
 const SUCCESS_MESSAGE_DURATION = 5000;
@@ -39,7 +40,8 @@ export default function ProfilePage() {
   const [message, setMessage] = useState("");
   const [messageLeaving, setMessageLeaving] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [selectedAvatar, setSelectedAvatar] = useState<File | null>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null);  
   const {
     isClosing: editDialogClosing,
     requestDismiss: closeEditDialog,
@@ -140,9 +142,10 @@ export default function ProfilePage() {
   function selectAvatar(event: ChangeEvent<HTMLInputElement>) {
     const image = event.target.files?.[0];
     event.target.value = "";
+
     if (!image) return;
 
-    if (!image.type.startsWith("image/")) {
+    if (!["image/jpeg", "image/png", "image/webp"].includes(image.type)) {
       setError("Pilih file gambar dengan format JPG, PNG, atau WebP.");
       return;
     }
@@ -155,8 +158,9 @@ export default function ProfilePage() {
     setError("");
     setMessage("");
     setMessageLeaving(false);
-    const nextPreview = URL.createObjectURL(image);
-    setAvatarPreview(nextPreview);
+
+    setSelectedAvatar(image);
+    setAvatarPreview(URL.createObjectURL(image));
   }
 
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
@@ -189,9 +193,40 @@ export default function ProfilePage() {
       if (authError) throw authError;
       if (!user) throw new Error("Sesi pengguna berakhir. Silakan login kembali.");
 
+      let avatarUrl = profile.avatar;
+
+      if (selectedAvatar) {
+        const extensionByType: Record<string, string> = {
+          "image/jpeg": "jpg",
+          "image/png": "png",
+          "image/webp": "webp",
+        };
+
+        const extension = extensionByType[selectedAvatar.type];
+        const avatarPath = `${user.id}/${crypto.randomUUID()}.${extension}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("avatars")
+          .upload(avatarPath, selectedAvatar, {
+            contentType: selectedAvatar.type,
+            upsert: false,
+          });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabase.storage
+          .from("avatars")
+          .getPublicUrl(avatarPath);
+
+        avatarUrl = publicUrlData.publicUrl;
+      }
+
       const { data: updatedProfile, error: updateError } = await supabase
         .from("profiles")
-        .update({ full_name: fullName })
+        .update({
+          full_name: fullName,
+          avatar_url: selectedAvatar ? avatarUrl : profile.avatar,
+        })
         .eq("id", user.id)
         .select("full_name, avatar_url, created_at")
         .maybeSingle();
@@ -333,15 +368,15 @@ export default function ProfilePage() {
         </p>
       )}
 
+      
       <div className="bkpfl-grid">
         <ProfileOverviewCard
           profile={profile}
           avatarSrc={avatarPreview || profile.avatar}
-          avatarInputRef={avatarInputRef}
-          onAvatarChange={selectAvatar}
         />
         <PersonalInformationCard profile={profile} />
       </div>
+
 
       {editing &&
         typeof document !== "undefined" &&
@@ -380,6 +415,42 @@ export default function ProfilePage() {
               </div>
 
               <form className="bkpfl-editForm" onSubmit={saveProfile}>
+                <div className="bkpfl-avatarEditField">
+                  <span className="bkpfl-avatarEditLabel">Foto profil</span>
+
+                  <div className="bkpfl-avatarEditPreview">
+                    <Image
+                      src={avatarPreview || profile.avatar}
+                      alt={`Pratinjau foto profil ${profile.fullName}`}
+                      width={96}
+                      height={96}
+                      unoptimized={Boolean(avatarPreview?.startsWith("blob:"))}
+                    />
+                  </div>
+
+                  <input
+                    ref={avatarInputRef}
+                    className="bkpfl-avatarInput"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    onChange={selectAvatar}
+                    aria-label="Pilih foto profil"
+                  />
+
+                  <button
+                    className="bkpfl-avatarUploadButton"
+                    type="button"
+                    disabled={saving}
+                    onClick={() => avatarInputRef.current?.click()}
+                  >
+                    <span aria-hidden="true">↥</span>
+                    {selectedAvatar ? "Ganti foto" : "Unggah foto"}
+                  </button>
+
+                  <p className="bkpfl-avatarHint">
+                    JPG, PNG, atau WebP · maksimal 5 MB
+                  </p>
+                </div>
                 <label>
                   Nama lengkap
                   <input
