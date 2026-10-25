@@ -2,7 +2,13 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import {
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FormEvent,
+} from "react";
 import { analysisRoutes } from "@/data/analysis";
 import { DEFAULT_HISTORY_FILTERS } from "@/data/history";
 import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
@@ -16,6 +22,8 @@ import HistoryCard from "./HistoryCard";
 import HistoryFilters from "./HistoryFilters";
 import HistoryIcon from "./HistoryIcon";
 import HistorySummary from "./HistorySummary";
+import ProjectSourceIcon from "../analysis/ProjectSourceIcon";
+import type { UploadProjectSource } from "@/types/upload-project";
 
 function filterAndSortHistory(
   entries: AnalysisHistoryEntry[],
@@ -75,6 +83,55 @@ function getRoleOptions(entries: AnalysisHistoryEntry[]) {
   return [...roles.entries()]
     .map(([value, label]) => ({ value, label }))
     .sort((a, b) => a.label.localeCompare(b.label, "id-ID"));
+}
+
+type DialogScoreStyle = CSSProperties & {
+  "--bkh-dialog-score": string;
+};
+
+function isCompleted(status: string) {
+  return status.toLowerCase() === "completed";
+}
+
+function formatLevel(level: number | null) {
+  if (level === null || !Number.isFinite(Number(level))) {
+    return "Belum dapat dinilai";
+  }
+
+  return `${Number(level).toLocaleString("id-ID")} / 5`;
+}
+
+function formatConfidence(score: number | null) {
+  if (score === null || !Number.isFinite(Number(score))) {
+    return "Tidak tersedia";
+  }
+
+  const value = Number(score);
+  return `${Math.round(value <= 1 ? value * 100 : value)}%`;
+}
+
+function priorityLabel(priority: string) {
+  const labels: Record<string, string> = {
+    low: "Rendah",
+    medium: "Sedang",
+    high: "Tinggi",
+    critical: "Kritis",
+  };
+
+  return labels[priority] ?? priority;
+}
+
+function getEvidenceSource(
+  evidenceType: string,
+  url: string | null,
+): UploadProjectSource {
+  const source = `${evidenceType} ${url ?? ""}`.toLowerCase();
+
+  if (source.includes("github")) return "github";
+  if (source.includes("linkedin")) return "linkedin";
+  if (source.includes("deploy")) return "deployment";
+  if (source.includes("pdf")) return "pdf";
+  return "portfolio";
 }
 
 export default function AnalysisHistoryClient({
@@ -247,56 +304,214 @@ export default function AnalysisHistoryClient({
               <HistoryIcon name="close" />
             </button>
 
-            <span className="bkh-dialogIcon">
-              <HistoryIcon name={selectedEntry.icon} size={34} />
-            </span>
-
-            <p className="bkh-dialogEyebrow">Detail analisis</p>
-            <h2 id="bkh-dialog-title">{selectedEntry.projectName}</h2>
-
-            <dl>
-              <div>
-                <dt>Target Role</dt>
-                <dd>{selectedEntry.roleLabel}</dd>
-              </div>
+            <header className="bkh-resultDialogHeader">
+              <span className="bkh-dialogIcon" aria-hidden="true">
+                <HistoryIcon name={selectedEntry.icon} size={30} />
+              </span>
 
               <div>
-                <dt>Tanggal Analisis</dt>
-                <dd>
-                  <time dateTime={selectedEntry.date || undefined}>
-                    {selectedEntry.dateLabel}
-                  </time>
-                </dd>
+                <p className="bkh-dialogEyebrow">Hasil analisis</p>
+                <h2 id="bkh-dialog-title">{selectedEntry.projectName}</h2>
+                <span className="bkh-dialogStatus">{selectedEntry.status}</span>
+              </div>
+            </header>
+
+            <section className="bkh-dialogOverview" aria-label="Ringkasan hasil">
+              <div className="bkh-dialogOverviewCopy">
+                <p className="bkh-dialogSectionLabel">Target role</p>
+                <h3>{selectedEntry.roleLabel}</h3>
+                <p className="bkh-dialogSummary">
+                  {isCompleted(selectedEntry.statusKey) && selectedEntry.summary
+                    ? selectedEntry.summary
+                    : selectedEntry.statusKey.toLowerCase() === "failed"
+                      ? "Analisis ini gagal diproses. Silakan mulai analisis baru setelah memeriksa data proyek Anda."
+                      : "Hasil lengkap akan tersedia setelah proses analisis selesai dan tersimpan."}
+                </p>
+
+                <dl className="bkh-dialogMeta">
+                  <div>
+                    <dt>Dibuat pada</dt>
+                    <dd>
+                      <time dateTime={selectedEntry.date || undefined}>
+                        {selectedEntry.dateTimeLabel}
+                      </time>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Status</dt>
+                    <dd>{selectedEntry.status}</dd>
+                  </div>
+                </dl>
               </div>
 
-              <div>
-                <dt>Skor Kesiapan</dt>
-                <dd>
-                  {selectedEntry.match === null
-                    ? "Belum tersedia"
-                    : `${selectedEntry.match}%`}
-                </dd>
+              <div
+                className={`bkh-dialogScoreRing${
+                  selectedEntry.match === null
+                    ? " bkh-dialogScoreRing--empty"
+                    : ""
+                }`}
+                style={
+                  {
+                    "--bkh-dialog-score": `${selectedEntry.match ?? 0}%`,
+                  } as DialogScoreStyle
+                }
+                aria-label={`Skor kesiapan ${
+                  selectedEntry.match === null
+                    ? "belum tersedia"
+                    : `${selectedEntry.match}%`
+                }`}
+              >
+                <div>
+                  <span>Skor kesiapan</span>
+                  <strong>
+                    {selectedEntry.match === null
+                      ? "—"
+                      : `${selectedEntry.match}%`}
+                  </strong>
+                </div>
+              </div>
+            </section>
+
+            <section className="bkh-dialogResultSection bkh-dialogEvidencePanel">
+              <div className="bkh-dialogSectionHeading">
+                <div>
+                  <p className="bkh-dialogSectionLabel">Dasar penilaian</p>
+                  <h3>Bukti Proyek</h3>
+                </div>
+                <span>{selectedEntry.evidences.length} bukti</span>
               </div>
 
-              <div>
-                <dt>Ringkasan</dt>
-                <dd>{selectedEntry.summary || "Belum tersedia"}</dd>
-              </div>
+              {selectedEntry.evidences.length === 0 ? (
+                <p className="bkh-dialogEmptyCopy">
+                  Belum ada bukti proyek yang tersimpan untuk analisis ini.
+                </p>
+              ) : (
+                <ul className="bkh-dialogEvidenceList">
+                  {selectedEntry.evidences.map((evidence) => (
+                    <li key={evidence.id}>
+                      <span className="bkh-dialogEvidenceIcon" aria-hidden="true">
+                        <ProjectSourceIcon
+                          source={getEvidenceSource(
+                            evidence.evidenceType,
+                            evidence.url,
+                          )}
+                          size={20}
+                        />
+                      </span>
+                      <div>
+                        <strong>{evidence.title || "Bukti proyek"}</strong>
+                        <span>Jenis: {evidence.evidenceType}</span>
+                        {evidence.description && <p>{evidence.description}</p>}
+                        {evidence.url && (
+                          <a
+                            href={evidence.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Buka bukti proyek ↗
+                          </a>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
 
-              <div>
-                <dt>Teknologi</dt>
-                <dd>
-                  {selectedEntry.technologies.length > 0
-                    ? selectedEntry.technologies.join(", ")
-                    : "Belum tersedia"}
-                </dd>
-              </div>
+            {isCompleted(selectedEntry.statusKey) && (
+              <>
+                <section className="bkh-dialogResultSection bkh-dialogCompetencyPanel">
+                  <div className="bkh-dialogSectionHeading">
+                    <div>
+                      <p className="bkh-dialogSectionLabel">Kekuatan saat ini</p>
+                      <h3>Evaluasi Kompetensi</h3>
+                    </div>
+                  </div>
 
-              <div>
-                <dt>Status</dt>
-                <dd>{selectedEntry.status}</dd>
-              </div>
-            </dl>
+                  {selectedEntry.skillResults.length === 0 ? (
+                    <p className="bkh-dialogEmptyCopy">
+                      Belum ada data kompetensi yang tersimpan untuk analisis ini.
+                    </p>
+                  ) : (
+                    <ul className="bkh-dialogResultCards">
+                      {selectedEntry.skillResults.map((skill) => (
+                        <li key={skill.id}>
+                          <div className="bkh-dialogCardTop">
+                            <strong>{skill.skillName || "Keterampilan tidak bernama"}</strong>
+                            <span>{formatLevel(skill.estimatedLevel)}</span>
+                          </div>
+                          <p><b>Keyakinan AI</b> {formatConfidence(skill.confidenceScore)}</p>
+                          <p className="bkh-dialogCardDescription">
+                            {skill.evidenceSummary ||
+                              "Belum ada ringkasan bukti yang tersedia."}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+
+                <section className="bkh-dialogResultSection bkh-dialogGapPanel">
+                  <div className="bkh-dialogSectionHeading">
+                    <div>
+                      <p className="bkh-dialogSectionLabel">Fokus pengembangan</p>
+                      <h3>Kesenjangan Keterampilan</h3>
+                    </div>
+                  </div>
+
+                  {selectedEntry.skillGaps.length === 0 ? (
+                    <p className="bkh-dialogEmptyCopy">
+                      Belum ada data skill gap yang tersimpan untuk analisis ini.
+                    </p>
+                  ) : (
+                    <ul className="bkh-dialogResultCards">
+                      {selectedEntry.skillGaps.map((gap) => (
+                        <li key={gap.id}>
+                          <div className="bkh-dialogCardTop">
+                            <strong>{gap.skillName || "Keterampilan tidak bernama"}</strong>
+                            <span className={`bkh-dialogPriority bkh-dialogPriority--${gap.priority}`}>
+                              {priorityLabel(gap.priority)}
+                            </span>
+                          </div>
+                          <dl className="bkh-dialogGapStats">
+                            <div><dt>Saat ini</dt><dd>{formatLevel(gap.currentLevel)}</dd></div>
+                            <div><dt>Target</dt><dd>{formatLevel(gap.requiredLevel)}</dd></div>
+                            <div><dt>Gap</dt><dd>{Number(gap.gapScore).toLocaleString("id-ID")}</dd></div>
+                          </dl>
+                          <p className="bkh-dialogCardDescription">
+                            {gap.explanation || "Belum ada penjelasan yang tersedia."}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              </>
+            )}
+
+            <aside className="bkh-dialogNotice">
+              {isCompleted(selectedEntry.statusKey) &&
+              selectedEntry.skillResults.length > 0 ? (
+                <>
+                  <strong>Hasil evaluasi AI tersedia.</strong>
+                  <p>
+                    Data kompetensi dan kesenjangan keterampilan ditampilkan
+                    berdasarkan hasil evaluasi yang tersimpan. Tingkat penguasaan
+                    merupakan estimasi AI berdasarkan bukti dan jawaban validasi,
+                    bukan pengukuran mutlak kemampuan pengguna.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <strong>Hasil evaluasi belum lengkap.</strong>
+                  <p>
+                    Data target role, bukti proyek, ringkasan, dan skor kesiapan
+                    dapat tersedia secara terpisah. Jika data kompetensi atau skill
+                    gap belum tersimpan, hasil tersebut belum dapat ditampilkan.
+                  </p>
+                </>
+              )}
+            </aside>
 
             <button
               className="bkh-dialogDone"

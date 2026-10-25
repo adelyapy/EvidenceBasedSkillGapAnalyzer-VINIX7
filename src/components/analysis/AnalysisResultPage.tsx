@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import { createClient } from "@/lib/supabase/client";
+import PrintAnalysisReportButton from "./PrintAnalysisReportButton";
 
 type AnalysisRecord = {
   id: string;
@@ -210,90 +211,81 @@ export default function AnalysisResultPage() {
 
   return (
     <article className="bkr-page" aria-labelledby="bkr-title">
-      <header className="bkr-intro">
+      <header className="bkr-intro bkr-resultIntro">
         <div>
+          <p className="bkr-eyebrow">Ringkasan personal</p>
           <h1 id="bkr-title">Hasil Analisis Anda</h1>
           <p>
-            Informasi analisis dan bukti proyek yang tersimpan pada akun Anda.
+            Pahami kekuatan, area pengembangan, dan bukti proyek Anda dalam satu ringkasan.
           </p>
         </div>
+        {analysis && <PrintAnalysisReportButton />}
       </header>
 
-      {loading && <p role="status">Memuat data analisis...</p>}
+      {loading && (
+        <section className="bkr-loading" role="status" aria-live="polite">
+          <span /><span /><span />
+          <p>Menyiapkan hasil analisis Anda...</p>
+        </section>
+      )}
 
       {!loading && error && (
-        <section className="bkr-panel" role="alert">
+        <section className="bkr-panel bkr-errorPanel" role="alert">
           <h2>Data analisis belum dapat ditampilkan</h2>
           <p>{error}</p>
-          <Link href={analysisRoutes.uploadProject}>Mulai analisis baru</Link>
+          <Link className="bkr-actionButton bkr-actionButton--primary" href={analysisRoutes.uploadProject}>Mulai analisis baru</Link>
         </section>
       )}
 
       {!loading && !error && analysis && (
         <>
-          <section className="bkr-panel" aria-labelledby="bkr-overview-title">
-            <h2 id="bkr-overview-title">Ringkasan Analisis</h2>
-            <p>
-              <strong>Target role:</strong> {analysis.target_role}
-            </p>
-            <p>
-              <strong>Status:</strong> {statusLabel(analysis.status)}
-            </p>
-            <p>
-              <strong>Tanggal dibuat:</strong>{" "}
-              {new Date(analysis.created_at).toLocaleString("id-ID")}
-            </p>
-
-            {analysis.status === "completed" &&
-            analysis.readiness_score !== null ? (
-              <p>
-                <strong>Skor kesiapan:</strong>{" "}
-                {Number(analysis.readiness_score)}%
+          <section className="bkr-overview" aria-labelledby="bkr-overview-title">
+            <div className="bkr-overviewCopy">
+              <p className="bkr-sectionEyebrow">Gambaran utama</p>
+              <h2 id="bkr-overview-title">{analysis.target_role}</h2>
+              <p className="bkr-summaryText">
+                {analysis.status === "completed" && analysis.summary
+                  ? analysis.summary
+                  : analysis.status === "failed"
+                    ? "Analisis ini gagal diproses. Silakan mulai analisis baru setelah memeriksa data proyek Anda."
+                    : "Hasil lengkap akan tersedia setelah proses analisis selesai dan tersimpan."}
               </p>
-            ) : (
-              <p>
-                Skor kesiapan belum tersedia. Skor akan ditampilkan setelah
-                proses analisis benar-benar selesai dan hasilnya tersimpan.
-              </p>
-            )}
-
-            {analysis.status === "completed" && analysis.summary && (
-              <p>{analysis.summary}</p>
-            )}
-
-            {analysis.status === "failed" && (
-              <p>
-                Analisis ini berstatus gagal. Periksa proses analisis sebelum
-                mencoba kembali.
-              </p>
-            )}
+              <dl className="bkr-metaGrid">
+                <div><dt>Dibuat pada</dt><dd>{new Date(analysis.created_at).toLocaleString("id-ID")}</dd></div>
+                <div><dt>Status</dt><dd>{statusLabel(analysis.status)}</dd></div>
+              </dl>
+            </div>
+            <div className="bkr-readinessCard">
+              <div
+                className={`bkr-readinessRing${analysis.status !== "completed" || analysis.readiness_score === null ? " bkr-readinessRing--empty" : ""}`}
+                style={{ "--bkr-readiness": `${analysis.status === "completed" && analysis.readiness_score !== null ? Number(analysis.readiness_score) : 0}%` } as CSSProperties}
+                aria-label={analysis.status === "completed" && analysis.readiness_score !== null ? `Skor kesiapan ${Number(analysis.readiness_score)} persen` : "Skor kesiapan belum tersedia"}
+              >
+                <div>
+                  <span>Skor kesiapan</span>
+                  <strong>{analysis.status === "completed" && analysis.readiness_score !== null ? `${Number(analysis.readiness_score)}%` : "—"}</strong>
+                </div>
+              </div>
+              <small>{analysis.readiness_score === null ? "Belum tersedia" : "Estimasi berdasarkan bukti dan jawaban"}</small>
+            </div>
           </section>
 
-          <section className="bkr-panel bkr-projectPanel">
-            <h2>Bukti Proyek</h2>
+          <section className="bkr-section bkr-evidencePanel" aria-labelledby="bkr-evidence-title">
+            <div className="bkr-sectionHeading"><div><p className="bkr-sectionEyebrow">Dasar penilaian</p><h2 id="bkr-evidence-title">Bukti Proyek</h2></div><span>{evidences.length} bukti</span></div>
 
             {evidences.length === 0 ? (
-              <p>Belum ada bukti proyek yang tersimpan untuk analisis ini.</p>
+              <p className="bkr-emptyCopy">Belum ada bukti proyek yang tersimpan untuk analisis ini.</p>
             ) : (
-              <ul>
+              <ul className="bkr-evidenceList">
                 {evidences.map((evidence) => (
                   <li key={evidence.id}>
+                    <div className="bkr-evidenceIcon" aria-hidden="true">↗</div>
                     <div>
                       <strong>{evidence.title || "Bukti proyek"}</strong>
-                      <p>Jenis bukti: {evidence.evidence_type}</p>
-
+                      <span>Jenis: {evidence.evidence_type}</span>
                       {evidence.description && <p>{evidence.description}</p>}
-
                       {evidence.url && (
-                        <p>
-                          <a
-                            href={evidence.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Buka bukti proyek
-                          </a>
-                        </p>
+                        <a href={evidence.url} target="_blank" rel="noopener noreferrer">Buka bukti proyek ↗</a>
                       )}
                     </div>
                   </li>
@@ -304,82 +296,40 @@ export default function AnalysisResultPage() {
 
           {analysis.status === "completed" && (
             <>
-              <section className="bkr-panel" aria-labelledby="bkr-skills-title">
-                <h2 id="bkr-skills-title">Hasil Evaluasi Kompetensi</h2>
+              <section className="bkr-section bkr-competencyPanel" aria-labelledby="bkr-skills-title">
+                <div className="bkr-sectionHeading"><div><p className="bkr-sectionEyebrow">Kekuatan saat ini</p><h2 id="bkr-skills-title">Evaluasi Kompetensi</h2></div></div>
 
                 {resultError ? (
-                  <p role="alert">{resultError}</p>
+                  <p className="bkr-emptyCopy" role="alert">{resultError}</p>
                 ) : skillResults.length === 0 ? (
-                  <p>
-                    Belum ada data kompetensi yang tersimpan untuk analisis ini.
-                  </p>
+                  <p className="bkr-emptyCopy">Belum ada data kompetensi yang tersimpan untuk analisis ini.</p>
                 ) : (
-                  <ul>
+                  <ul className="bkr-resultCards">
                     {skillResults.map((skill) => (
                       <li key={skill.id}>
-                        <div>
-                          <strong>
-                            {skill.skill_name || "Keterampilan tidak bernama"}
-                          </strong>
-                          <p>
-                            <strong>Estimasi tingkat:</strong>{" "}
-                            {formatLevel(skill.estimated_level)}
-                          </p>
-                          <p>
-                            <strong>Keyakinan AI:</strong>{" "}
-                            {formatConfidence(skill.confidence_score)}
-                          </p>
-                          <p>
-                            <strong>Bukti pendukung:</strong>{" "}
-                            {skill.evidence_summary ||
-                              "Belum ada ringkasan bukti yang tersedia."}
-                          </p>
-                        </div>
+                        <div className="bkr-cardTop"><strong>{skill.skill_name || "Keterampilan tidak bernama"}</strong><span>{formatLevel(skill.estimated_level)}</span></div>
+                        <p><b>Keyakinan AI</b> {formatConfidence(skill.confidence_score)}</p>
+                        <p className="bkr-cardDescription">{skill.evidence_summary || "Belum ada ringkasan bukti yang tersedia."}</p>
                       </li>
                     ))}
                   </ul>
                 )}
               </section>
 
-              <section className="bkr-panel" aria-labelledby="bkr-gaps-title">
-                <h2 id="bkr-gaps-title">Kesenjangan Keterampilan</h2>
+              <section className="bkr-section bkr-gapPanel" aria-labelledby="bkr-gaps-title">
+                <div className="bkr-sectionHeading"><div><p className="bkr-sectionEyebrow">Fokus pengembangan</p><h2 id="bkr-gaps-title">Kesenjangan Keterampilan</h2></div></div>
 
                 {resultError ? (
-                  <p>Data skill gap belum dapat ditampilkan.</p>
+                  <p className="bkr-emptyCopy">Data skill gap belum dapat ditampilkan.</p>
                 ) : skillGaps.length === 0 ? (
-                  <p>
-                    Belum ada data skill gap yang tersimpan untuk analisis ini.
-                  </p>
+                  <p className="bkr-emptyCopy">Belum ada data skill gap yang tersimpan untuk analisis ini.</p>
                 ) : (
-                  <ul>
+                  <ul className="bkr-resultCards">
                     {skillGaps.map((gap) => (
                       <li key={gap.id}>
-                        <div>
-                          <strong>
-                            {gap.skill_name || "Keterampilan tidak bernama"}
-                          </strong>
-                          <p>
-                            <strong>Tingkat saat ini:</strong>{" "}
-                            {formatLevel(gap.current_level)}
-                          </p>
-                          <p>
-                            <strong>Tingkat yang dibutuhkan:</strong>{" "}
-                            {formatLevel(gap.required_level)}
-                          </p>
-                          <p>
-                            <strong>Skor kesenjangan:</strong>{" "}
-                            {Number(gap.gap_score).toLocaleString("id-ID")}
-                          </p>
-                          <p>
-                            <strong>Prioritas:</strong>{" "}
-                            {priorityLabel(gap.priority)}
-                          </p>
-                          <p>
-                            <strong>Penjelasan:</strong>{" "}
-                            {gap.explanation ||
-                              "Belum ada penjelasan yang tersedia."}
-                          </p>
-                        </div>
+                        <div className="bkr-cardTop"><strong>{gap.skill_name || "Keterampilan tidak bernama"}</strong><span className={`bkr-priority bkr-priority--${gap.priority}`}>{priorityLabel(gap.priority)}</span></div>
+                        <dl className="bkr-gapStats"><div><dt>Saat ini</dt><dd>{formatLevel(gap.current_level)}</dd></div><div><dt>Target</dt><dd>{formatLevel(gap.required_level)}</dd></div><div><dt>Gap</dt><dd>{Number(gap.gap_score).toLocaleString("id-ID")}</dd></div></dl>
+                        <p className="bkr-cardDescription">{gap.explanation || "Belum ada penjelasan yang tersedia."}</p>
                       </li>
                     ))}
                   </ul>
@@ -416,12 +366,9 @@ export default function AnalysisResultPage() {
         </>
       )}
 
-      <nav
-        className="bkr-actions bkr-screenOnly"
-        aria-label="Navigasi hasil analisis"
-      >
-        <Link href={analysisRoutes.uploadProject}>Mulai analisis baru</Link>
-        <Link href="/workspace/dashboard">Kembali ke Dashboard</Link>
+      <nav className="bkr-actions bkr-screenOnly" aria-label="Navigasi hasil analisis">
+        <Link className="bkr-actionButton bkr-actionButton--secondary" href="/workspace/dashboard">← Kembali ke Dashboard</Link>
+        <Link className="bkr-actionButton bkr-actionButton--primary" href={analysisRoutes.uploadProject}>Mulai analisis baru →</Link>
       </nav>
     </article>
   );

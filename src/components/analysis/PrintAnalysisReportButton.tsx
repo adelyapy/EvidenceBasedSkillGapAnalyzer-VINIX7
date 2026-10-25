@@ -8,9 +8,8 @@ export default function PrintAnalysisReportButton() {
       className="bkr-printButton bkr-screenOnly"
       type="button"
       onClick={() => window.print()}
-      aria-describedby="bkr-print-help"
     >
-      Unduh Laporan PDF
+      Cetak laporan PDF
       <AnalysisResultIcon name="download" size={17} />
     </button>
   );

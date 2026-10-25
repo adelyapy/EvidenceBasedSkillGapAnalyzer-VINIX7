@@ -55,8 +55,9 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
   const totalQuestions = questions.length;
   const progress = totalQuestions ? (step / totalQuestions) * 100 : 0;
   const isMovingToNextQuestion = saving && step < totalQuestions;
+  const isPreparingResult = saving && step === totalQuestions;
   const isShowingTransition =
-    isMovingToNextQuestion || navigationDirection !== null;
+    isMovingToNextQuestion || isPreparingResult || navigationDirection !== null;
 
   useEffect(() => {
     let cancelled = false;
@@ -191,6 +192,9 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
       return;
     }
 
+    if (step < totalQuestions) {
+      setNavigationDirection("next");
+    }
     setSaving(true);
     setError("");
 
@@ -277,6 +281,8 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
 
       router.push(analysisRoutes.result);
     } catch (err) {
+      sessionStorage.removeItem(VALIDATION_NAVIGATION_STORAGE_KEY);
+      setNavigationDirection(null);
       setError(
         err instanceof Error
           ? err.message
@@ -457,12 +463,14 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
           role="status"
           aria-live="assertive"
           aria-label={
-            navigationDirection === "back"
+            isPreparingResult
+              ? "Menyiapkan hasil analisis"
+              : navigationDirection === "back"
               ? "Membuka pertanyaan sebelumnya"
-              : "Menyimpan jawaban dan membuka pertanyaan berikutnya"
+              : "Membuka pertanyaan selanjutnya"
           }
         >
-          <div className="validation-transition-card">
+          <div className={`validation-transition-card${isPreparingResult ? " validation-transition-card--result" : ""}`}>
             <Image
               src="/images/logo-icon.svg"
               alt=""
@@ -476,15 +484,27 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
               <span />
             </div>
             <strong>
-              {navigationDirection === "back"
+              {isPreparingResult
+                ? "Menyiapkan hasil analisis"
+                : navigationDirection === "back"
                 ? "Membuka pertanyaan sebelumnya"
-                : "Menyimpan jawaban"}
+                : "Membuka pertanyaan selanjutnya"}
             </strong>
             <p>
-              {navigationDirection === "back"
+              {isPreparingResult
+                ? "AI sedang mengevaluasi jawaban Anda..."
+                : navigationDirection === "back"
                 ? "Menyiapkan pertanyaan sebelumnya..."
                 : "Menyiapkan pertanyaan berikutnya..."}
             </p>
+            {isPreparingResult && (
+              <div className="validation-result-skeleton" aria-hidden="true">
+                <span className="validation-result-skeleton-label" />
+                <span className="validation-result-skeleton-title" />
+                <span className="validation-result-skeleton-line" />
+                <span className="validation-result-skeleton-line validation-result-skeleton-line--short" />
+              </div>
+            )}
           </div>
         </div>
       )}

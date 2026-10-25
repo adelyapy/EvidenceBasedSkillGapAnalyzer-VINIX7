@@ -1,5 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
-import type { AnalysisHistoryEntry, HistoryRoleId } from "@/types/history";
+import type {
+  AnalysisHistoryEntry,
+  HistoryProjectEvidence,
+  HistoryRoleId,
+  HistorySkillGap,
+  HistorySkillResult,
+} from "@/types/history";
 import AnalysisHistoryClient from "./AnalysisHistoryClient";
 
 function getRoleInfo(targetRole: string | null): {
@@ -36,15 +42,24 @@ function getRoleInfo(targetRole: string | null): {
 function formatDate(value: string | null): {
   date: string;
   dateLabel: string;
+  dateTimeLabel: string;
 } {
   if (!value) {
-    return { date: "", dateLabel: "Belum tersedia" };
+    return {
+      date: "",
+      dateLabel: "Belum tersedia",
+      dateTimeLabel: "Belum tersedia",
+    };
   }
 
   const parsed = new Date(value);
 
   if (Number.isNaN(parsed.getTime())) {
-    return { date: "", dateLabel: "Belum tersedia" };
+    return {
+      date: "",
+      dateLabel: "Belum tersedia",
+      dateTimeLabel: "Belum tersedia",
+    };
   }
 
   return {
@@ -55,6 +70,7 @@ function formatDate(value: string | null): {
       year: "numeric",
       timeZone: "Asia/Jakarta",
     }).format(parsed),
+    dateTimeLabel: parsed.toLocaleString("id-ID"),
   };
 }
 
@@ -117,6 +133,97 @@ export default async function AnalysisHistoryPage() {
     return <AnalysisHistoryClient entries={[]} loadError />;
   }
 
+  const analysisIds = (data ?? []).map((row) => row.id);
+  const emptyDetails = {
+    evidences: [] as HistoryProjectEvidence[],
+    skillResults: [] as HistorySkillResult[],
+    skillGaps: [] as HistorySkillGap[],
+  };
+
+  const detailsByAnalysisId = new Map<string, typeof emptyDetails>();
+
+  if (analysisIds.length > 0) {
+    const [evidencesResponse, skillsResponse, gapsResponse] = await Promise.all([
+      supabase
+        .from("project_evidences")
+        .select("id, analysis_id, evidence_type, title, url, description")
+        .eq("user_id", user.id)
+        .in("analysis_id", analysisIds)
+        .order("created_at", { ascending: true }),
+      supabase
+        .from("analysis_skill_results")
+        .select(
+          "id, analysis_id, skill_name, estimated_level, confidence_score, evidence_summary",
+        )
+        .eq("user_id", user.id)
+        .in("analysis_id", analysisIds)
+        .order("skill_name", { ascending: true }),
+      supabase
+        .from("skill_gaps")
+        .select(
+          "id, analysis_id, skill_name, current_level, required_level, gap_score, priority, explanation",
+        )
+        .eq("user_id", user.id)
+        .in("analysis_id", analysisIds)
+        .order("gap_score", { ascending: false }),
+    ]);
+
+    for (const analysisId of analysisIds) {
+      detailsByAnalysisId.set(analysisId, {
+        evidences: [],
+        skillResults: [],
+        skillGaps: [],
+      });
+    }
+
+    if (!evidencesResponse.error) {
+      for (const evidence of evidencesResponse.data ?? []) {
+        const details = detailsByAnalysisId.get(evidence.analysis_id);
+        if (!details) continue;
+
+        details.evidences.push({
+          id: evidence.id,
+          evidenceType: evidence.evidence_type,
+          title: evidence.title,
+          url: evidence.url,
+          description: evidence.description,
+        });
+      }
+    }
+
+    if (!skillsResponse.error) {
+      for (const skill of skillsResponse.data ?? []) {
+        const details = detailsByAnalysisId.get(skill.analysis_id);
+        if (!details) continue;
+
+        details.skillResults.push({
+          id: skill.id,
+          skillName: skill.skill_name,
+          estimatedLevel: skill.estimated_level,
+          confidenceScore: skill.confidence_score,
+          evidenceSummary: skill.evidence_summary,
+        });
+      }
+    }
+
+    if (!gapsResponse.error) {
+      for (const gap of gapsResponse.data ?? []) {
+        const details = detailsByAnalysisId.get(gap.analysis_id);
+        if (!details) continue;
+
+        details.skillGaps.push({
+          id: gap.id,
+          skillName: gap.skill_name,
+          currentLevel: gap.current_level,
+          requiredLevel: gap.required_level,
+          gapScore: gap.gap_score,
+          priority: gap.priority,
+          explanation: gap.explanation,
+        });
+      }
+    }
+  }
+
   const entries: AnalysisHistoryEntry[] = (data ?? []).map((row) => {
     const role = getRoleInfo(row.target_role);
     const formattedDate = formatDate(row.created_at);
@@ -132,10 +239,13 @@ export default async function AnalysisHistoryPage() {
       technologies: [],
       date: formattedDate.date,
       dateLabel: formattedDate.dateLabel,
+      dateTimeLabel: formattedDate.dateTimeLabel,
       match: row.readiness_score,
       status: getStatusLabel(row.status),
+      statusKey: row.status ?? "",
       icon: getHistoryIcon(role.roleId),
       summary: row.summary,
+      ...(detailsByAnalysisId.get(row.id) ?? emptyDetails),
     };
   });
 

@@ -137,6 +137,61 @@
   object-fit: cover;
 }
 
+.bkpfl-avatarInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+}
+
+.bkpfl-avatarUploadButton {
+  min-height: 40px;
+  margin-top: 16px;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 2px solid var(--bkpfl-ink, #14213d);
+  border-radius: 5px;
+  background: var(--bkpfl-yellow, #ffe681);
+  box-shadow: 3px 3px 0 var(--bkpfl-ink, #14213d);
+  color: var(--bkpfl-ink, #14213d);
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 850;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.bkpfl-avatarUploadButton span {
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.bkpfl-avatarUploadButton:hover {
+  box-shadow: 1px 1px 0 var(--bkpfl-ink, #14213d);
+  transform: translate(2px, 2px);
+}
+
+.bkpfl-avatarUploadButton:focus-visible {
+  outline: 3px solid #5bc3e6;
+  outline-offset: 3px;
+}
+
+.bkpfl-avatarHint {
+  margin: 8px 0 0;
+  color: #526272;
+  font-size: .72rem;
+  line-height: 1.35;
+}
+
 .bkpfl-identity {
   min-width: 0;
   margin-top: 24px;

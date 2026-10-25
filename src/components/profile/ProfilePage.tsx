@@ -1,7 +1,13 @@
 
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 import { createPortal } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
 import { WORKSPACE_PROFILE_UPDATED_EVENT } from "@/data/workspace";
@@ -32,6 +38,8 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [messageLeaving, setMessageLeaving] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
   const {
     isClosing: editDialogClosing,
     requestDismiss: closeEditDialog,
@@ -120,6 +128,36 @@ export default function ProfilePage() {
       window.clearTimeout(removeTimer);
     };
   }, [message]);
+
+  useEffect(() => {
+    return () => {
+      if (avatarPreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(avatarPreview);
+      }
+    };
+  }, [avatarPreview]);
+
+  function selectAvatar(event: ChangeEvent<HTMLInputElement>) {
+    const image = event.target.files?.[0];
+    event.target.value = "";
+    if (!image) return;
+
+    if (!image.type.startsWith("image/")) {
+      setError("Pilih file gambar dengan format JPG, PNG, atau WebP.");
+      return;
+    }
+
+    if (image.size > 5 * 1024 * 1024) {
+      setError("Ukuran foto maksimal 5 MB.");
+      return;
+    }
+
+    setError("");
+    setMessage("");
+    setMessageLeaving(false);
+    const nextPreview = URL.createObjectURL(image);
+    setAvatarPreview(nextPreview);
+  }
 
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -296,7 +334,12 @@ export default function ProfilePage() {
       )}
 
       <div className="bkpfl-grid">
-        <ProfileOverviewCard profile={profile} />
+        <ProfileOverviewCard
+          profile={profile}
+          avatarSrc={avatarPreview || profile.avatar}
+          avatarInputRef={avatarInputRef}
+          onAvatarChange={selectAvatar}
+        />
         <PersonalInformationCard profile={profile} />
       </div>
 
