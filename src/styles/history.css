@@ -299,10 +299,16 @@
   overflow-wrap: anywhere;
 }
 .bkh-cardDetails .bkh-status {
+  width: fit-content;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: #14785d;
+  padding: 4px 8px;
+  border: 2px solid #14213d;
+  border-radius: 999px;
+  background: #d9f0df;
+  box-shadow: 2px 2px 0 #14213d;
+  color: #245f3d;
   font-weight: 700;
 }
 .bkh-matchRing {
@@ -861,12 +867,39 @@
   margin-top: 8px;
   padding: 3px 8px;
   display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border: 2px solid var(--bkh-ink);
   border-radius: 999px;
   background: #e2f0f5;
   color: #1e5d8c;
   font-size: .76rem;
   font-weight: 900;
+}
+
+:is(.bkh-status, .bkh-dialogStatus).bkh-status--completed {
+  background: #d9f0df;
+  color: #245f3d;
+}
+
+:is(.bkh-status, .bkh-dialogStatus).bkh-status--draft {
+  background: #ffe681;
+  color: #604800;
+}
+
+:is(.bkh-status, .bkh-dialogStatus).bkh-status--failed {
+  background: #f7c1b8;
+  color: #8b2f25;
+}
+
+:is(.bkh-status, .bkh-dialogStatus).bkh-status--processing {
+  background: #c7e3ed;
+  color: #1e5d8c;
+}
+
+:is(.bkh-status, .bkh-dialogStatus).bkh-status--unknown {
+  background: #e3e7ea;
+  color: #45515d;
 }
 .bkh-dialogOverview {
   min-width: 0;
@@ -1017,6 +1050,8 @@
 .bkh-dialogEvidencePanel { background: var(--bkh-paper); }
 .bkh-dialogCompetencyPanel { background: #e7f2f6; }
 .bkh-dialogGapPanel { background: #fff3c7; }
+.bkh-dialogProgressPanel { background: #e5f1f5; }
+.bkh-dialogRoadmapPanel { background: #fff3c7; }
 .bkh-dialogSectionHeading {
   min-width: 0;
   display: flex;
@@ -1168,6 +1203,27 @@
 .bkh-dialogCardTop > .bkh-dialogPriority--high,
 .bkh-dialogCardTop > .bkh-dialogPriority--critical { background: #f7c1b8; }
 .bkh-dialogCardTop > .bkh-dialogPriority--low { background: #cce2d0; }
+.bkh-dialogProgressList { margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; list-style: none; }
+.bkh-dialogProgressList > li { min-width: 0; padding: 11px; border: 2px solid var(--bkh-ink); border-radius: 5px; background: var(--bkh-paper); }
+.bkh-dialogProgressHeading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.bkh-dialogProgressHeading strong { min-width: 0; color: var(--bkh-ink); font-size: .84rem; line-height: 1.35; overflow-wrap: anywhere; }
+.bkh-dialogProgressHeading > span { min-width: 52px; padding: 4px 7px; flex: none; border: 2px solid var(--bkh-ink); border-radius: 4px; background: #ffe681; color: var(--bkh-ink); font-size: .76rem; font-weight: 900; text-align: center; }
+.bkh-dialogProgressTrack { height: 14px; margin-top: 9px; overflow: hidden; border: 2px solid var(--bkh-ink); border-radius: 999px; background: #d7dfe2; }
+.bkh-dialogProgressTrack > span { width: var(--bkh-skill-progress); height: 100%; display: block; border-right: 2px solid var(--bkh-ink); background: var(--bkh-blue); transform-origin: left center; animation: bkh-dialog-progress-fill 680ms cubic-bezier(.22, 1, .36, 1) both; }
+.bkh-dialogProgressTrack--empty > span { border-right: 0; animation: none; }
+.bkh-dialogRoadmapList { margin: 14px 0 0; padding: 0; display: grid; gap: 11px; list-style: none; }
+.bkh-dialogRoadmapList > li { min-width: 0; display: grid; grid-template-columns: 39px minmax(0, 1fr); align-items: start; gap: 10px; }
+.bkh-dialogRoadmapNumber { width: 39px; height: 39px; display: grid; place-items: center; border: 2px solid var(--bkh-ink); border-radius: 50%; background: var(--bkh-blue); box-shadow: 3px 3px 0 var(--bkh-ink); color: #fff; font-size: .72rem; font-weight: 900; }
+.bkh-dialogRoadmapCard { min-width: 0; padding: 11px 12px; border: 2px solid var(--bkh-ink); border-radius: 5px; background: var(--bkh-paper); }
+.bkh-dialogRoadmapHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.bkh-dialogRoadmapHeading h4 { margin: 0; color: var(--bkh-ink); font-size: .86rem; line-height: 1.35; overflow-wrap: anywhere; }
+.bkh-dialogRoadmapCard p { margin: 8px 0 0; color: #475666; font-size: .78rem; line-height: 1.45; }
+.bkh-dialogRoadmapTags { display: flex; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.bkh-dialogRoadmapTags span { padding: 3px 5px; border: 1px solid var(--bkh-ink); border-radius: 4px; background: #dcecfb; color: var(--bkh-ink); font-size: .64rem; font-weight: 850; text-transform: capitalize; }
+.bkh-dialogRoadmapTags span:first-child { background: #ffe681; }
+.bkh-dialogRoadmapCard a { min-height: 40px; margin-top: 10px; padding: 7px 9px; display: inline-flex; align-items: center; border: 2px solid var(--bkh-ink); border-radius: 4px; background: var(--bkh-blue); box-shadow: 3px 3px 0 var(--bkh-ink); color: #fff; font-size: .74rem; font-weight: 850; text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease; }
+.bkh-dialogRoadmapCard a:hover { background: #285f91; box-shadow: 1px 1px 0 var(--bkh-ink); color: #fff; transform: translate(2px, 2px); }
+.bkh-dialogRoadmapCard a:focus-visible { outline: 3px solid #5cbfe5; outline-offset: 3px; }
 .bkh-dialogNotice {
   margin-top: 21px;
   padding: 13px 14px;
@@ -1190,6 +1246,10 @@
 @keyframes bkh-dialog-score-fill {
   to { --bkh-dialog-score-progress: var(--bkh-dialog-score); }
 }
+@keyframes bkh-dialog-progress-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
 @media (max-width: 540px) {
   .bkh-dialogOverview {
     grid-template-columns: minmax(0, 1fr);
@@ -1200,6 +1260,15 @@
   .bkh-dialogResultCards {
     grid-template-columns: minmax(0, 1fr);
   }
+  .bkh-dialogProgressList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bkh-dialogRoadmapHeading {
+    flex-direction: column;
+  }
+  .bkh-dialogRoadmapTags {
+    justify-content: flex-start;
+  }
 }
 @media (max-width: 390px) {
   .bkh-dialog .bkh-dialogMeta {
@@ -1208,6 +1277,9 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .bkh-dialogScoreRing { animation: none; --bkh-dialog-score-progress: var(--bkh-dialog-score); }
+  .bkh-dialogProgressTrack > span { animation: none; }
+  .bkh-dialogRoadmapCard a { transition: none; }
+  .bkh-dialogRoadmapCard a:hover { transform: none; }
   .bkh-dialogDone { transition: none; }
   .bkh-dialogDone:hover { transform: none; }
 }

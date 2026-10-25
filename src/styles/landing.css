@@ -533,19 +533,6 @@
   padding-top: clamp(66px, 7vw, 92px);
   padding-bottom: clamp(72px, 7vw, 104px);
 }
-.bk-howItWorks::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 210px;
-  left: -85px;
-  width: 210px;
-  height: 280px;
-  border: 2px solid #14213d;
-  border-radius: 44% 56% 61% 39% / 37% 45% 55% 63%;
-  background: #dceef5;
-  transform: rotate(12deg);
-}
 .bk-howItWorks::after {
   content: "";
   position: absolute;
@@ -1662,13 +1649,6 @@
   .bk-howItWorks {
     padding-top: 58px;
     padding-bottom: 66px;
-  }
-  .bk-howItWorks::before {
-    top: 420px;
-    left: -130px;
-    width: 180px;
-    height: 230px;
-    opacity: 0.5;
   }
   .bk-howItWorks::after {
     right: 4px;

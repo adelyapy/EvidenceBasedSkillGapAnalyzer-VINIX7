@@ -10,6 +10,8 @@ export const analysisRoutes = {
   process: `${ANALYSIS_BASE}/proses-analisis`,
   question: (number: number) => `${ANALYSIS_BASE}/pertanyaan/${number}`,
   result: `${ANALYSIS_BASE}/hasil-analisis`,
+  resultFor: (analysisId: string) =>
+    `${ANALYSIS_BASE}/hasil-analisis?analysisId=${encodeURIComponent(analysisId)}`,
   skillGap: `${ANALYSIS_BASE}/skill-gap-report`,
   roadmap: `${ANALYSIS_BASE}/roadmap`,
 } as const;

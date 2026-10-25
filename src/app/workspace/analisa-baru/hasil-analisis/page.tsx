@@ -4,6 +4,19 @@ import "@/styles/analysis-result.css";
 
 export const metadata: Metadata = { title: "Hasil Analisis | BUKTIVA" };
 
-export default function WorkspaceAnalysisResultPage() {
-  return <AnalysisResultPage />;
+type WorkspaceAnalysisResultPageProps = {
+  searchParams: Promise<{
+    analysisId?: string | string[];
+  }>;
+};
+
+export default async function WorkspaceAnalysisResultPage({
+  searchParams,
+}: WorkspaceAnalysisResultPageProps) {
+  const query = await searchParams;
+  const analysisId = Array.isArray(query.analysisId)
+    ? query.analysisId[0]
+    : query.analysisId;
+
+  return <AnalysisResultPage analysisId={analysisId} />;
 }

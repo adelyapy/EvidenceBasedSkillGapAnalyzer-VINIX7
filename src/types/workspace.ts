@@ -12,3 +12,8 @@ export type WorkspaceUser = {
   role: string;
   avatar: string;
 };
+
+export type WorkspaceProfileUpdatedDetail = {
+  name?: string;
+  avatar?: string;
+};

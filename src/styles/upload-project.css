@@ -272,18 +272,6 @@
   line-height: 1.4;
 }
 
-.bkp-formError {
-  border-left: 7px solid #b42318;
-  background: #fee4e2;
-  color: #861c14;
-}
-
-.bkp-formSuccess {
-  border-left: 7px solid #138a67;
-  background: #e3f5ee;
-  color: #155d4a;
-}
-
 .bkp-storageWarning {
   border-left: 7px solid #b77a0c;
   background: #fff3d6;

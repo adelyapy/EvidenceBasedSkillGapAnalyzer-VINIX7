@@ -104,7 +104,7 @@ export default function WorkspaceHeader({
             <summary aria-label={`Buka menu profil ${user.name}`}>
               <Image
                 src={user.avatar}
-                alt={`Foto profil default ${user.name}`}
+                alt={`Foto profil ${user.name}`}
                 width={34}
                 height={34}
               />

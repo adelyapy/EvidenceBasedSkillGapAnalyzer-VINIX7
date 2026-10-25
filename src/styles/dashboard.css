@@ -127,6 +127,10 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
+
+.bkd-contentGrid--withoutRoadmap > :last-child {
+  grid-column: 1 / -1;
+}
 .bkd-panel {
   min-width: 0;
   border: 2px solid #111;
@@ -293,6 +297,16 @@
   list-style: none;
   padding: 0;
   margin: 0;
+}
+.bkd-recommendationContext {
+  margin: -2px 0 12px;
+  color: #40566a;
+  font-size: 0.76rem;
+  line-height: 1.4;
+}
+.bkd-recommendationContext strong {
+  color: var(--bkd-ink);
+  font-weight: 850;
 }
 .bkd-recommendationList::before {
   content: "";
@@ -1011,6 +1025,33 @@
   color: #455968;
   font-size: .81rem;
   line-height: 1.45;
+}
+.bkd-skillsCard .bkd-skillPointList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.bkd-skillsCard .bkd-skillPointList li {
+  max-width: 100%;
+  padding: 5px 9px;
+  border: 2px solid var(--bkd-ink);
+  border-radius: 999px;
+  background: #fffdf7;
+  color: var(--bkd-ink);
+  font-size: .75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.bkd-skillStatus:first-child .bkd-skillPointList li {
+  background: #cce8f1;
+}
+.bkd-skillStatus:last-child .bkd-skillPointList li {
+  background: #ffe681;
 }
 @media (prefers-reduced-motion: reduce) {
   .bkd-analysisDetailLink { transition: none; }
