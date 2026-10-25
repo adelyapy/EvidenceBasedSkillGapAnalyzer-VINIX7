@@ -29,6 +29,7 @@ export type AnalysisHistoryEntry = {
   evidences: HistoryProjectEvidence[];
   skillResults: HistorySkillResult[];
   skillGaps: HistorySkillGap[];
+  roadmapItems: HistoryRoadmapItem[];
 };
 
 export type HistorySummaryValue = {
@@ -62,4 +63,14 @@ export type HistorySkillGap = {
   gapScore: number;
   priority: string;
   explanation: string | null;
+};
+
+export type HistoryRoadmapItem = {
+  id: string;
+  title: string;
+  description: string | null;
+  resourceUrl: string | null;
+  priority: string | null;
+  status: string | null;
+  sortOrder: number;
 };

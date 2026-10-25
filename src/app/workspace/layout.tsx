@@ -27,7 +27,7 @@ async function AuthenticatedWorkspace({ children }: { children: ReactNode }) {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("full_name")
+    .select("full_name, avatar_url")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -36,13 +36,15 @@ async function AuthenticatedWorkspace({ children }: { children: ReactNode }) {
     user.user_metadata?.full_name?.trim() ||
     user.email?.split("@")[0] ||
     "Pengguna";
+  const avatarUrl =
+    profile?.avatar_url?.trim() || "/images/profile/profile.png";
 
   return (
     <WorkspaceShell
       user={{
         name: displayName,
         role: "Mahasiswa",
-        avatar: "/images/profile/profile.png",
+        avatar: avatarUrl,
       }}
     >
       {children}

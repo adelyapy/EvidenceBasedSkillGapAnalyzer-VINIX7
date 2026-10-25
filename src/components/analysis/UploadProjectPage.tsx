@@ -14,6 +14,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import AnalysisStepper from "./AnalysisStepper";
+import AnalysisToast from "./AnalysisToast";
 import ProjectSourceIcon from "./ProjectSourceIcon";
 import { analysisRoutes, analysisStorage } from "@/data/analysis";
 import {
@@ -40,6 +41,8 @@ const sourceLabels = Object.fromEntries(
 ) as Record<UploadProjectSource, string>;
 const UPLOAD_PROJECT_ORIGIN = "upload-project-v1";
 const UPLOAD_PROJECT_SYNC_EVENT = "buktiva:upload-project:updated";
+const TOAST_VISIBLE_DURATION = 3500;
+const TOAST_EXIT_DURATION = 240;
 
 type SharedUploadProject = AnalysisProject & {
   id: string;
@@ -316,6 +319,8 @@ export default function UploadProjectPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sourceTabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const deleteCancelRef = useRef<HTMLButtonElement>(null);
+  const toastId = useRef(0);
+  const manualToastTimer = useRef<number | null>(null);
   const storedLinksSnapshot = useSyncExternalStore(
     subscribeToStoredLinks,
     getStoredLinksSnapshot,
@@ -332,7 +337,12 @@ export default function UploadProjectPage() {
   const [pdfEvidence, setPdfEvidence] = useState<UploadProjectPdfEvidence[]>(
     () => parseStoredPdfs(),
   );
-  const [error, setError] = useState("");
+  const [toast, setToast] = useState<{
+    id: number;
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+  const [toastLeaving, setToastLeaving] = useState(false);
   const [storageAvailable, setStorageAvailable] = useState(true);
   const [evidenceToDelete, setEvidenceToDelete] =
     useState<UploadProjectEvidence | null>(null);
@@ -382,13 +392,64 @@ export default function UploadProjectPage() {
     };
   }, [closeDeleteDialog, evidenceToDelete]);
 
+  useEffect(() => {
+    if (!toast) return;
+
+    const exitTimer = window.setTimeout(
+      () => setToastLeaving(true),
+      TOAST_VISIBLE_DURATION,
+    );
+    const removeTimer = window.setTimeout(
+      () => setToast(null),
+      TOAST_VISIBLE_DURATION + TOAST_EXIT_DURATION,
+    );
+
+    return () => {
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(removeTimer);
+    };
+  }, [toast]);
+
+  useEffect(
+    () => () => {
+      if (manualToastTimer.current !== null) {
+        window.clearTimeout(manualToastTimer.current);
+      }
+    },
+    [],
+  );
+
+  function showToast(type: "success" | "error", message: string) {
+    toastId.current += 1;
+    setToastLeaving(false);
+    setToast({ id: toastId.current, type, message });
+  }
+
+  function clearToast() {
+    if (!toast) return;
+
+    const currentToastId = toast.id;
+    setToastLeaving(true);
+
+    if (manualToastTimer.current !== null) {
+      window.clearTimeout(manualToastTimer.current);
+    }
+
+    manualToastTimer.current = window.setTimeout(() => {
+      manualToastTimer.current = null;
+      setToast((current) =>
+        current?.id === currentToastId ? null : current,
+      );
+    }, TOAST_EXIT_DURATION);
+  }
+
   const currentSource =
     uploadProjectSources.find((source) => source.id === activeSource) ??
     uploadProjectSources[0];
 
   function changeSource(source: UploadProjectSource) {
     setActiveSource(source);
-    setError("");
+    clearToast();
   }
 
   function handleSourceKeyDown(
@@ -419,16 +480,16 @@ export default function UploadProjectPage() {
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
     setSelectedFile(event.target.files?.[0] ?? null);
-    setError("");
+    clearToast();
   }
 
   function addEvidence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError("");
+    clearToast();
 
     if (activeSource === "pdf") {
       if (!selectedFile) {
-        setError("Pilih dokumen PDF terlebih dahulu.");
+        showToast("error", "Pilih dokumen PDF terlebih dahulu.");
         return;
       }
 
@@ -436,12 +497,15 @@ export default function UploadProjectPage() {
       const isPdfType =
         !selectedFile.type || selectedFile.type === "application/pdf";
       if (!isPdfName || !isPdfType) {
-        setError("Format tidak didukung. Pilih dokumen berformat PDF (.pdf).");
+        showToast(
+          "error",
+          "Format tidak didukung. Pilih dokumen berformat PDF (.pdf).",
+        );
         return;
       }
 
       if (selectedFile.size === 0) {
-        setError("Dokumen PDF kosong. Pilih file lain.");
+        showToast("error", "Dokumen PDF kosong. Pilih file lain.");
         return;
       }
 
@@ -453,7 +517,7 @@ export default function UploadProjectPage() {
           item.file.lastModified === selectedFile.lastModified,
       );
       if (duplicate) {
-        setError("Dokumen PDF yang sama sudah ditambahkan.");
+        showToast("error", "Dokumen PDF yang sama sudah ditambahkan.");
         return;
       }
 
@@ -465,15 +529,22 @@ export default function UploadProjectPage() {
       };
       const nextEvidence = [...evidence, pdfItem];
       setPdfEvidence((items) => [...items, pdfItem]);
-      setStorageAvailable(persistLinks(nextEvidence));
+      const stored = persistLinks(nextEvidence);
+      setStorageAvailable(stored);
       setSelectedFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
+      showToast(
+        stored ? "success" : "error",
+        stored
+          ? `Dokumen ${selectedFile.name} berhasil ditambahkan.`
+          : "Dokumen ditambahkan, tetapi penyimpanan sesi tidak tersedia.",
+      );
       return;
     }
 
     const validation = validateUrl(urlValue, activeSource);
     if (!validation.ok) {
-      setError(validation.error);
+      showToast("error", validation.error);
       return;
     }
 
@@ -482,7 +553,7 @@ export default function UploadProjectPage() {
         (item) => item.kind === "url" && item.value === validation.value,
       )
     ) {
-      setError("URL yang sama sudah ditambahkan.");
+      showToast("error", "URL yang sama sudah ditambahkan.");
       return;
     }
 
@@ -495,8 +566,15 @@ export default function UploadProjectPage() {
         value: validation.value,
       },
     ];
-    setStorageAvailable(persistLinks(nextEvidence));
+    const stored = persistLinks(nextEvidence);
+    setStorageAvailable(stored);
     setUrlValue("");
+    showToast(
+      stored ? "success" : "error",
+      stored
+        ? `${sourceLabels[activeSource]} berhasil ditambahkan.`
+        : "URL ditambahkan, tetapi penyimpanan sesi tidak tersedia.",
+    );
   }
 
   function removeEvidence(id: string) {
@@ -505,15 +583,22 @@ export default function UploadProjectPage() {
     if (removedEvidence?.kind === "pdf") {
       setPdfEvidence((items) => items.filter((item) => item.id !== id));
     }
-    setStorageAvailable(persistLinks(nextEvidence));
-    setError("");
+    const stored = persistLinks(nextEvidence);
+    setStorageAvailable(stored);
+    showToast(
+      stored ? "success" : "error",
+      stored
+        ? "Bukti proyek berhasil dihapus."
+        : "Bukti dihapus, tetapi perubahan tidak dapat disimpan ke sesi.",
+    );
   }
 
   function continueToTargetRole() {
-    setError("");
+    clearToast();
 
     if (evidence.length === 0) {
-      setError(
+      showToast(
+        "error",
         "Tambahkan minimal satu URL atau dokumen PDF untuk melanjutkan.",
       );
       return;
@@ -521,7 +606,8 @@ export default function UploadProjectPage() {
 
     if (!persistLinks(evidence)) {
       setStorageAvailable(false);
-      setError(
+      showToast(
+        "error",
         "Bukti proyek tidak dapat disimpan. Navigasi dihentikan agar data tidak hilang.",
       );
       return;
@@ -613,7 +699,10 @@ export default function UploadProjectPage() {
                 type="file"
                 accept=".pdf,application/pdf"
                 onChange={onFileChange}
-                aria-describedby="bkp-form-error"
+                aria-invalid={toast?.type === "error"}
+                aria-errormessage={
+                  toast?.type === "error" ? "bkp-upload-toast" : undefined
+                }
               />
             </div>
           ) : (
@@ -631,9 +720,12 @@ export default function UploadProjectPage() {
                 placeholder={currentSource.placeholder}
                 onChange={(event) => {
                   setUrlValue(event.target.value);
-                  setError("");
+                  clearToast();
                 }}
-                aria-describedby="bkp-form-error"
+                aria-invalid={toast?.type === "error"}
+                aria-errormessage={
+                  toast?.type === "error" ? "bkp-upload-toast" : undefined
+                }
               />
             </div>
           )}
@@ -642,15 +734,6 @@ export default function UploadProjectPage() {
           </button>
         </form>
 
-        {error && (
-          <p
-            className="bkp-formMessage bkp-formError"
-            id="bkp-form-error"
-            role="alert"
-          >
-            {error}
-          </p>
-        )}
         {!storageAvailable && (
           <p className="bkp-formMessage bkp-storageWarning" role="status">
             Penyimpanan sesi tidak tersedia. URL tetap tersimpan selama halaman
@@ -736,6 +819,15 @@ export default function UploadProjectPage() {
           Lanjutkan <span aria-hidden="true">→</span>
         </button>
       </div>
+      {toast && (
+        <AnalysisToast
+          key={toast.id}
+          id="bkp-upload-toast"
+          type={toast.type}
+          message={toast.message}
+          leaving={toastLeaving}
+        />
+      )}
       {evidenceToDelete &&
         typeof document !== "undefined" &&
         createPortal(

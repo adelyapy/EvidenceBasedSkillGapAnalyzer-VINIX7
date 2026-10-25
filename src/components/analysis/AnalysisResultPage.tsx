@@ -42,6 +42,16 @@ type SkillGap = {
   explanation: string | null;
 };
 
+type RoadmapItem = {
+  id: string;
+  title: string;
+  description: string | null;
+  resource_url: string | null;
+  priority: string | null;
+  status: string | null;
+  sort_order: number;
+};
+
 function statusLabel(status: string) {
   const labels: Record<string, string> = {
     draft: "Draf",
@@ -85,27 +95,149 @@ function formatConfidence(score: number | null) {
   return `${Math.round(percentage)}%`;
 }
 
-export default function AnalysisResultPage() {
+function calculateTargetProgress(
+  currentLevel: number | null,
+  requiredLevel: number,
+) {
+  if (currentLevel === null) return null;
+
+  const current = Number(currentLevel);
+  const required = Number(requiredLevel);
+
+  if (
+    !Number.isFinite(current) ||
+    !Number.isFinite(required) ||
+    required <= 0
+  ) {
+    return null;
+  }
+
+  return Math.round(Math.min(100, Math.max(0, (current / required) * 100)));
+}
+
+function AnalysisResultSkeleton() {
+  return (
+    <section
+      className="bkr-resultSkeleton"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <div className="bkr-skeletonStatus">
+        <span className="bkr-skeletonDots" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <p>Menyiapkan hasil analisis Anda...</p>
+      </div>
+
+      <div className="bkr-skeletonOverview" aria-hidden="true">
+        <div className="bkr-skeletonOverviewCopy">
+          <span className="bkr-skeletonLine bkr-skeletonLine--eyebrow" />
+          <span className="bkr-skeletonLine bkr-skeletonLine--title" />
+          <span className="bkr-skeletonLine bkr-skeletonLine--wide" />
+          <span className="bkr-skeletonLine bkr-skeletonLine--medium" />
+          <div className="bkr-skeletonMetaGrid">
+            <div>
+              <span className="bkr-skeletonLine bkr-skeletonLine--label" />
+              <span className="bkr-skeletonLine bkr-skeletonLine--value" />
+            </div>
+            <div>
+              <span className="bkr-skeletonLine bkr-skeletonLine--label" />
+              <span className="bkr-skeletonLine bkr-skeletonLine--value" />
+            </div>
+          </div>
+        </div>
+        <div className="bkr-skeletonScore">
+          <span className="bkr-skeletonScoreRing" />
+          <span className="bkr-skeletonLine bkr-skeletonLine--scoreLabel" />
+        </div>
+      </div>
+
+      <div className="bkr-skeletonSection" aria-hidden="true">
+        <div className="bkr-skeletonSectionHeading">
+          <div>
+            <span className="bkr-skeletonLine bkr-skeletonLine--eyebrow" />
+            <span className="bkr-skeletonLine bkr-skeletonLine--heading" />
+          </div>
+          <span className="bkr-skeletonCount" />
+        </div>
+        <div className="bkr-skeletonCardGrid">
+          {[0, 1].map((item) => (
+            <div className="bkr-skeletonCard" key={item}>
+              <span className="bkr-skeletonIcon" />
+              <div>
+                <span className="bkr-skeletonLine bkr-skeletonLine--cardTitle" />
+                <span className="bkr-skeletonLine bkr-skeletonLine--cardMeta" />
+                <span className="bkr-skeletonLine bkr-skeletonLine--wide" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="bkr-skeletonSection bkr-skeletonSection--compact"
+        aria-hidden="true"
+      >
+        <div className="bkr-skeletonSectionHeading">
+          <div>
+            <span className="bkr-skeletonLine bkr-skeletonLine--eyebrow" />
+            <span className="bkr-skeletonLine bkr-skeletonLine--heading" />
+          </div>
+        </div>
+        <div className="bkr-skeletonCardGrid">
+          {[0, 1].map((item) => (
+            <div className="bkr-skeletonCard bkr-skeletonCard--result" key={item}>
+              <span className="bkr-skeletonLine bkr-skeletonLine--cardTitle" />
+              <span className="bkr-skeletonLine bkr-skeletonLine--cardMeta" />
+              <span className="bkr-skeletonLine bkr-skeletonLine--wide" />
+              <span className="bkr-skeletonLine bkr-skeletonLine--medium" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+type AnalysisResultPageProps = {
+  analysisId?: string;
+};
+
+export default function AnalysisResultPage({
+  analysisId: requestedAnalysisId,
+}: AnalysisResultPageProps) {
   const [analysis, setAnalysis] = useState<AnalysisRecord | null>(null);
   const [evidences, setEvidences] = useState<ProjectEvidence[]>([]);
   const [skillResults, setSkillResults] = useState<SkillResult[]>([]);
   const [skillGaps, setSkillGaps] = useState<SkillGap[]>([]);
+  const [roadmapItems, setRoadmapItems] = useState<RoadmapItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [resultError, setResultError] = useState("");
+  const [roadmapError, setRoadmapError] = useState("");
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadAnalysis() {
       try {
-        const analysisId = sessionStorage.getItem(
-          analysisStorage.activeAnalysisId,
-        );
+        const analysisId =
+          requestedAnalysisId?.trim() ||
+          sessionStorage.getItem(analysisStorage.activeAnalysisId);
 
         if (!analysisId) {
           throw new Error(
             "Analisis aktif tidak ditemukan. Silakan mulai analisis baru.",
+          );
+        }
+
+        if (requestedAnalysisId) {
+          sessionStorage.setItem(
+            analysisStorage.activeAnalysisId,
+            analysisId,
           );
         }
 
@@ -150,10 +282,12 @@ export default function AnalysisResultPage() {
 
         let skills: SkillResult[] = [];
         let gaps: SkillGap[] = [];
+        let roadmap: RoadmapItem[] = [];
         let resultLoadError = "";
+        let roadmapLoadError = "";
 
         if (data.status === "completed") {
-          const [skillsResponse, gapsResponse] = await Promise.all([
+          const [skillsResponse, gapsResponse, roadmapResponse] = await Promise.all([
             supabase
               .from("analysis_skill_results")
               .select(
@@ -171,6 +305,15 @@ export default function AnalysisResultPage() {
               .eq("analysis_id", analysisId)
               .eq("user_id", user.id)
               .order("gap_score", { ascending: false }),
+
+            supabase
+              .from("roadmap_items")
+              .select(
+                "id, title, description, resource_url, priority, status, sort_order",
+              )
+              .eq("analysis_id", analysisId)
+              .eq("user_id", user.id)
+              .order("sort_order", { ascending: true }),
           ]);
 
           if (skillsResponse.error || gapsResponse.error) {
@@ -180,6 +323,13 @@ export default function AnalysisResultPage() {
             skills = (skillsResponse.data ?? []) as SkillResult[];
             gaps = (gapsResponse.data ?? []) as SkillGap[];
           }
+
+          if (roadmapResponse.error) {
+            roadmapLoadError =
+              "Roadmap pengembangan belum dapat diambil dari database.";
+          } else {
+            roadmap = (roadmapResponse.data ?? []) as RoadmapItem[];
+          }
         }
 
         if (cancelled) return;
@@ -188,7 +338,9 @@ export default function AnalysisResultPage() {
         setEvidences((evidenceData ?? []) as ProjectEvidence[]);
         setSkillResults(skills);
         setSkillGaps(gaps);
+        setRoadmapItems(roadmap);
         setResultError(resultLoadError);
+        setRoadmapError(roadmapLoadError);
       } catch (cause) {
         if (!cancelled) {
           setError(
@@ -207,7 +359,7 @@ export default function AnalysisResultPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [requestedAnalysisId]);
 
   return (
     <article className="bkr-page" aria-labelledby="bkr-title">
@@ -222,12 +374,7 @@ export default function AnalysisResultPage() {
         {analysis && <PrintAnalysisReportButton />}
       </header>
 
-      {loading && (
-        <section className="bkr-loading" role="status" aria-live="polite">
-          <span /><span /><span />
-          <p>Menyiapkan hasil analisis Anda...</p>
-        </section>
-      )}
+      {loading && <AnalysisResultSkeleton />}
 
       {!loading && error && (
         <section className="bkr-panel bkr-errorPanel" role="alert">
@@ -308,7 +455,7 @@ export default function AnalysisResultPage() {
                     {skillResults.map((skill) => (
                       <li key={skill.id}>
                         <div className="bkr-cardTop"><strong>{skill.skill_name || "Keterampilan tidak bernama"}</strong><span>{formatLevel(skill.estimated_level)}</span></div>
-                        <p><b>Keyakinan AI</b> {formatConfidence(skill.confidence_score)}</p>
+                        <p><b>Hasil Persentase Kompetensi</b> {formatConfidence(skill.confidence_score)}</p>
                         <p className="bkr-cardDescription">{skill.evidence_summary || "Belum ada ringkasan bukti yang tersedia."}</p>
                       </li>
                     ))}
@@ -333,6 +480,139 @@ export default function AnalysisResultPage() {
                       </li>
                     ))}
                   </ul>
+                )}
+              </section>
+
+              <section
+                className="bkr-section bkr-skillProgressPanel"
+                aria-labelledby="bkr-skill-progress-title"
+              >
+                <div className="bkr-sectionHeading">
+                  <div>
+                    <p className="bkr-sectionEyebrow">Progres terhadap target</p>
+                    <h2 id="bkr-skill-progress-title">
+                      Persentase Penguasaan Skill
+                    </h2>
+                  </div>
+                </div>
+                <p className="bkr-skillProgressIntro">
+                  Persentase menunjukkan perbandingan level saat ini dengan
+                  level yang dibutuhkan untuk target role.
+                </p>
+
+                {resultError ? (
+                  <p className="bkr-emptyCopy">
+                    Persentase skill belum dapat ditampilkan.
+                  </p>
+                ) : skillGaps.length === 0 ? (
+                  <p className="bkr-emptyCopy">
+                    Belum ada data level skill yang dapat dihitung.
+                  </p>
+                ) : (
+                  <ul className="bkr-skillProgressList">
+                    {skillGaps.map((gap) => {
+                      const percentage = calculateTargetProgress(
+                        gap.current_level,
+                        gap.required_level,
+                      );
+                      const skillName =
+                        gap.skill_name || "Keterampilan tidak bernama";
+
+                      return (
+                        <li key={gap.id}>
+                          <div className="bkr-skillProgressHeading">
+                            <strong>{skillName}</strong>
+                            <span>
+                              {percentage === null ? "—" : `${percentage}%`}
+                            </span>
+                          </div>
+                          <div
+                            className={`bkr-skillProgressTrack${
+                              percentage === null
+                                ? " bkr-skillProgressTrack--empty"
+                                : ""
+                            }`}
+                            role="progressbar"
+                            aria-label={`Pemenuhan target ${skillName}`}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-valuenow={percentage ?? undefined}
+                            aria-valuetext={
+                              percentage === null
+                                ? "Belum dapat dihitung"
+                                : `${percentage} persen dari target role`
+                            }
+                          >
+                            <span
+                              style={
+                                {
+                                  "--bkr-skill-progress": `${percentage ?? 0}%`,
+                                } as CSSProperties
+                              }
+                            />
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </section>
+
+              <section
+                className="bkr-section bkr-roadmapPanel"
+                aria-labelledby="bkr-roadmap-title"
+              >
+                <div className="bkr-sectionHeading">
+                  <div>
+                    <p className="bkr-sectionEyebrow">Langkah berikutnya</p>
+                    <h2 id="bkr-roadmap-title">Roadmap Pengembangan</h2>
+                  </div>
+                  {!roadmapError && roadmapItems.length > 0 && (
+                    <span>{roadmapItems.length} langkah</span>
+                  )}
+                </div>
+
+                {roadmapError ? (
+                  <p className="bkr-emptyCopy" role="alert">
+                    {roadmapError}
+                  </p>
+                ) : roadmapItems.length === 0 ? (
+                  <p className="bkr-emptyCopy">
+                    Roadmap pengembangan belum tersedia untuk analisis ini.
+                  </p>
+                ) : (
+                  <ol className="bkr-developmentRoadmap">
+                    {roadmapItems.map((item, index) => (
+                      <li key={item.id}>
+                        <span
+                          className="bkr-roadmapNumber"
+                          aria-label={`Langkah ${index + 1}`}
+                        >
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <article className="bkr-roadmapCard">
+                          <div className="bkr-roadmapCardHeading">
+                            <h3>{item.title}</h3>
+                            <div className="bkr-roadmapTags">
+                              {item.priority && (
+                                <span>{priorityLabel(item.priority)}</span>
+                              )}
+                            </div>
+                          </div>
+                          {item.description && <p>{item.description}</p>}
+                          {item.resource_url && (
+                            <a
+                              href={item.resource_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Buka sumber belajar ↗
+                            </a>
+                          )}
+                        </article>
+                      </li>
+                    ))}
+                  </ol>
                 )}
               </section>
             </>
@@ -366,10 +646,12 @@ export default function AnalysisResultPage() {
         </>
       )}
 
-      <nav className="bkr-actions bkr-screenOnly" aria-label="Navigasi hasil analisis">
-        <Link className="bkr-actionButton bkr-actionButton--secondary" href="/workspace/dashboard">← Kembali ke Dashboard</Link>
-        <Link className="bkr-actionButton bkr-actionButton--primary" href={analysisRoutes.uploadProject}>Mulai analisis baru →</Link>
-      </nav>
+      {!loading && (
+        <nav className="bkr-actions bkr-screenOnly" aria-label="Navigasi hasil analisis">
+          <Link className="bkr-actionButton bkr-actionButton--secondary" href="/workspace/dashboard">← Kembali ke Dashboard</Link>
+          <Link className="bkr-actionButton bkr-actionButton--primary" href={analysisRoutes.uploadProject}>Mulai analisis baru →</Link>
+        </nav>
+      )}
     </article>
   );
 }

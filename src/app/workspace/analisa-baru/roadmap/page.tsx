@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import RoadmapPage from "@/components/analysis/RoadmapPage";
-import "@/styles/roadmap.css";
+import UnavailableAnalysisFeature from "@/components/analysis/UnavailableAnalysisFeature";
+import "@/styles/unavailable-analysis-feature.css";
 
-export const metadata: Metadata = { title: "Road Map Pengembangan Skill | BUKTIVA" };
+export const metadata: Metadata = {
+  title: "Roadmap Belum Tersedia | BUKTIVA",
+};
 
 export default function WorkspaceRoadmapPage() {
-  return <RoadmapPage />;
+  return (
+    <UnavailableAnalysisFeature
+      featureName="Roadmap Pengembangan"
+      description="Halaman roadmap terpisah belum tersedia pada alur aplikasi yang sedang digunakan."
+    />
+  );
 }

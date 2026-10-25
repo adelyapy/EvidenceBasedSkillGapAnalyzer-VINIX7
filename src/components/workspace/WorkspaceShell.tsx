@@ -4,7 +4,10 @@ import { useEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { WORKSPACE_PROFILE_UPDATED_EVENT } from "@/data/workspace";
-import type { WorkspaceUser } from "@/types/workspace";
+import type {
+  WorkspaceProfileUpdatedDetail,
+  WorkspaceUser,
+} from "@/types/workspace";
 import WorkspaceHeader from "./WorkspaceHeader";
 import WorkspaceSidebar from "./WorkspaceSidebar";
 
@@ -18,9 +21,9 @@ export default function WorkspaceShell({
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const [updatedProfileName, setUpdatedProfileName] = useState<string | null>(
-    null,
-  );
+  const [profileOverrides, setProfileOverrides] = useState<
+    Partial<Pick<WorkspaceUser, "name" | "avatar">>
+  >({});
   const pathname = usePathname();
   const router = useRouter();
 
@@ -44,23 +47,32 @@ export default function WorkspaceShell({
   }, [mobileOpen]);
 
   useEffect(() => {
-    const updateProfileName = (event: Event) => {
-      const detail = (event as CustomEvent<{ name?: unknown }>).detail;
+    const updateWorkspaceProfile = (event: Event) => {
+      const detail = (event as CustomEvent<WorkspaceProfileUpdatedDetail>)
+        .detail;
       const nextName =
         typeof detail?.name === "string" ? detail.name.trim() : "";
+      const nextAvatar =
+        typeof detail?.avatar === "string" ? detail.avatar.trim() : "";
 
-      if (nextName) setUpdatedProfileName(nextName);
+      if (!nextName && !nextAvatar) return;
+
+      setProfileOverrides((current) => ({
+        ...current,
+        ...(nextName ? { name: nextName } : {}),
+        ...(nextAvatar ? { avatar: nextAvatar } : {}),
+      }));
     };
 
     window.addEventListener(
       WORKSPACE_PROFILE_UPDATED_EVENT,
-      updateProfileName,
+      updateWorkspaceProfile,
     );
 
     return () =>
       window.removeEventListener(
         WORKSPACE_PROFILE_UPDATED_EVENT,
-        updateProfileName,
+        updateWorkspaceProfile,
       );
   }, []);
 
@@ -104,11 +116,7 @@ export default function WorkspaceShell({
 
       <div className="bkw-mainColumn">
         <WorkspaceHeader
-          user={
-            updatedProfileName
-              ? { ...user, name: updatedProfileName }
-              : user
-          }
+          user={{ ...user, ...profileOverrides }}
           collapsed={collapsed}
           mobileOpen={mobileOpen}
           onLogout={handleLogout}
