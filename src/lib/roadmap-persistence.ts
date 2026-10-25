@@ -1,6 +1,6 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { RoadmapItemInsert } from "./gap-based-generator";
+import type { RoadmapItemInsert } from "./roadmap/gap-based-generator";
 
 export async function persistGapBasedRoadmap(
   supabaseAdmin: SupabaseClient,
@@ -49,7 +49,7 @@ export async function persistGapBasedRoadmap(
       .delete()
       .eq("analysis_id", analysisId)
       .eq("user_id", userId)
-      .not("id", "in", newIds); // Supabase mendukung array langsung di sini
+      .not("id", "in", `(${newIds.join(",")})`);
 
     if (deleteError) {
       // Hanya log, jangan throw. Data baru sudah masuk. Sisa data lama tidak merusak sistem.
