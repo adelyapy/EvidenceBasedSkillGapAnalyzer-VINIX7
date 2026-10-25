@@ -596,3 +596,130 @@ Tangkapan layar menunjukkan angka penggunaan RPD di atas batas yang ditampilkan.
 Pekerjaan backend BUKTIVA tidak terbatas pada satu perubahan halaman. Cakupannya meliputi alur ingestion bukti, integrasi AI, validasi jawaban, scoring dan skill gap, roadmap, keamanan akses data Supabase, pengujian, serta integrasi dengan pekerjaan frontend dan AI Engineer. Setelah integrasi, pekerjaan berlanjut pada penyesuaian sumber data profil/dashboard dan pemeriksaan kuota Gemini API.
 
 Dokumen ini menggabungkan prompt kerja yang direkonstruksi dengan catatan teknis dari percakapan. Untuk laporan akhir, status implementasi sebaiknya dicocokkan lagi dengan kode terbaru, hasil pengujian, dan riwayat Git. Jangan menyatakan fitur yang baru direncanakan atau baru disiapkan kodenya sebagai selesai tanpa verifikasi.
+
+---
+
+## 33. Prompt — Mengaktifkan Login dan Pendaftaran dengan Google OAuth
+
+### Tujuan
+Mengaktifkan tombol Google pada halaman autentikasi BUKTIVA menggunakan Supabase Auth dan Google OAuth, tanpa mengganggu login email/password maupun pendaftaran email yang sudah tersedia.
+
+### Prompt kerja
+> Audit implementasi autentikasi BUKTIVA sebelum mengubah kode. Periksa komponen form autentikasi, Supabase browser/server client, route callback yang sudah ada, dan konfigurasi URL. Integrasikan `supabase.auth.signInWithOAuth({ provider: "google" })` pada tombol Google. Gunakan callback Next.js yang menukar authorization code dengan sesi melalui `exchangeCodeForSession`, mempertahankan cookie menggunakan helper server Supabase yang sudah ada, dan mengarahkan pengguna yang berhasil masuk ke dashboard. Tangani kegagalan dengan aman. Jangan menampilkan secret di kode atau log, jangan mengubah desain form tanpa kebutuhan, dan jalankan pemeriksaan TypeScript serta build sebelum commit.
+
+### Kondisi awal yang ditemukan
+- `src/components/auth/AuthForm.tsx` sudah memiliki tombol Google dan prop `onGoogleClick`.
+- `src/components/auth/AuthPage.tsx` sebelumnya hanya menampilkan notifikasi `Masuk dengan Google belum aktif.` ketika tombol diklik.
+- `src/lib/supabase/client.ts` menggunakan `createBrowserClient` dari `@supabase/ssr`.
+- `src/lib/supabase/server.ts` menggunakan `createServerClient` dan `cookies` dari `next/headers`, termasuk mekanisme `getAll`/`setAll` untuk sesi.
+- Pemeriksaan awal pada `src/app` tidak menemukan route callback OAuth yang sudah ada.
+- Halaman login dan register menggunakan komponen `AuthPage.tsx` yang sama; karena itu handler Google dapat digunakan untuk kedua mode tanpa membuat ulang tombol.
+
+### Perubahan yang dibuat
+- Handler Google di `src/components/auth/AuthPage.tsx` diubah agar memanggil Supabase OAuth dengan provider `google`.
+- Redirect OAuth diarahkan ke `${window.location.origin}/auth/callback`.
+- Route baru dibuat pada `src/app/auth/callback/route.ts`.
+- Route callback membaca parameter `code`, memanggil `exchangeCodeForSession(code)`, lalu mengarahkan pengguna ke `/workspace/dashboard` ketika pertukaran kode berhasil.
+- Jika parameter kode tidak ada atau pertukaran sesi gagal, pengguna diarahkan kembali ke `/login?error=google_auth_failed`.
+- Parameter `next` dibatasi menjadi path relatif yang tidak diawali `//` untuk menghindari redirect ke host eksternal.
+- Desain `AuthForm.tsx` tidak perlu diubah karena tombol sudah tersedia.
+
+### Konfigurasi dashboard yang dibahas
+1. Google Cloud Console: membuat OAuth client dengan tipe **Web application**.
+2. **Authorized JavaScript origins** harus berisi origin production Vercel dan `http://localhost:3000` untuk pengujian lokal.
+3. **Authorized redirect URI** di Google Cloud harus menggunakan callback Supabase yang ditampilkan di konfigurasi provider, dengan bentuk `https://<project-ref>.supabase.co/auth/v1/callback`.
+4. Supabase Authentication → Sign In / Providers → Google: aktifkan provider dan masukkan OAuth Client ID serta Client Secret yang diterbitkan Google Cloud. Alamat email bukan nilai Client ID.
+5. Supabase Authentication → URL Configuration: Site URL menggunakan domain production; Redirect URLs perlu mengizinkan callback aplikasi untuk lokal dan production, misalnya `http://localhost:3000/auth/callback` dan `https://<production-domain>/auth/callback`. Wildcard untuk domain production dapat digunakan jika sesuai dengan kebutuhan aplikasi.
+6. Jangan menaruh Client Secret, `SUPABASE_SERVICE_ROLE_KEY`, atau kredensial lain di kode frontend, Git, dokumentasi publik, maupun percakapan. Secret yang pernah terlihat terbuka pada screenshot sebaiknya dirotasi jika masih aktif.
+
+### Validasi yang telah dilaporkan
+- `npx tsc --noEmit` berhasil tanpa menampilkan error.
+- `npm run build` berhasil dengan Next.js 16.4.0.
+- Output build mencantumkan route dinamis `ƒ /auth/callback`.
+- Pengguna melaporkan pengujian login Google di lokal berhasil.
+
+### Commit yang tercatat
+- Branch: `backend-dev`.
+- Commit: `53f5643 feat(auth): enable Google OAuth login and registration`.
+- `git status` menunjukkan working tree bersih dan branch `backend-dev` up to date dengan `origin/backend-dev` pada pemeriksaan terakhir yang dibagikan.
+
+---
+
+## 34. Prompt — Deploy Perubahan OAuth ke Vercel Production
+
+### Tujuan
+Memastikan perubahan yang sudah lulus pengujian lokal benar-benar masuk ke branch production yang dipantau Vercel dan dapat diuji di domain production.
+
+### Prompt kerja
+> Periksa branch aktif, status working tree, commit terbaru, dan source commit deployment Vercel sebelum menyimpulkan bahwa perubahan sudah ter-deploy. Bedakan keberhasilan build lokal, commit yang sudah di-push ke branch fitur, dan deployment production. Jangan menganggap Vercel hanya membutuhkan waktu jika source commit-nya masih lama. Periksa alur integrasi tim dan pastikan perubahan sudah di-merge ke branch production sebelum menunggu deployment otomatis. Jangan melakukan merge atau push ke branch utama tanpa memeriksa status dan meminta konfirmasi pengguna.
+
+### Status Git dan Vercel yang terlihat pada 25 Oktober 2026
+- Pemeriksaan lokal menunjukkan branch aktif `backend-dev`.
+- `git status`: working tree bersih; branch up to date dengan `origin/backend-dev`.
+- `git log -1 --oneline`: `53f5643 (HEAD -> backend-dev, origin/backend-dev) feat(auth): enable Google OAuth login and registration`.
+- `git branch --show-current`: `backend-dev`.
+- Screenshot Vercel menunjukkan deployment Production berstatus `Ready`, tetapi source branch masih `main` dan source commit masih `fc8c6f7` (`Merge pull request #42 from adelyapy/backend-dev`).
+- Dengan demikian, commit OAuth `53f5643` sudah berada di `origin/backend-dev`, tetapi belum terbukti masuk ke deployment production yang ditunjukkan screenshot.
+
+### Tindak lanjut deployment
+- [ ] Jalankan `git switch main` dan `git pull origin main` untuk memeriksa keadaan branch utama terkini.
+- [ ] Sebelum merge, pastikan tidak ada perubahan yang belum siap dipublikasikan dan tinjau commit yang akan digabung.
+- [ ] Gabungkan `backend-dev` ke `main` sesuai alur kerja tim, selesaikan konflik jika ada, lalu push `main` hanya setelah pengguna memastikan siap.
+- [ ] Tunggu deployment otomatis Vercel dan pastikan status `Ready`, environment `Production`, serta source commit sesuai dengan merge terbaru.
+- [ ] Uji login Google pada domain production, bukan hanya di localhost.
+- [ ] Jika deployment sudah memakai commit terbaru tetapi login tetap gagal, periksa Redirect URLs Supabase, domain production yang benar, log Vercel, dan pesan error autentikasi.
+
+### Catatan penting
+Status deployment harus dibuktikan dari source commit pada Vercel. Domain preview/deployment khusus tidak selalu sama dengan domain production utama. Menunggu saja tidak akan memasukkan commit branch `backend-dev` ke `main` apabila alur deployment hanya memantau `main`.
+
+---
+
+## 35. Prompt — Prinsip Kerja dan Batasan Peran Backend Developer
+
+### Prompt kerja yang diperbarui
+> Bertindak sebagai pendamping teknis untuk peran saya sebagai Backend Developer pada proyek BUKTIVA — Evidence-Based Skill Gap Analyzer. Gunakan repositori yang sudah ada dan pahami implementasi, skema database, kontrak API, branch, serta pekerjaan anggota tim sebelum memberi perubahan. Fokus pada API, integrasi Supabase, autentikasi dan otorisasi, pemrosesan evidence, integrasi Gemini, validasi, scoring, skill gap, roadmap, konsistensi data profil/dashboard, pengujian, dan deployment. Koordinasikan perubahan yang menyentuh UI dengan batas peran frontend: pertahankan desain dan styling kecuali saya secara eksplisit meminta perubahan UI. Jangan mengarang struktur tabel, status implementasi, hasil uji, atau status deployment. Bedakan dengan jelas antara rencana, kode yang telah dibuat, pengujian yang telah lulus, commit yang telah di-push, dan deployment yang telah terverifikasi. Berikan instruksi PowerShell yang bisa dijalankan bertahap, periksa status Git sebelum merge/push, jangan meminta atau menampilkan secret, dan jangan melakukan commit, push, merge, atau perubahan production tanpa instruksi/konfirmasi saya.
+
+### Prinsip pelaksanaan
+- Baca kode dan kontrak yang sudah ada sebelum menyarankan perubahan.
+- Utamakan perubahan kecil dan terarah; jangan menulis ulang file penuh tanpa alasan.
+- Pertahankan autentikasi, otorisasi kepemilikan data, RLS, validasi input, dan kompatibilitas frontend.
+- Validasi hasil AI sebagai data yang belum tentu benar; tangani kegagalan dan batas penggunaan Gemini.
+- Jalankan pengujian relevan, `npx tsc --noEmit`, dan `npm run build` bila sesuai dengan perubahan.
+- Sebelum commit atau integrasi, tinjau `git status`, branch aktif, log commit, serta konflik.
+- Untuk Vercel, verifikasi branch dan source commit deployment, bukan hanya status `Ready`.
+- Jangan menyatakan fitur selesai hanya karena kode telah ditulis; gunakan hasil uji atau bukti deployment sebagai dasar status.
+
+---
+
+## 36. Checklist Rekap Terbaru — 25 Oktober 2026
+
+### Terverifikasi dalam percakapan
+- [x] Integrasi Google OAuth ditambahkan ke `AuthPage.tsx`.
+- [x] Route callback `src/app/auth/callback/route.ts` ditambahkan.
+- [x] `npx tsc --noEmit` berhasil.
+- [x] `npm run build` berhasil dan output build mengenali `/auth/callback`.
+- [x] Pengguna melaporkan login Google berhasil diuji di lokal.
+- [x] Commit `53f5643` dibuat dan tersedia di `origin/backend-dev`.
+- [x] Working tree `backend-dev` bersih pada pemeriksaan terakhir.
+
+### Belum terverifikasi / tindak lanjut
+- [ ] Pastikan domain production utama dan callback aplikasi production terdaftar di Supabase URL Configuration.
+- [ ] Pastikan kredensial OAuth di Supabase berasal dari OAuth client yang benar di Google Cloud.
+- [ ] Rotasi OAuth Client Secret jika nilai aktif pernah terekspos pada screenshot.
+- [ ] Integrasikan commit `53f5643` ke `main` melalui alur tim yang disepakati.
+- [ ] Verifikasi deployment Vercel Production mengambil commit merge terbaru.
+- [ ] Uji login Google langsung di domain production.
+- [ ] Pastikan pesan error OAuth ditangani dengan baik pada UI; query `error=google_auth_failed` saat ini perlu dipastikan ditampilkan secara informatif jika diinginkan.
+
+---
+
+## 37. Catatan Status dan Sumber Kebenaran
+
+Dokumen ini merupakan catatan prompt dan rekonstruksi pekerjaan berdasarkan percakapan. Untuk status saat ini, gunakan sumber berikut secara berurutan:
+1. Kode dan skema terbaru pada repositori.
+2. Hasil pengujian yang dijalankan pada commit yang relevan.
+3. Riwayat Git dan status branch.
+4. Source commit serta status deployment pada Vercel.
+5. Konfigurasi provider dan URL pada Supabase/Google Cloud.
+
+Catatan lama dalam dokumen ini merekam status pada tanggal masing-masing dan tidak otomatis menjamin bahwa kondisi repositori atau deployment masih sama. Sebelum membuat laporan akhir atau mengubah production, periksa kembali sumber kebenaran tersebut.
