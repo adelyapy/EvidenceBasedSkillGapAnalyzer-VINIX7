@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type {
   AnalysisHistoryEntry,
   HistoryProjectEvidence,
+  HistoryRoadmapItem,
   HistoryRoleId,
   HistorySkillGap,
   HistorySkillResult,
@@ -138,12 +139,14 @@ export default async function AnalysisHistoryPage() {
     evidences: [] as HistoryProjectEvidence[],
     skillResults: [] as HistorySkillResult[],
     skillGaps: [] as HistorySkillGap[],
+    roadmapItems: [] as HistoryRoadmapItem[],
   };
 
   const detailsByAnalysisId = new Map<string, typeof emptyDetails>();
 
   if (analysisIds.length > 0) {
-    const [evidencesResponse, skillsResponse, gapsResponse] = await Promise.all([
+    const [evidencesResponse, skillsResponse, gapsResponse, roadmapResponse] =
+      await Promise.all([
       supabase
         .from("project_evidences")
         .select("id, analysis_id, evidence_type, title, url, description")
@@ -166,13 +169,22 @@ export default async function AnalysisHistoryPage() {
         .eq("user_id", user.id)
         .in("analysis_id", analysisIds)
         .order("gap_score", { ascending: false }),
-    ]);
+      supabase
+        .from("roadmap_items")
+        .select(
+          "id, analysis_id, title, description, resource_url, priority, status, sort_order",
+        )
+        .eq("user_id", user.id)
+        .in("analysis_id", analysisIds)
+        .order("sort_order", { ascending: true }),
+      ]);
 
     for (const analysisId of analysisIds) {
       detailsByAnalysisId.set(analysisId, {
         evidences: [],
         skillResults: [],
         skillGaps: [],
+        roadmapItems: [],
       });
     }
 
@@ -219,6 +231,23 @@ export default async function AnalysisHistoryPage() {
           gapScore: gap.gap_score,
           priority: gap.priority,
           explanation: gap.explanation,
+        });
+      }
+    }
+
+    if (!roadmapResponse.error) {
+      for (const item of roadmapResponse.data ?? []) {
+        const details = detailsByAnalysisId.get(item.analysis_id);
+        if (!details) continue;
+
+        details.roadmapItems.push({
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          resourceUrl: item.resource_url,
+          priority: item.priority,
+          status: item.status,
+          sortOrder: item.sort_order,
         });
       }
     }

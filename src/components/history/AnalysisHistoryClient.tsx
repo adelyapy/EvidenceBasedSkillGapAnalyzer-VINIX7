@@ -22,6 +22,7 @@ import HistoryCard from "./HistoryCard";
 import HistoryFilters from "./HistoryFilters";
 import HistoryIcon from "./HistoryIcon";
 import HistorySummary from "./HistorySummary";
+import { getHistoryStatusPresentation } from "./historyStatus";
 import ProjectSourceIcon from "../analysis/ProjectSourceIcon";
 import type { UploadProjectSource } from "@/types/upload-project";
 
@@ -119,6 +120,26 @@ function priorityLabel(priority: string) {
   };
 
   return labels[priority] ?? priority;
+}
+
+function calculateTargetProgress(
+  currentLevel: number | null,
+  requiredLevel: number,
+) {
+  if (currentLevel === null) return null;
+
+  const current = Number(currentLevel);
+  const required = Number(requiredLevel);
+
+  if (
+    !Number.isFinite(current) ||
+    !Number.isFinite(required) ||
+    required <= 0
+  ) {
+    return null;
+  }
+
+  return Math.round(Math.min(100, Math.max(0, (current / required) * 100)));
 }
 
 function getEvidenceSource(
@@ -312,7 +333,18 @@ export default function AnalysisHistoryClient({
               <div>
                 <p className="bkh-dialogEyebrow">Hasil analisis</p>
                 <h2 id="bkh-dialog-title">{selectedEntry.projectName}</h2>
-                <span className="bkh-dialogStatus">{selectedEntry.status}</span>
+                <span
+                  className={`bkh-dialogStatus bkh-status--${getHistoryStatusPresentation(selectedEntry.statusKey).tone}`}
+                >
+                  <HistoryIcon
+                    name={
+                      getHistoryStatusPresentation(selectedEntry.statusKey)
+                        .icon
+                    }
+                    size={15}
+                  />
+                  {selectedEntry.status}
+                </span>
               </div>
             </header>
 
@@ -440,7 +472,7 @@ export default function AnalysisHistoryClient({
                             <strong>{skill.skillName || "Keterampilan tidak bernama"}</strong>
                             <span>{formatLevel(skill.estimatedLevel)}</span>
                           </div>
-                          <p><b>Keyakinan AI</b> {formatConfidence(skill.confidenceScore)}</p>
+                          <p><b>Hasil Persentase Kompetensi</b> {formatConfidence(skill.confidenceScore)}</p>
                           <p className="bkh-dialogCardDescription">
                             {skill.evidenceSummary ||
                               "Belum ada ringkasan bukti yang tersedia."}
@@ -484,6 +516,121 @@ export default function AnalysisHistoryClient({
                         </li>
                       ))}
                     </ul>
+                  )}
+                </section>
+
+                <section className="bkh-dialogResultSection bkh-dialogProgressPanel">
+                  <div className="bkh-dialogSectionHeading">
+                    <div>
+                      <p className="bkh-dialogSectionLabel">
+                        Progres terhadap target
+                      </p>
+                      <h3>Persentase Penguasaan Skill</h3>
+                    </div>
+                  </div>
+
+                  {selectedEntry.skillGaps.length === 0 ? (
+                    <p className="bkh-dialogEmptyCopy">
+                      Belum ada data level skill yang dapat dihitung.
+                    </p>
+                  ) : (
+                    <ul className="bkh-dialogProgressList">
+                      {selectedEntry.skillGaps.map((gap) => {
+                        const percentage = calculateTargetProgress(
+                          gap.currentLevel,
+                          gap.requiredLevel,
+                        );
+                        const skillName =
+                          gap.skillName || "Keterampilan tidak bernama";
+
+                        return (
+                          <li key={gap.id}>
+                            <div className="bkh-dialogProgressHeading">
+                              <strong>{skillName}</strong>
+                              <span>
+                                {percentage === null ? "—" : `${percentage}%`}
+                              </span>
+                            </div>
+                            <div
+                              className={`bkh-dialogProgressTrack${
+                                percentage === null
+                                  ? " bkh-dialogProgressTrack--empty"
+                                  : ""
+                              }`}
+                              role="progressbar"
+                              aria-label={`Pemenuhan target ${skillName}`}
+                              aria-valuemin={0}
+                              aria-valuemax={100}
+                              aria-valuenow={percentage ?? undefined}
+                              aria-valuetext={
+                                percentage === null
+                                  ? "Belum dapat dihitung"
+                                  : `${percentage} persen dari target role`
+                              }
+                            >
+                              <span
+                                style={
+                                  {
+                                    "--bkh-skill-progress": `${percentage ?? 0}%`,
+                                  } as CSSProperties
+                                }
+                              />
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </section>
+
+                <section className="bkh-dialogResultSection bkh-dialogRoadmapPanel">
+                  <div className="bkh-dialogSectionHeading">
+                    <div>
+                      <p className="bkh-dialogSectionLabel">Langkah berikutnya</p>
+                      <h3>Roadmap Pengembangan</h3>
+                    </div>
+                    {selectedEntry.roadmapItems.length > 0 && (
+                      <span>{selectedEntry.roadmapItems.length} langkah</span>
+                    )}
+                  </div>
+
+                  {selectedEntry.roadmapItems.length === 0 ? (
+                    <p className="bkh-dialogEmptyCopy">
+                      Roadmap pengembangan belum tersedia untuk analisis ini.
+                    </p>
+                  ) : (
+                    <ol className="bkh-dialogRoadmapList">
+                      {selectedEntry.roadmapItems.map((item, index) => (
+                        <li key={item.id}>
+                          <span
+                            className="bkh-dialogRoadmapNumber"
+                            aria-label={`Langkah ${index + 1}`}
+                          >
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <article className="bkh-dialogRoadmapCard">
+                            <div className="bkh-dialogRoadmapHeading">
+                              <h4>{item.title}</h4>
+                              <div className="bkh-dialogRoadmapTags">
+                                {item.priority && (
+                                  <span>{priorityLabel(item.priority)}</span>
+                                )}
+                              </div>
+                            </div>
+                            {item.description && <p>{item.description}</p>}
+                            {item.resourceUrl && (
+                              <a
+                                href={item.resourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                Buka sumber belajar ↗
+                              </a>
+                            )}
+                          </article>
+                        </li>
+                      ))}
+                    </ol>
                   )}
                 </section>
               </>

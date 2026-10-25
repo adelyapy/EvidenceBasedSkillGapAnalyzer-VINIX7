@@ -13,6 +13,7 @@ import { createClient } from "@/lib/supabase/client";
 import { WORKSPACE_PROFILE_UPDATED_EVENT } from "@/data/workspace";
 import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
 import type { ProfileData } from "@/types/profile";
+import type { WorkspaceProfileUpdatedDetail } from "@/types/workspace";
 import PersonalInformationCard from "./PersonalInformationCard";
 import ProfileOverviewCard from "./ProfileOverviewCard";
 import ProfileSkeleton from "./ProfileSkeleton";
@@ -253,13 +254,15 @@ export default function ProfilePage() {
       }
 
       const savedFullName = updatedProfile.full_name?.trim() || fullName;
+      const savedAvatar =
+        updatedProfile.avatar_url?.trim() || defaultAvatar;
 
       setProfile((current) =>
         current
           ? {
               ...current,
               fullName: savedFullName,
-              avatar: updatedProfile.avatar_url || defaultAvatar,
+              avatar: savedAvatar,
               joinedDateTime: current.joinedDateTime,
               joinedLabel: current.joinedLabel,
             }
@@ -267,14 +270,20 @@ export default function ProfilePage() {
       );
 
       window.dispatchEvent(
-        new CustomEvent(WORKSPACE_PROFILE_UPDATED_EVENT, {
-          detail: { name: savedFullName },
-        }),
+        new CustomEvent<WorkspaceProfileUpdatedDetail>(
+          WORKSPACE_PROFILE_UPDATED_EVENT,
+          {
+            detail: { name: savedFullName, avatar: savedAvatar },
+          },
+        ),
       );
+
+      setSelectedAvatar(null);
+      setAvatarPreview(null);
 
       closeEditDialogAfterSave();
       setMessageLeaving(false);
-      setMessage(`Nama profil berhasil disimpan.${emailMessage}`);
+      setMessage(`Profil berhasil disimpan.${emailMessage}`);
     } catch (err) {
       console.error("Gagal menyimpan profil:", err);
       setError(
