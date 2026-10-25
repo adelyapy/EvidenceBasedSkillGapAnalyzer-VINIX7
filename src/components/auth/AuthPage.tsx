@@ -48,6 +48,38 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
     setNotice(null);
   }
 
+  async function handleGoogleClick() {
+    if (loading) return;
+
+    setLoading(true);
+    setNotice(null);
+
+    try {
+      const supabase = createClient();
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Gagal memulai login dengan Google.";
+
+      setNotice({
+        type: "error",
+        text: message,
+      });
+
+      setLoading(false);
+    }
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (loading) return;
@@ -156,12 +188,7 @@ export default function AuthPage({ mode }: { mode: AuthMode }) {
           notice={notice}
           onFieldChange={updateField}
           onSubmit={handleSubmit}
-          onGoogleClick={() =>
-            setNotice({
-              type: "info",
-              text: "Masuk dengan Google belum aktif.",
-            })
-          }
+          onGoogleClick={handleGoogleClick}
         />
       </div>
       <RegistrationSuccessDialog
