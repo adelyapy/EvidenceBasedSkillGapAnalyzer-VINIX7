@@ -15,6 +15,7 @@ import type {
   AnalysisProject,
 } from "@/types/analysis";
 import { createClient } from "@/lib/supabase/client";
+import { getProjectPdf } from "@/lib/analysis/project-pdf-storage";
 
 const EMPTY_INPUT: AnalysisInput = {
   projects: [],
@@ -196,11 +197,75 @@ export default function ReviewInputPage() {
         throw new Error(analysisError?.message || "Gagal menyimpan analisis.");
       }
 
-      try {
-        // PDF dilewati karena file aslinya belum diunggah ke Storage.
+      const uploadedStoragePaths: string[] = [];
 
-        const evidences = data.projects.flatMap((project) => {
-          if (project.evidenceKind === "pdf") return [];
+      try {
+        const evidences: Array<{
+          analysis_id: string;
+          user_id: string;
+          evidence_type: string;
+          title: string;
+          url: string | null;
+          storage_path: string | null;
+          description: string | null;
+        }> = [];
+
+        for (const rawProject of data.projects) {
+          const project = rawProject as AnalysisProject & {
+            id?: string;
+            origin?: string;
+            evidenceKind?: string;
+            fileName?: string;
+            fileType?: string;
+          };
+
+          if (project.evidenceKind === "pdf") {
+            if (!project.id) {
+              throw new Error(
+                `ID dokumen PDF "${project.fileName || project.name || ""}" tidak ditemukan. Silakan kembali ke halaman upload dan pilih ulang PDF.`,
+              );
+            }
+
+            const file = await getProjectPdf(project.id);
+            if (!file) {
+              throw new Error(
+                `File PDF "${project.fileName || project.name || "bukti proyek"}" tidak ditemukan di penyimpanan browser. Silakan kembali ke halaman upload, hapus dokumen tersebut, lalu unggah ulang.`,
+              );
+            }
+
+            if (
+              file.type !== "application/pdf" &&
+              !file.name.toLowerCase().endsWith(".pdf")
+            ) {
+              throw new Error(`File "${file.name}" bukan dokumen PDF yang valid.`);
+            }
+
+            const storagePath = `${user.id}/${analysis.id}/${project.id}.pdf`;
+            const { error: uploadError } = await supabase.storage
+              .from("project-evidences")
+              .upload(storagePath, file, {
+                contentType: "application/pdf",
+                upsert: false,
+              });
+
+            if (uploadError) {
+              throw new Error(
+                `Gagal mengunggah PDF "${file.name}": ${uploadError.message}`,
+              );
+            }
+
+            uploadedStoragePaths.push(storagePath);
+            evidences.push({
+              analysis_id: analysis.id,
+              user_id: user.id,
+              evidence_type: "pdf",
+              title: project.fileName || project.name || file.name,
+              url: null,
+              storage_path: storagePath,
+              description: project.description || project.deskripsi || null,
+            });
+            continue;
+          }
 
           const url = (
             project.link ||
@@ -209,7 +274,7 @@ export default function ReviewInputPage() {
             ""
           ).trim();
 
-          if (!/^https?:\/\//i.test(url)) return [];
+          if (!/^https?:\/\//i.test(url)) continue;
 
           const source = `${project.type || ""} ${
             project.name || ""
@@ -235,18 +300,17 @@ export default function ReviewInputPage() {
             evidenceType = "deployment";
           }
 
-          return [
-            {
-              analysis_id: analysis.id,
-              user_id: user.id,
-              evidence_type: evidenceType,
-              title:
-                project.name || project.title || project.type || "Bukti proyek",
-              url,
-              description: project.description || project.deskripsi || null,
-            },
-          ];
-        });
+          evidences.push({
+            analysis_id: analysis.id,
+            user_id: user.id,
+            evidence_type: evidenceType,
+            title:
+              project.name || project.title || project.type || "Bukti proyek",
+            url,
+            storage_path: null,
+            description: project.description || project.deskripsi || null,
+          });
+        }
 
         if (evidences.length > 0) {
           const { error: evidenceError } = await supabase
@@ -254,14 +318,26 @@ export default function ReviewInputPage() {
             .insert(evidences);
 
           if (evidenceError) {
-            throw new Error(evidenceError.message);
+            throw new Error(
+              `Gagal menyimpan metadata bukti proyek: ${evidenceError.message}`,
+            );
           }
         }
 
         // Simpan referensi analisis yang akan digunakan halaman berikutnya.
         sessionStorage.setItem(analysisStorage.activeAnalysisId, analysis.id);
       } catch (error) {
-        // Hapus record analisis jika penyimpanan bukti gagal.
+        // File Storage tidak otomatis terhapus ketika record analisis dihapus.
+        if (uploadedStoragePaths.length > 0) {
+          const { error: cleanupError } = await supabase.storage
+            .from("project-evidences")
+            .remove(uploadedStoragePaths);
+
+          if (cleanupError) {
+            console.error("Gagal membersihkan file PDF sementara:", cleanupError);
+          }
+        }
+
         await supabase
           .from("analyses")
           .delete()

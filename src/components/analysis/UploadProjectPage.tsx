@@ -1,5 +1,6 @@
 "use client";
 
+import { saveProjectPdf, deleteProjectPdf } from "@/lib/analysis/project-pdf-storage";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
@@ -422,38 +423,28 @@ export default function UploadProjectPage() {
     setError("");
   }
 
-  function addEvidence(event: FormEvent<HTMLFormElement>) {
+  async function addEvidence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
 
     if (activeSource === "pdf") {
       if (!selectedFile) {
-        setError("Pilih dokumen PDF terlebih dahulu.");
+        setError("Pilih file PDF terlebih dahulu.");
         return;
       }
 
-      const isPdfName = /\.pdf$/i.test(selectedFile.name);
-      const isPdfType =
-        !selectedFile.type || selectedFile.type === "application/pdf";
-      if (!isPdfName || !isPdfType) {
-        setError("Format tidak didukung. Pilih dokumen berformat PDF (.pdf).");
+      const isPdf =
+        selectedFile.type === "application/pdf" ||
+        selectedFile.name.toLowerCase().endsWith(".pdf");
+
+      if (!isPdf) {
+        setError("Format file tidak valid. Silakan pilih dokumen PDF.");
         return;
       }
 
-      if (selectedFile.size === 0) {
-        setError("Dokumen PDF kosong. Pilih file lain.");
-        return;
-      }
-
-      const duplicate = evidence.some(
-        (item) =>
-          item.kind === "pdf" &&
-          item.file.name === selectedFile.name &&
-          item.file.size === selectedFile.size &&
-          item.file.lastModified === selectedFile.lastModified,
-      );
-      if (duplicate) {
-        setError("Dokumen PDF yang sama sudah ditambahkan.");
+      // Batas 10 MB harus sesuai dengan konfigurasi bucket Supabase.
+      if (selectedFile.size > 10 * 1024 * 1024) {
+        setError("Ukuran PDF maksimal 10 MB.");
         return;
       }
 
@@ -463,11 +454,25 @@ export default function UploadProjectPage() {
         source: "pdf",
         file: selectedFile,
       };
-      const nextEvidence = [...evidence, pdfItem];
-      setPdfEvidence((items) => [...items, pdfItem]);
-      setStorageAvailable(persistLinks(nextEvidence));
-      setSelectedFile(null);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+
+      try {
+        await saveProjectPdf(pdfItem.id, selectedFile);
+
+        const nextEvidence = [...evidence, pdfItem];
+        if (!persistLinks(nextEvidence)) {
+          await deleteProjectPdf(pdfItem.id);
+          setError("Bukti proyek tidak dapat disimpan. Coba lagi.");
+          return;
+        }
+
+        setPdfEvidence((items) => [...items, pdfItem]);
+        setStorageAvailable(true);
+        setSelectedFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
+      } catch (saveError) {
+        console.error("Gagal menyimpan PDF sementara:", saveError);
+        setError("PDF gagal disimpan sementara. Coba pilih file kembali.");
+      }
       return;
     }
 
@@ -477,35 +482,57 @@ export default function UploadProjectPage() {
       return;
     }
 
-    if (
-      evidence.some(
-        (item) => item.kind === "url" && item.value === validation.value,
-      )
-    ) {
-      setError("URL yang sama sudah ditambahkan.");
+    const duplicate = linkEvidence.some(
+      (item) =>
+        item.source === activeSource && item.value === validation.value,
+    );
+    if (duplicate) {
+      setError("URL tersebut sudah ditambahkan.");
       return;
     }
 
-    const nextEvidence: UploadProjectEvidence[] = [
-      ...evidence,
-      {
-        id: createEvidenceId(),
-        kind: "url",
-        source: activeSource,
-        value: validation.value,
-      },
-    ];
-    setStorageAvailable(persistLinks(nextEvidence));
+    const linkItem: UploadProjectLinkEvidence = {
+      id: createEvidenceId(),
+      kind: "url",
+      source: activeSource,
+      value: validation.value,
+    };
+    const nextEvidence = [...evidence, linkItem];
+
+    if (!persistLinks(nextEvidence)) {
+      setStorageAvailable(false);
+      setError("Bukti proyek tidak dapat disimpan. Coba lagi.");
+      return;
+    }
+
+    setStorageAvailable(true);
     setUrlValue("");
   }
 
-  function removeEvidence(id: string) {
+  async function removeEvidence(id: string) {
     const removedEvidence = evidence.find((item) => item.id === id);
+    if (!removedEvidence) return;
+
+    if (removedEvidence.kind === "pdf") {
+      try {
+        await deleteProjectPdf(id);
+      } catch (deleteError) {
+        console.error("Gagal menghapus PDF sementara:", deleteError);
+        setError("PDF gagal dihapus. Silakan coba lagi.");
+        return;
+      }
+    }
+
     const nextEvidence = evidence.filter((item) => item.id !== id);
-    if (removedEvidence?.kind === "pdf") {
+    if (!persistLinks(nextEvidence)) {
+      setError("Bukti proyek gagal diperbarui. Silakan coba lagi.");
+      return;
+    }
+
+    if (removedEvidence.kind === "pdf") {
       setPdfEvidence((items) => items.filter((item) => item.id !== id));
     }
-    setStorageAvailable(persistLinks(nextEvidence));
+    setStorageAvailable(true);
     setError("");
   }
 
@@ -771,8 +798,8 @@ export default function UploadProjectPage() {
                 <button
                   type="button"
                   className="bkp-deleteConfirm"
-                  onClick={() => {
-                    removeEvidence(evidenceToDelete.id);
+                  onClick={async () => {
+                    await removeEvidence(evidenceToDelete.id);
                     closeDeleteDialog();
                   }}
                 >
