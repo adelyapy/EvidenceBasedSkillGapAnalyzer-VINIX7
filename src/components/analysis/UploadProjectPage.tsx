@@ -587,28 +587,29 @@ export default function UploadProjectPage() {
         await deleteProjectPdf(id);
       } catch (deleteError) {
         console.error("Gagal menghapus PDF sementara:", deleteError);
-        setError("PDF gagal dihapus. Silakan coba lagi.");
+        showToast("error", "PDF gagal dihapus. Silakan coba lagi.");
         return;
       }
     }
 
     const nextEvidence = evidence.filter((item) => item.id !== id);
-    if (!persistLinks(nextEvidence)) {
-      setError("Bukti proyek gagal diperbarui. Silakan coba lagi.");
+
+    const stored = persistLinks(nextEvidence);
+    setStorageAvailable(stored);
+
+    if (!stored) {
+      showToast(
+        "error",
+        "Bukti proyek dihapus, tetapi perubahan gagal disimpan ke sesi.",
+      );
       return;
     }
 
     if (removedEvidence.kind === "pdf") {
       setPdfEvidence((items) => items.filter((item) => item.id !== id));
     }
-    const stored = persistLinks(nextEvidence);
-    setStorageAvailable(stored);
-    showToast(
-      stored ? "success" : "error",
-      stored
-        ? "Bukti proyek berhasil dihapus."
-        : "Bukti dihapus, tetapi perubahan tidak dapat disimpan ke sesi.",
-    );
+
+    showToast("success", "Bukti proyek berhasil dihapus.");
   }
 
   function continueToTargetRole() {
