@@ -1,5 +1,6 @@
 "use client";
 
+import { saveProjectPdf, deleteProjectPdf } from "@/lib/analysis/project-pdf-storage";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
@@ -483,7 +484,7 @@ export default function UploadProjectPage() {
     clearToast();
   }
 
-  function addEvidence(event: FormEvent<HTMLFormElement>) {
+  async function addEvidence(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     clearToast();
 
@@ -577,10 +578,27 @@ export default function UploadProjectPage() {
     );
   }
 
-  function removeEvidence(id: string) {
+  async function removeEvidence(id: string) {
     const removedEvidence = evidence.find((item) => item.id === id);
+    if (!removedEvidence) return;
+
+    if (removedEvidence.kind === "pdf") {
+      try {
+        await deleteProjectPdf(id);
+      } catch (deleteError) {
+        console.error("Gagal menghapus PDF sementara:", deleteError);
+        setError("PDF gagal dihapus. Silakan coba lagi.");
+        return;
+      }
+    }
+
     const nextEvidence = evidence.filter((item) => item.id !== id);
-    if (removedEvidence?.kind === "pdf") {
+    if (!persistLinks(nextEvidence)) {
+      setError("Bukti proyek gagal diperbarui. Silakan coba lagi.");
+      return;
+    }
+
+    if (removedEvidence.kind === "pdf") {
       setPdfEvidence((items) => items.filter((item) => item.id !== id));
     }
     const stored = persistLinks(nextEvidence);
@@ -863,8 +881,8 @@ export default function UploadProjectPage() {
                 <button
                   type="button"
                   className="bkp-deleteConfirm"
-                  onClick={() => {
-                    removeEvidence(evidenceToDelete.id);
+                  onClick={async () => {
+                    await removeEvidence(evidenceToDelete.id);
                     closeDeleteDialog();
                   }}
                 >
