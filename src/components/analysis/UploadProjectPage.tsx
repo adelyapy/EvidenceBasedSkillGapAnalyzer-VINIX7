@@ -522,23 +522,55 @@ export default function UploadProjectPage() {
         return;
       }
 
+      
+      
       const pdfItem: UploadProjectPdfEvidence = {
         id: createEvidenceId(),
         kind: "pdf",
         source: "pdf",
         file: selectedFile,
       };
+
+      // WAJIB: simpan file asli sebelum menyimpan metadata.
+      try {
+        await saveProjectPdf(pdfItem.id, selectedFile);
+      } catch (saveError) {
+        console.error("Gagal menyimpan PDF ke IndexedDB:", saveError);
+        showToast(
+          "error",
+          "PDF gagal disimpan di browser. Silakan coba unggah ulang.",
+        );
+        return;
+      }
+
       const nextEvidence = [...evidence, pdfItem];
-      setPdfEvidence((items) => [...items, pdfItem]);
       const stored = persistLinks(nextEvidence);
-      setStorageAvailable(stored);
+
+      if (!stored) {
+        try {
+          await deleteProjectPdf(pdfItem.id);
+        } catch (cleanupError) {
+          console.error("Gagal membersihkan PDF sementara:", cleanupError);
+        }
+
+        showToast(
+          "error",
+          "Informasi PDF gagal disimpan. Silakan coba unggah ulang.",
+        );
+        return;
+      }
+
+      setPdfEvidence((items) => [...items, pdfItem]);
+      setStorageAvailable(true);
       setSelectedFile(null);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+
       showToast(
-        stored ? "success" : "error",
-        stored
-          ? `Dokumen ${selectedFile.name} berhasil ditambahkan.`
-          : "Dokumen ditambahkan, tetapi penyimpanan sesi tidak tersedia.",
+        "success",
+        `Dokumen ${selectedFile.name} berhasil ditambahkan.`,
       );
       return;
     }
