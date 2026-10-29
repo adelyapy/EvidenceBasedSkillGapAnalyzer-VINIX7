@@ -2,9 +2,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-// Gunakan implementasi parser langsung. Entry point "pdf-parse" menjalankan test PDF bawaan saat build Next.js.
-// @ts-expect-error Subpath ini tersedia pada pdf-parse@1.1.1, tetapi tidak dideklarasikan oleh @types/pdf-parse.
-import pdf from "pdf-parse/lib/pdf-parse.js";
 
 type Evidence = {
   id: string;
@@ -84,6 +81,8 @@ async function readStoredPdf(
     throw new Error(`File "${evidence.title ?? ""}" bukan PDF yang valid.`);
   }
 
+  const pdfModule = await import("pdf-parse");
+  const pdf = pdfModule.default;
   const parsed = await pdf(buffer);
   const text = parsed.text.trim();
 
