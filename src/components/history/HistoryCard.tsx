@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { AnalysisHistoryEntry } from "@/types/history";
 import HistoryIcon from "./HistoryIcon";
+import { getHistoryStatusPresentation } from "./historyStatus";
 
 type MatchStyle = CSSProperties & {
   "--bkh-match": string;
@@ -17,6 +18,7 @@ export default function HistoryCard({
   const scoreStyle = {
     "--bkh-match": `${score ?? 0}%`,
   } as MatchStyle;
+  const statusPresentation = getHistoryStatusPresentation(entry.statusKey);
 
   return (
     <li className="bkh-historyItem">
@@ -58,8 +60,10 @@ export default function HistoryCard({
 
             <div>
               <dt>Status</dt>
-              <dd className="bkh-status">
-                <HistoryIcon name="check" size={18} />
+              <dd
+                className={`bkh-status bkh-status--${statusPresentation.tone}`}
+              >
+                <HistoryIcon name={statusPresentation.icon} size={18} />
                 {entry.status}
               </dd>
             </div>

@@ -9,7 +9,6 @@ import DashboardStats from "@/components/dashboard/sections/DashboardStats";
 import LatestAnalysis from "@/components/dashboard/sections/LatestAnalysis";
 import Recommendations from "@/components/dashboard/sections/Recommendations";
 import RecentHistory from "@/components/dashboard/sections/RecentHistory";
-import LearningRoadmap from "@/components/dashboard/sections/LearningRoadmap";
 import "@/styles/dashboard.css";
 
 export default function DashboardPage() {
@@ -21,7 +20,7 @@ export default function DashboardPage() {
       <Suspense fallback={<DashboardStatsSkeleton />}>
         <DashboardStats />
       </Suspense>
-      <div className="bkd-contentGrid">
+      <div className="bkd-contentGrid bkd-contentGrid--withoutRoadmap">
         <Suspense fallback={<DashboardPanelSkeleton />}>
           <LatestAnalysis />
         </Suspense>
@@ -29,7 +28,6 @@ export default function DashboardPage() {
           <Recommendations />
         </Suspense>
         <RecentHistory />
-        <LearningRoadmap />
       </div>
     </div>
   );

@@ -4,6 +4,29 @@ import { createClient } from "@/lib/supabase/server";
 import { analysisRoutes } from "@/data/analysis";
 import { HISTORY_ROUTE } from "@/data/workspace";
 
+type LatestSkillGap = {
+  skill_name: string | null;
+  current_level: number | null;
+  required_level: number | null;
+  gap_score: number | null;
+};
+
+function uniqueSkillNames(rows: LatestSkillGap[]) {
+  const seen = new Set<string>();
+
+  return rows.reduce<string[]>((names, row) => {
+    const name = row.skill_name?.trim();
+    const key = name?.toLocaleLowerCase("id-ID");
+
+    if (name && key && !seen.has(key)) {
+      seen.add(key);
+      names.push(name);
+    }
+
+    return names;
+  }, []);
+}
+
 export default async function LatestAnalysis() {
   const supabase = await createClient();
 
@@ -11,7 +34,7 @@ export default async function LatestAnalysis() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: analysis, error } = user
+  const { data: analysis, error: analysisError } = user
     ? await supabase
         .from("analyses")
         .select("id, status, readiness_score, summary, created_at, target_role")
@@ -20,6 +43,43 @@ export default async function LatestAnalysis() {
         .limit(1)
         .maybeSingle()
     : { data: null, error: null };
+
+  const { data: skillGapRows, error: skillGapError } =
+    user && analysis?.status === "completed"
+      ? await supabase
+          .from("skill_gaps")
+          .select("skill_name, current_level, required_level, gap_score")
+          .eq("user_id", user.id)
+          .eq("analysis_id", analysis.id)
+      : { data: [], error: null };
+
+  const skillGaps = (skillGapRows ?? []) as LatestSkillGap[];
+  const strengths = uniqueSkillNames(
+    [...skillGaps]
+      .filter((skill) => {
+        const currentLevel = Number(skill.current_level);
+        const requiredLevel = Number(skill.required_level);
+
+        return (
+          Number.isFinite(currentLevel) &&
+          Number.isFinite(requiredLevel) &&
+          requiredLevel > 0 &&
+          currentLevel >= requiredLevel
+        );
+      })
+      .sort(
+        (first, second) =>
+          Number(second.current_level) - Number(first.current_level),
+      ),
+  ).slice(0, 5);
+  const developmentAreas = uniqueSkillNames(
+    [...skillGaps]
+      .filter((skill) => Number(skill.gap_score) > 0)
+      .sort(
+        (first, second) =>
+          Number(second.gap_score) - Number(first.gap_score),
+      ),
+  ).slice(0, 5);
 
   const score = analysis?.readiness_score ?? null;
   const role = analysis?.target_role?.trim() || "Target role belum ditentukan";
@@ -44,7 +104,7 @@ export default async function LatestAnalysis() {
         </Link>
       </div>
 
-      {error ? (
+      {analysisError ? (
         <p role="alert">
           Ringkasan analisis belum dapat dimuat. Silakan muat ulang halaman.
         </p>
@@ -89,7 +149,10 @@ export default async function LatestAnalysis() {
               <span>Status: {analysis.status || "Belum diketahui"}</span>
             </div>
 
-            <Link className="bkd-analysisDetailLink" href={analysisRoutes.result}>
+            <Link
+              className="bkd-analysisDetailLink"
+              href={analysisRoutes.resultFor(analysis.id)}
+            >
               Lihat hasil lengkap →
             </Link>
           </div>
@@ -97,12 +160,32 @@ export default async function LatestAnalysis() {
           <div className="bkd-skillsCard">
             <div className="bkd-skillStatus">
               <h3>Kemampuan unggul</h3>
-              <p>Belum ada informasi kemampuan unggul yang tersedia.</p>
+              {skillGapError ? (
+                <p role="alert">Data kemampuan belum dapat dimuat.</p>
+              ) : strengths.length > 0 ? (
+                <ul className="bkd-skillPointList">
+                  {strengths.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Belum ada kemampuan yang memenuhi level target.</p>
+              )}
             </div>
 
             <div className="bkd-skillStatus">
               <h3>Area pengembangan</h3>
-              <p>Belum ada informasi area yang perlu dikembangkan.</p>
+              {skillGapError ? (
+                <p role="alert">Data area pengembangan belum dapat dimuat.</p>
+              ) : developmentAreas.length > 0 ? (
+                <ul className="bkd-skillPointList">
+                  {developmentAreas.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Belum ada skill gap yang perlu dikembangkan.</p>
+              )}
             </div>
           </div>
         </div>

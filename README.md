@@ -3,9 +3,9 @@
 **Platform persiapan karier berbasis bukti proyek untuk membantu mahasiswa tingkat akhir dan _fresh graduate_ memahami kompetensi, kesenjangan keterampilan (_skill gap_), dan prioritas pengembangan diri.**
 
 > [!IMPORTANT]
-> **Status: prototipe frontend — Modul 7 (pengembangan aktif).** Fokus tahap ini ialah menerjemahkan desain Figma ke website yang **responsif, mudah digunakan, dan interaktif**. Skor, pertanyaan, riwayat, perbandingan keterampilan, serta rekomendasi tertentu masih berupa **contoh/simulasi**. Belum ada dasar untuk menyatakan bahwa analisis AI produksi, autentikasi sungguhan, database persisten, atau tolok ukur kebutuhan industri tervalidasi sudah terintegrasi.
+> **Status: pengembangan Modul 8 — integrasi frontend, backend, dan modul AI.** BUKTIVA adalah aplikasi web persiapan karier berbasis bukti proyek. Repository memuat alur ingestion bukti proyek, evaluasi jawaban validasi, scoring/readiness, perhitungan skill gap, penyimpanan data melalui Supabase, dan pembuatan roadmap. Integrasi model AI menggunakan SDK Gemini dan OpenAI tersedia dalam dependency; model/provider yang benar-benar dipakai pada suatu alur bergantung pada implementasi endpoint dan konfigurasi environment. Sebagian data atau halaman masih dapat menggunakan contoh/simulasi, sehingga status tiap fitur dijelaskan secara terpisah.
 >
-> README ini diselaraskan dengan **PRD BUKTIVA Bagian 1–9** dan dokumentasi teknis frontend yang sebelumnya disusun. Status teknis di bawah didasarkan pada laporan implementasi tim/Codex yang dibahas hingga **17 Oktober 2026**, **bukan audit langsung atas commit GitHub terbaru**.
+> README ini disusun dengan merujuk pada struktur repository GitHub, `package.json`, dokumentasi AI, PRD, serta prompt log backend yang tersedia. Branch `main` yang dapat dibaca publik dan pekerjaan lokal/branch pengembangan mungkin tidak selalu identik; periksa branch dan commit yang akan dikumpulkan sebelum menganggap seluruh status di bawah sebagai hasil audit pada commit tersebut.
 
 ## Daftar Isi
 
@@ -13,24 +13,25 @@
 2. [Latar Belakang dan Permasalahan](#2-latar-belakang-dan-permasalahan)
 3. [Visi, Nilai Utama, dan Tujuan](#3-visi-nilai-utama-dan-tujuan)
 4. [Target Pengguna](#4-target-pengguna)
-5. [Ruang Lingkup Modul 7](#5-ruang-lingkup-modul-7)
+5. [Ruang Lingkup dan Status Modul 8](#5-ruang-lingkup-dan-status-modul-8)
 6. [Fitur dan Pemetaan Kebutuhan PRD](#6-fitur-dan-pemetaan-kebutuhan-prd)
 7. [Alur Pengguna](#7-alur-pengguna)
 8. [Tech Stack](#8-tech-stack)
-9. [Instalasi dan Menjalankan Proyek](#9-instalasi-dan-menjalankan-proyek)
-10. [Struktur Direktori](#10-struktur-direktori)
-11. [Arsitektur Frontend dan Konvensi](#11-arsitektur-frontend-dan-konvensi)
-12. [Daftar Route](#12-daftar-route)
-13. [Data Demo dan Penyimpanan Sementara](#13-data-demo-dan-penyimpanan-sementara)
-14. [Validasi, Interaksi, dan Penanganan Kesalahan](#14-validasi-interaksi-dan-penanganan-kesalahan)
-15. [UI/UX, Responsivitas, dan Aksesibilitas](#15-uiux-responsivitas-dan-aksesibilitas)
-16. [Kriteria Keberhasilan dan Evaluasi](#16-kriteria-keberhasilan-dan-evaluasi)
-17. [Quality Assurance dan Pengujian](#17-quality-assurance-dan-pengujian)
-18. [Status Implementasi dan Kesenjangan](#18-status-implementasi-dan-kesenjangan)
-19. [Rencana Pengembangan](#19-rencana-pengembangan)
-20. [Panduan Kontribusi](#20-panduan-kontribusi)
-21. [Pemecahan Masalah](#21-pemecahan-masalah)
-22. [Dokumentasi, Privasi, dan Lisensi](#22-dokumentasi-privasi-dan-lisensi)
+9. [Sumber Data dan Layanan yang Digunakan](#9-sumber-data-dan-layanan-yang-digunakan)
+10. [Instalasi dan Menjalankan Proyek](#9-instalasi-dan-menjalankan-proyek)
+11. [Struktur Direktori](#10-struktur-direktori)
+12. [Arsitektur Frontend dan Konvensi](#11-arsitektur-frontend-dan-konvensi)
+13. [Daftar Route](#12-daftar-route)
+14. [Data Demo dan Penyimpanan Sementara](#13-data-demo-dan-penyimpanan-sementara)
+15. [Validasi, Interaksi, dan Penanganan Kesalahan](#14-validasi-interaksi-dan-penanganan-kesalahan)
+16. [UI/UX, Responsivitas, dan Aksesibilitas](#15-uiux-responsivitas-dan-aksesibilitas)
+17. [Kriteria Keberhasilan dan Evaluasi](#16-kriteria-keberhasilan-dan-evaluasi)
+18. [Quality Assurance dan Pengujian](#17-quality-assurance-dan-pengujian)
+19. [Status Implementasi dan Kesenjangan](#18-status-implementasi-dan-kesenjangan)
+20. [Rencana Pengembangan](#19-rencana-pengembangan)
+21. [Panduan Kontribusi](#20-panduan-kontribusi)
+22. [Pemecahan Masalah](#21-pemecahan-masalah)
+23. [Dokumentasi, Privasi, dan Lisensi](#22-dokumentasi-privasi-dan-lisensi)
 
 ---
 
@@ -42,7 +43,7 @@
 | Nama lengkap                                    | **Evidence-Based Skill Gap Analyzer**                                                                                                          |
 | Bentuk produk                                   | Platform web untuk persiapan karier dan pemetaan kompetensi                                                                                    |
 | Tim                                             | **Kelompok 3 — Web & UI/UX Developer, VINIX7**                                                                                                 |
-| Tahap yang didokumentasikan                     | **Implementasi frontend Modul 7**                                                                                                              |
+| Tahap yang didokumentasikan                     | **Implementasi aplikasi Modul 8 (frontend, backend, dan AI)**                                                                                  |
 | Dasar perancangan                               | Modul 1–6: ideasi, riset pengguna, persona, user flow, wireframe, UI prototype, dan HTML                                                       |
 | PRD acuan                                       | `PRD_BUKTIVA_Bagian_1-9.md` (draf; Bagian 10–11 belum disusun)                                                                                 |
 | Repository                                      | [EvidenceBasedSkillGapAnalyzer-VINIX7](https://github.com/adelyapy/EvidenceBasedSkillGapAnalyzer-VINIX7)                                       |
@@ -94,28 +95,30 @@ BUKTIVA menempatkan bukti proyek sebagai **konteks utama**, bukan sekadar meneri
 
 PRD menggunakan **persona representatif hasil sintesis riset**, bukan identitas seorang narasumber tertentu. Fokus desain harus mendukung pengguna yang belum yakin sejauh mana pengalamannya memenuhi tuntutan karier yang diincar.
 
-## 5. Ruang Lingkup Modul 7
+## 5. Ruang Lingkup dan Status Modul 8
 
-### Termasuk pada Tahap Ini
+### Cakupan yang telah dikembangkan dalam repository
 
-- Mengimplementasikan desain UI dari Figma Modul 5 menjadi frontend yang dapat dijalankan.
-- Halaman publik: Beranda, Tentang BUKTIVA, Cara Kerja, Team Kami, dan footer.
-- Halaman akses akun: Login, Register, dan Reset Password **sebagai antarmuka**.
-- Halaman Workspace: Dashboard, input proyek, pemilihan target role, CV opsional, review, validasi, hasil, riwayat, dan halaman pendukung yang telah dirancang.
-- Navigasi, form, pemeriksaan input dasar, tombol kembali/lanjut, pencarian/filter (jika tersedia), serta interaksi frontend yang dapat diuji.
-- Data contoh, state browser, dan simulasi untuk statistik, pertanyaan, hasil analisis, skill gap, dan roadmap.
-- Responsivitas, umpan balik kesalahan/keadaan kosong, serta dokumentasi implementasi.
+- Antarmuka publik dan Workspace yang diturunkan dari rancangan Figma serta HTML awal.
+- API Next.js untuk ingestion bukti, pertanyaan/evaluasi validasi, dan proses analisis.
+- Penyiapan bukti proyek dari repository GitHub dan berkas ZIP, dengan validasi input dan penanganan kegagalan sumber.
+- Modul AI untuk ekstraksi/evaluasi skill, normalisasi input, validasi output terstruktur, dan penanganan error model.
+- Modul scoring untuk readiness score dan skill gap, serta formatter respons untuk konsumsi frontend.
+- Supabase untuk autentikasi sesi dan penyimpanan data aplikasi sesuai tabel/policy yang digunakan.
+- Roadmap pembelajaran yang dibentuk dari gap dan hasil skill, serta integrasi item roadmap dengan Dashboard.
+- Halaman profil dan penyimpanan foto profil menggunakan Supabase Storage.
+- Unit test untuk ingestion, analysis, AI, validation, scoring, dan roadmap.
 
-### Belum Menjadi Kewajiban Modul 7
+### Batasan yang Tetap Perlu Diperiksa
 
-- Backend/API produksi, database persisten, dan sistem akun/autentikasi nyata.
-- Google OAuth yang memverifikasi identitas serta pengiriman email reset password sungguhan.
-- Pengambilan atau analisis kode GitHub/GitLab/portofolio secara otomatis.
-- Upload dan ekstraksi konten PDF di server.
-- Model AI produksi untuk membuat pertanyaan adaptif, menilai jawaban, menghitung skor, dan menghasilkan roadmap personal.
-- Sinkronisasi data pengguna antarperangkat dan antarsesi.
+- Pemanggilan AI memerlukan API key dan konfigurasi environment yang benar; respons model dapat gagal, timeout, atau terkena pembatasan layanan.
+- Integrasi AI tidak otomatis berarti seluruh keluaran selalu benar. Input dan output model divalidasi, tetapi relevansi hasil tetap bergantung pada bukti, aturan scoring, dataset evaluasi, dan pengujian.
+- Dukungan Google OAuth, reset password melalui email, serta pemrosesan dokumen perlu diverifikasi pada environment yang digunakan untuk demo/deployment.
+- Dokumentasi repository mencatat ingestion GitHub dan ZIP. Jangan menyatakan dukungan GitLab atau semua format PDF setara tanpa memeriksa kode aktual.
+- Data di `sessionStorage` tetap bersifat sementara; data yang tersimpan di Supabase memiliki perilaku berbeda dan bergantung pada tabel, RLS, serta endpoint terkait.
+- Angka pengujian yang disebut di dokumen pendukung adalah hasil pada tahap integrasi yang dicatat di dokumen itu, bukan jaminan bahwa commit terbaru belum mengalami regresi.
 
-Fitur tersebut merupakan **arah pengembangan produk**, bukan fitur yang telah selesai hanya karena memiliki komponen UI.
+Fitur diberi status **terintegrasi**, **simulasi**, atau **perlu verifikasi** berdasarkan kode dan pengujian yang sesuai.
 
 ## 6. Fitur dan Pemetaan Kebutuhan PRD
 
@@ -207,22 +210,88 @@ Penyimpanan riwayat per pengguna belum merupakan persyaratan backend pada fase i
 
 PRD **tidak mengunci framework tertentu**. Tim memilih stack berikut untuk implementasi repository frontend:
 
-| Kebutuhan                 | Teknologi / pendekatan                                                                                    |
-| ------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Framework                 | **Next.js 16.4.0**, App Router (berdasarkan catatan implementasi; cek `package.json` untuk versi terkini) |
-| UI                        | **React 19**                                                                                              |
-| Bahasa                    | **TypeScript**                                                                                            |
-| Styling                   | **Tailwind CSS v4** dan CSS terstruktur per halaman                                                       |
-| Runtime                   | **Node.js** dan **npm**                                                                                   |
-| Routing/Layout            | Next.js App Router, layout bersama Workspace                                                              |
-| Aset                      | `public/images/`                                                                                          |
-| Data sementara            | State React dan `sessionStorage`                                                                          |
-| Acuan desain              | Figma Modul 5                                                                                             |
-| Rencana setelah prototipe | Supabase untuk autentikasi/database; OpenAI atau Gemini untuk fitur AI (belum diklaim aktif)              |
+| Kebutuhan      | Teknologi / pendekatan                                                                                    |
+| -------------- | --------------------------------------------------------------------------------------------------------- |
+| Framework      | **Next.js 16.4.0**, App Router (berdasarkan catatan implementasi; cek `package.json` untuk versi terkini) |
+| UI             | **React 19**                                                                                              |
+| Bahasa         | **TypeScript**                                                                                            |
+| Styling        | **Tailwind CSS v4** dan CSS terstruktur per halaman                                                       |
+| Runtime        | **Node.js** dan **npm**                                                                                   |
+| Routing/Layout | Next.js App Router, layout bersama Workspace                                                              |
+| Aset           | `public/images/`                                                                                          |
+| Data sementara | State React dan `sessionStorage`                                                                          |
+| Acuan desain   | Figma Modul 5                                                                                             |
+| Backend / data | Next.js Route Handlers, Supabase Auth, PostgreSQL, dan Supabase Storage sesuai modul yang terintegrasi    |
+| AI / validasi  | `@google/genai`, `openai`, Zod, modul formatter dan evaluator; provider aktif bergantung pada endpoint    |
+| Pengujian      | Node.js Test Runner, `tsx`, TypeScript, ESLint, dan suite di `tests/`                                     |
 
 Versi dependensi dan skrip paling otoritatif adalah **`package.json` dan lockfile** pada checkout yang digunakan, bukan tabel dokumentasi ini.
 
-## 9. Instalasi dan Menjalankan Proyek
+## 9. Sumber Data dan Layanan yang Digunakan
+
+Bagian ini menjelaskan sumber data dan layanan eksternal berdasarkan file konfigurasi, dependency, serta dokumentasi teknis yang ada di repository. Integrasi yang benar-benar digunakan pada setiap jalur tetap perlu dicocokkan dengan endpoint dan environment yang aktif.
+
+| Sumber/layanan                        | Peran                                                                          | Data/proses terkait                                                                                                                                                                 | Batasan dan catatan                                                                                                                                                         |
+| ------------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Supabase Auth**                     | Mengelola identitas dan sesi pengguna untuk route yang menggunakan autentikasi | Sesi pengguna dan identitas yang diverifikasi di sisi server                                                                                                                        | Endpoint harus mengambil identitas dari sesi tervalidasi; `user_id` yang dikirim klien bukan bukti kepemilikan.                                                             |
+| **Supabase Database (PostgreSQL)**    | Menyimpan data inti aplikasi                                                   | `analyses`, `project_evidences`, `validation_questions`, `validation_answers`, `analysis_skill_results`, `skill_gaps`, `roadmap_items`, dan data profil sesuai skema yang digunakan | Akses harus mengikuti kepemilikan analisis dan kebijakan Row Level Security (RLS). Tidak setiap bagian UI harus diasumsikan membaca database; periksa implementasi halaman. |
+| **Supabase Storage**                  | Menyimpan file yang diunggah, termasuk foto profil                             | Objek foto profil pada bucket `avatars` dan URL yang digunakan oleh profil                                                                                                          | Pastikan bucket, kebijakan upload, dan akses objek sesuai konfigurasi. Jangan pernah mengekspos service-role key ke browser.                                                |
+| **Google Gemini**                     | Provider AI yang digunakan/dibahas dalam alur ekstraksi atau evaluasi tertentu | Ekstraksi skill dari bukti dan/atau evaluasi jawaban sesuai endpoint yang memanggilnya                                                                                              | SDK `@google/genai` tersedia. Pemanggilan live memerlukan konfigurasi rahasia; layanan bisa mengalami timeout, HTTP 503, atau batas penggunaan.                             |
+| **OpenAI SDK**                        | Dependency provider AI yang tersedia dalam project                             | Pemakaian hanya pada jalur yang secara eksplisit menginisialisasi dan memanggilnya                                                                                                  | Dependency saja tidak membuktikan bahwa semua alur memakai OpenAI. Periksa kode endpoint dan environment sebelum menyatakan fitur OpenAI aktif.                             |
+| **GitHub repository**                 | Sumber bukti proyek yang dapat diproses                                        | Berkas dan metadata repository yang diambil oleh modul ingestion                                                                                                                    | Kegagalan jaringan, repository tidak tersedia, atau input yang tidak valid perlu ditangani. Jangan mengklaim dukungan provider lain tanpa verifikasi.                       |
+| **Berkas ZIP**                        | Sumber alternatif bukti proyek                                                 | File proyek yang diekstrak/ditelaah oleh modul ingestion                                                                                                                            | Pemrosesan harus menerapkan validasi dan batas keamanan sesuai kode aktual; batas ukuran dan ekstensi harus merujuk implementasi, bukan perkiraan.                          |
+| **React state dan `sessionStorage`**  | Menyimpan state sementara pada alur UI tertentu                                | Input sementara, status langkah, atau fitur yang memang menggunakan penyimpanan browser                                                                                             | Bukan database permanen dan tidak otomatis tersinkron antarperangkat.                                                                                                       |
+| **Data statis atau dataset evaluasi** | Mendukung tampilan contoh dan pengujian kualitas AI                            | Contoh konten UI dan `golden-dataset.json` untuk membandingkan output model dengan ground truth                                                                                     | Dataset evaluasi adalah alat pengujian, bukan benchmark industri tervalidasi. Data demo harus dibedakan dari hasil personal pengguna.                                       |
+
+### Alur data aplikasi
+
+```text
+Pengguna
+   │
+   ├── Sesi dan identitas ──────────────────> Supabase Auth
+   │
+   ├── Bukti proyek ───────────────────────> Modul ingestion
+   │                                         ├── GitHub repository
+   │                                         └── Berkas ZIP
+   │
+   ├── Jawaban validasi ───────────────────> Validasi input dan sesi analisis
+   │
+   └── Analisis ───────────────────────────> Endpoint server / modul AI
+                                             ├── Normalisasi input
+                                             ├── Ekstraksi atau evaluasi AI
+                                             ├── Validasi output terstruktur
+                                             ├── Scoring dan readiness
+                                             ├── Skill gap
+                                             └── Roadmap
+                                                   │
+                                                   ▼
+                                           Supabase Database
+                                                   │
+                                                   ▼
+                                      Hasil, riwayat, dan Dashboard
+```
+
+Diagram di atas menggambarkan alur logis modul yang didokumentasikan, bukan jaminan bahwa semua halaman telah tersambung ke satu jalur data tanpa fallback atau data contoh.
+
+### Validasi, scoring, dan kualitas output AI
+
+- `src/lib/ai/input-processor.ts` menormalisasi masukan, menangani teks bukti, dan memvalidasi jumlah jawaban validasi sesuai aturan alur.
+- `src/lib/ai/validation/ai-output-validator.ts` menggunakan Zod untuk memvalidasi bentuk output AI, termasuk rentang level/confidence dan identitas skill.
+- `src/lib/ai/error-handler.ts` menangani kegagalan API, timeout, dan respons JSON yang tidak valid agar proses dapat mengembalikan status gagal secara terkontrol.
+- `src/lib/ai/ai-result-formatter.ts` menyiapkan struktur respons hasil yang dikonsumsi frontend, termasuk skill, persentase, skill gap, dan roadmap.
+- Modul scoring menggunakan fungsi perhitungan skill gap bersama agar aturan perhitungan tidak berbeda antara tampilan dan backend.
+- `src/data/evaluation/golden-dataset.json` digunakan sebagai dataset evaluasi awal. Hasil pengujian otomatis tidak boleh disamakan dengan validasi kebutuhan industri atau jaminan akurasi untuk semua repository.
+
+### Keamanan konfigurasi
+
+- Simpan konfigurasi lokal dalam `.env.local` dan jangan commit file tersebut.
+- Gunakan variabel publik hanya untuk nilai yang memang aman dipakai di browser.
+- **Jangan pernah mengekspos `SUPABASE_SERVICE_ROLE_KEY`, API key Gemini/OpenAI, token akses, atau rahasia lain di komponen client maupun dokumentasi.**
+- Nama variabel yang benar harus dicocokkan dengan kode konfigurasi Supabase dan modul AI; jangan menebak nama atau mencantumkan nilai rahasia.
+- Uji input tidak valid, analisis tidak ditemukan, sesi tidak cocok, akses tanpa autentikasi, akses lintas akun, dan kegagalan provider AI.
+- Penggunaan UUID atau identifier yang sulit ditebak tidak menggantikan pemeriksaan autentikasi, otorisasi objek, dan RLS di server.
+
+## 10. Instalasi dan Menjalankan Proyek
 
 ### Prasyarat
 
@@ -269,7 +338,7 @@ Jika tersedia skrip `start` pada `package.json`, hasil build dapat dijalankan de
 
 Frontend simulasi dapat berjalan tanpa layanan backend tertentu. **Jangan menyalin kredensial ke source code atau meng-commit `.env.local`.** Bila integrasi Supabase/AI nanti diimplementasikan, dokumentasikan nama variabel yang **benar-benar digunakan kode** pada saat itu; saat ini README sengaja tidak mengarang daftar environment variables.
 
-## 10. Struktur Direktori
+## 11. Struktur Direktori
 
 Struktur berikut adalah gambaran arsitektur dan halaman yang terdokumentasi, **bukan hasil `tree` langsung dari repository terbaru**:
 
@@ -315,7 +384,7 @@ EvidenceBasedSkillGapAnalyzer-VINIX7/
 
 **Ketentuan struktur tim:** pertahankan `src/app/workspace/` tanpa tanda kurung; jangan membuat `src/features/` atau `(workspace)` sebagai pengganti struktur yang telah disepakati. File di `legacy-html/` dipertahankan sebagai referensi. Gambar Next.js diakses melalui `/images/...` dari `public/images/`.
 
-## 11. Arsitektur Frontend dan Konvensi
+## 12. Arsitektur Frontend dan Konvensi
 
 ### Layout Bersama
 
@@ -349,7 +418,7 @@ RootLayout
 
 Gunakan komponen bersama dan penamaan CSS yang terisolasi untuk mencegah efek samping. Hindari perubahan kontrak route atau key penyimpanan tanpa koordinasi tim. Perbaikan UI harus mempertahankan fungsi yang sudah diuji.
 
-## 12. Daftar Route
+## 13. Daftar Route
 
 ### Workspace
 
@@ -370,7 +439,7 @@ Gunakan komponen bersama dan penamaan CSS yang terisolasi untuk mencegah efek sa
 
 **Landing:** route publik utama berada di `/`. Route pasti Login, Register, dan Reset Password mengikuti struktur `src/app/` di repository; README tidak mengarang URL yang belum diperiksa. Beberapa URL legacy mungkin masih memiliki redirect kompatibilitas menuju route Workspace.
 
-## 13. Data Demo dan Penyimpanan Sementara
+## 14. Data Demo dan Penyimpanan Sementara
 
 ### Data yang Terlihat Bukan Penilaian Personal
 
@@ -407,9 +476,9 @@ Beberapa key alur lainnya didefinisikan oleh implementasi aktual di `src/data/an
 - Tahap Proses Analisis sekitar **12 detik** merupakan simulasi progress.
 - Cetak laporan melalui `window.print()` menggunakan browser; **bukan** generator laporan PDF backend.
 - Tombol materi Roadmap belum memiliki halaman tujuan dan dinonaktifkan dengan penjelasan.
-- Penyimpanan Roadmap sesi yang telah dilaporkan tidak tersedia sebagai profil permanen atau lintas perangkat.
+- Roadmap yang dibuat oleh endpoint evaluasi dapat disimpan ke tabel `roadmap_items`; verifikasi lagi bahwa item yang tampil di Dashboard berasal dari analisis terbaru dan tidak terduplikasi.
 
-## 14. Validasi, Interaksi, dan Penanganan Kesalahan
+## 15. Validasi, Interaksi, dan Penanganan Kesalahan
 
 Berdasarkan F-09–F-16, US-03–US-07, dan Bagian 8 PRD, prototipe harus memberikan perilaku berikut:
 
@@ -425,7 +494,7 @@ Berdasarkan F-09–F-16, US-03–US-07, dan Bagian 8 PRD, prototipe harus member
 
 Implementasi tertentu dapat masih membutuhkan perbaikan. Daftar ini adalah **persyaratan perilaku dan sasaran QA**, bukan klaim semuanya sudah lolos audit.
 
-## 15. UI/UX, Responsivitas, dan Aksesibilitas
+## 16. UI/UX, Responsivitas, dan Aksesibilitas
 
 ### Konsistensi Desain
 
@@ -464,7 +533,7 @@ Prinsip ini digunakan sebagai **kerangka audit perbaikan**, bukan pengganti peng
 
 Audit heuristik menyeluruh dan kepatuhan WCAG **belum boleh dinyatakan lulus** tanpa pemeriksaan khusus.
 
-## 16. Kriteria Keberhasilan dan Evaluasi
+## 17. Kriteria Keberhasilan dan Evaluasi
 
 PRD Bagian 4.2 menetapkan **target evaluasi**, bukan hasil yang sudah dicapai:
 
@@ -496,16 +565,24 @@ Tabel berikut merangkum **kriteria penerimaan US-01 sampai US-10** dari PRD seba
 | **US-09** | Menggunakan desktop maupun mobile        | Konten utama tidak terpotong; tidak ada scroll horizontal yang tidak perlu                     |
 | **US-10** | Berpindah antarhalaman akun              | Login, Register, dan Reset Password terhubung; proses simulasi tidak disebut autentikasi nyata |
 
-## 17. Quality Assurance dan Pengujian
+## 18. Quality Assurance dan Pengujian
 
 ### Pemeriksaan Teknis
 
 ```bash
-npm run lint -- --no-cache
-npx tsc --noEmit --incremental false
+npm run lint
+npx tsc --noEmit
+npm run test:ingestion
+npm run test:analysis
+npm run test:ai
+npm run test:validation
+npm run test:scoring
+npm run test:roadmap
 npm run build
 git diff --check
 ```
+
+Skrip `test:ai:live` dan `test:validation:live` menjalankan pengujian yang memerlukan konfigurasi environment/provider live. Jalankan hanya setelah environment tersedia dan pahami bahwa hasil live dapat dipengaruhi ketersediaan layanan eksternal.
 
 ### Browser / Interaksi Manual
 
@@ -531,7 +608,7 @@ Skenario regresi minimum:
 
 Pada laporan implementasi sebelumnya, sejumlah halaman telah lulus lint, type-check, build, dan browser test. **Uji ulang perlu dilakukan setelah perubahan berikutnya; hasil pengujian lama tidak otomatis berlaku bagi commit terbaru.**
 
-## 18. Status Implementasi dan Kesenjangan
+## 19. Status Implementasi dan Kesenjangan
 
 | Area                                 | Status berdasarkan laporan pengembangan, bukan audit terbaru                                                |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
@@ -540,13 +617,13 @@ Pada laporan implementasi sebelumnya, sejumlah halaman telah lulus lint, type-ch
 | Upload Project → Pertanyaan Validasi | Frontend tersedia; alur utama harus diuji ulang, terutama CV opsional dan PDF-only                          |
 | Hasil Analisis                       | Demo UI terimplementasi; bukan skor AI dinamis                                                              |
 | Skill Gap                            | Demo tujuh skill Frontend Developer terintegrasi                                                            |
-| Roadmap                              | Demo empat tahap terintegrasi; simpan ke Dashboard berbasis sesi                                            |
+| Roadmap                              | Generator/persistensi database telah dikembangkan; verifikasi hasil deduplikasi dan tampilan Dashboard      |
 | Riwayat Analisis                     | Demo empat data, search/filter/sort/dialog terimplementasi                                                  |
-| Profile                              | Paket implementasi telah disiapkan; pemasangan/tes terbaru belum terkonfirmasi                              |
+| Profile                              | Route profil dan foto melalui Supabase telah dikembangkan; uji simpan, refresh, dan modal Edit Profil       |
 | Logout Sidebar dan dropdown          | Prompt perbaikan telah disiapkan; hasil terakhir belum terkonfirmasi                                        |
 | Navbar Landing mengikuti scroll      | Prompt scroll spy telah disiapkan; hasil terakhir belum terkonfirmasi                                       |
-| Sinkronisasi data Dashboard–Riwayat  | Belum menggunakan sumber data backend yang sama                                                             |
-| Supabase/Auth/AI produksi            | Di luar kewajiban Modul 7 dan belum terverifikasi terintegrasi                                              |
+| Sinkronisasi data Dashboard–Riwayat  | Periksa tiap komponen apakah sudah memakai query database atau masih memakai data demo                      |
+| Supabase/Auth/AI                     | Modul integrasi tersedia; konfigurasi environment dan alur tiap fitur tetap harus diuji                     |
 
 ### Kesenjangan yang Layak Diprioritaskan
 
@@ -558,9 +635,9 @@ Pada laporan implementasi sebelumnya, sejumlah halaman telah lulus lint, type-ch
 6. **F-15:** jangan menyamakan empat entri Riwayat dengan total statistik demo Dashboard yang berbeda.
 7. **Kebutuhan nonfungsional:** selesaikan audit aksesibilitas, konsistensi visual Figma, dan regresi mobile.
 
-## 19. Rencana Pengembangan
+## 20. Rencana Pengembangan
 
-### Fokus Sebelum Demo/Penilaian Modul 7
+### Fokus Penyelesaian dan Penilaian Modul 8
 
 - Verifikasi seluruh F-01–F-16 dan US-01–US-10 terhadap antarmuka aktual.
 - Selesaikan gap prioritas pada form, CV opsional, navigasi, dan penanganan error.
@@ -569,7 +646,7 @@ Pada laporan implementasi sebelumnya, sejumlah halaman telah lulus lint, type-ch
 - Uji responsivitas, keyboard, dan hasil simulasi; lakukan usability test jika memungkinkan.
 - Lengkapi dokumentasi keputusan tim dan bukti pengujian.
 
-### Pengembangan Produk Setelah Tahap Frontend
+### Pengembangan Lanjutan
 
 - Supabase Auth, otorisasi, dan manajemen akun.
 - Database yang menghubungkan bukti proyek, target role, CV, jawaban, hasil, dan riwayat kepada pengguna.
@@ -581,7 +658,7 @@ Pada laporan implementasi sebelumnya, sejumlah halaman telah lulus lint, type-ch
 
 **Rencana tersebut bukan daftar fitur yang telah selesai.**
 
-## 20. Panduan Kontribusi
+## 21. Panduan Kontribusi
 
 Repository merupakan pekerjaan kolaboratif. Sebelum mengubah kode:
 
@@ -612,7 +689,7 @@ git diff --cached --check
 
 Contoh pesan commit: `feat: implement profile page`, `fix: landing navigation scroll spy`, `docs: align README with PRD`.
 
-## 21. Pemecahan Masalah
+## 22. Pemecahan Masalah
 
 | Masalah                                  | Pemeriksaan awal                                                                                       |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -627,17 +704,20 @@ Contoh pesan commit: `feat: implement profile page`, `fix: landing navigation sc
 | PDF-only tidak bisa lanjut               | Keterbatasan state/upload frontend yang perlu ditangani sebagai gap implementasi                       |
 | `os error 112` pada Windows              | Periksa ruang disk sistem dan folder temp; jangan menghapus `.git` atau konfigurasi secara sembarangan |
 
-## 22. Dokumentasi, Privasi, dan Lisensi
+## 23. Dokumentasi, Privasi, dan Lisensi
 
 ### Referensi Dokumen
 
-- **PRD:** `PRD_BUKTIVA_Bagian_1-9.md` — sumber kebutuhan produk, target evaluasi, dan batasan Modul 7.
+- **PRD:** `PRD.md` — dokumen kebutuhan produk yang tersedia di root repository.
+- **AI QA:** `AI-testing-and-evaluation.md` — ringkasan pengujian, modul AI, dataset evaluasi, dan kontrak output.
+- **Prompt log backend:** `prompt-log-backend.md` — catatan pekerjaan ingestion, AI, evaluasi, Supabase, scoring, roadmap, dan integrasi.
+- **Prompt log ai engineer 1:** `prompt-log-ai-engineer1.md`
+- **Prompt log frontend developer 1:** `Log_Prompt_Frontend-1.md`
+- **Prompt log frontend developer 2:** `Log_Prompt_Frontend-2.md`
 - **Desain:** [Figma Modul 5](https://www.figma.com/design/UVAFASV8FI30S6IFXKWUQU/VINIX7-DESIGN-UI?node-id=207-101&t=4u0zQ0JJCLAXJXPG-1).
 - **Repository:** [GitHub BUKTIVA](https://github.com/adelyapy/EvidenceBasedSkillGapAnalyzer-VINIX7).
 - **HTML awal:** `legacy-html/` (beserta referensi aset `assets/images/`).
 - **Kode frontend:** `src/` untuk route, komponen, data, types, dan styles.
-
-PRD yang menjadi acuan **baru mencakup Bagian 1–9**; Bagian 10–11 belum tersedia pada dokumen ini. Jika file PRD belum masuk repository, tambahkan ke folder dokumentasi sesuai kesepakatan tim dan perbarui tautan di README.
 
 ### Privasi pada Prototipe
 
@@ -650,10 +730,8 @@ PRD yang menjadi acuan **baru mencakup Bagian 1–9**; Bagian 10–11 belum ters
 
 Proyek dikembangkan oleh **Kelompok 3 — Web & UI/UX Developer, VINIX7**. PRD menyebut lima anggota tim pada tampilan Team Kami, tetapi README tidak mengarang identitas atau peran individual; lengkapi dari daftar tim resmi.
 
-**Lisensi belum ditetapkan dalam dokumen yang tersedia.** Periksa apakah repository sudah mempunyai file `LICENSE` sebelum menyatakan ketentuan penggunaan kode.
-
 ---
 
-**Pemeliharaan README:** Perbarui isi setelah setiap perubahan penting, terutama saat implementasi Profile, logout, scroll spy, validasi PDF/GitLab, data backend, atau fitur AI telah benar-benar diuji. Status "selesai" hanya boleh diberikan berdasarkan bukti kode dan pengujian, bukan dari screenshot atau instruksi implementasi semata.
-
 **BUKTIVA - Evidence-Based Skill Gap Analyzer**
+
+**Catatan:** README menjelaskan arsitektur dan batasan berdasarkan implementasi yang diketahui. Hasil uji terakhir pada branch pengumpulan tetap menjadi bukti utama untuk menyatakan fitur lulus.

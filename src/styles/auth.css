@@ -24,7 +24,14 @@
 }
 .bka-screenWithHome {
   position: relative;
-  padding-top: clamp(76px, 8vw, 92px);
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0;
+  padding: clamp(64px, 9dvh, 82px) clamp(12px, 2vw, 20px)
+    clamp(10px, 2dvh, 18px);
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 .bka-homeLink {
   position: absolute;
@@ -136,6 +143,8 @@
 }
 .bka-right {
   min-width: 0;
+  min-height: 0;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -760,20 +769,28 @@
 .bka-shell.bka-login,
 .bka-shell.bka-register {
   max-width: 960px;
+  max-height: 100%;
+  min-height: 0;
   grid-template-columns: minmax(280px, 390px) minmax(370px, 435px);
   align-items: center;
   column-gap: clamp(34px, 5vw, 68px);
-  padding: clamp(28px, 3.5vw, 38px);
+  padding: clamp(16px, 3dvh, 30px) clamp(18px, 3vw, 34px);
+  overflow: hidden;
 }
 .bka-shell.bka-login {
-  min-height: min(620px, calc(100svh - 16px));
+  height: min(620px, 100%);
 }
 .bka-shell.bka-register {
-  min-height: min(690px, calc(100svh - 16px));
+  height: min(690px, 100%);
 }
 .bka-login .bka-left,
 .bka-register .bka-left {
   align-self: center;
+}
+.bka-login .bka-right,
+.bka-register .bka-right {
+  height: 100%;
+  justify-content: center;
 }
 .bka-login .bka-headline,
 .bka-register .bka-headline {
@@ -806,13 +823,32 @@
 }
 .bka-login .bka-card,
 .bka-register .bka-card {
-  min-height: 500px;
+  max-height: 100%;
+  min-height: 0;
   justify-content: center;
-  gap: 13px;
-  padding: 28px;
+  gap: clamp(8px, 1.4dvh, 13px);
+  padding: clamp(18px, 3dvh, 28px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #7c9ab6 transparent;
+  scrollbar-width: thin;
+}
+.bka-login .bka-card::-webkit-scrollbar,
+.bka-register .bka-card::-webkit-scrollbar {
+  width: 7px;
+}
+.bka-login .bka-card::-webkit-scrollbar-thumb,
+.bka-register .bka-card::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #7c9ab6;
+}
+.bka-login .bka-card::-webkit-scrollbar-track,
+.bka-register .bka-card::-webkit-scrollbar-track {
+  background: transparent;
 }
 .bka-register .bka-card {
-  min-height: 610px;
+  min-height: 0;
 }
 .bka-login .bka-card h2,
 .bka-register .bka-card h2 {
@@ -827,7 +863,7 @@
 }
 .bka-login .bka-form,
 .bka-register .bka-form {
-  gap: 12px;
+  gap: clamp(8px, 1.4dvh, 12px);
 }
 .bka-login .bka-field,
 .bka-register .bka-field {
@@ -843,7 +879,7 @@
 }
 .bka-login .bka-inputWrap,
 .bka-register .bka-inputWrap {
-  height: 48px;
+  height: clamp(40px, 6dvh, 48px);
   padding-inline: 13px;
   gap: 10px;
 }
@@ -934,8 +970,8 @@
   .bka-shell.bka-register {
     min-height: 0;
     grid-template-columns: minmax(220px, 0.85fr) minmax(340px, 1.15fr);
-    gap: 28px;
-    padding: 28px 24px;
+    gap: clamp(18px, 3vw, 28px);
+    padding: clamp(14px, 2.5dvh, 24px) clamp(16px, 2.5vw, 24px);
   }
   .bka-login .bka-headline,
   .bka-register .bka-headline {
@@ -949,7 +985,7 @@
   .bka-login .bka-card,
   .bka-register .bka-card {
     min-height: 0;
-    padding: 24px;
+    padding: clamp(16px, 2.6dvh, 24px);
   }
   .bka-headline {
     font-size: clamp(25px, 4vw, 29px);
@@ -978,7 +1014,21 @@
     align-items: stretch;
   }
   .bka-screenWithHome {
-    padding-top: 72px;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    padding: 58px 10px 10px;
+    overflow-x: hidden;
+    overflow-y: visible;
+    overscroll-behavior-y: auto;
+  }
+  .bka-screenWithHome .bka-homeLink {
+    top: 10px;
+    left: 10px;
+    min-height: 38px;
+    padding: 7px 13px;
+    box-shadow: 4px 4px 0 #14213d;
   }
   .bka-shell,
   .bka-reset {
@@ -991,9 +1041,24 @@
   .bka-shell.bka-login,
   .bka-shell.bka-register {
     display: flex;
+    height: auto;
+    max-height: none;
     min-height: 0;
-    gap: 24px;
-    padding: 22px 16px;
+    gap: 16px;
+    padding: 12px;
+    overflow: visible;
+  }
+  .bka-login .bka-left,
+  .bka-register .bka-left {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    border: 0;
   }
   .bka-left {
     text-align: center;
@@ -1019,7 +1084,13 @@
     margin: 9px auto 0;
   }
   .bka-right {
+    min-height: 0;
+    max-height: none;
     width: 100%;
+  }
+  .bka-login .bka-right,
+  .bka-register .bka-right {
+    height: auto;
   }
   .bka-card,
   .bka-register .bka-card,
@@ -1030,10 +1101,12 @@
   }
   .bka-login .bka-card,
   .bka-register .bka-card {
+    max-height: none;
     min-height: 0;
     justify-content: flex-start;
     gap: 12px;
     padding: 22px 18px;
+    overflow: visible;
   }
   .bka-login .bka-headline,
   .bka-register .bka-headline {
@@ -1067,7 +1140,7 @@
   }
   .bka-shell.bka-login,
   .bka-shell.bka-register {
-    padding: 18px 12px;
+    padding: 9px 7px;
   }
   .bka-card,
   .bka-register .bka-card,

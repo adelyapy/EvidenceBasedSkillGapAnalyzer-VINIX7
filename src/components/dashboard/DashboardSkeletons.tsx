@@ -65,10 +65,9 @@ export function DashboardPageSkeleton() {
       <span className="bkw-srOnly">Memuat dashboard...</span>
       <DashboardHeroSkeleton />
       <DashboardStatsSkeleton />
-      <div className="bkd-contentGrid">
+      <div className="bkd-contentGrid bkd-contentGrid--withoutRoadmap">
         <DashboardPanelSkeleton />
         <DashboardPanelSkeleton />
-        <DashboardPanelSkeleton compact />
         <DashboardPanelSkeleton compact />
       </div>
     </section>
