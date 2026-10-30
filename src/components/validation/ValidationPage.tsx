@@ -399,7 +399,7 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
                     setNavigationDirection("back");
                   }}
                 >
-                  ← Kembali
+                  Kembali
                 </Link>
               )}
 
@@ -413,7 +413,7 @@ export default function ValidationPage({ step }: { step: QuestionNumber }) {
                   : step === totalQuestions
                     ? "Selesai"
                     : "Selanjutnya"}
-                <span aria-hidden="true">→</span>
+                
               </button>
             </div>
           </form>

@@ -25,7 +25,7 @@ export default function Hero() {
           </p>
           <div className="bk-heroActions">
             <Link className="bk-heroButton bk-primaryButton" href="/login">
-              Mulai Analisis Proyekmu <span aria-hidden="true">→</span>
+              Mulai Analisis Proyekmu 
             </Link>
             <a className="bk-heroButton bk-secondaryButton" href="#cara-kerja">
               <svg viewBox="0 0 24 24" aria-hidden="true">

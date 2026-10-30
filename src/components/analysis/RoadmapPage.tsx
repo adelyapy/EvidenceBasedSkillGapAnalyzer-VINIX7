@@ -59,7 +59,7 @@ export default function RoadmapPage() {
       </section>
 
       <nav className="bkrm-bottomNav" aria-label="Navigasi Road Map Pengembangan Skill">
-        <Link className="bkrm-backButton" href={analysisRoutes.skillGap}>← Kembali ke Skill Gap Report</Link>
+        <Link className="bkrm-backButton" href={analysisRoutes.skillGap}>Kembali ke Skill Gap Report</Link>
         <Link className="bkrm-dashboardButton" href="/workspace/dashboard">Kembali ke Dashboard</Link>
       </nav>
     </article>

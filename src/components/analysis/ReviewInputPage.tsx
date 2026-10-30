@@ -550,7 +550,7 @@ export default function ReviewInputPage() {
 
         <div className="review-actions">
           <Link className="review-back" href={analysisRoutes.uploadCv}>
-            ← Kembali
+            Kembali
           </Link>
           <button
             type="button"
@@ -558,7 +558,7 @@ export default function ReviewInputPage() {
             disabled={!loaded || !canAnalyze}
             onClick={startAnalysis}
           >
-            Mulai Analisis →
+            Mulai Analisis
           </button>
         </div>
         {loaded && (!hasProjects || !hasRole) && (

@@ -36,7 +36,7 @@ export default function UnavailableAnalysisFeature({
 
         <Link className="bkuf-dashboardLink" href="/workspace/dashboard">
           Kembali ke Dashboard
-          <span aria-hidden="true">→</span>
+          
         </Link>
       </div>
     </section>

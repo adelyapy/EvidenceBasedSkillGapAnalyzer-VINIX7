@@ -183,7 +183,7 @@ export default function ProcessAnalysisPage() {
             className="validation-next"
             onClick={() => setRetryCount((count) => count + 1)}
           >
-            Coba Lagi <span aria-hidden="true">→</span>
+            Coba Lagi 
           </button>
         )}
 

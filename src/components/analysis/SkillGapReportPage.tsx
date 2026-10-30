@@ -73,8 +73,8 @@ export default function SkillGapReportPage() {
       </section>
 
       <nav className="bks-bottomNav" aria-label="Navigasi Skill Gap Report">
-        <Link className="bks-backButton" href={analysisRoutes.result}>← Kembali ke Hasil Analisis</Link>
-        <Link className="bks-nextButton" href={analysisRoutes.roadmap}>Lanjutkan <span aria-hidden="true">→</span></Link>
+        <Link className="bks-backButton" href={analysisRoutes.result}>Kembali ke Hasil Analisis</Link>
+        <Link className="bks-nextButton" href={analysisRoutes.roadmap}>Lanjutkan </Link>
       </nav>
     </article>
   );

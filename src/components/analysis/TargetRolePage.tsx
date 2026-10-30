@@ -237,14 +237,14 @@ export default function TargetRolePage() {
             className="bktr-button bktr-button--back"
             href={analysisRoutes.uploadProject}
           >
-            <span aria-hidden="true">←</span> Kembali
+             Kembali
           </Link>
           <button
             className="bktr-button bktr-button--next"
             type="submit"
             disabled={!loaded || !storageAvailable}
           >
-            Lanjutkan <span aria-hidden="true">→</span>
+            Lanjutkan 
           </button>
         </div>
       </form>
