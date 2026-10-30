@@ -153,7 +153,7 @@ export default async function LatestAnalysis() {
               className="bkd-analysisDetailLink"
               href={analysisRoutes.resultFor(analysis.id)}
             >
-              Lihat hasil lengkap →
+              Lihat hasil lengkap
             </Link>
           </div>
 

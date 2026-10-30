@@ -826,8 +826,7 @@ export default function UploadProjectPage() {
                       </a>
                     ) : (
                       <span>
-                        {item.file.name} · {formatFileSize(item.file.size)} ·
-                        belum diunggah
+                        {item.file.name} · {formatFileSize(item.file.size)}
                       </span>
                     )}
                   </span>
@@ -867,7 +866,7 @@ export default function UploadProjectPage() {
           disabled={evidence.length === 0 || !storageAvailable}
           onClick={continueToTargetRole}
         >
-          Lanjutkan <span aria-hidden="true">→</span>
+          Lanjutkan 
         </button>
       </div>
       {toast && (

@@ -254,8 +254,8 @@ export default function UploadCvPage() {
       {isDemo && <p className="cv-demo-note">Mode pratinjau desain: kelengkapan langkah sebelumnya ditampilkan sebagai simulasi.</p>}
 
       <div className="cv-actions">
-        <Link className="cv-action cv-action-back" href={analysisRoutes.targetRole}><UploadIcon name="arrow-left" size={19} /> Kembali</Link>
-        <button className="cv-action cv-action-next" onClick={continueToReview} type="button">Lanjutkan <UploadIcon name="arrow-right" size={20} /></button>
+        <Link className="cv-action cv-action-back" href={analysisRoutes.targetRole}> Kembali</Link>
+        <button className="cv-action cv-action-next" onClick={continueToReview} type="button">Lanjutkan </button>
       </div>
       {toast && (
         <AnalysisToast

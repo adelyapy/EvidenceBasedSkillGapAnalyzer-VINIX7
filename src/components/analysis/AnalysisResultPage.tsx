@@ -648,8 +648,8 @@ export default function AnalysisResultPage({
 
       {!loading && (
         <nav className="bkr-actions bkr-screenOnly" aria-label="Navigasi hasil analisis">
-          <Link className="bkr-actionButton bkr-actionButton--secondary" href="/workspace/dashboard">← Kembali ke Dashboard</Link>
-          <Link className="bkr-actionButton bkr-actionButton--primary" href={analysisRoutes.uploadProject}>Mulai analisis baru →</Link>
+          <Link className="bkr-actionButton bkr-actionButton--secondary" href="/workspace/dashboard">Kembali ke Dashboard</Link>
+          <Link className="bkr-actionButton bkr-actionButton--primary" href={analysisRoutes.uploadProject}>Mulai analisis baru</Link>
         </nav>
       )}
     </article>

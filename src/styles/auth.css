@@ -1216,3 +1216,39 @@
     transform: none;
   }
 }
+
+/* Keep navigation in normal flow and let the document scroll with the form. */
+.bka-screen.bka-screenWithHome {
+  height: auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 24px;
+  padding: clamp(16px, 2vw, 24px);
+  overflow: visible;
+  overscroll-behavior: auto;
+}
+.bka-screenWithHome .bka-homeLink {
+  position: static;
+  align-self: flex-start;
+  flex-shrink: 0;
+}
+.bka-screenWithHome > .bka-shell {
+  flex-shrink: 0;
+}
+.bka-screenWithHome .bka-shell.bka-register {
+  height: auto;
+  max-height: none;
+  overflow: visible;
+}
+.bka-register .bka-right {
+  height: auto;
+  max-height: none;
+}
+.bka-register .bka-card {
+  max-height: none;
+  justify-content: flex-start;
+  overflow: visible;
+}

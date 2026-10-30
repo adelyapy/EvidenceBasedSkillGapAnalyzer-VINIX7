@@ -195,7 +195,7 @@ export default function DashboardGuideDialog() {
                   href={analysisRoutes.uploadProject}
                 >
                   Mulai analisa baru
-                  <span aria-hidden="true">→</span>
+                  
                 </Link>
               </footer>
             </section>

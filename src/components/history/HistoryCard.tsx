@@ -94,7 +94,7 @@ export default function HistoryCard({
           type="button"
           onClick={() => onOpen(entry)}
         >
-          Lihat Detail <span aria-hidden="true">→</span>
+          Lihat Detail 
         </button>
       </article>
     </li>

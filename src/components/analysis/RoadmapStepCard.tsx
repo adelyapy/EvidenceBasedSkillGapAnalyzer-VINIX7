@@ -21,7 +21,7 @@ export default function RoadmapStepCard({ number, step }: Props) {
             ))}
           </ul>
           <button type="button" className="bkrm-materialButton" disabled aria-describedby={materialHelpId}>
-            Lihat Materi <span aria-hidden="true">→</span>
+            Lihat Materi 
           </button>
           <p className="bkrm-materialHelp" id={materialHelpId}>Materi belum tersedia.</p>
         </div>
