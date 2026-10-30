@@ -9,7 +9,6 @@ type Evidence = {
   title: string | null;
   url: string | null;
   description: string | null;
-  storage_path: string | null;
 };
 
 type GeneratedQuestion = {
@@ -38,61 +37,6 @@ function jsonError(message: string, status: number) {
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-const MAX_PDF_SIZE = 10 * 1024 * 1024;
-const MAX_PDF_TEXT = 20000;
-
-async function readStoredPdf(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  evidence: Evidence,
-  userId: string,
-): Promise<string> {
-  if (!evidence.storage_path) {
-    throw new Error(`Lokasi PDF "${evidence.title ?? ""}" tidak tersedia.`);
-  }
-
-  // Pastikan path berada di folder milik pengguna yang sedang login.
-  const expectedPrefix = `${userId}/`;
-
-  if (!evidence.storage_path.startsWith(expectedPrefix)) {
-    throw new Error("Lokasi PDF tidak sesuai dengan pemilik analisis.");
-  }
-
-  const { data: file, error } = await supabase.storage
-    .from("project-evidences")
-    .download(evidence.storage_path);
-
-  if (error || !file) {
-    console.error("PDF Storage download failed:", error?.message);
-    throw new Error(
-      `PDF "${evidence.title ?? ""}" tidak dapat diambil dari penyimpanan.`,
-    );
-  }
-
-  if (file.size === 0 || file.size > MAX_PDF_SIZE) {
-    throw new Error("Ukuran PDF kosong atau melebihi batas 10 MiB.");
-  }
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  // Periksa signature PDF sebelum parser dijalankan.
-  if (buffer.subarray(0, 5).toString("ascii") !== "%PDF-") {
-    throw new Error(`File "${evidence.title ?? ""}" bukan PDF yang valid.`);
-  }
-
-  const pdfModule = await import("pdf-parse");
-  const pdf = pdfModule.default;
-  const parsed = await pdf(buffer);
-  const text = parsed.text.trim();
-
-  if (!text) {
-    throw new Error(
-      `PDF "${evidence.title ?? ""}" tidak memiliki teks yang dapat dibaca. PDF hasil scan memerlukan OCR.`,
-    );
-  }
-
-  return text.slice(0, MAX_PDF_TEXT);
 }
 
 function isDuplicateError(error: { code?: string }) {
@@ -194,8 +138,7 @@ async function generateQuestions(
   model: string,
   apiKey: string,
   targetRole: string,
-  evidences: Evidence[],
-  pdfContents: Array<{ title: string; text: string }>
+  evidences: Evidence[]
 ): Promise<{
   questions: GeneratedQuestion[];
   evidenceVerified: boolean;
@@ -234,11 +177,6 @@ async function generateQuestions(
     description: evidence.description,
   }));
 
-  const pdfContext = pdfContents.map((item) => ({
-  title: item.title,
-  text: item.text,
-}));
-
   const prompt = `
 Kamu adalah AI evaluator untuk BUKTIVA, aplikasi analisis
 kesenjangan kompetensi berbasis bukti proyek.
@@ -248,9 +186,6 @@ ${targetRole}
 
 Data bukti proyek yang tersimpan:
 ${JSON.stringify(evidenceContext, null, 2)}
-
-Isi dokumen PDF yang berhasil dibaca:
-${JSON.stringify(pdfContext, null, 2)}
 
 Data repositori publik yang berhasil dibaca:
 ${JSON.stringify(repositoryDetails, null, 2)}
@@ -481,7 +416,7 @@ export async function POST(request: Request) {
       await supabase
         .from("project_evidences")
         .select(
-          "id, evidence_type, title, url, description, storage_path"
+          "id, evidence_type, title, url, description"
         )
         .eq("analysis_id", analysisId)
         .eq("user_id", user.id);
@@ -508,31 +443,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const typedEvidences = evidences as Evidence[];
-
-    const pdfContents: Array<{ title: string; text: string }> = [];
-
-    for (const evidence of typedEvidences) {
-      if (evidence.evidence_type !== "pdf") continue;
-
-      const text = await readStoredPdf(
-        supabase,
-        evidence,
-        user.id,
-      );
-
-      pdfContents.push({
-        title: evidence.title ?? "Bukti PDF",
-        text,
-      });
-    }
-
     const generated = await generateQuestions(
       model,
       apiKey,
       analysis.target_role,
-      typedEvidences,
-      pdfContents,
+      evidences as Evidence[]
     );
 
     const rows = generated.questions.map((question, index) => ({
