@@ -1,35 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { analysisSteps, analysisStorage } from "@/data/analysis";
 import type { AnalysisStepId } from "@/types/analysis";
 
+const subscribeToAnalysisProgress = () => () => {};
+
+function getLastAvailableIndex() {
+  let hasProject = false;
+
+  try {
+    const projects: unknown = JSON.parse(
+      sessionStorage.getItem(analysisStorage.projects) || "[]",
+    );
+    hasProject = Array.isArray(projects) && projects.length > 0;
+  } catch {
+    hasProject = false;
+  }
+
+  const progress = sessionStorage.getItem(analysisStorage.flowProgress);
+  const savedRole = Boolean(
+    sessionStorage.getItem(analysisStorage.targetRole)?.trim(),
+  );
+  const completedIndex =
+    progress === "cv"
+      ? 2
+      : progress === "role"
+        ? 1
+        : progress === "project" || hasProject
+          ? 0
+          : -1;
+
+  return Math.min(
+    analysisSteps.length - 1,
+    Math.max(completedIndex + 1, hasProject && savedRole ? 2 : 0),
+  );
+}
+
 export default function AnalysisStepper({ current }: { current: AnalysisStepId }) {
-  const [lastAvailableIndex, setLastAvailableIndex] = useState(0);
-
-  useEffect(() => {
-    let hasProject = false;
-
-    try {
-      const projects: unknown = JSON.parse(
-        sessionStorage.getItem(analysisStorage.projects) || "[]",
-      );
-      hasProject = Array.isArray(projects) && projects.length > 0;
-    } catch {
-      hasProject = false;
-    }
-
-    const progress = sessionStorage.getItem(analysisStorage.flowProgress);
-    const savedRole = Boolean(
-      sessionStorage.getItem(analysisStorage.targetRole)?.trim(),
-    );
-    const completedIndex = progress === "cv" ? 2 : progress === "role" ? 1 : progress === "project" || hasProject ? 0 : -1;
-
-    setLastAvailableIndex(
-      Math.min(analysisSteps.length - 1, Math.max(completedIndex + 1, hasProject && savedRole ? 2 : 0)),
-    );
-  }, []);
+  const lastAvailableIndex = useSyncExternalStore(
+    subscribeToAnalysisProgress,
+    getLastAvailableIndex,
+    () => 0,
+  );
 
   return (
     <nav className="analysis-stepper" aria-label="Tahapan analisis">

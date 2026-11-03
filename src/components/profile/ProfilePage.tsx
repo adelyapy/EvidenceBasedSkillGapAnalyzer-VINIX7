@@ -9,6 +9,7 @@ import {
   type FormEvent,
 } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { WORKSPACE_PROFILE_UPDATED_EVENT } from "@/data/workspace";
 import { useAnimatedDismiss } from "@/hooks/useAnimatedDismiss";
@@ -33,6 +34,7 @@ function formatJoinedDate(date: string) {
 }
 
 export default function ProfilePage() {
+  const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -67,7 +69,7 @@ export default function ProfilePage() {
         if (authError) throw authError;
 
         if (!user) {
-          window.location.href = "/login";
+          router.push("/login");
           return;
         }
 
@@ -112,7 +114,7 @@ export default function ProfilePage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (!message) return;

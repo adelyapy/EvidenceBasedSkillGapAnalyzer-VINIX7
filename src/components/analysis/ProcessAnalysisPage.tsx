@@ -19,10 +19,6 @@ export default function ProcessAnalysisPage() {
     let redirectTimer: number | undefined;
     let currentProgress = 0;
 
-    setProgress(0);
-    setError("");
-    setProcessing(true);
-
     // Progres hanya indikator visual selama proses AI berlangsung.
     const interval = window.setInterval(() => {
       currentProgress = Math.min(currentProgress + 1, 90);
@@ -115,6 +111,13 @@ export default function ProcessAnalysisPage() {
     };
   }, [router, retryCount]);
 
+  function retryAnalysis() {
+    setProgress(0);
+    setError("");
+    setProcessing(true);
+    setRetryCount((count) => count + 1);
+  }
+
   return (
     <div className="process-main">
       <section className="process-content" aria-labelledby="process-heading">
@@ -181,7 +184,7 @@ export default function ProcessAnalysisPage() {
           <button
             type="button"
             className="validation-next"
-            onClick={() => setRetryCount((count) => count + 1)}
+            onClick={retryAnalysis}
           >
             Coba Lagi 
           </button>
